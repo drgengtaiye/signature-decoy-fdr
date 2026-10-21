@@ -1,0 +1,9 @@
+cohort,group,genes,n,n_resp,note
+GSE176307,primary,58387,89,16,"Salmon TPM, log2(TPM+1)"
+GSE161537,panel,2559,76,20,"HTG EdgeSeq, log2 CPM"
+GSE159067,panel,2552,102,11,"HTG EdgeSeq, log2 CPM"
+GSE303300,panel,2559,34,4,"HTG EdgeSeq, log2 CPM, baseline; 2 sample(s) without expression dropped"
+GSE215868,panel,750,104,45,"NanoString IO 360, positive + housekeeping normalized, log2"
+GSE93157,panel,770,65,20,"NanoString PanCancer Immune, median-of-ratios, log2"
+GSE207422,chemoICB,58387,24,9,log2 TPM; MPR against none
+GSE235919,chemoICB,20232,34,23,log2(TPM+1); CR/PR against SD
