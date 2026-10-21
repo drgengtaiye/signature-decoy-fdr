@@ -10,7 +10,12 @@ was cited only here and is the last reference, so no renumbering is needed.
 The figure-legend section also carried the GM figures as embedded images (old Figs 1-8, including the
 old Fig. 2 with its triage rings and old Figs 7-8 of the separate paper, and no Fig. 4). Figures are
 uploaded as separate files, so every embedded image goes and the legends stay.
+
+Last, copyedits found on proofreading: the first author's initials in the contributions, title-page
+and funding spacing, CRediT role names, American spelling outside the reference list, and three
+abbreviations missing from the list.
 """
+import re
 import sys
 
 import docx
@@ -40,6 +45,58 @@ set_text(avail, "All analysis code is provided as Additional file 3 and in the s
 set_text(r98, f"98. signature-decoy-fdr: analysis code for this study. {REPO}. Accessed {ACCESSED}.")
 (r99,) = find("99. immunoTriage")
 r99._p.getparent().remove(r99._p)
+
+
+# ---- copyedits found on proofreading (2026-10-20)
+def run_sub(p, old, new):
+    """Replace old by new inside one run of paragraph p."""
+    for r in p.runs:
+        if old in r.text:
+            r.text = r.text.replace(old, new, 1)
+            return
+    raise AssertionError((old, p.text[:60]))
+
+
+ps = d.paragraphs
+# title page: "Zheng3,  Xuetao" and "Peng3,Jun"
+authors = ps[1]
+run_sub(authors, " Xuetao Lei", "Xuetao Lei")
+k = [i for i, r in enumerate(authors.runs) if r.text == "Jun Qu"][0]
+assert authors.runs[k - 1].text == ","
+authors.runs[k - 1].text = ", "
+# authors' contributions: the first author's initials lost a letter; CRediT role names; spacing
+(contrib,) = [ps[i + 1] for i, p in enumerate(ps) if p.text.strip() in ("Authors’ contributions", "Authors' contributions")]
+assert contrib.runs[0].text == "L."
+contrib.runs[0].text = "W.L."
+run_sub(contrib, " Z.Y.", "Z.Y.")
+for r in contrib.runs:
+    r.text = (r.text.replace("Writing- original draft", "Writing – original draft")
+              .replace("Writing-original draft", "Writing – original draft")
+              .replace("Writing-review & editing", "Writing – review & editing"))
+(fund,) = [ps[i + 1] for i, p in enumerate(ps) if p.text.strip() == "Funding"]
+run_sub(fund, "Hospital  (", "Hospital (")
+(fig4ac,) = [p for p in ps if "(Fig. 4a,c)" in p.text]
+run_sub(fig4ac, "Fig. 4a,c", "Fig. 4a, c")
+
+# American spelling in the text (reference titles keep their published spelling)
+US = {"favourable": "favorable", "favoured": "favored", "centred": "centered", "centre": "center",
+      "standardisation": "standardization", "standardised": "standardized", "modelled": "modeled",
+      "tumour": "tumor"}
+rx_us = re.compile(r"\b(" + "|".join(US) + r")\b")
+texts = [p.text for p in ps]
+r0, r1 = texts.index("References"), texts.index("Figure titles and legends")
+cells = [cp for tb in d.tables for row in tb.rows for c in row.cells for cp in c.paragraphs]
+for p in [p for i, p in enumerate(ps) if not r0 < i < r1] + cells:
+    for r in p.runs:
+        if rx_us.search(r.text):
+            r.text = rx_us.sub(lambda m: US[m.group(1)], r.text)
+
+# abbreviations used in formulas and figures but not listed
+(abbr,) = [ps[i + 1] for i, p in enumerate(ps) if p.text.strip() == "Abbreviations"]
+lines = [l for l in abbr.text.split("\n") if l.strip()]
+lines += ["C-index: concordance index", "pCR: pathological complete response", "PFS: progression-free survival"]
+assert len(abbr.runs) == 1
+abbr.runs[0].text = "\n".join(sorted(set(lines), key=str.lower))
 
 # embedded figures: drop each drawing, and its paragraph when nothing else is in it
 for dr in list(d.element.body.iter(qn("w:drawing"))):

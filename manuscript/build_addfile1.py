@@ -165,6 +165,12 @@ for el in (blank, img_t, leg_t):
 for i in DROP:
     E[i].getparent().remove(E[i])
 
+# American spelling, as in the manuscript
+for p in d.paragraphs:
+    for r in p.runs:
+        if re.search(r"\bcentre|\bcentred\b", r.text):
+            r.text = re.sub(r"\bcentred\b", "centered", re.sub(r"\bcentre\b", "center", r.text))
+
 # the images of the deleted figures are still related to the document part; drop them
 body_xml = d.element.xml
 for rid, rel in list(d.part.rels.items()):
