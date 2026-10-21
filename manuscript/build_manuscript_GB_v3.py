@@ -6,10 +6,15 @@ The analysis code is released as a public repository holding exactly Additional 
 earlier immunoTriage-paper repository (which also holds the separate paper's analyses) and the
 immunoTriage R package (which this paper's code does not call) are no longer cited. Reference 99
 was cited only here and is the last reference, so no renumbering is needed.
+
+The figure-legend section also carried the GM figures as embedded images (old Figs 1-8, including the
+old Fig. 2 with its triage rings and old Figs 7-8 of the separate paper, and no Fig. 4). Figures are
+uploaded as separate files, so every embedded image goes and the legends stay.
 """
 import sys
 
 import docx
+from docx.oxml.ns import qn
 
 SRC, OUT = sys.argv[1:3]
 REPO = "https://github.com/drgengtaiye/signature-decoy-fdr"
@@ -36,8 +41,21 @@ set_text(r98, f"98. signature-decoy-fdr: analysis code for this study. {REPO}. A
 (r99,) = find("99. immunoTriage")
 r99._p.getparent().remove(r99._p)
 
+# embedded figures: drop each drawing, and its paragraph when nothing else is in it
+for dr in list(d.element.body.iter(qn("w:drawing"))):
+    p = next(a for a in dr.iterancestors() if a.tag == qn("w:p"))
+    run = dr.getparent()
+    run.remove(dr)
+    if not "".join(t.text or "" for t in p.iter(qn("w:t"))).strip() and not list(p.iter(qn("w:drawing"))):
+        p.getparent().remove(p)
+for rid, rel in list(d.part.rels.items()):
+    if rel.reltype.endswith("/image"):
+        d.part.drop_rel(rid)
+
 d.save(OUT)
 d2 = docx.Document(OUT)
+assert not list(d2.element.body.iter(qn("w:drawing"))), "embedded image left"
+assert not [r for r in d2.part.rels.values() if r.reltype.endswith("/image")], "image part left"
 txt = "\n".join(p.text for p in d2.paragraphs)
 assert "[99]" not in txt and "dryichen" not in txt and "immunoTriage" not in txt, "residual"
 print("saved", OUT)

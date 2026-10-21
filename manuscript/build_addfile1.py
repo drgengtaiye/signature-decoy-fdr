@@ -165,6 +165,12 @@ for el in (blank, img_t, leg_t):
 for i in DROP:
     E[i].getparent().remove(E[i])
 
+# the images of the deleted figures are still related to the document part; drop them
+body_xml = d.element.xml
+for rid, rel in list(d.part.rels.items()):
+    if rel.reltype.endswith("/image") and f'r:embed="{rid}"' not in body_xml:
+        d.part.drop_rel(rid)                   # unreferenced only (drop_rel would also drop a count of 1)
+
 OUT.mkdir(parents=True, exist_ok=True)
 out = OUT / "Additional_file_1_Notes_and_Figures.docx"
 d.save(out)
