@@ -1,26 +1,43 @@
 # signature-decoy-fdr
 
-Analysis code for **Matched decoy modules give immune gene-expression signatures a false discovery rate**
-(manuscript under review).
+Code for **Matched decoy modules estimate the false discovery rate of claims about gene-expression signatures**.
 
-52 published immune gene-expression signatures are each compared with random gene sets matched on
-size and scoring engine, in 12 checkpoint-treated cohorts and 20 TCGA cancer types. 2,912 decoy
-modules, grown from genes in no published signature and matched to each signature on size, engine,
-expression level and internal co-expression, then attach a false discovery rate to the library's
-claims.
+A claim that so many signatures of a library predict an outcome can carry a false discovery rate. Each signature
+receives decoy modules of genes in no signature, matched to it on size, scoring engine, expression level and
+internal co-expression in every cohort; signatures and decoys pass through the identical test against random gene
+sets of the signature's size and engine, and the decoys' call rate estimates the false calls.
 
-This repository holds the same files as Additional file 3 of the article. `README.txt` describes
-the layout and the order in which the scripts run. The scripts carry the absolute paths of the HPC
-system they were run on; set the data root at the top of each script (and `D` in
-`scripts/v4kit.py`) before running elsewhere. All input data are public; the article's data
-availability statement lists the sources.
+## The package
+
+`decoyfdr/` is an installable R package implementing the procedure: cohort preparation, five scoring engines, matched
+null banks, decoy growth in several independent sets, the call rule, the estimate (and its pi0-corrected form) with
+target or cluster bootstraps, and the calibration of the estimate under permuted outcomes.
+
+```r
+install.packages("remotes")
+remotes::install_github("drgengtaiye/signature-decoy-fdr", subdir = "decoyfdr")
+```
+
+It needs only Rcpp and matrixStats (and a C++ compiler); GSVA from Bioconductor is needed for the GSVA and ssGSEA
+engines.
+
+See `decoyfdr/README.md` and the vignette. Its tests reproduce the response-benchmark calls and estimates of the
+paper from the stored per-cohort statistics.
+
+## The analyses
 
 | Folder | Contents |
 |---|---|
-| `scripts/` | benchmarks, dependence, randomized-trial analyses and figures |
-| `decoys/` | the target-decoy calibration |
-| `trials/` | treatment-interaction models and the no-interaction simulation |
-| `validation/` | deposited analysis plans with their SHA-256 hashes, the GEO search, I-SPY2, the seven registered cohorts of tests A and B |
-| `manuscript/` | build the manuscript and Additional files |
+| `decoyfdr/` | the R package |
+| `applications/` | the package run on the 12 response cohorts, on 20 TCGA cancer types, on breast cancer cohorts and on the MSigDB Hallmark library |
+| `breast/` | download and preparation of the breast cancer cohorts and the Venet et al. signature library |
+| `scripts/` | the response and prognostic benchmarks, the dependence between signatures, figures |
+| `decoys/` | the target-decoy estimate on the response benchmark and its calibration (global null, planted signal, intervals) |
+| `validation/` | the analysis plans with their SHA-256 hashes, and the provenance of the immune and breast signatures |
 
-License: MIT (see `LICENSE`).
+`README.txt` gives the order in which the scripts run. The analysis scripts carry the absolute paths of the system
+they were run on: lay out the inputs listed in `INPUTS.csv` under a local root and run
+`python scripts/set_root.py /path/to/root` to rewrite them. `ENVIRONMENT.txt` lists the software versions used. All
+input data are public.
+
+License: MIT (see `LICENSE`). Citation metadata: `CITATION.cff`.

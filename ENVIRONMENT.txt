@@ -1,0 +1,15 @@
+Software used for the analyses (one HPC system, Linux, R and Python as below)
+
+R 4.5.2 (2025-10-31)
+  decoyfdr 0.2.0        this repository (decoyfdr/); frozen installs were used for every run
+  GSVA 2.4.4            gsvaParam / ssgseaParam scoring of every signature and null set
+  Rcpp 1.1.2, matrixStats 1.5.0, RSpectra 0.16.2
+  MultiAssayExperiment 1.36.1, SummarizedExperiment 1.40.0   ORCESTRA clinical_icb objects
+  survival 3.8.3        concordance, reverse Kaplan-Meier (planted survival signal)
+  msigdbr 26.1.0        MSigDB 2026.1.Hs gene sets
+  jsonlite 2.0.0        score-store metadata (decoys/v10_store_json.R)
+
+Python 3.14.0
+  numpy 2.3.5, scipy 1.17.1 (the exact Wilcoxon signed-rank P values follow scipy 1.17's handling of ties and zeros)
+  pandas 2.3.3, statsmodels 0.14.6
+  matplotlib 3.11.0 (figures), openpyxl 3.1.5

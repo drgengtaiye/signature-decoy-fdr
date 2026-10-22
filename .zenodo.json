@@ -1,0 +1,8 @@
+{
+  "title": "signature-decoy-fdr: matched decoy modules for the false discovery rate of claims about gene-expression signatures",
+  "upload_type": "software",
+  "description": "The R package decoyfdr and the analysis code for the paper \"Matched decoy modules estimate the false discovery rate of claims about gene-expression signatures\".",
+  "creators": [{"name": "Ye, Gengtai"}],
+  "license": "MIT",
+  "keywords": ["gene-expression signature", "false discovery rate", "target-decoy", "R package"]
+}

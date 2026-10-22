@@ -1,0 +1,23 @@
+Package: decoyfdr
+Type: Package
+Title: Matched Decoy Modules for False Discovery Rates of Gene-Expression Signature Libraries
+Version: 0.2.1
+Authors@R: person("Gengtai", "Ye", role = c("aut", "cre"),
+    email = "337516242+drgengtaiye@users.noreply.github.com")
+Description: Estimates the false discovery rate of a claim about a library of gene-expression
+    signatures, such as "k of these signatures predict the outcome", with the target-decoy design of
+    peptide identification. Each signature (target) receives decoy modules of genes in no signature,
+    matched to it on size, scoring engine, expression level and internal co-expression in every cohort;
+    targets and decoys go through the identical test against size- and engine-matched random gene sets,
+    and the decoys' call rate estimates how many target calls are false. The package also calibrates the
+    estimate under the global null by permuting outcomes within cohorts.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 4.2)
+Imports: Rcpp, stats, matrixStats, parallel
+LinkingTo: Rcpp
+Suggests: GSVA, RSpectra, survival, testthat (>= 3.0.0), knitr, rmarkdown
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+RoxygenNote: 7.3.3
+URL: https://github.com/drgengtaiye/signature-decoy-fdr

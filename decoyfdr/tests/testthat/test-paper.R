@@ -1,0 +1,10 @@
+test_that("the paper's response-benchmark calls and FDRs are reproduced from its stored statistics", {
+  U <- read.csv(system.file("extdata", "response_units_N0.csv.gz", package = "decoyfdr"))
+  C <- call_units(U)
+  expect_equal(sum(C$call[C$kind == "target" & C$stat == "fold"]), 21)
+  expect_equal(sum(C$call[C$kind == "target" & C$stat == "dir"]), 27)
+  f <- decoy_fdr(C, "fold", "coexA", B = 200)
+  d <- decoy_fdr(C, "dir", "coexA", B = 200)
+  expect_equal(f$fdr, 100 * 3.625 / 21, tolerance = 1e-12)
+  expect_equal(round(d$fdr, 4), 7.4448)
+})

@@ -1,0 +1,52 @@
+---
+title: "decoyfdr: a worked example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{decoyfdr: a worked example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+Six simulated cohorts share two co-expressed programs: genes 1-40 drive response, genes 101-300 do not. Two
+signatures cover the first program; a third samples the second, and a fourth is noise.
+
+```{r}
+library(decoyfdr)
+set.seed(1)
+genes <- sprintf("G%03d", 1:400)
+cohorts <- lapply(1:6, function(i) {
+  f <- rnorm(60)
+  X <- matrix(rnorm(400 * 60), 400, 60, dimnames = list(genes, sprintf("c%d_%02d", i, 1:60)))
+  X[1:40, ] <- X[1:40, ] + matrix(f, 40, 60, byrow = TRUE)
+  X[101:300, ] <- X[101:300, ] + matrix(rnorm(60), 200, 60, byrow = TRUE)
+  y <- rbinom(60, 1, plogis(1.2 * f)); names(y) <- colnames(X)
+  dfdr_cohort(X + 5, y, name = paste0("C", i))
+})
+lib <- dfdr_library(list(prog_a = genes[1:20], prog_b = genes[21:40], other = genes[101:115],
+                         noise = genes[320:340]),
+                    engine = "mean", direction = c(prog_a = 1, prog_b = 1, other = 1, noise = 1))
+res <- run_decoy_fdr(cohorts, lib, n_coex = 8, n_rand = 2, n_sets = 3, n_draw = 200, keep_draws = 100, seed = 7, B = 500)
+res$decoys$info[res$decoys$info$class == "coex", c("target", "r_target_med", "r_achieved_med")][c(1, 9, 17, 25), ]
+res
+subset(res$calls, kind == "target")
+```
+
+The two signatures of the response program are called. Their co-expressed decoys, grown from genes in no
+signature, take their co-expression from the unrelated program and are not called, so the estimated FDR is low.
+The estimate pools three independent decoy sets here (the default is ten, as in the paper); `fdr_set_min` and
+`fdr_set_max` give the range of the per-set estimates. The plain estimate sums the decoy call rate over every
+target, true ones included, so it is the estimate with pi0 = 1; `fdr_pi0` multiplies it by the share of targets
+whose statistic does not stand out from their own decoys':
+
+```{r}
+res$fdr[, c("stat", "class", "called", "fdr", "fdr_lo", "fdr_hi", "fdr_set_min", "fdr_set_max", "pi0", "fdr_pi0")]
+```
+Under permuted outcomes every call is false, and the decoys estimate how many there are:
+
+```{r}
+calibrate_null(res$fit, B = 100, seed = 8)$summary
+```

@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+# manuscript builders are kept outside the public repository
+manuscript/

@@ -13,6 +13,8 @@ from scipy.stats import norm
 D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
 S = pd.read_csv(f"{D}/cf_cohort_stats.csv").set_index("cohort")
 N = pd.read_csv(f"{D}/native_response_matched_v2.csv")
+if "null_signed" in N:                    # v10: model the unsigned ladder rungs, as drawn
+    N = N.assign(**{c: N[c.replace("rand_", "ladder_")] for c in ["rand_med", "rand_p95", "rand_mean", "rand_sd"]})
 R = N.drop_duplicates(["cohort", "engine", "null_size"])[
     ["cohort", "engine", "null_size", "rand_med", "rand_p95", "rand_mean", "rand_sd"]].copy()
 R = R[R.cohort.isin(S.index)].reset_index(drop=True)

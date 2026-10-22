@@ -1,0 +1,11 @@
+path_under_root,content,source
+icb/ICB_<cohort>.rds,ORCESTRA clinical_icb cohorts as MultiAssayExperiment objects (the 12 response cohorts and ICB_VanDenEnde),"ORCESTRA clinical_icb collection, https://orcestra.ca (Zenodo deposits listed there)"
+icb/SignatureSets-main/data-raw/IO/<signature>.csv,Gene identifiers and weights of the 59 curated immune-oncology signatures,"bhklab/SignatureSets, https://github.com/bhklab/SignatureSets"
+icb/sig_methods_clean.csv,"Signature, scoring method, declared association and PMID (the signature and method columns of the curation's sig_methods.csv, read without its free-text column)",bhklab/SignatureSets
+pancan/expr/<cancer>.gz,TCGA gene expression per cancer type (20 types with at least 80 primary tumors and 25 events),"UCSC Xena, TCGA Pan-Cancer"
+pancan/Survival_SupplementalTable_S1_20171025_xena_sp,"TCGA Clinical Data Resource endpoints (OS, DSS, PFI)",UCSC Xena; Liu et al. Cell 2018
+breast/download_venet/ploscb-venet-dumont-detours/data/*.Rda,Venet et al. 2011 Dataset S1: the 48 breast-cancer signature sets (signatures.Rda) and the NKI and Loi (GSE6532) expression with outcome; parsed without R by breast/prep_breast_cohorts.py,"PLoS Comput Biol 7:e1002240, supporting file journal.pcbi.1002240.s001"
+breast/download_geo/<GSE>/*,"Series matrices and platform annotation of GSE7390, GSE11121, GSE1456, GSE4922, GSE20685, GSE21653, GSE42568, GSE17705 and GSE96058 (and of the series checked and not included: GSE2034, GSE2990, GSE3494, GSE12093, GSE6532)",GEO
+breast/download_metabric/*,METABRIC expression (data_mrna_illumina_microarray.txt) and clinical files,"cBioPortal datahub, study brca_metabric"
+pancan/expr/BRCA.gz,"TCGA-BRCA expression, also used as a breast cohort","UCSC Xena, TCGA Pan-Cancer"
+(R package msigdbr 26.1.0),"MSigDB 2026.1.Hs: Hallmark, C2 canonical pathways and C5 GO biological process gene sets (applications/v12_hallmark.R, decoys/v12_tcga_planted.R)","CRAN msigdbr with msigdbdf; MSigDB, https://www.gsea-msigdb.org"
