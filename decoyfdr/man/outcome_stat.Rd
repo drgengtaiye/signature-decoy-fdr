@@ -11,6 +11,14 @@ outcome_stat(cohort, S)
 
 \item{S}{score matrix, rows = scores, columns = the cohort's samples.}
 }
+\value{
+A numeric vector, one signed statistic per row of `S`.
+}
 \description{
 AUC for a binary outcome, Harrell's C (larger score, longer survival) for survival.
+}
+\examples{
+set.seed(1)
+toy <- dfdr_toy(n_cohorts = 1)
+outcome_stat(toy$cohorts[[1]], score_library(toy$cohorts[[1]], toy$lib))
 }

@@ -5,13 +5,32 @@
 #' of every gene (deciles of the gene means within the cohort).
 #'
 #' @param expr numeric matrix, genes in rows (row names are gene identifiers), samples in columns
-#'   (column names are sample identifiers).
+#'   (column names are sample identifiers); or a `SummarizedExperiment`, whose assay `assay` is used and
+#'   whose `colData` holds the outcome.
 #' @param outcome either a 0/1 vector (1 = responder or favorable class) or a data frame / matrix with
-#'   columns `time` and `event` (1 = event). Named by sample, or in the column order of `expr`.
+#'   columns `time` and `event` (1 = event). Named by sample, or in the column order of `expr`. With a
+#'   `SummarizedExperiment`, the name of a 0/1 `colData` column, or a named character vector
+#'   `c(time = ..., event = ...)` naming the survival columns.
 #' @param name cohort name.
+#' @param assay with a `SummarizedExperiment`, the assay to use (name or index).
 #' @return An object of class `dfdr_cohort`.
+#' @examples
+#' set.seed(1)
+#' expr <- matrix(rnorm(200 * 30), 200, 30, dimnames = list(paste0("g", 1:200), paste0("s", 1:30)))
+#' dfdr_cohort(expr, stats::setNames(rep(0:1, 15), colnames(expr)), name = "toy")
 #' @export
-dfdr_cohort <- function(expr, outcome, name = "cohort") {
+dfdr_cohort <- function(expr, outcome, name = "cohort", assay = 1) {
+  if (inherits(expr, "SummarizedExperiment")) {
+    if (!requireNamespace("SummarizedExperiment", quietly = TRUE)) stop("SummarizedExperiment is not installed")
+    cd <- as.data.frame(SummarizedExperiment::colData(expr))
+    if (is.character(outcome) && length(outcome) == 1) {
+      outcome <- stats::setNames(cd[[outcome]], colnames(expr))
+    } else if (is.character(outcome) && all(c("time", "event") %in% names(outcome))) {
+      outcome <- data.frame(time = cd[[outcome[["time"]]]], event = cd[[outcome[["event"]]]],
+                            row.names = colnames(expr))
+    } else stop("with a SummarizedExperiment, outcome names a colData column or c(time = , event = ) columns")
+    expr <- SummarizedExperiment::assay(expr, assay)
+  }
   expr <- as.matrix(expr)
   if (is.null(rownames(expr)) || is.null(colnames(expr))) stop("expr needs row and column names")
   if (is.data.frame(outcome) || is.matrix(outcome)) {
@@ -58,6 +77,11 @@ print.dfdr_cohort <- function(x, ...) {
 #' permuted together), which makes every score null.
 #' @param cohort a `dfdr_cohort`.
 #' @param perm a permutation of `seq_len(cohort$n)`; random if omitted.
+#' @return The `dfdr_cohort` with its outcome permuted.
+#' @examples
+#' set.seed(1)
+#' toy <- dfdr_toy(n_cohorts = 1)
+#' permute_outcome(toy$cohorts[[1]], perm = rev(seq_len(toy$cohorts[[1]]$n)))
 #' @export
 permute_outcome <- function(cohort, perm = sample.int(cohort$n)) {
   if (cohort$type == "binary") cohort$y <- cohort$y[perm] else {
@@ -70,6 +94,11 @@ permute_outcome <- function(cohort, perm = sample.int(cohort$n)) {
 #' AUC for a binary outcome, Harrell's C (larger score, longer survival) for survival.
 #' @param cohort a `dfdr_cohort`.
 #' @param S score matrix, rows = scores, columns = the cohort's samples.
+#' @return A numeric vector, one signed statistic per row of `S`.
+#' @examples
+#' set.seed(1)
+#' toy <- dfdr_toy(n_cohorts = 1)
+#' outcome_stat(toy$cohorts[[1]], score_library(toy$cohorts[[1]], toy$lib))
 #' @export
 outcome_stat <- function(cohort, S) {
   if (cohort$type == "binary") auc_rows(S, cohort$y) else cindex_rows(S, cohort$time, cohort$event)

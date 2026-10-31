@@ -28,3 +28,7 @@ One row per target: its median delta, its Wilcoxon P and call, the number of its
 \description{
 Where each target sits among its own decoys
 }
+\examples{
+U <- read.csv(system.file("extdata", "response_units_N0.csv.gz", package = "decoyfdr"))
+head(target_vs_decoys(call_units(U), "fold", "coexA"))
+}

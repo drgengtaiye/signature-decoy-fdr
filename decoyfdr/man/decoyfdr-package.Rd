@@ -13,6 +13,7 @@ estimate under the global null. See `vignette("decoyfdr")`.
 Useful links:
 \itemize{
   \item \url{https://github.com/drgengtaiye/signature-decoy-fdr}
+  \item Report bugs at \url{https://github.com/drgengtaiye/signature-decoy-fdr/issues}
 }
 
 }

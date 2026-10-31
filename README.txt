@@ -63,11 +63,15 @@ Run order (each step reads the outputs of the steps before it)
    library. decoys/v12_call_truth.py signal <0-7> | null reads the response planted signal against the
    call-probability truth and adds the pi0-corrected estimate and the coverage of the intervals;
    decoys/v12_tcga_planted.R <0-5> plants survival signal with new causal gene sets in TCGA; v12_truth_summary.py
-   summarizes both.
-6  Figures (validation/PLAN_round8_figure_displays.md and its four amendments: the descriptive displays added last).
+   summarizes both. decoys/v14_standard_fdr.py sets the decoy estimate beside the nominal (Benjamini-Hochberg,
+   Storey) and permutation (SAM-type) estimates of the same calls, from the stored outputs of this step
+   (validation/PLAN_round9_standard_fdr_comparison.md; icb/v14_standard/).
+6  Figures (validation/PLAN_round8_figure_displays.md and its four amendments: the descriptive displays added last;
+   Figure 5c, j and Additional file 1 Fig. S2: validation/PLAN_round9_standard_fdr_comparison.md).
    figprep_example.py, figprep_r.R, figprep_roc.py and figprep_km.R write the data of the example panels
    (icb/v13_fig/); cns.py holds the shared style and cns10.py its palette and the forms of the last redraw. Figure 1
    scripts/fig1.py; Figure 2 fig2.py; Figure 3 fig3.py; Figure 4 fig4.py; Figure 5 fig5.py; Figure 6 fig6.py; Figure 7
-   fig7.py. Additional file 1: python run_restyled.py figS1.py (which also draws the figure set's earlier Figure 4,
-   not used) and figS2.py to figS6.py; run_restyled.py applies the palette of cns10.py (fig67_lib.py, figstyle.py and
-   v4kit.py are their shared panels and style).
+   fig7.py. Additional file 1: python figS2.py; python run_restyled.py figS1.py (which also draws the figure set's
+   earlier Figure 4, not used) and figS3.py to figS7.py, whose scripts save under their earlier names (FigS2_calib to
+   FigS6_scale); run_restyled.py applies the palette of cns10.py (fig67_lib.py, figstyle.py and v4kit.py are their
+   shared panels and style).

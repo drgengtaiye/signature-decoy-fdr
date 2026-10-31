@@ -30,3 +30,9 @@ non-responder (ties one half). `cindex_rows()` gives Harrell's C with a larger s
 survival, with the conventions of `survival::concordance()`. Both equal 0.5 for an uninformative score;
 a statistic below 0.5 means the score runs the other way. `fold()` maps a statistic to `max(s, 1 - s)`.
 }
+\examples{
+S <- rbind(a = c(1, 2, 3, 4, 5, 6), b = c(6, 1, 5, 2, 4, 3))
+auc_rows(S, c(0, 0, 0, 1, 1, 1))
+fold(auc_rows(S, c(0, 0, 0, 1, 1, 1)))
+cindex_rows(S, time = c(5, 4, 6, 2, 1, 3), event = c(1, 1, 0, 1, 1, 1))
+}

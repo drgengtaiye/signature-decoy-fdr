@@ -9,6 +9,11 @@
 #' @param y 0/1 vector of length `ncol(S)` (1 = responder, or the favorable class).
 #' @param time,event survival time and event indicator (1 = event), of length `ncol(S)`.
 #' @return A numeric vector with one value per row of `S`.
+#' @examples
+#' S <- rbind(a = c(1, 2, 3, 4, 5, 6), b = c(6, 1, 5, 2, 4, 3))
+#' auc_rows(S, c(0, 0, 0, 1, 1, 1))
+#' fold(auc_rows(S, c(0, 0, 0, 1, 1, 1)))
+#' cindex_rows(S, time = c(5, 4, 6, 2, 1, 3), event = c(1, 1, 0, 1, 1, 1))
 #' @export
 auc_rows <- function(S, y) {
   S <- as_row_matrix(S)
@@ -51,6 +56,9 @@ as_row_matrix <- function(S) {
 #' @param D numeric matrix, units in columns, cohorts in rows (or a vector for one unit).
 #' @param max_exact largest number of non-zero differences for the exact distributions.
 #' @return A vector of P values, one per column.
+#' @examples
+#' D <- cbind(up = c(0.04, 0.02, 0.05, 0.01, 0.03, 0.06), none = c(0.02, -0.03, 0.01, -0.01, 0.04, -0.02))
+#' signed_rank_p(D)
 #' @export
 signed_rank_p <- function(D, max_exact = 20L) {
   if (is.null(dim(D))) D <- matrix(D, ncol = 1L)

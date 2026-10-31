@@ -112,3 +112,18 @@ test_that("the estimate pooled over sets is the mean of the per-set estimates, a
     rbind(tg, sib) }))
   expect_gt(decoy_fdr(fake, "fold", "coex", B = 2)$pi0, 0.7)
 })
+
+test_that("a SummarizedExperiment gives the same cohort as its matrix and colData", {
+  skip_if_not_installed("SummarizedExperiment")
+  set.seed(3)
+  expr <- matrix(rnorm(100 * 24), 100, 24, dimnames = list(paste0("g", 1:100), paste0("s", 1:24)))
+  cd <- data.frame(resp = rep(0:1, 12), os = rexp(24), dead = rbinom(24, 1, 0.6), row.names = colnames(expr))
+  se <- SummarizedExperiment::SummarizedExperiment(assays = list(expr = expr), colData = cd)
+  a <- dfdr_cohort(se, "resp", name = "x")
+  b <- dfdr_cohort(expr, stats::setNames(cd$resp, rownames(cd)), name = "x")
+  expect_identical(a, b)
+  s1 <- dfdr_cohort(se, c(time = "os", event = "dead"), name = "y")
+  s2 <- dfdr_cohort(expr, data.frame(time = cd$os, event = cd$dead, row.names = rownames(cd)), name = "y")
+  expect_identical(s1, s2)
+  expect_error(dfdr_cohort(se, 1:24), "colData")
+})

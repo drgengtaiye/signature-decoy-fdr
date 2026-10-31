@@ -62,3 +62,8 @@ whose mean correlation with the genes already chosen lies within `tol` of the be
 target's own mean pairwise correlation, the match being the root mean square over cohorts. This is the
 seed-and-grow of the accompanying paper (calib_decoys_v3.R).
 }
+\examples{
+set.seed(1)
+toy <- dfdr_toy()
+grow_decoys(toy$cohorts, toy$lib, n_coex = 4, n_rand = 1, seed = 1)
+}

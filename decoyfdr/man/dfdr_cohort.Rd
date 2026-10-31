@@ -4,16 +4,21 @@
 \alias{dfdr_cohort}
 \title{Prepare one cohort}
 \usage{
-dfdr_cohort(expr, outcome, name = "cohort")
+dfdr_cohort(expr, outcome, name = "cohort", assay = 1)
 }
 \arguments{
 \item{expr}{numeric matrix, genes in rows (row names are gene identifiers), samples in columns
-(column names are sample identifiers).}
+(column names are sample identifiers); or a `SummarizedExperiment`, whose assay `assay` is used and
+whose `colData` holds the outcome.}
 
 \item{outcome}{either a 0/1 vector (1 = responder or favorable class) or a data frame / matrix with
-columns `time` and `event` (1 = event). Named by sample, or in the column order of `expr`.}
+columns `time` and `event` (1 = event). Named by sample, or in the column order of `expr`. With a
+`SummarizedExperiment`, the name of a 0/1 `colData` column, or a named character vector
+`c(time = ..., event = ...)` naming the survival columns.}
 
 \item{name}{cohort name.}
+
+\item{assay}{with a `SummarizedExperiment`, the assay to use (name or index).}
 }
 \value{
 An object of class `dfdr_cohort`.
@@ -22,4 +27,9 @@ An object of class `dfdr_cohort`.
 Keeps the samples that have an outcome, the genes that are finite and non-constant across them (the
 first row of a duplicated gene identifier), and computes gene-wise z-scores and the expression decile
 of every gene (deciles of the gene means within the cohort).
+}
+\examples{
+set.seed(1)
+expr <- matrix(rnorm(200 * 30), 200, 30, dimnames = list(paste0("g", 1:200), paste0("s", 1:30)))
+dfdr_cohort(expr, stats::setNames(rep(0:1, 15), colnames(expr)), name = "toy")
 }

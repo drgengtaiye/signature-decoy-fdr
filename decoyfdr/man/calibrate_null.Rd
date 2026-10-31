@@ -45,3 +45,10 @@ false, and reruns the whole procedure on each permutation from the scores kept b
 the signed-rank calls and the decoy estimate. The ratio of the mean estimated to the mean realized
 number of false calls is 1 for a calibrated estimate.
 }
+\examples{
+set.seed(1)
+toy <- dfdr_toy()
+res <- run_decoy_fdr(toy$cohorts, toy$lib, n_coex = 4, n_rand = 1, n_sets = 1, n_draw = 50,
+                     keep_draws = 25, seed = 3, B = 50)
+calibrate_null(res$fit, B = 20, seed = 4, nboot = 200)$summary
+}

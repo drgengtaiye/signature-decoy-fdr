@@ -24,3 +24,8 @@ Score matrix, sets in rows, the cohort's samples in columns.
 \description{
 Score gene sets in a cohort
 }
+\examples{
+set.seed(1)
+toy <- dfdr_toy(n_cohorts = 1)
+score_sets(toy$cohorts[[1]], toy$lib$sets, "mean")[, 1:4]
+}

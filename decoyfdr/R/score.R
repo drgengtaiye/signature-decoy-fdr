@@ -8,6 +8,9 @@
 #' @param direction optional named vector, +1 when a high score is declared to go with the favorable
 #'   outcome (response, longer survival), -1 for the unfavorable one, NA when nothing is declared.
 #' @return An object of class `dfdr_library`.
+#' @examples
+#' dfdr_library(list(a = c("G1", "G2", "G3"), b = c("G4", "G5", "G6")), engine = "mean",
+#'              direction = c(a = 1, b = -1))
 #' @export
 dfdr_library <- function(sets, engine = "mean", weights = NULL, direction = NULL) {
   if (is.null(names(sets)) || anyDuplicated(names(sets))) stop("sets must be a uniquely named list")
@@ -43,6 +46,10 @@ print.dfdr_library <- function(x, ...) {
 #' @param weights for `"wmean"`: a named list of weight vectors aligned with `sets` (NULL = unit weights).
 #' @param min_genes smallest number of measured genes for a score.
 #' @return Score matrix, sets in rows, the cohort's samples in columns.
+#' @examples
+#' set.seed(1)
+#' toy <- dfdr_toy(n_cohorts = 1)
+#' score_sets(toy$cohorts[[1]], toy$lib$sets, "mean")[, 1:4]
 #' @export
 score_sets <- function(cohort, sets, engine, weights = NULL, min_genes = 3L) {
   stopifnot(length(engine) == 1L)
@@ -78,6 +85,11 @@ score_sets <- function(cohort, sets, engine, weights = NULL, min_genes = 3L) {
 #' Score every set of a library in a cohort, each by its own engine
 #' @param cohort a `dfdr_cohort`.
 #' @param lib a `dfdr_library`.
+#' @return Score matrix, the library's sets in rows, the cohort's samples in columns.
+#' @examples
+#' set.seed(1)
+#' toy <- dfdr_toy(n_cohorts = 1)
+#' score_library(toy$cohorts[[1]], toy$lib)[, 1:4]
 #' @export
 score_library <- function(cohort, lib) {
   out <- matrix(NA_real_, length(lib$sets), cohort$n, dimnames = list(names(lib$sets), cohort$samples))

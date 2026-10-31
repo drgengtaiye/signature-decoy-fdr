@@ -46,3 +46,9 @@ A list of class `dfdr_result`: `decoys`, `fit`, `calls` and `fdr` (one row per s
 Grows decoys ([grow_decoys()]), scores targets, decoys and null banks ([fit_units()]), calls every
 unit ([call_units()]) and estimates the FDR of the library claim for each statistic ([decoy_fdr()]).
 }
+\examples{
+set.seed(1)
+toy <- dfdr_toy()
+res <- run_decoy_fdr(toy$cohorts, toy$lib, n_coex = 4, n_rand = 1, n_sets = 2, n_draw = 50, seed = 3, B = 100)
+res$fdr[, c("stat", "class", "called", "fdr")]
+}

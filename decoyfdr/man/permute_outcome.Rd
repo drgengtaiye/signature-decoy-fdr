@@ -11,7 +11,15 @@ permute_outcome(cohort, perm = sample.int(cohort$n))
 
 \item{perm}{a permutation of `seq_len(cohort$n)`; random if omitted.}
 }
+\value{
+The `dfdr_cohort` with its outcome permuted.
+}
 \description{
 Returns the cohort with its outcome permuted across samples (for survival, (time, event) pairs are
 permuted together), which makes every score null.
+}
+\examples{
+set.seed(1)
+toy <- dfdr_toy(n_cohorts = 1)
+permute_outcome(toy$cohorts[[1]], perm = rev(seq_len(toy$cohorts[[1]]$n)))
 }

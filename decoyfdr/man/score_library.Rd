@@ -11,6 +11,14 @@ score_library(cohort, lib)
 
 \item{lib}{a `dfdr_library`.}
 }
+\value{
+Score matrix, the library's sets in rows, the cohort's samples in columns.
+}
 \description{
 Score every set of a library in a cohort, each by its own engine
+}
+\examples{
+set.seed(1)
+toy <- dfdr_toy(n_cohorts = 1)
+score_library(toy$cohorts[[1]], toy$lib)[, 1:4]
 }

@@ -17,6 +17,12 @@
 #' @return A list: `summary` (per statistic: mean realized and estimated false calls, their ratio with a
 #'   95% interval, and the per-unit call rates of targets and of each decoy class), `per_perm` (R and E for
 #'   every permutation) and `per_target` (each target's call rate and its decoys' mean call rate).
+#' @examples
+#' set.seed(1)
+#' toy <- dfdr_toy()
+#' res <- run_decoy_fdr(toy$cohorts, toy$lib, n_coex = 4, n_rand = 1, n_sets = 1, n_draw = 50,
+#'                      keep_draws = 25, seed = 3, B = 50)
+#' calibrate_null(res$fit, B = 20, seed = 4, nboot = 200)$summary
 #' @export
 calibrate_null <- function(fit, B = 200L, stats = c("fold", "dir"), decoy_class = "coex", alpha = 0.05,
                            min_cohorts = 6L, seed = 1L, cores = 1L, nboot = 2000L) {

@@ -28,6 +28,10 @@
 #' @return An object of class `dfdr_decoys`: a list with `decoys` (one entry per decoy: name, target,
 #'   class `"coex"` or `"rand"`, set, genes, k, engine, dirn, the target's and the achieved internal
 #'   correlation per cohort), `info` (one row per decoy) and `pool`. Decoys are ordered set by set.
+#' @examples
+#' set.seed(1)
+#' toy <- dfdr_toy()
+#' grow_decoys(toy$cohorts, toy$lib, n_coex = 4, n_rand = 1, seed = 1)
 #' @export
 grow_decoys <- function(cohorts, lib, exclude = character(0), n_coex = 32L, n_rand = 8L, n_sets = 1L, tol = 0.02,
                         seed = 1L, cores = 1L, precompute = NULL, max_bytes = 48e9,

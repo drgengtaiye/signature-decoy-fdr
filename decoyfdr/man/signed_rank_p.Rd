@@ -21,3 +21,7 @@ distribution over all sign patterns of the non-zero ranks, for up to `max_exact`
 differences; beyond that, the normal approximation with the tie correction and no continuity
 correction. A column whose differences are all zero gets P = 1.
 }
+\examples{
+D <- cbind(up = c(0.04, 0.02, 0.05, 0.01, 0.03, 0.06), none = c(0.02, -0.03, 0.01, -0.01, 0.04, -0.02))
+signed_rank_p(D)
+}

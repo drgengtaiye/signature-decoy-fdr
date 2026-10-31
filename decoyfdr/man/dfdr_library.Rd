@@ -24,3 +24,7 @@ An object of class `dfdr_library`.
 \description{
 A signature library
 }
+\examples{
+dfdr_library(list(a = c("G1", "G2", "G3"), b = c("G4", "G5", "G6")), engine = "mean",
+             direction = c(a = 1, b = -1))
+}

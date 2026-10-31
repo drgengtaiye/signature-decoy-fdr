@@ -7,14 +7,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 Six simulated cohorts share two co-expressed programs: genes 1-40 drive response, genes 101-300 do not. Two
 signatures cover the first program; a third samples the second, and a fourth is noise.
 
-```{r}
+```{r simulate-and-run}
 library(decoyfdr)
 set.seed(1)
 genes <- sprintf("G%03d", 1:400)
@@ -42,11 +42,15 @@ The estimate pools three independent decoy sets here (the default is ten, as in 
 target, true ones included, so it is the estimate with pi0 = 1; `fdr_pi0` multiplies it by the share of targets
 whose statistic does not stand out from their own decoys':
 
-```{r}
+```{r estimates}
 res$fdr[, c("stat", "class", "called", "fdr", "fdr_lo", "fdr_hi", "fdr_set_min", "fdr_set_max", "pi0", "fdr_pi0")]
 ```
 Under permuted outcomes every call is false, and the decoys estimate how many there are:
 
-```{r}
+```{r global-null}
 calibrate_null(res$fit, B = 100, seed = 8)$summary
+```
+
+```{r session-info}
+sessionInfo()
 ```

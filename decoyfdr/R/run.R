@@ -14,6 +14,11 @@
 #' @param B bootstrap replicates for the FDR interval.
 #' @return A list of class `dfdr_result`: `decoys`, `fit`, `calls` and `fdr` (one row per statistic and
 #'   decoy class).
+#' @examples
+#' set.seed(1)
+#' toy <- dfdr_toy()
+#' res <- run_decoy_fdr(toy$cohorts, toy$lib, n_coex = 4, n_rand = 1, n_sets = 2, n_draw = 50, seed = 3, B = 100)
+#' res$fdr[, c("stat", "class", "called", "fdr")]
 #' @export
 run_decoy_fdr <- function(cohorts, lib, n_coex = 32L, n_rand = 8L, n_sets = 10L, tol = 0.02, exclude = character(0),
                           n_draw = 1000L, keep_draws = 0L, stats = c("fold", "dir"), seed = 1L, cores = 1L,

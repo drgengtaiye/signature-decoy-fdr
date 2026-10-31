@@ -81,6 +81,9 @@ decoy_fdr <- function(calls, stat = "fold", decoy_class = "coex", same_direction
 #' @inheritParams decoy_fdr
 #' @return One row per target: its median delta, its Wilcoxon P and call, the number of its decoys with
 #'   a median delta at least as large, and the decoy-calibrated P `(1 + that number) / (1 + decoys)`.
+#' @examples
+#' U <- read.csv(system.file("extdata", "response_units_N0.csv.gz", package = "decoyfdr"))
+#' head(target_vs_decoys(call_units(U), "fold", "coexA"))
 #' @export
 target_vs_decoys <- function(calls, stat = "fold", decoy_class = "coex", same_direction = FALSE) {
   C <- calls[calls$stat == stat, , drop = FALSE]

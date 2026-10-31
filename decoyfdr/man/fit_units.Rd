@@ -41,3 +41,10 @@ weights, permuted, go to each draw, so weights of both signs are kept); each dec
 target's engine, with its target's weights permuted; and every unit's signed statistic is read
 against its target's bank under the folded and the directed transformation.
 }
+\examples{
+set.seed(1)
+toy <- dfdr_toy()
+dec <- grow_decoys(toy$cohorts, toy$lib, n_coex = 4, n_rand = 1, seed = 1)
+fit <- fit_units(toy$cohorts, toy$lib, dec, n_draw = 50, seed = 2)
+head(fit$units)
+}

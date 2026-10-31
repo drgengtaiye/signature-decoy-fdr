@@ -16,6 +16,12 @@
 #' @return An object of class `dfdr_fit`: `units` (one row per unit and cohort: the signed statistic and
 #'   the folded and directed observed value, bank median and 95th percentile) and, if `keep_draws > 0`,
 #'   the scores needed for calibration.
+#' @examples
+#' set.seed(1)
+#' toy <- dfdr_toy()
+#' dec <- grow_decoys(toy$cohorts, toy$lib, n_coex = 4, n_rand = 1, seed = 1)
+#' fit <- fit_units(toy$cohorts, toy$lib, dec, n_draw = 50, seed = 2)
+#' head(fit$units)
 #' @export
 fit_units <- function(cohorts, lib, decoys, n_draw = 1000L, keep_draws = 0L, seed = 1L, cores = 1L) {
   types <- unique(vapply(cohorts, `[[`, "", "type"))
