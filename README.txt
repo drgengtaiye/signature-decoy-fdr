@@ -78,13 +78,21 @@ Run order (each step reads the outputs of the steps before it)
    prep_validation_cohorts.py is the September 2026 preparation of GSE176307. applications/v16_external.R survival |
    response (run_v16.sbatch) runs the package on the 11 survival cohorts and on GSE176307 (icb/v16_external/);
    decoys/v17_external_replication.py computes the plan's tests from them (icb/v17_external/).
+   Split halves (validation/PLAN_round12_reproducibility_by_type.md, deposited before it was computed, and three
+   amendments: a tie rule, one round-10 cell accepted, and a post hoc bootstrap; AMENDMENT_2's first deposited version
+   is kept as _superseded). applications/v18_split_half.R tcga | external | tcga_boot | external_boot (run_v18.sbatch)
+   splits every TCGA type and independent survival cohort 500 times into halves stratified by event status and
+   bootstraps its patients 200 times, from the per-patient scores of the step-5 TCGA fit and of the independent cohorts
+   (recomputed by the steps of fit_units and checked against step 6); decoys/v18_reproducibility.py computes the
+   reliabilities, the discordance test, the power simulation and the single-signature rates (icb/v18_split/).
 7  Figures (validation/PLAN_round8_figure_displays.md and its four amendments: the descriptive displays added last;
    Figure 5c, j and Additional file 1 Fig. S2: validation/PLAN_round9_standard_fdr_comparison.md; Figure 8:
-   validation/PLAN_round10_content_and_structure.md, and panels f and g validation/PLAN_round11_external_replication.md).
+   validation/PLAN_round10_content_and_structure.md, and panels f and g validation/PLAN_round11_external_replication.md;
+   Additional file 1 Fig. S9: validation/PLAN_round12_reproducibility_by_type.md).
    figprep_example.py, figprep_r.R, figprep_roc.py and figprep_km.R write the data of the example panels
    (icb/v13_fig/); cns.py holds the shared style and cns10.py its palette and the forms of the last redraw. Figure 1
    scripts/fig1.py; Figure 2 fig2.py; Figure 3 fig3.py; Figure 4 fig4.py; Figure 5 fig5.py; Figure 6 fig6.py; Figure 7
    fig7.py; Figure 8 fig8.py. Additional file 1: python figS2.py; python run_restyled.py figS1.py (which also draws the figure set's
    earlier Figure 4, not used) and figS3.py to figS7.py, whose scripts save under their earlier names (FigS2_calib to
-   FigS6_scale); python figS8.py (round 10: single-cohort estimates and libraries); run_restyled.py applies the palette of cns10.py (fig67_lib.py, figstyle.py and v4kit.py are their
+   FigS6_scale); python figS8.py (round 10: single-cohort estimates and libraries); python figS9.py (round 12: split halves); run_restyled.py applies the palette of cns10.py (fig67_lib.py, figstyle.py and v4kit.py are their
    shared panels and style).
