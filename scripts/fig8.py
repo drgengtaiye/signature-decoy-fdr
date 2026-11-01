@@ -1,4 +1,6 @@
-"""Figure 8 (GB v13) - gene content and co-expression structure, by endpoint, family and cancer type
+"""Figure 8 (GB v14: panels f and g now show the independent cohorts of round 11,
+validation/PLAN_round11_external_replication.md; the v13 panels f and g are Additional file 1 Fig. S8, figS8_v14.py)
+Figure 8 (GB v13) - gene content and co-expression structure, by endpoint, family and cancer type
 (validation/PLAN_round10_content_and_structure.md; icb/v15_content from decoys/v15_content_structure.py).
 
 rho(s, c) = the share of a signature's 320 co-expressed decoys whose gain over the null in cohort c lies below its own
@@ -179,44 +181,40 @@ ax.set_xlim(0, 1); ax.set_xticks([0, .5, 1]); K.frame(ax, left=False); ax.set_xl
 K.hlegend(C, 47, 194.6, [(K.INK, "response", "o", True), (K.INK, "survival", "o", False)], size=K.T_SMALL, s=7,
           gap=1.5)
 
-# ================================================================== f  single-cohort estimates
-ax = C.panel("f", 82, 199, 40, 31, head="Single-cohort estimates")
-CAP = 150
-FLAB = {"SKCM": (0.70, 22), "CESC": (0.64, 9), "Gide": (1.06, 27), "SARC": (0.97, 44), "KIRC": (0.157, 158),
-        "LUSC": (0.29, 158), "STAD": (0.23, 127)}
-for k_, mk, col, fill in (("tcga_OS", "o", K.SLATE, False), ("response", "D", K.INK, True)):
-    q = AT[(AT.setting == k_) & (AT.calls > 0)]
-    for _, rr in q.iterrows():
-        y = min(rr.fdr, CAP)
-        K.dots(ax, [rr.rho_inflamed], [y], col, s=4 + 0.45 * rr.calls, filled=fill, marker=mk, z=5)
-        name = K.COHORT.get(rr.cohort, rr.cohort)
-        if name in FLAB:
-            tx, ty = FLAB[name]
-            lead = abs(tx - rr.rho_inflamed) > 0.05 or abs(ty - y) > 10
-            ax.annotate(name, (rr.rho_inflamed, y), (tx, ty), ha="center" if name in ("KIRC", "LUSC", "Gide", "SARC")
-                        else ("left" if tx > rr.rho_inflamed else "right"), va="center", fontsize=4.3, color=K.INK2,
-                        arrowprops=dict(arrowstyle="-", lw=0.35, color=K.INK2, shrinkA=1, shrinkB=2) if lead else None)
-ax.axhline(CAP, color=K.RULE, lw=0.4, ls=(0, (1, 1.5)))
-ax.set_xlim(0.1, 1.12); ax.set_ylim(0, CAP + 14); ax.set_xticks([.25, .5, .75, 1]); ax.set_yticks([0, 50, 100, 150])
-ax.set_yticklabels(["0", "50", "100", "≥150"])
-ax.set_xlabel("mean ρ, inflamed family"); ax.set_ylabel("estimated FDR (%)")
-K.legend(ax, [(K.SLATE, "TCGA type", "o", False), (K.INK, "response cohort", "D", True)], x=0.55, y=0.80, dy=0.085,
-         s=7, size=K.T_SMALL)
+# ================================================================== f  independent cohorts against TCGA (round 11)
+X = K.D + "/icb/v17_external/"
+BT = pd.read_csv(X + "by_type.csv"); PCX = pd.read_csv(X + "per_cohort.csv"); PRX = pd.read_csv(X + "predictions.csv")
+PRI = pd.read_csv(X + "primary.csv").iloc[0]
+ax = C.panel("f", 82, 199, 36, 31, head="Independent cohorts")
+K.ref(ax, 0.5); K.ref(ax, 0.5, axis="v"); K.identity(ax, 0, 1)
+for _, q in BT.iterrows():
+    K.dots(ax, [q.tcga], [q.ext], K.BLUE, s=13, z=5)
+    dy_ = {"CESC": 0.022, "SARC": -0.022}.get(q.type, 0)
+    ax.text(q.tcga + 0.025, q.ext + dy_, q.type, fontsize=4.3, color=K.INK2, va="center", ha="left")
+ax.set_xlim(0, 1.05); ax.set_ylim(0, 1.05); ax.set_xticks([0, .5, 1]); ax.set_yticks([0, .5, 1])
+ax.set_xlabel("inflamed mean ρ, TCGA"); ax.set_ylabel("inflamed mean ρ, independent")
+ax.text(0.97, 0.03, f"Spearman {PRI.spearman:.2f}".replace("-", "\u2212") + f", P = {K.sci(PRI.p_one_sided)}",
+        transform=ax.transAxes, ha="right", va="bottom", fontsize=K.T_SMALL - 0.2, color=K.INK)
 
-# ================================================================== g  libraries
-ax = C.panel("g", 140, 199, 38, 31, head="Libraries")
-LL = {"response": "immune, response", "tcga_OS": "immune, OS", "tcga_DSS": "immune, DSS", "tcga_PFI": "immune, PFI",
-      "breast_pc1_origin_out": "breast, PC1", "breast_mean": "breast, mean z", "hallmark_OS": "Hallmark, OS"}
-OFF = {"response": (4, 0.0), "tcga_OS": (4, 0.008), "tcga_DSS": (4, 0.004), "tcga_PFI": (4, -0.012),
-       "breast_pc1_origin_out": (-4, 0.0), "breast_mean": (-4, 0.0), "hallmark_OS": (4, 0.0)}
-for _, q in LIB[LIB.library.isin(LL)].iterrows():
-    x_, y_ = 100 * q.decoy_clear, q.rho_bar_called
-    K.dots(ax, [x_], [y_], K.INK, s=14, z=5)
-    dx, dy = OFF[q.library]
-    ax.text(x_ + dx * 0.35, y_ + dy, f"{LL[q.library]} {q.fdr_reported:.0f}%", ha="left" if dx > 0 else "right",
-            va="center", fontsize=4.3, color=K.INK2)
-K.ref(ax, 5, axis="v")
-ax.set_xlim(3, 17); ax.set_ylim(0.6, 0.92); ax.set_xticks([5, 10, 15])
-ax.set_xlabel("decoys above the null's 95th pct (%)"); ax.set_ylabel("mean ρ of the called")
-C.save("Figure8_GB13")
-print("Figure8_GB13 | rows", nr, "| contrast", round(p0.contrast_inflamed_minus_confounder, 3))
+# ================================================================== g  each independent cohort, and the response cohort
+ax = C.panel("g", 140, 199, 38, 31, head="Per independent cohort")
+K.legend(ax, [(K.FAM["Inflamed/IFN"], "inflamed"), (K.FAM["Confounder"], "confounder")], x=0.70, y=1.10, dy=0.065, s=6,
+         size=K.T_SMALL - 0.3, xpad=0.03)
+PCX = PCX.sort_values("tcga_rho_inflamed")
+ys = np.arange(len(PCX))
+for y, (_, q) in zip(ys, PCX.iterrows()):
+    for f_, lab_, off in ((K.FAM["Inflamed/IFN"], "inflamed", 0.17), (K.FAM["Confounder"], "confounder", -0.17)):
+        K.hbar_interval(ax, y + off, q[f"rho_{lab_}_lo"], q[f"rho_{lab_}_hi"], K.tint(f_, 0.45), lw=1.0)
+        K.dots(ax, [q[f"rho_{lab_}"]], [y + off], f_, s=8, z=5)
+yr = len(PCX) + 0.6
+for key, f_, off in (("GSE176307 inflamed", K.FAM["Inflamed/IFN"], 0.17), ("GSE176307 confounder", K.FAM["Confounder"], -0.17)):
+    rr = PRX[PRX.test.str.startswith(key)].iloc[0]
+    K.hbar_interval(ax, yr + off, rr.lo, rr.hi, K.tint(f_, 0.45), lw=1.0)
+    K.dots(ax, [rr.estimate], [yr + off], f_, s=9, marker="D", z=5)
+K.ref(ax, 0.5, axis="v")
+ax.set_yticks(list(ys) + [yr])
+ax.set_yticklabels([f"{t} {g}" for t, g in zip(PCX.type, PCX.cohort.str.split("_").str[1])] + ["BLCA GSE176307, response"], fontsize=3.9)
+ax.set_ylim(-0.6, yr + 0.7); ax.set_xlim(0, 1); ax.set_xticks([0, .5, 1]); K.frame(ax, left=False)
+ax.set_xlabel("mean ρ (95% cluster interval)")
+C.save("Figure8_GB14")
+print("Figure8_GB14 | rows", nr, "| contrast", round(p0.contrast_inflamed_minus_confounder, 3))
