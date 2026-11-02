@@ -1,0 +1,3 @@
+count=7663
+ids_returned=7663
+query=(TCGA OR "The Cancer Genome Atlas") AND ("risk score" OR "risk model" OR "prognostic signature" OR "prognostic model") AND ("ovarian cancer") AND (ferroptosis OR cuproptosis OR pyroptosis OR necroptosis OR anoikis OR disulfidptosis OR autophagy OR m6A OR "N6-methyladenosine" OR hypoxia OR glycolysis OR senescence OR "immune-related" OR mitophagy OR "epithelial-mesenchymal") AND "open access"[filter] AND 2019:2025[pdat]

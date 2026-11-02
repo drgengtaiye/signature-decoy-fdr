@@ -1,0 +1,5 @@
+E-utilities esearch, db=gds, retmax=5000, run 2026-11-01:
+(pembrolizumab OR nivolumab OR atezolizumab OR durvalumab OR avelumab OR ipilimumab OR tremelimumab OR camrelizumab OR sintilimab OR tislelizumab OR toripalimab OR "anti-PD-1" OR "anti-PD1" OR "anti-PD-L1" OR "anti-CTLA-4" OR "immune checkpoint" OR "checkpoint blockade" OR "checkpoint inhibitor" OR immunotherapy) AND "Homo sapiens"[Organism] AND gse[Entry Type] AND ("expression profiling by high throughput sequencing"[DataSet Type] OR "expression profiling by array"[DataSet Type])
+Count: 2964. Summaries by esummary (retmode json). Shortlist (geo_filter.py): human, n_samples >= 25, title or summary
+matches a checkpoint agent or checkpoint blockade and a response term; column "neg" lists exclusion words found
+(single-cell, mouse, blood ...), which flag but do not exclude.

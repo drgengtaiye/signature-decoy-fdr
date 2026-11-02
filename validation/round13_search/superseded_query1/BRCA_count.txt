@@ -1,0 +1,11 @@
+count=15889
+ids_returned=15889
+method=esearch caps returned ids at 9999 (retstart>9998 refused), so the identical query was run with the pdat range split into single years 2019..2025 and the union taken; union size equals the full-query count
+2019:2019[pdat] count=327
+2020:2020[pdat] count=951
+2021:2021[pdat] count=2208
+2022:2022[pdat] count=3356
+2023:2023[pdat] count=2720
+2024:2024[pdat] count=2864
+2025:2025[pdat] count=3463
+query=(TCGA OR "The Cancer Genome Atlas") AND ("risk score" OR "risk model" OR "prognostic signature" OR "prognostic model") AND ("breast cancer") AND (ferroptosis OR cuproptosis OR pyroptosis OR necroptosis OR anoikis OR disulfidptosis OR autophagy OR m6A OR "N6-methyladenosine" OR hypoxia OR glycolysis OR senescence OR "immune-related" OR mitophagy OR "epithelial-mesenchymal") AND "open access"[filter] AND 2019:2025[pdat]

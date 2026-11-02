@@ -85,14 +85,28 @@ Run order (each step reads the outputs of the steps before it)
    bootstraps its patients 200 times, from the per-patient scores of the step-5 TCGA fit and of the independent cohorts
    (recomputed by the steps of fit_units and checked against step 6); decoys/v18_reproducibility.py computes the
    reliabilities, the discordance test, the power simulation and the single-signature rates (icb/v18_split/).
-7  Figures (validation/PLAN_round8_figure_displays.md and its four amendments: the descriptive displays added last;
+7  Published prognostic risk models (validation/PLAN_round13_published_risk_models.md with two amendments, deposited
+   before any paper was retrieved and before any model was scored). validation/round13_search/round13_search_amended.py
+   runs the PubMed search and orders the records (search_summary.json, <TYPE>_order.tsv); the screening tables
+   screen_<TYPE>.csv record every record read, with the formula extracted, and second_pass_*.csv the independent
+   re-extraction of a random 22 (compare_second_pass.py). applications/v19_freeze_models.R maps the eligible models'
+   genes to the cohorts' symbols and writes validation/published_models.csv (frozen; SHA-256 in AMENDMENT_2).
+   applications/v19_published_models.R <TYPE> scores each model and its decoys in TCGA and the independent cohort of
+   the type; applications/v19_pipeline.R <TYPE> runs the published pipeline (univariate Cox, LASSO-Cox) on 15 theme
+   gene pools and their decoy pools (run_v19.sbatch; v19_common.R holds the shared pieces); decoys/v19_audit.py gives
+   the estimates (icb/v19_audit/).
+8  Checkpoint cohorts outside the collection (validation/PLAN_round14_new_checkpoint_cohorts.md, deposited before any
+   sample annotation was read): validation/round14_search/ holds the GEO search (query.txt, gds_ids.txt,
+   geo_filter.py, shortlist.csv) and the screen of every candidate (screen.csv); no cohort was eligible and the tests
+   were not run (validation/RESULT_round14_new_checkpoint_cohorts.md).
+9  Figures (validation/PLAN_round8_figure_displays.md and its four amendments: the descriptive displays added last;
    Figure 5c, j and Additional file 1 Fig. S2: validation/PLAN_round9_standard_fdr_comparison.md; Figure 8:
    validation/PLAN_round10_content_and_structure.md, and panels f and g validation/PLAN_round11_external_replication.md;
    Additional file 1 Fig. S9: validation/PLAN_round12_reproducibility_by_type.md).
    figprep_example.py, figprep_r.R, figprep_roc.py and figprep_km.R write the data of the example panels
    (icb/v13_fig/); cns.py holds the shared style and cns10.py its palette and the forms of the last redraw. Figure 1
    scripts/fig1.py; Figure 2 fig2.py; Figure 3 fig3.py; Figure 4 fig4.py; Figure 5 fig5.py; Figure 6 fig6.py; Figure 7
-   fig7.py; Figure 8 fig8.py. Additional file 1: python figS2.py; python run_restyled.py figS1.py (which also draws the figure set's
+   fig7.py; Figure 8 fig8.py; Figure 9 fig9.py (round 13). Additional file 1: python figS2.py; python run_restyled.py figS1.py (which also draws the figure set's
    earlier Figure 4, not used) and figS3.py to figS7.py, whose scripts save under their earlier names (FigS2_calib to
    FigS6_scale); python figS8.py (round 10: single-cohort estimates and libraries); python figS9.py (round 12: split halves); run_restyled.py applies the palette of cns10.py (fig67_lib.py, figstyle.py and v4kit.py are their
    shared panels and style).
