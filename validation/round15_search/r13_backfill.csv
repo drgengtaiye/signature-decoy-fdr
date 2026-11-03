@@ -1,0 +1,295 @@
+type,order_rank,pmcid,trains_tcga_model,validation_used,notes
+STAD,1,PMC9548545,TRUE,,TCGA internal train/test split only
+STAD,2,PMC9858704,TRUE,,splicing-event (PSI) model in TCGA-STAD; no external validation
+STAD,3,PMC11574080,TRUE,,NMG_Score (PCA) derived on TCGA-STAD with GSE84437 analysed alongside; no separate validation of the score found
+STAD,4,PMC9577805,TRUE,GSE84437,
+STAD,5,PMC10878937,TRUE,GSE84433,GSE84437 merged into training
+STAD,6,PMC12160351,TRUE,,multi-omics clustering prognostic model in TCGA-STAD; GSE62254 used for gene-level prognosis screening only
+STAD,7,PMC11276922,TRUE,,TCGA internal split only
+STAD,8,PMC8940523,TRUE,,TCGA internal split only
+STAD,9,PMC9709115,TRUE,GSE84437,
+STAD,10,PMC9239763,TRUE,,TCGA internal split only
+STAD,11,PMC8541751,TRUE,,TCGA internal split only
+STAD,12,PMC11476876,TRUE,GSE84437;GSE62254,GSE102556/GSE80655 are MDD datasets used for the depression score only
+STAD,13,PMC8832759,TRUE,,lncRNA-pair model; TCGA internal split only
+STAD,14,PMC11836380,TRUE,GSE84437,
+STAD,15,PMC11887229,TRUE,,TCGA internal split only
+STAD,16,PMC11276689,FALSE,,"ovarian cancer paper; model trained on TCGA-OV, not STAD"
+STAD,17,PMC10454988,TRUE,,TCGA internal split only; GEO series used for drug resistance DEGs
+STAD,18,PMC8674955,TRUE,GSE62254;GSE84437;GSE14549,IMvigor210 used for immunotherapy response only
+STAD,19,PMC7563367,TRUE,,pan-cancer paper with a STAD-specific immune score trained in TCGA-STAD; STAD score tested only for anti-PD1 response (Kim cohort); judgment call
+STAD,20,PMC11131102,TRUE,GSE66229,
+STAD,21,PMC7937463,TRUE,GSE66229;GSE15459;GSE34942,three GEO series combined as the GEO validation cohort
+STAD,22,PMC11099433,TRUE,GSE84426,GSE99553 used for H. pylori DEGs and diagnostic ROC only
+STAD,23,PMC7641644,TRUE,,GSE84426 used for single target-gene survival only
+STAD,24,PMC8985853,TRUE,,TCGA internal split only
+STAD,25,PMC8923768,TRUE,GSE62254,key genes picked by TCGA Cox coefficients; risk score also evaluated in GSE62254 (also used for gene screening); unclear whether GSE62254 used TCGA coefficients
+STAD,26,PMC10011703,TRUE,,TCGA internal split only
+STAD,27,PMC9318354,TRUE,,TCGA internal split only
+STAD,28,PMC8446556,FALSE,,trained on GSE62254; TCGA not in training
+STAD,29,PMC10226425,TRUE,,"ceRNA panel (lncRNA, miRNA, mRNA) in TCGA-STAD; no external validation"
+STAD,30,PMC8590758,TRUE,,no external validation
+STAD,31,PMC8491937,TRUE,,lncRNA-pair model; paper states no external dataset available
+STAD,32,PMC10232468,TRUE,GSE66229,
+STAD,33,PMC8274920,TRUE,GSE84437,
+STAD,34,PMC11925758,TRUE,GSE15460,"GSE35640, GSE91061, IMvigor210, GSE126044 immunotherapy response only; GSE55696/GSE79973 DE only"
+STAD,35,PMC9515443,TRUE,,TCGA internal split only
+STAD,36,PMC12148105,TRUE,,"GEO series (GSE84437, GSE88770, GSE15459) named as data but no separate prognostic validation of the 8-gene score found; GEO used for immune correlation; uncertain"
+STAD,37,PMC9328384,TRUE,GSE26901;GSE62254;GSE15459;SYSUCC in-house cohort,"melanoma anti-PD1 cohorts (Liu, PRJEB23709, GSE100797) and Kim ICB cohort used for immunotherapy outcome only, excluded"
+SKCM,1,PMC8393813,TRUE,,TCGA internal split only
+SKCM,2,PMC8201078,TRUE,,TCGA internal split only
+SKCM,3,PMC11178724,TRUE,GSE51547,DNA methylation model
+SKCM,4,PMC9238413,FALSE,,"uveal melanoma (TCGA-UVM), not SKCM"
+SKCM,5,PMC12748409,TRUE,GSE65904,IMvigor210 immunotherapy only
+SKCM,6,PMC9487883,TRUE,GSE65904,text also prints GSE65094 (typo); ICGC mentioned only for DEGs
+SKCM,7,PMC10800307,FALSE,,uveal melanoma; trained on GSE22138
+SKCM,8,PMC9354448,TRUE,,TCGA internal split only
+SKCM,9,PMC12114673,TRUE,GSE59455;GSE65904;GSE54467,"DFCI anti-PD1 cohort and GSE35640 MAGE-A3 cohort immunotherapy only, excluded"
+SKCM,10,PMC9632664,TRUE,,"TCGA merged with GSE19234, GSE22153, GSE54467, GSE69504 then split 1:1; validation half is from the merged set"
+SKCM,11,PMC8938586,TRUE,GSE65904,pan-cancer paper with a per-type necroptosis model; SKCM model trained in TCGA-SKCM and tested in GSE65904; judgment call
+SKCM,12,PMC9402914,TRUE,GSE65904,GSE65904 also used to pre-select prognostic genes; IMvigor210 immunotherapy only
+SKCM,13,PMC8184246,TRUE,,lncRNA-pair model; no external validation
+SKCM,14,PMC12174916,TRUE,GSE19234;GSE22153;GSE53118;GSE54467;GSE59455;GSE65904,SurvivalSVM model
+SKCM,15,PMC9598429,TRUE,,no external validation
+SKCM,16,PMC8979066,TRUE,GSE65904,
+SKCM,17,PMC8803850,FALSE,,"uveal melanoma (TCGA-UVM), not SKCM"
+SKCM,18,PMC12050255,TRUE,GSE65904,
+SKCM,19,PMC9048552,TRUE,GSE65904;GSE19234;GSE78220,
+SKCM,20,PMC9941880,TRUE,GSE65904,"TCGA and four GEO series combined by ComBat (781 patients), 70/30 split of 643; GSE65904 called the external validation set; unclear whether it was excluded from training; uncertain"
+SKCM,21,PMC11378888,FALSE,,"uveal melanoma (TCGA-UVM), not SKCM"
+SKCM,22,PMC9372044,FALSE,,LUSC paper (TCGA-LUSC training); GSE78220 melanoma used only as an outside-type validation
+SKCM,23,PMC9309482,TRUE,GSE54467;GSE65904,two GEO series merged as one validation set
+SKCM,24,PMC11874052,TRUE,,no external validation
+SKCM,25,PMC9715341,TRUE,GSE65904,GSE65904 also used to pre-select prognostic genes
+SKCM,26,PMC9006059,FALSE,,"uveal melanoma (TCGA-UVM), not SKCM"
+SKCM,27,PMC9633315,TRUE,GSE65904;GSE22153;GSE22154;GSE46517;GSE54467,"GSE65904 test cohort (DSS, DMFS); four OS series integrated into one validation cohort"
+SKCM,28,PMC9809105,FALSE,,"uveal melanoma (TCGA-UVM), not SKCM"
+SKCM,29,PMC9005314,FALSE,,"uveal melanoma (TCGA-UVM), not SKCM"
+SKCM,30,PMC10424397,TRUE,,no external validation
+SKCM,31,PMC8353259,FALSE,,"uveal melanoma (TCGA-UVM), not SKCM"
+SKCM,32,PMC9845246,TRUE,,GSE15605 and GSE46517 differential expression only
+LUAD,1,PMC9542578,TRUE,,TCGA internal split only
+LUAD,2,PMC11585238,TRUE,GSE31210;GSE50081;GSE30219;GSE37745;GSE68465,"GSE78220, IMvigor210, GSE91061 immunotherapy only"
+LUAD,3,PMC7878883,TRUE,GSE68465;GSE41271;GSE30219,gene-pair model
+LUAD,4,PMC9606618,TRUE,,TCGA internal split only; IMvigor210 for MARCH1 only
+LUAD,5,PMC8100529,TRUE,in-house cohort,"First Affiliated Hospital of Xi'an Jiaotong University cohort (78 LUAD, qRT-PCR)"
+LUAD,6,PMC8606539,TRUE,,TCGA internal split only
+LUAD,7,PMC8184679,TRUE,,no external validation
+LUAD,8,PMC11439862,TRUE,,TCGA internal split only
+LUAD,9,PMC7273488,TRUE,,TCGA internal split only
+LUAD,10,PMC12487532,TRUE,,no external validation
+LUAD,11,PMC9878554,FALSE,,"unsupervised immune subtypes (ssGSEA, K-means) compared for survival; no prognostic model or risk score; judgment call"
+LUAD,12,PMC12554473,TRUE,GSE3141;GSE30219;GSE8894;GSE31210;GSE72094;GSE42127;GSE50081;GSE37745,
+LUAD,13,PMC10483076,TRUE,,TCGA internal split only
+LUAD,14,PMC11848621,TRUE,GSE31210,"in-house Tianjin cohort (31 LUAD) scored for clinical-stage correlation only, no survival"
+LUAD,15,PMC9168189,TRUE,GSE72094;GSE42127,GSE58355 cell-line DEGs only
+LUAD,16,PMC11635229,FALSE,,"pathomics image-feature model predicting TIGIT expression in TCGA-LUAD; inputs are image features, not molecular data; judgment call"
+LUAD,17,PMC12104069,TRUE,GSE13213,GSE131907 single-cell only
+LUAD,18,PMC8966122,TRUE,,"TCGA internal split only; in-house Xi'an cohort used for single-gene survival, not the risk score"
+LUAD,19,PMC11215279,TRUE,in-house cohort,Zhuzhou Central Hospital clinical samples (60 paired LUAD) used as external validation set
+LUAD,20,PMC7297823,TRUE,GSE42127;GSE37745;GSE50081;GSE29013;GSE72094,
+LUAD,21,PMC8735786,TRUE,,no external validation
+LUAD,22,PMC9428519,TRUE,GSE50081;GSE31210,
+LUAD,23,PMC8722539,TRUE,GSE68465,
+LUAD,24,PMC10933528,TRUE,,TCGA internal split only
+LUAD,25,PMC8656114,TRUE,,splicing-event model; no external validation
+LUAD,26,PMC10089852,TRUE,,TCGA internal split only
+LUAD,27,PMC11210241,TRUE,,TCGA internal split only
+LUAD,28,PMC8064222,TRUE,GSE72094;GSE41271,"GSE31908, GSE26939, GSE29013 downloaded but only the two largest used for external validation"
+LUAD,29,PMC10984901,TRUE,GSE30219;GSE37745;GSE50081;GSE31210,four GEO series merged into one validation cohort
+LUAD,30,PMC10183546,TRUE,,TCGA internal split only; GSE200972 single-cell
+LUSC,1,PMC9249737,TRUE,GSE81089,
+LUSC,2,PMC8611943,TRUE,GSE12472;GSE8894;GSE4882;GSE41271;GSE30219;GSE42127;GSE37745,single-gene (METTL3) risk model; 181 LUSC pooled from seven NSCLC GEO series as test set; IHC specimens for METTL3 protein only
+LUSC,3,PMC10415548,TRUE,GSE73403,
+LUSC,4,PMC11443789,TRUE,CPTAC-LUSC,GSE200972 single-cell only
+LUSC,5,PMC11320240,TRUE,,miRNA and splicing-event model; KM plotter for single genes only
+LUSC,6,PMC9303127,TRUE,,no external validation
+LUSC,7,PMC7330657,TRUE,,TCGA internal split only
+LUSC,8,PMC9229145,TRUE,,TCGA internal split only
+LUSC,9,PMC8643179,FALSE,,trained on GSE157009; TCGA-LUSC used only as a validation cohort
+LUSC,10,PMC8695426,TRUE,,"separate LUAD, LUSC and pooled m6A models in TCGA; LUSC model trained in TCGA-LUSC; no external validation"
+LUSC,11,PMC11294474,TRUE,,TCGA internal split only
+LUSC,12,PMC9712184,TRUE,GSE73403,GSE13213 used for DEGs; IMvigor210 immunotherapy only
+LUSC,13,PMC11911325,TRUE,GSE50081,"in-house Kunming cohort (79, IHC of model genes) with survival by protein expression, not the mRNA score; excluded; uncertain"
+LUSC,14,PMC8637334,TRUE,,no external validation
+LUSC,15,PMC8636213,TRUE,GSE73403,
+LUSC,16,PMC8502038,TRUE,GSE74777,"in-house samples for gene expression (RT-PCR, Western) only"
+LUSC,17,PMC9484906,TRUE,,DNA methylation model; TCGA internal split only
+LUSC,18,PMC11222204,TRUE,,TCGA internal split only
+LUSC,19,PMC8883700,TRUE,GSE43131,GSE43131 also used to pre-filter prognostic genes
+LUSC,20,PMC9330609,TRUE,GSE73403,IMvigor210 immunotherapy only
+LUSC,21,PMC9636639,TRUE,,no external validation
+LUSC,22,PMC10258956,TRUE,,TCGA-LUSC merged with GSE157010 then split 1:1; test half from the merged set
+LUSC,23,PMC10266248,TRUE,,TCGA internal split only
+LUSC,24,PMC8246229,TRUE,,model of CIBERSORT immune-cell fractions estimated from TCGA expression; TCGA internal split only
+LUSC,25,PMC10089836,TRUE,GSE37745,
+LUSC,26,PMC6953332,TRUE,GSE3141,trained on TCGA LUAD+LUSC combined; GSE3141 NSCLC
+LUSC,27,PMC10642926,TRUE,,no external validation
+LUSC,28,PMC9434561,TRUE,GSE30219;GSE157010;GSE73403;GSE4573,GSE111907 single-cell only
+COAD,1,PMC10291194,TRUE,GSE39582;GSE17538,
+COAD,2,PMC8420973,TRUE,,no external validation
+COAD,3,PMC7970128,TRUE,,no external validation
+COAD,4,PMC12534154,TRUE,GSE29621,GSE166555 single-cell only
+COAD,5,PMC11549462,TRUE,GSE17536;GSE39582,IMvigor210 immunotherapy only
+COAD,6,PMC10242659,TRUE,,TCGA internal split only
+COAD,7,PMC10494936,TRUE,,TCGA internal split only
+COAD,8,PMC9515658,FALSE,,"trained on GSE40967 (LASSO in GEO), TCGA-COAD as external validation; one sentence swaps the roles; uncertain"
+COAD,9,PMC9996977,TRUE,,a 'validation cohort' is reported but its source is not named (no external accession); treated as internal
+COAD,10,PMC9247273,TRUE,,"first model (DFS) trained on GSE106584; a second OS model (CCL22, FABP7, LTBR, RBP7) fitted in TCGA COAD+READ; no external validation of it"
+COAD,11,PMC8921248,TRUE,GSE17536;GSE39582,"text also prints GSE395282, GSE175356 and GSE17636 (typos for the same validation series)"
+COAD,12,PMC7797534,TRUE,,no external validation
+COAD,13,PMC11565111,TRUE,GSE39582;NJCRC in-house cohort,NJCRC and GSE39582 combined into one external validation set
+COAD,14,PMC12018357,TRUE,,no external validation; clinical samples for FDX1 expression only
+COAD,15,PMC8927973,FALSE,,"clear cell renal cell carcinoma paper, not COAD"
+COAD,16,PMC9129977,TRUE,GSE39582;GSE87211,
+COAD,17,PMC8093825,TRUE,,TCGA CRC lncRNA model; no external validation; clinical samples for expression only
+COAD,18,PMC10909728,TRUE,GSE39582;GSE38832;GSE33113;GSE14333;GSE17538,IMvigor210 and GSE135222 immunotherapy only
+COAD,19,PMC9997773,TRUE,,TCGA CRC; no external validation
+COAD,20,PMC11770481,TRUE,,TCGA CRC; no external validation
+COAD,21,PMC9712968,TRUE,GSE39582;GSE17536;GSE72970,three GEO series as one external validation set
+COAD,22,PMC7726244,TRUE,GSE17536,
+COAD,23,PMC11987197,TRUE,,TCGA internal split only
+COAD,24,PMC11762008,TRUE,GSE17538,"GSE179351, GSE91061, GSE52562, GSE135222 ICI cohorts immunotherapy only; GSE146771 single-cell"
+COAD,25,PMC7935549,TRUE,GSE72970,text also prints GSE72920 (typo)
+COAD,26,PMC11876384,TRUE,GSE39582,GSE231559 single-cell only
+COAD,27,PMC12062125,TRUE,GSE39582,3-gene MMP14 co-expression model fitted in TCGA; GSE217517/GSE225857 single-cell
+COAD,28,PMC10656577,TRUE,,TCGA internal split only; KM plotter for single lncRNA GIHCG only
+COAD,29,PMC9445192,TRUE,GSE17536;GSE39582,
+CESC,1,PMC11047986,TRUE,GSE44001,GSE168652 single-cell only
+CESC,2,PMC8027330,TRUE,,GSE26511 used for metastasis DEGs only
+CESC,3,PMC9958637,TRUE,GSE44001,
+CESC,4,PMC10066621,TRUE,GSE44001,
+CESC,5,PMC9352469,TRUE,GSE44001,
+CESC,6,PMC10184429,TRUE,GSE44001,normal-tissue series for DE and eight ICI series for immunotherapy only
+CESC,7,PMC11214323,TRUE,GSE44001,IMvigor210 immunotherapy only; in-house 103 SCC for NRP1 IHC only
+CESC,8,PMC10067583,TRUE,,TCGA internal split only
+CESC,9,PMC10033772,TRUE,GSE44001,
+CESC,10,PMC12288217,TRUE,,TCGA internal split only; GSE63514 used for gene screening (no survival)
+CESC,11,PMC10175786,TRUE,GSE44001;TCGA-UCEC;TCGA-OV,"TCGA-UCEC and TCGA-OV are other-type validation sets; GSE9750, GSE7410, GSE63514 DEGs only"
+CESC,12,PMC9441061,TRUE,,"TCGA-CESC, GTEx and GSE52903 merged (ComBat) before modelling; no separate validation"
+CESC,13,PMC7648936,TRUE,GSE44001,
+CESC,14,PMC9165826,TRUE,CGCI-HTMCP-CC,GSE72723 hypoxia-category prediction only
+CESC,15,PMC9021468,TRUE,GSE44001,gene-pair model
+CESC,16,PMC9552080,TRUE,GSE44001,GSE7803 used for gene expression only
+CESC,17,PMC9666757,TRUE,,no external validation; ONCOMINE and qRT-PCR for CD79B expression only
+CESC,19,PMC8806749,TRUE,,no external validation
+SARC,1,PMC8674658,TRUE,GSE21050,
+SARC,2,PMC11671775,TRUE,,TCGA internal split only; GSE40021 and 16 in-house SS used for DEGs/expression only
+SARC,3,PMC12346403,FALSE,,AS score trained on an own angiosarcoma cohort (25); TCGA sarcoma used only for validation
+SARC,4,PMC9935680,TRUE,GSE17674;GSE71118;GSE21050,
+SARC,5,PMC8605873,TRUE,,TCGA internal split only
+SARC,6,PMC7603611,FALSE,,"colorectal cancer paper, not SARC"
+SARC,7,PMC12444014,TRUE,,TCGA internal split only
+SARC,8,PMC8671884,TRUE,GSE30929,DFS in GSE30929
+SARC,9,PMC7871579,TRUE,,TCGA internal split only (called external validation in the text)
+SARC,10,PMC10966107,TRUE,ICGC;in-house cohort,"ICGC project code not named; in-house tissue cohort scored with the formula; GSE16091/GSE21050 expression only; GSE111636, IMvigor210, GSE91061 immunotherapy only"
+SARC,11,PMC8665299,TRUE,,TCGA internal split only
+SARC,12,PMC7396489,TRUE,GSE21050,
+SARC,13,PMC8806857,TRUE,GSE17674,GSE17674 Ewing sarcoma (44 patients) OS and EFS
+SARC,14,PMC7186619,FALSE,,"malignant melanoma paper, not SARC"
+SARC,15,PMC10196039,TRUE,GSE21050;GSE30929;GSE63157,GSE21050 DFS/RFS; IMvigor210 immunotherapy only
+SARC,16,PMC9597465,TRUE,,"ceRNA model (miRNA, lncRNA, mRNA); no external validation"
+SARC,17,PMC8497898,TRUE,,TCGA internal split only
+HNSC,1,PMC9304892,TRUE,GSE102349,IMvigor210 and TCGA-SKCM used for immunotherapy only
+HNSC,2,PMC6930791,TRUE,GSE41613,oral cavity subset of TCGA-HNSC
+HNSC,3,PMC9691887,TRUE,GSE102349,IMS (ssGSEA plus univariate Cox) built on a combined cohort TCGA + GSE41613 + GSE65858 + CELL (these merged into training); pembrolizumab trial cohort for ICB response only; judgment call
+HNSC,4,PMC9441563,TRUE,TCGA-ESCA;TCGA-CESC,no other HNSC cohort available; validated in other-type TCGA squamous cohorts
+HNSC,5,PMC10208083,TRUE,,TCGA internal split only
+HNSC,6,PMC8575318,TRUE,GSE31056,
+HNSC,7,PMC12432597,TRUE,GSE65858,machine-learning model; GSE65858 test cohort also used to pick the best algorithm by C-index
+HNSC,8,PMC7708322,TRUE,,TCGA internal split only
+HNSC,9,PMC9872116,TRUE,GSE42743;GSE65858;GSE208576,GSE208576 is the Qilu Hospital in-house cohort (28 HNSCC) deposited by the authors
+HNSC,10,PMC12173340,TRUE,GSE65858;GSE41613,
+HNSC,11,PMC9454905,TRUE,,TCGA internal split only
+HNSC,12,PMC10683111,TRUE,,TCGA internal split only
+HNSC,13,PMC8629675,TRUE,GSE65858,
+HNSC,14,PMC12528569,TRUE,,"multivariable Cox model of clinical factors, ssGSEA score and genes in TCGA-HNSC; GSE6631/GSE107591 DEGs only; no external validation"
+HNSC,15,PMC10585349,TRUE,,TCGA internal split only
+HNSC,16,PMC9355512,TRUE,GSE65858,GSE103322 single-cell only
+HNSC,17,PMC9702068,TRUE,GSE65858;GSE41613;GSE85446,three GEO series integrated as one external validation cohort; clinical IHC cohort with protein-level risk groups excluded
+HNSC,18,PMC10618291,TRUE,GSE65858,
+BLCA,1,PMC10409915,TRUE,,no external validation
+BLCA,2,PMC8881497,TRUE,,lncRNA-pair model; no external validation
+BLCA,3,PMC7880322,TRUE,unnamed GEO cohort,MIBC subset of TCGA-BLCA; GEO cross-validation set of 165 samples with no accession printed (likely GSE13507); uncertain
+BLCA,4,PMC8714163,TRUE,GSE13507;GSE31684;GSE48276;JSPH in-house cohort,three GEO series combined as one validation set; JSPH 46 patients
+BLCA,5,PMC8594790,TRUE,GSE31684,
+BLCA,6,PMC8743383,TRUE,GSE31864;GSE32894;GSE13507,"AI-score trained on TCGA-BLCA + GSE13507 (ComBat) and tested in GSE31864 (as printed, probably GSE31684) and GSE32894; the 6-gene LASSO model validated in GSE13507; GSE78220 and IMvigor210 immunotherapy only; uncertain"
+BLCA,7,PMC11483368,TRUE,GSE13507,model of GSVA gene-set scores
+BLCA,8,PMC8635965,TRUE,,TCGA internal split only
+BLCA,9,PMC10637370,TRUE,GSE32894,GSE135337 single-cell only
+BLCA,10,PMC9471150,TRUE,,TCGA internal split only
+BLCA,11,PMC10028168,TRUE,,TCGA internal split only
+BLCA,12,PMC11298345,TRUE,GSE13507;GSE31684;GSE32894;GSE69795,text also prints GSE69895 (typo for GSE69795); GSE135337 single-cell
+BLCA,13,PMC6925814,TRUE,GSE84525,miRNA model; MIBC subset
+BLCA,15,PMC8828980,TRUE,,TCGA-only lncRNA model; 'meta-data' and 'validation' cohorts appear to be TCGA subsets
+BLCA,16,PMC11224815,TRUE,,TCGA internal split only
+BLCA,17,PMC11464978,TRUE,GSE13507;GSE31684;GSE32894;GSE48276,"101-combination ML pipeline fitted in TCGA, GEO cohorts used to rank algorithms by C-index and to validate; text also prints GSE32984 (typo); GSE78220, IMvigor210, GSE91061 immunotherapy only"
+BLCA,18,PMC11538480,TRUE,,TCGA internal split only
+BLCA,19,PMC11625674,TRUE,,TCGA-BLCA and GSE32894 integrated (ComBat) before the 1:1 split; GSE32894 merged into training data
+BLCA,20,PMC7880361,TRUE,GSE13507;GSE32549;GSE48075;GSE48276,MIBC subset; four GEO series as testing cohorts
+BLCA,21,PMC8710446,TRUE,FAHWMU in-house cohort,First Affiliated Hospital of Wenzhou Medical University MIBC cohort (n=110)
+BLCA,22,PMC7571842,TRUE,GSE13507;GSE31684;GSE32894,text also prints GSE13057 (typo); IMvigor210 immunotherapy cohort excluded
+BLCA,23,PMC12636232,TRUE,GSE13507;GSE32894,GSE129845 single-cell only
+BLCA,24,PMC12672317,TRUE,,GSE31684 and GSE48276 used for immune subtyping/DEGs only; no external validation of the score
+BLCA,25,PMC8175978,FALSE,,trained on GSE13507; TCGA-BLCA used only as validation
+BLCA,26,PMC10676223,TRUE,GSE13507,
+BLCA,27,PMC8799921,TRUE,,TCGA internal split only
+BLCA,28,PMC10362680,TRUE,,TCGA internal split only
+BLCA,29,PMC8685517,FALSE,,trained on GSE32894; TCGA-BLCA and GSE13507 used only as test sets
+BLCA,30,PMC8446409,TRUE,,TCGA internal split only
+BLCA,31,PMC10536175,TRUE,GSE13507;GSE48075;GSE48276,three GEO series (402 patients) as one external validation cohort
+BLCA,32,PMC7658175,TRUE,,no external validation
+OV,1,PMC11164503,TRUE,GSE70769;GSE102073;OV-AU,text names the GEO validation cohort as GSE70769 in methods/abstract and GSE102073 in another passage; ICGC-AU (OV-AU)
+OV,2,PMC7844906,TRUE,GSE26712;GSE63885,
+OV,3,PMC8425093,TRUE,,TCGA-OV merged with GSE17260 and GSE73614 (sva) then split; test half from the merged set
+OV,4,PMC9152429,TRUE,,TCGA internal split only
+OV,5,PMC10837903,TRUE,ICGC;GSE30161,ICGC-OV validation cohort (n=111) without project code; GSE30161 also evaluated (HR reported); PRJEB23709 immunotherapy only
+OV,6,PMC9050317,TRUE,GSE49997,text also prints GSE4997 (typo); GSE49997 also used for immune DEG screening
+OV,7,PMC9218568,TRUE,,TCGA internal split only
+OV,8,PMC9886487,TRUE,GSE9891,
+OV,9,PMC9406778,TRUE,GSE9891,
+OV,10,PMC8848366,TRUE,,GSE66957 and GSE63885 used for expression/stratified analyses only
+OV,11,PMC8268297,TRUE,,TCGA internal split only
+OV,12,PMC9962729,TRUE,OV-AU;GSE49997;GSE13876,GSE49997 and GSE13876 combined as one GEO cohort
+OV,13,PMC8806923,TRUE,,no external validation (bootstrap only)
+OV,14,PMC8312230,TRUE,GSE26193,
+OV,15,PMC12595266,TRUE,ICGC,"ICGC OC cohort (108 patients, project code not named, probably OV-AU)"
+OV,16,PMC8791230,TRUE,,TCGA internal split only
+OV,17,PMC11437962,TRUE,,RPPA protein model in TCGA-OV; internal split only
+OV,18,PMC8102990,TRUE,GSE9891;GSE14764,trained within TCGA-OV immune-high cluster
+OV,19,PMC9520471,TRUE,GSE26712,GSE102073 platinum response only
+OV,20,PMC7646107,TRUE,,TCGA internal split only
+BRCA,1,PMC9253018,TRUE,,TCGA internal split only
+BRCA,2,PMC9701826,TRUE,GSE58812;GSE135565,TNBC subset of TCGA-BRCA
+BRCA,3,PMC11502855,TRUE,,GSE65212 used for SLC31A1 expression only; no external validation of the signature
+BRCA,4,PMC7917807,TRUE,METABRIC,
+BRCA,5,PMC8262234,TRUE,GSE42568,METABRIC named only within cBioPortal alteration analysis
+BRCA,6,PMC9855618,TRUE,,"TCGA IDC internal split; GSE21653/GSE45255/GSE61304 (combined) used for single model-gene RFS curves only, not the risk score"
+BRCA,7,PMC7877483,TRUE,GSE88847;GSE135565,"TNBC subset; GSE88847 compared risk scores by metastasis/recurrence status, GSE135565 survival"
+BRCA,8,PMC10637804,TRUE,,pan-cancer paper: 10-CRG Cox risk model and AI subgroup model fitted on pooled TCGA (31 types incl. BRCA); the breast nomogram is trained on KM-plotter data with TCGA as validation; GEO breast cohorts used for subgroup/drug analyses; judgment call
+BRCA,9,PMC7648448,TRUE,GSE131769,IDC subset of TCGA-BRCA
+BRCA,10,PMC11850720,TRUE,METABRIC;GSE20685,GSE20685 compared risk scores by metastasis and vital status only; GSE35640/IMvigor210 immunotherapy; other GEO series expression only
+BRCA,11,PMC9198763,TRUE,,TCGA internal split only
+BRCA,12,PMC9531154,TRUE,,TCGA internal split only
+BRCA,13,PMC12282832,TRUE,,TCGA internal resampling only
+BRCA,14,PMC10645620,TRUE,,TCGA internal split only
+BRCA,15,PMC9630632,TRUE,GSE42568;GSE58812,text also prints GSE42586/GSE42582 (typos for GSE42568)
+BRCA,16,PMC8908135,TRUE,GSE20685,
+BRCA,17,PMC10083333,TRUE,GSE1456;GSE20685;GSE3494;GSE7390,random survival forest; validation sets also used to pick the algorithm; GSE3496 named in data section; GSE194040/GSE173839 anti-PD-L1 pCR only
+BRCA,18,PMC10499992,TRUE,METABRIC,TNBC subset
+BRCA,19,PMC8993638,TRUE,,TCGA internal split only
+BRCA,20,PMC8416750,TRUE,GSE103091;METABRIC;BMCHH in-house cohort,"TNBC subset; GSE103091 also used to pre-select genes; text also prints GSE103901/GSE03091 (typos); GSE104193, GSE33950, GSE13041 DEGs only"
+BRCA,21,PMC9815178,TRUE,,TCGA internal split only
+BRCA,22,PMC10817393,TRUE,,TCGA internal split only
+BRCA,23,PMC10057494,TRUE,,TCGA internal split only
+BRCA,24,PMC12719570,TRUE,GSE22093;GSE22513,"ML model (CoxBoost+GBM); GSE100797, GSE115821, GSE145996, GSE126044 immunotherapy only; GSE176078 single-cell"
+BRCA,25,PMC12666366,TRUE,,GSE42568 (104) called a validation dataset but integrated with TCGA (limma/sva) into one analysis matrix; no separate validation of the score found; uncertain
+BRCA,26,PMC9133489,TRUE,GSE20685,
+BRCA,27,PMC10476720,TRUE,GSE4922;GSE20685,
+BRCA,28,PMC8051719,TRUE,,no external validation (lncRNAs absent from METABRIC/GEO)
+BRCA,29,PMC10576492,TRUE,,"merged GEO set (GSE42568, GSE20685, GSE102484) split by risk score for DEG analysis only; no survival validation found; uncertain"
+BRCA,30,PMC8555664,TRUE,,"in-house 20-patient clinical cohort used for m6A regulator expression by risk group, not survival"
+BRCA,31,PMC9798726,TRUE,GSE158309,testing set described as 327 GEO patients (size matches GSE20685); accession recorded as printed; other GEO series expression only
+BRCA,32,PMC11308995,TRUE,GSE20685,GSE20685 also used for candidate DEG selection
+CESC,18,PMC8938586,TRUE,GSE44001,pan-cancer paper with a per-type necroptosis model; CESC model trained in TCGA-CESC and tested in GSE44001; judgment call
+BLCA,14,PMC11276689,FALSE,,"ovarian cancer paper (TCGA-OV training), not BLCA; same PMCID also listed under STAD rank 16"

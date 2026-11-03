@@ -1,0 +1,37 @@
+rows 1598; eligible 629; PMCIDs under two or more types: {'PMC9682003': ['LUAD', 'LUSC'], 'PMC12321723': ['LUAD', 'LUSC'], 'PMC8226009': ['LUAD', 'LUSC'], 'PMC8761744': ['LUAD', 'LUSC'], 'PMC12698758': ['LUAD', 'LUSC'], 'PMC10751343': ['LUAD', 'LUSC'], 'PMC10605745': ['LUAD', 'BRCA'], 'PMC11839610': ['COAD', 'STAD'], 'PMC7378627': ['COAD', 'STAD'], 'PMC11438766': ['COAD', 'BRCA'], 'PMC9389369': ['COAD', 'BRCA'], 'PMC9814967': ['STAD', 'BLCA'], 'PMC9259832': ['BLCA', 'SKCM'], 'PMC8657403': ['BLCA', 'SKCM'], 'PMC7563367': ['BLCA', 'SKCM']}
+  BLCA: screened 169, eligible 69, trains a TCGA model 160
+  BRCA: screened 214, eligible 84, trains a TCGA model 200
+  CESC: screened 60, eligible 28, trains a TCGA model 59
+  COAD: screened 300, eligible 105, trains a TCGA model 277
+  HNSC: screened 122, eligible 46, trains a TCGA model 119
+  LUAD: screened 323, eligible 140, trains a TCGA model 311
+  LUSC: screened 40, eligible 18, trains a TCGA model 38
+  OV: screened 83, eligible 32, trains a TCGA model 79
+  SKCM: screened 104, eligible 30, trains a TCGA model 77
+  STAD: screened 183, eligible 77, trains a TCGA model 169
+coverage:
+eligible models with a problem: 24
+c01_LUAD_a LUAD PMC9730711: unparsed coefficients ['0.105,367', '0.134,121']
+c01_LUAD_a LUAD PMC10767103: coefficients not in formula_text ['− 7.36e−05', '− 1.51e−03', '− 7.43e−04']
+c01_LUAD_a LUAD PMC9732022: coefficients not in formula_text ['8.37e-6']
+c01_LUAD_a LUAD PMC10726488: genes not in formula_text ['IL1A']
+c01_LUAD_a LUAD PMC10501266: coefficients not in formula_text ['−2e‐04', '−1e‐04']
+c01_LUAD_a LUAD PMC8600368: genes not in formula_text ['S100P']
+c01_LUAD_a LUAD PMC12402859: genes not in formula_text ['TTC19', 'CHCHD4', 'SFXN1', 'ABCD1', 'NDUFAF7', 'NSUN4', 'NME6', 'XPNPEP3', 'LIPT1', 'METAP1D', 'CA5B', 'KMO', 'ADHFE1']
+c02_LUAD_b LUAD PMC10292873: genes not in formula_text ['SERPINE2']
+c03_COAD_a COAD PMC8687688: coefficients not in formula_text ['0.24', '0.38', '-0.2', '0.97']
+c04_COAD_b COAD PMC9513614: coefficients not in formula_text ['-0.8399']
+c04_COAD_b COAD PMC12604944: genes not in formula_text ['HMMR']
+c05_BRCA BRCA PMC12480286: coefficients not in formula_text ['6.355e-05']
+c06_STAD STAD PMC10008502: genes not in formula_text ['INHBE']
+c06_STAD STAD PMC10962090: genes not in formula_text ['HIF1A']
+c06_STAD STAD PMC9452725: genes not in formula_text ['NCF1']
+c07_BLCA BLCA PMC7967990: genes not in formula_text ['PNOC']
+c07_BLCA BLCA PMC12008088: genes not in formula_text ['HGF']
+c08_HNSC_LUSC HNSC PMC8487076: coefficients not in formula_text ['9.95e-04', '2.96e-05', '-2.67e-05', '2.65e-04', '2.75e-03']
+c08_HNSC_LUSC HNSC PMC8817543: genes not in formula_text ['PLCG1']
+c08_HNSC_LUSC LUSC PMC10344514: genes not in formula_text ['CLDN18', 'ADAMTS8']
+c08_HNSC_LUSC LUSC PMC7485220: genes not in formula_text ['GCGR']
+c09_SKCM_CESC SKCM PMC8595480: genes not in formula_text ['GPX2']
+c09_SKCM_CESC CESC PMC12481447: genes not in formula_text ['IL1B']
+c10_OV OV PMC12167356: coefficients not in formula_text ['11.80464867091524']

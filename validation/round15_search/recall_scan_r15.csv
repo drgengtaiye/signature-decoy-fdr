@@ -1,0 +1,14 @@
+type,pmcid,chunk,reason,n_products,genes
+COAD,PMC9614021,c03_COAD_a,not a linear formula with per-gene coefficients: gene-pair m,7,DXO;MYC;NCBP2;NUDT4;PIK3CA;PML;YTHDF2
+COAD,PMC10169605,c04_COAD_b,not a linear formula with per-gene coefficients: gene-pair m,3,C6;CTSW;SPRR1B
+BRCA,PMC10718145,c05_BRCA,coefficients not given in text,2,ACSF2;IL18
+BRCA,PMC9243266,c05_BRCA,not a linear formula with per-gene coefficients: dichotomize,2,INHBA;SCG2
+STAD,PMC11799156,c06_STAD,coefficients only in figure image,7,CRABP2;CXCL1;FRZB;NOX4;PLG;SERPINE1;TRIM50
+BLCA,PMC8714136,c07_BLCA,not a linear formula with per-gene coefficients: circadian r,8,ADA;ARNT2;ID2;OGT;PPP2CB;PSMA4;QKI;TH
+BLCA,PMC11398808,c07_BLCA,"coefficients only in figure image (6 genes CALR, FASN, CSPG4",6,CALR;CAV1921;CSPG4919;FASN;HGF;SATB1925
+HNSC,PMC8109104,c08_HNSC_LUSC,not a linear formula with per-gene coefficients: dichotomize,10,ADM;BTC;CTLA4;DEFB1;DKK1;EDNRB;FAM3D;GNRH1;STC2;TNFRSF12A
+HNSC,PMC10861726,c08_HNSC_LUSC,coefficients not given in text,9,COL5A2;JAG1;KCNJ8;MSX1;PTK2;SERPINA5;SPP1;VAV2;VEGFA
+SKCM,PMC7751297,c09_SKCM_CESC,not a linear formula with per-gene coefficients: gene-pair m,13,ACHE;APOBEC3A;CASP6;CD1D;CNOT4;CTLA4;CXCL10;EGFR;FANCC;IFI27;ITGB3;RSAD2;TLR8
+OV,PMC7720540,c10_OV,coefficients not given in text,4,CXCL11;DHRS95;S1PR4;TNFRSF17
+OV,PMC8141647,c10_OV,coefficients not given in text,7,ATG4C;HLA-DPA10;HLA-DQB10;HLA-DRA;IL210;PTGS20;STAT60
+OV,PMC10244028,c10_OV,no prognostic model,8,CD860;GZMB;LAG30;M2;MS4A4A;STAT40;STAT60;TIM3
