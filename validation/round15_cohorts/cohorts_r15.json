@@ -1,0 +1,718 @@
+{
+ "STAD_GSE84437": {
+  "gse": "GSE84437",
+  "gpl": "GPL6947",
+  "endpoint": "OS",
+  "time": "duration overall survival",
+  "event": "death",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 1.0,
+  "n_patients": 431,
+  "n_events": 207
+ },
+ "STAD_GSE84433": {
+  "gse": "GSE84433",
+  "gpl": "GPL6947",
+  "endpoint": "OS",
+  "time": "duration overall survival",
+  "event": "death",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 1.0,
+  "n_patients": 355,
+  "n_events": 172
+ },
+ "SKCM_GSE65904": {
+  "gse": "GSE65904",
+  "gpl": "GPL10558",
+  "endpoint": "DSS",
+  "time": "disease specific survival in days",
+  "event": "disease specific survival (1=death, 0=alive)",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "n_patients": 210,
+  "n_events": 102
+ },
+ "LUAD_GSE31210": {
+  "gse": "GSE31210",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "days before death/censor",
+  "event": "death",
+  "event_map": {
+   "dead": 1,
+   "alive": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "filters": {
+   "tissue": [
+    "primary lung tumor"
+   ]
+  },
+  "n_patients": 226,
+  "n_events": 35
+ },
+ "LUAD_GSE72094": {
+  "gse": "GSE72094",
+  "gpl": "GPL15048",
+  "endpoint": "OS",
+  "time": "survival_time_in_days",
+  "event": "vital_status",
+  "event_map": {
+   "dead": 1,
+   "alive": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "n_patients": 398,
+  "n_events": 113
+ },
+ "LUAD_GSE30219": {
+  "gse": "GSE30219",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "follow-up time (months)",
+  "event": "status",
+  "event_map": {
+   "dead": 1,
+   "alive": 0
+  },
+  "time_scale": 1.0,
+  "filters": {
+   "histology": [
+    "ADC"
+   ]
+  },
+  "n_patients": 83,
+  "n_events": 43
+ },
+ "LUAD_GSE50081": {
+  "gse": "GSE50081",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "survival time",
+  "event": "status",
+  "event_map": {
+   "dead": 1,
+   "alive": 0
+  },
+  "time_scale": 12.0,
+  "filters": {
+   "histology": [
+    "adenocarcinoma"
+   ]
+  },
+  "n_patients": 127,
+  "n_events": 51
+ },
+ "LUAD_GSE37745": {
+  "gse": "GSE37745",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "days to determined death status",
+  "event": "dead",
+  "event_map": {
+   "yes": 1,
+   "no": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "filters": {
+   "histology": [
+    "adeno"
+   ]
+  },
+  "n_patients": 106,
+  "n_events": 77
+ },
+ "LUAD_GSE13213": {
+  "gse": "GSE13213",
+  "gpl": "GPL6480",
+  "endpoint": "OS",
+  "time": "Survival (days)",
+  "event": "Status",
+  "event_map": {
+   "dead": 1,
+   "alive": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "n_patients": 117,
+  "n_events": 49
+ },
+ "LUAD_GSE41271": {
+  "gse": "GSE41271",
+  "gpl": "GPL6884",
+  "endpoint": "OS",
+  "time": "last follow-up survival",
+  "event": "vital statistics",
+  "event_map": {
+   "d": 1,
+   "a": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "filters": {
+   "histology": [
+    "Adenocarcinoma"
+   ]
+  },
+  "time_start": "date of surgery",
+  "time_kind": "date_difference_days (time = date in 'time' minus date in 'time_start', ISO dates)",
+  "n_patients": 182,
+  "n_events": 70
+ },
+ "LUAD_GSE42127": {
+  "gse": "GSE42127",
+  "gpl": "GPL6884",
+  "endpoint": "OS",
+  "time": "overall survival months",
+  "event": "survival status",
+  "event_map": {
+   "d": 1,
+   "a": 0
+  },
+  "time_scale": 1.0,
+  "filters": {
+   "histology": [
+    "Adenocarcinoma"
+   ]
+  },
+  "n_patients": 131,
+  "n_events": 41
+ },
+ "LUAD_GSE26939": {
+  "gse": "GSE26939",
+  "gpl": "GPL9053",
+  "endpoint": "OS",
+  "time": "survival_months",
+  "event": "survival_status(0='alive',1='dead')",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 1.0,
+  "n_patients": 115,
+  "n_events": 66
+ },
+ "LUAD_GSE11969": {
+  "gse": "GSE11969",
+  "gpl": "GPL7015",
+  "endpoint": "OS",
+  "time": "Survival (days)",
+  "event": "Status",
+  "event_map": {
+   "dead": 1,
+   "alive": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "filters": {
+   "Histology": [
+    "AD"
+   ]
+  },
+  "n_patients": 90,
+  "n_events": 40
+ },
+ "LUSC_GSE74777": {
+  "gse": "GSE74777",
+  "gpl": "GPL17586",
+  "endpoint": "OS",
+  "time": "days before death/censor",
+  "event": "death",
+  "event_map": {
+   "dead": 1,
+   "alive": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "n_patients": 107,
+  "n_events": 42
+ },
+ "LUSC_GSE41271": {
+  "gse": "GSE41271",
+  "gpl": "GPL6884",
+  "endpoint": "OS",
+  "time": "last follow-up survival",
+  "event": "vital statistics",
+  "event_map": {
+   "d": 1,
+   "a": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "filters": {
+   "histology": [
+    "Squamous"
+   ]
+  },
+  "time_start": "date of surgery",
+  "time_kind": "date_difference_days (time = date in 'time' minus date in 'time_start', ISO dates)",
+  "n_patients": 80,
+  "n_events": 43
+ },
+ "LUSC_GSE157011": {
+  "gse": "GSE157011",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "os_mo",
+  "event": "os_event",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 1.0,
+  "n_patients": 483,
+  "n_events": 264
+ },
+ "COAD_GSE39582": {
+  "gse": "GSE39582",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "os.delay (months)",
+  "event": "os.event",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 1.0,
+  "filters": {
+   "dataset": [
+    "discovery",
+    "validation"
+   ]
+  },
+  "n_patients": 556,
+  "n_events": 187
+ },
+ "COAD_GSE17536": {
+  "gse": "GSE17536",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "overall survival follow-up time",
+  "event": "overall_event (death from any cause)",
+  "event_map": {
+   "death": 1,
+   "no death": 0
+  },
+  "time_scale": 1.0,
+  "n_patients": 177,
+  "n_events": 73
+ },
+ "COAD_GSE17538": {
+  "gse": "GSE17538",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "overall survival follow-up time",
+  "event": "overall_event (death from any cause)",
+  "event_map": {
+   "death": 1,
+   "no death": 0
+  },
+  "time_scale": 1.0,
+  "filters": {
+   "(source)": [
+    "Moffitt Cancer Center",
+    "Vanderbilt University Medical Center"
+   ]
+  },
+  "n_patients": 232,
+  "n_events": 93
+ },
+ "COAD_GSE38832": {
+  "gse": "GSE38832",
+  "gpl": "GPL570",
+  "endpoint": "DSS",
+  "time": "dss_time (disease specific survival time, months)",
+  "event": "dss_event (disease specific survival)",
+  "event_map": {
+   "1 (death from cancer)": 1,
+   "0 (no death)": 0
+  },
+  "time_scale": 1.0,
+  "n_patients": 122,
+  "n_events": 28
+ },
+ "COAD_GSE103479": {
+  "gse": "GSE103479",
+  "gpl": "GPL23985",
+  "endpoint": "OS",
+  "time": "overall survival time",
+  "event": "status alive.dead",
+  "event_map": {
+   "dead": 1,
+   "alive": 0
+  },
+  "time_scale": 1.0,
+  "filters": {
+   "tumour site": [
+    "Sigmoid",
+    "Right colon",
+    "Left Colon",
+    "Caecum",
+    "Ascending colon",
+    "Hepatic flexure",
+    "Transverse colon",
+    "Asc colon",
+    "colon",
+    "Left colon",
+    "Colon",
+    "right colon",
+    "Transverse/left colon",
+    "left colon/cecum",
+    "sigma",
+    "Descending colon",
+    "Caecum + Asc colon"
+   ]
+  },
+  "n_patients": 127,
+  "n_events": 49
+ },
+ "COAD_GSE14333": {
+  "gse": "GSE14333",
+  "gpl": "GPL570",
+  "endpoint": "DFS",
+  "time": "DFS_Time",
+  "event": "DFS_Cens",
+  "event_map": {
+   "0": 1,
+   "1": 0
+  },
+  "time_scale": 1.0,
+  "filters": {
+   "Location": [
+    "Left",
+    "Right",
+    "Colon"
+   ]
+  },
+  "composite": "Location",
+  "composite_note": "all annotations are in one characteristics line keyed 'Location'; parse 'Location: <value>' split on ';' into key: value pairs; time, event and filters refer to those keys",
+  "n_patients": 196,
+  "n_events": 43
+ },
+ "COAD_GSE72970": {
+  "gse": "GSE72970",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "os",
+  "event": "os censored",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 1.0,
+  "filters": {
+   "tumor location": [
+    "Left colon",
+    "Right colon",
+    "Caecum",
+    "Transverse colon"
+   ]
+  },
+  "n_patients": 86,
+  "n_events": 64
+ },
+ "COAD_GSE40967": {
+  "gse": "GSE40967",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "os.delay (months)",
+  "event": "os.event",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 1.0,
+  "filters": {
+   "(platform)": [
+    "GPL570"
+   ],
+   "dataset": [
+    "discovery",
+    "validation"
+   ]
+  },
+  "n_patients": 556,
+  "n_events": 187
+ },
+ "CESC_GSE44001": {
+  "gse": "GSE44001",
+  "gpl": "GPL14951",
+  "endpoint": "DFS",
+  "time": "disease_free_survival_(dfs)_(months)",
+  "event": "status_of_dfs",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 1.0,
+  "n_patients": 300,
+  "n_events": 38
+ },
+ "SARC_GSE21050": {
+  "gse": "GSE21050",
+  "gpl": "GPL570",
+  "endpoint": "MFS",
+  "time": "time",
+  "event": "metastasis",
+  "event_map": {
+   "yes": 1,
+   "no": 0
+  },
+  "time_scale": 12.0,
+  "n_patients": 289,
+  "n_events": 101
+ },
+ "SARC_GSE71118": {
+  "gse": "GSE71118",
+  "gpl": "GPL570",
+  "endpoint": "MFS",
+  "time": "time",
+  "event": "metastasis",
+  "event_map": {
+   "yes": 1,
+   "no": 0
+  },
+  "time_scale": 12.0,
+  "n_patients": 291,
+  "n_events": 103
+ },
+ "HNSC_GSE65858": {
+  "gse": "GSE65858",
+  "gpl": "GPL10558",
+  "endpoint": "OS",
+  "time": "os",
+  "event": "os_event",
+  "event_map": {
+   "true": 1,
+   "false": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "filters": {
+   "tumor_type": [
+    "Primary"
+   ]
+  },
+  "n_patients": 253,
+  "n_events": 85
+ },
+ "HNSC_GSE41613": {
+  "gse": "GSE41613",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "fu time",
+  "event": "vital",
+  "event_map": {
+   "dead-oral ca": 1,
+   "dead-non oc": 1,
+   "dead -unk cause": 1,
+   "alive": 0
+  },
+  "time_scale": 1.0,
+  "n_patients": 97,
+  "n_events": 51
+ },
+ "BLCA_GSE13507": {
+  "gse": "GSE13507",
+  "gpl": "GPL6102",
+  "endpoint": "OS",
+  "time": "survival month",
+  "event": "overall survival",
+  "event_map": {
+   "death": 1,
+   "survival": 0
+  },
+  "time_scale": 1.0,
+  "filters": {
+   "biological source": [
+    "primary bladder cancer"
+   ]
+  },
+  "n_patients": 165,
+  "n_events": 69
+ },
+ "BLCA_GSE31684": {
+  "gse": "GSE31684",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "survival.months",
+  "event": "last known status",
+  "event_map": {
+   "dod": 1,
+   "doc": 1,
+   "ned": 0
+  },
+  "time_scale": 1.0,
+  "n_patients": 93,
+  "n_events": 65
+ },
+ "BLCA_GSE32894": {
+  "gse": "GSE32894",
+  "gpl": "GPL6947",
+  "endpoint": "DSS",
+  "time": "time_to_dod_(months)",
+  "event": "dod_event_(yes/no)",
+  "event_map": {
+   "yes": 1,
+   "no": 0
+  },
+  "time_scale": 1.0,
+  "n_patients": 224,
+  "n_events": 25
+ },
+ "OV_GSE140082": {
+  "gse": "GSE140082",
+  "gpl": "GPL14951",
+  "endpoint": "OS",
+  "time": "final_ostm",
+  "event": "final_osid",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "filters": {
+   "histology.serous": [
+    "serous"
+   ]
+  },
+  "n_patients": 277,
+  "n_events": 73
+ },
+ "OV_GSE32062": {
+  "gse": "GSE32062",
+  "gpl": "GPL6480",
+  "endpoint": "OS",
+  "time": "os (m)",
+  "event": "death (1)",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 1.0,
+  "filters": {
+   "(platform)": [
+    "GPL6480"
+   ]
+  },
+  "n_patients": 260,
+  "n_events": 121
+ },
+ "BRCA_GSE20685": {
+  "gse": "GSE20685",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "follow_up_duration (years)",
+  "event": "event_death",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 12.0,
+  "n_patients": 327,
+  "n_events": 83
+ },
+ "BRCA_GSE42568": {
+  "gse": "GSE42568",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "overall survival time_days",
+  "event": "overall survival event",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "filters": {
+   "tissue": [
+    "breast cancer"
+   ]
+  },
+  "n_patients": 104,
+  "n_events": 35
+ },
+ "BRCA_GSE58812": {
+  "gse": "GSE58812",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "os (days)",
+  "event": "death",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "n_patients": 107,
+  "n_events": 29
+ },
+ "BRCA_GSE21653": {
+  "gse": "GSE21653",
+  "gpl": "GPL570",
+  "endpoint": "DFS",
+  "time": "dfs time (months)",
+  "event": "dfs evt",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 1.0,
+  "n_patients": 248,
+  "n_events": 79
+ },
+ "BRCA_GSE20711": {
+  "gse": "GSE20711",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "t.os",
+  "event": "e.os",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 12.0,
+  "filters": {
+   "(source)": [
+    "Breast tumor"
+   ]
+  },
+  "n_patients": 88,
+  "n_events": 25
+ },
+ "BRCA_GSE96058": {
+  "gse": "GSE96058",
+  "gpl": [
+   "GPL11154",
+   "GPL18573"
+  ],
+  "endpoint": "OS",
+  "time": "overall survival days",
+  "event": "overall survival event",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "exclude_suffix": {
+   "(title)": "repl"
+  },
+  "n_patients": 3273,
+  "n_events": 336
+ },
+ "BRCA_GSE103091": {
+  "gse": "GSE103091",
+  "gpl": "GPL570",
+  "endpoint": "OS",
+  "time": "os (days)",
+  "event": "death",
+  "event_map": {
+   "1": 1,
+   "0": 0
+  },
+  "time_scale": 0.03285420944558522,
+  "n_patients": 107,
+  "n_events": 29
+ }
+}

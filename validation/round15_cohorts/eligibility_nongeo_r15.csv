@@ -1,0 +1,14 @@
+type,cohort,source,retrievable,n_patients,n_events,endpoint,eligible,reason,notes
+BRCA,METABRIC,cBioPortal (on disk: breast/download_metabric),TRUE,,,OS,pending,,Illumina HT-12; patients and events counted when built
+OV,ICGC,ICGC 25K open bucket (OV-AU),TRUE,,,OS,pending,,"named without a project code by 11 records; the ICGC ovarian expression project with survival is OV-AU, judged once as OV-AU"
+OV,OV-AU,ICGC 25K open bucket (icgc25k-open),TRUE,82,,OS,pending,,"93 donors with exp_seq and survival (74 deaths); 82 with a primary solid tumour specimen; events among them counted when built"
+CESC,CGCI-HTMCP-CC,GDC open access (api.gdc.cancer.gov),TRUE,,,OS,pending,,"212 cases (116 dead) with a time; open RNA-seq for 123 cases; patients and events with both counted when built"
+BLCA,IMvigor210,,FALSE,,,,FALSE,treated with checkpoint blockade (atezolizumab),
+LUAD,in-house cohort,,FALSE,,,,FALSE,not retrievable (in-house),
+HNSC,in-house cohort,,FALSE,,,,FALSE,not retrievable (in-house),
+SARC,in-house cohort,,FALSE,,,,FALSE,not retrievable (in-house),
+SARC,ICGC,,FALSE,,,,FALSE,not identifiable (ICGC project not named),
+CESC,"GEO cohort (n=300, accession not named)",,FALSE,,,,FALSE,not identifiable (no accession),
+CESC,ICGC dataset (project not named),,FALSE,,,,FALSE,not identifiable (ICGC project not named),
+CESC,"in-house cohort (n=120, Outdo Biotech tissues)",,FALSE,,,,FALSE,not retrievable (in-house),
+CESC,"in-house cohort (n=56, qRT-PCR)",,FALSE,,,,FALSE,not retrievable (in-house),
