@@ -1,0 +1,246 @@
+<title>Validation Cohort Lookup</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one reading column; a filter row, then one row per cohort with its rate drawn on a shared 0-100% scale. */
+:root {
+  --bg: #f7f8fa;
+  --surface: #fcfcfb;
+  --ink: #12161c;
+  --ink-2: #4b5260;
+  --ink-3: #6b7280;
+  --rule: #dfe3ea;
+  --grid: #e9ecf1;
+  --bar: #2a78d6;
+  --bar-track: #eef1f5;
+  --chip: #e8edf4;
+  --chip-on: #12161c;
+  --chip-on-ink: #fcfcfb;
+  --focus: #2a78d6;
+  --font-display: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121417; --surface: #1a1a19; --ink: #eef0f3; --ink-2: #b9bfca; --ink-3: #9299a6; --rule: #2c3038;
+    --grid: #262a31; --bar: #3987e5; --bar-track: #23272e; --chip: #262b33; --chip-on: #eef0f3; --chip-on-ink: #121417;
+    --focus: #3987e5; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121417; --surface: #1a1a19; --ink: #eef0f3; --ink-2: #b9bfca; --ink-3: #9299a6; --rule: #2c3038;
+  --grid: #262a31; --bar: #3987e5; --bar-track: #23272e; --chip: #262b33; --chip-on: #eef0f3; --chip-on-ink: #121417;
+  --focus: #3987e5; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--font-body); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-block: 28px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 22px; }
+header { display: grid; gap: 10px; }
+.eyebrow { font: 500 12px/1.2 var(--font-data); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+h1 { font: 600 clamp(28px, 4.2vw, 40px)/1.1 var(--font-display); margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+.lede { margin: 0; max-width: 68ch; color: var(--ink-2); }
+.lede strong { color: var(--ink); font-weight: 600; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; padding-block: 12px;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.search { flex: 1 1 220px; min-width: 0; display: flex; }
+.search input { width: 100%; min-width: 0; font: 400 15px var(--font-data); color: var(--ink); background: var(--surface);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 500 13px/1 var(--font-data); padding: 7px 9px; border-radius: 999px; border: 1px solid transparent;
+  background: var(--chip); color: var(--ink-2); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--chip-on); color: var(--chip-on-ink); }
+.sort { display: flex; gap: 8px; align-items: center; color: var(--ink-3); font-size: 13px; }
+.sort select { font: 400 14px var(--font-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 6px; padding: 6px 8px; }
+:is(input, select, button):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.count { font: 400 13px var(--font-data); color: var(--ink-3); }
+.table { display: grid; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.row { display: grid; grid-template-columns: minmax(150px, 1.15fr) minmax(220px, 2.2fr) minmax(150px, 1fr); gap: 18px;
+  align-items: center; padding: 12px 16px; border-top: 1px solid var(--rule); }
+.row:first-child { border-top: 0; }
+.head { font: 500 12px/1.3 var(--font-data); letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3);
+  background: var(--bg); align-items: end; }
+.head .scale { position: relative; height: 16px; }
+.head .scale span { position: absolute; transform: translateX(-50%); font-size: 11px; letter-spacing: 0; }
+.head .scale span:first-child { transform: none; }
+.head .scale span:last-child { transform: translateX(-100%); }
+.cell { min-width: 0; }
+.acc { font: 500 15px var(--font-data); }
+.meta { font-size: 13px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.tag { display: inline-block; font: 500 11px/1 var(--font-data); padding: 3px 5px; border-radius: 4px; background: var(--chip);
+  color: var(--ink-2); margin-left: 6px; vertical-align: 2px; }
+.barline { display: grid; grid-template-columns: 1fr 112px; gap: 12px; align-items: center; }
+.track { position: relative; height: 18px; background: var(--bar-track); border-radius: 0 4px 4px 0;
+  background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px);
+  background-size: 25% 100%; background-position: -1px 0; cursor: default; }
+.fill { position: absolute; left: 0; top: 3px; bottom: 3px; background: var(--bar); border-radius: 0 4px 4px 0; min-width: 2px; }
+.val { font: 500 14px var(--font-data); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.val small { font-weight: 400; color: var(--ink-3); font-size: 12px; }
+.pub { font-size: 13px; color: var(--ink-2); font-variant-numeric: tabular-nums; display: grid; gap: 2px; }
+.pub b { font: 500 14px var(--font-data); color: var(--ink); }
+.note { font-size: 12px; color: var(--ink-3); }
+.empty { padding: 24px 16px; color: var(--ink-3); }
+.tip { position: fixed; z-index: 20; pointer-events: none; background: var(--surface); color: var(--ink);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; font-size: 13px; line-height: 1.45;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .12); max-width: 280px; }
+.tip .t { font: 500 13px var(--font-data); }
+.tip .k { color: var(--ink-3); }
+section.read { display: grid; gap: 10px; max-width: 72ch; }
+section.read h2 { font: 600 20px/1.2 var(--font-display); margin: 0; }
+section.read p { margin: 0; color: var(--ink-2); }
+section.read code { font: 400 13.5px var(--font-data); background: var(--chip); padding: 1px 4px; border-radius: 4px; color: var(--ink); }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 0; color: var(--ink-2); font-size: 14px; }
+dt { font: 500 13px var(--font-data); color: var(--ink); }
+dd { margin: 0; }
+@media (max-width: 720px) {
+  .row { grid-template-columns: 1fr; gap: 8px; }
+  .head { display: none; }
+  .barline { grid-template-columns: 1fr 104px; }
+}
+@media (prefers-reduced-motion: no-preference) { .fill { transition: width .25s ease-out; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Matched decoy modules · round 15 · 43 cohorts, 11 cancer types</div>
+    <h1>Validation Cohort Lookup</h1>
+    <p class="lede">A prognostic gene model fitted in TCGA is often called validated when its high-risk group fares worse
+      in a public cohort. <strong>How often does a model built from genes no published theme or model uses pass that same test there?</strong>
+      Each bar is the share of null models that did: the usual pipeline (univariate Cox screen, then LASSO Cox) run in
+      TCGA of the cohort's cancer type on pools of genes matched in number (six of every eight also in co-expression) to 15 published themes,
+      such as ferroptosis and hypoxia, but drawn from genes outside all of them, then tested with one rule (median split, log-rank P &lt; 0.05, high group worse). The rates run from 0% to 85%.</p>
+  </header>
+
+  <div class="controls" role="search">
+    <label class="search" for="q"><input id="q" type="search" placeholder="Search accession, e.g. GSE39582" autocomplete="off" aria-label="Search by accession"></label>
+    <div class="chips" id="types" aria-label="Cancer type"></div>
+    <label class="sort" for="sort">Sort
+      <select id="sort">
+        <option value="fvr">Null-model rate, high to low</option>
+        <option value="type">Cancer type</option>
+        <option value="events">Events, high to low</option>
+      </select>
+    </label>
+  </div>
+  <div class="count" id="count" aria-live="polite"></div>
+
+  <div class="table" id="table" role="table" aria-label="False-validation rate by cohort">
+    <div class="row head" role="row">
+      <div role="columnheader">Cohort</div>
+      <div role="columnheader">
+        <div class="barline"><div class="scale" aria-hidden="true"><span style="left:0">0%</span><span style="left:25%">25</span><span style="left:50%">50</span><span style="left:75%">75</span><span style="left:100%">100%</span></div><div>Null models</div></div>
+      </div>
+      <div role="columnheader">Published models validated</div>
+    </div>
+  </div>
+
+  <section class="read">
+    <h2>Reading a row</h2>
+    <p>The bar is the share of null models that validated in the cohort, with the count beside it. A model of genes chosen
+      for no reason passes there that often, so a validation in a cohort with a long bar says less than one in a cohort
+      with a short bar. Within a cancer type, cohorts differ beyond chance, and across the 35 cohorts that share no
+      patients the rate was only weakly related to the number of events (Spearman 0.24, one-sided P = 0.08).</p>
+    <p>The right column gives the validation rate of published models of the cancer type, among papers that did not name
+      the cohort as a validation cohort and among those that did. A cohort marked <span class="tag" style="margin:0">same patients</span>
+      shares its patients with another cohort and carries that cohort's rates; one marked
+      <span class="tag" style="margin:0">overlaps</span> shares some patients with another cohort of the table and has its own
+      rate.</p>
+    <dl>
+      <dt>OS</dt><dd>overall survival</dd>
+      <dt>DSS</dt><dd>disease-specific survival</dd>
+      <dt>DFS</dt><dd>disease-free survival</dd>
+      <dt>MFS</dt><dd>metastasis-free survival</dd>
+    </dl>
+    <p>To check a model of your own against matched decoys in your cohorts, use <code>check_models()</code> in the R package
+      decoyfdr (0.3.0 or later); <code>cohort_fvr()</code> returns this table. Source: Supplementary Data 1, sheet
+      <code>r15_cohort_fvr</code>, of "Matched decoy modules estimate the false discovery rate of claims about
+      gene-expression signatures".</p>
+  </section>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const DATA = __DATA__;
+const TYPES = [...new Set(DATA.map(d => d.type))].sort();
+const state = { q: "", type: "All", sort: "fvr" };
+const pct = x => (x == null || Number.isNaN(x)) ? "–" : Math.round(100 * x) + "%";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+const chips = document.getElementById("types");
+["All", ...TYPES].forEach(t => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "chip"; b.textContent = t; b.id = "type-" + t;
+  b.setAttribute("aria-pressed", t === state.type ? "true" : "false");
+  b.addEventListener("click", () => { state.type = t; render(); });
+  chips.appendChild(b);
+});
+document.getElementById("q").addEventListener("input", e => { state.q = e.target.value.trim().toUpperCase(); render(); });
+document.getElementById("sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+
+function twinOf(d) { const m = /rate of \S+?_(\S+)/.exec(d.note || ""); return m ? m[1] : null; }
+
+function render() {
+  chips.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", b.textContent === state.type ? "true" : "false"));
+  let rows = DATA.filter(d => (state.type === "All" || d.type === state.type) &&
+    (!state.q || d.accession.toUpperCase().includes(state.q) || d.cohort.toUpperCase().includes(state.q)));
+  const by = { fvr: (a, b) => b.fvr - a.fvr || a.cohort.localeCompare(b.cohort),
+               type: (a, b) => a.type.localeCompare(b.type) || b.fvr - a.fvr,
+               events: (a, b) => b.events - a.events || b.fvr - a.fvr };
+  rows.sort(by[state.sort]);
+  const table = document.getElementById("table");
+  table.querySelectorAll(".row:not(.head), .empty").forEach(e => e.remove());
+  document.getElementById("count").textContent = `Showing ${rows.length} of ${DATA.length} cohorts`;
+  if (!rows.length) {
+    const e = document.createElement("div"); e.className = "empty";
+    e.textContent = "No cohort matches. Try an accession such as GSE39582, or choose All."; table.appendChild(e); return;
+  }
+  for (const d of rows) {
+    const r = document.createElement("div"); r.className = "row"; r.setAttribute("role", "row");
+    const twin = twinOf(d);
+    r.innerHTML = `
+      <div class="cell" role="cell">
+        <div><span class="acc">${esc(d.accession)}</span><span class="tag">${esc(d.type)}</span>${twin ? '<span class="tag">same patients</span>' : (d.independent_set ? "" : '<span class="tag">overlaps</span>')}</div>
+        <div class="meta">${esc(d.endpoint)} · ${d.patients.toLocaleString("en-US")} patients · ${d.events.toLocaleString("en-US")} events</div>
+        ${twin ? `<div class="note">Same patients as ${esc(twin)}; its rates</div>` : ""}
+      </div>
+      <div class="cell" role="cell">
+        <div class="barline">
+          <div class="track" tabindex="0" aria-label="${esc(d.accession)}: ${pct(d.fvr)} of null models validated"><div class="fill" style="width:${(100 * d.fvr).toFixed(2)}%"></div></div>
+          <div class="val">${pct(d.fvr)} <small>${d.null_validated}/${d.null_models}</small></div>
+        </div>
+      </div>
+      <div class="cell pub" role="cell">
+        <div>not naming it: <b>${pct(d.model_rate_not_naming)}</b> of ${d.models_not_naming}</div>
+        <div>naming it: <b>${d.models_naming ? pct(d.model_rate_naming) : "–"}</b> of ${d.models_naming}</div>
+      </div>`;
+    const tr = r.querySelector(".track");
+    const show = ev => tip(ev, d, tr);
+    tr.addEventListener("mousemove", show); tr.addEventListener("focus", show);
+    tr.addEventListener("mouseleave", hide); tr.addEventListener("blur", hide);
+    table.appendChild(r);
+  }
+}
+
+const tipEl = document.getElementById("tip");
+function tip(ev, d, el) {
+  tipEl.innerHTML = `<div class="t">${esc(d.cohort)}</div>
+    <div>${pct(d.fvr)} of ${d.null_models} null models validated</div>
+    <div><span class="k">from co-expressed pools</span> ${pct(d.fvr_coex)} · <span class="k">random-gene pools</span> ${pct(d.fvr_rand)}</div>
+    <div><span class="k">decoys of published models (papers not naming it)</span> ${pct(d.decoy_rate_not_naming)}</div>`;
+  tipEl.hidden = false;
+  const r = el.getBoundingClientRect();
+  const x = ev.clientX != null && ev.type === "mousemove" ? ev.clientX : r.left + r.width * Math.min(d.fvr, 0.9);
+  const w = tipEl.offsetWidth, h = tipEl.offsetHeight;
+  tipEl.style.left = Math.max(8, Math.min(window.innerWidth - w - 8, x + 12)) + "px";
+  const top = r.top - h - 8;
+  tipEl.style.top = (top > 8 ? top : r.bottom + 8) + "px";
+}
+function hide() { tipEl.hidden = true; }
+window.addEventListener("scroll", hide, { passive: true });
+render();
+</script>

@@ -124,3 +124,10 @@ Run order (each step reads the outputs of the steps before it)
    published models (round 13). figprep_example.py, figprep_r.R, figprep_roc.py and figprep_km.R write the data of
    the example panels (icb/v13_fig/); cns.py, cns10.py, run_restyled.py, fig67_lib.py, figstyle.py and v4kit.py are
    the style of the earlier supplementary figures.
+13 The model check of the package (decoyfdr 0.3.0: check_models(), validation_fdr(), cohort_fvr()). Acceptance
+   criteria written and hashed before the run (validation/TOOL_check_models_acceptance.md); applications/
+   v24_check_models_repro.R <TYPE> reruns round 15 part A and the published models of part B5 through the function
+   (icb/v24_tool/), decoys/v24_check_models_repro.py compares the output with round 15, and the result is
+   validation/TOOL_check_models_result.md. decoys/v24_cohort_table.py writes the cohort table the package ships
+   (decoyfdr/inst/extdata/validation_cohorts_r15.csv) and decoys/v24_cohort_page.py the searchable page
+   docs/validation_cohorts.html from it.

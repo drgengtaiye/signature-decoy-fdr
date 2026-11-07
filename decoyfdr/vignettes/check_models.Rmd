@@ -1,0 +1,88 @@
+---
+title: "Checking prognostic risk models with matched decoys"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Checking prognostic risk models with matched decoys}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+A prognostic risk model is a list of genes with Cox coefficients, fitted in one cohort and called validated in
+another when patients with a high score fare worse. `check_models()` asks of each such validation how often a model
+of the same structure, built from genes unrelated to it, passes the same test in the same cohort.
+
+## A simulated example
+
+A training cohort and two validation cohorts share a small co-expressed program (genes 1-10) that shortens survival,
+and a large one (genes 101-250) that does not. One model takes six genes of the first program, one five of the
+second, one four noise genes.
+
+```{r simulate}
+library(decoyfdr)
+set.seed(1)
+toy <- dfdr_toy_survival()
+toy$train
+toy$models$program
+```
+
+Each model of three or more genes gets 32 co-expressed and 8 random-gene decoys, matched in the training and
+validation cohorts. A decoy carries its model's coefficients in a random order and takes the direction of its own
+association with survival in the training cohort. Model and decoys are then tested in every validation cohort:
+score split at its median, log-rank P < 0.05, high group worse.
+
+```{r check}
+chk <- check_models(toy$models, train = toy$train, validate = toy$validate, seed = 1)
+chk
+```
+
+The model on the survival program validates in both cohorts and beats nearly all of its co-expressed decoys (`rho`).
+Its decoys come mostly from the other program, which carries no survival information, so most of them do not
+validate.
+
+## Reading the result
+
+`chk$units` holds one row per model and validation cohort:
+
+```{r units}
+chk$units[, c("cohort", "model", "validated", "cdir", "p", "d_coex", "d_rand", "rho")]
+```
+
+- `validated`: the rule above.
+- `d_coex`: how often a model with this structure, built from unrelated genes, validates in this cohort. Summed over
+  a set of models and divided by the number validated, it estimates how many validations are false:
+
+```{r fdr}
+validation_fdr(chk, B = 500)
+```
+
+- `rho`: the share of co-expressed decoys the model beats on the directed C-index. It ranks a model among models of
+  its structure; it is not a test of whether the model is true. In the accompanying paper, among published models
+  that validated in one cohort, those with rho of at least 0.95 there replicated in another independent cohort in
+  30.5% of pairs, and the others in 21.9%.
+
+## Cohorts differ
+
+How often a model validates also depends on the cohort. In the paper, the usual pipeline (univariate Cox screen,
+then LASSO Cox) run in TCGA on pools of genes outside every published theme and model produced null models that
+validated in 0% to 85% of tries, depending on the validation cohort. `cohort_fvr()` returns that table:
+
+```{r cohorts}
+f <- cohort_fvr()
+f[order(-f$fvr), c("type", "cohort", "endpoint", "patients", "events", "null_models", "fvr")][1:8, ]
+cohort_fvr("GSE39582")[, c("cohort", "null_validated", "null_models", "fvr", "model_rate_not_naming")]
+```
+
+## Real data
+
+Build one `dfdr_cohort()` per cohort from an expression matrix (genes in rows, the same gene symbols in every
+cohort) and a data frame of `time` and `event`, give the models as coefficient vectors named by gene, and pass the
+gene set the models were selected from to `exclude` so that the decoys come from outside it. With `cores > 1` the
+result is unchanged.
+
+```{r session-info}
+sessionInfo()
+```

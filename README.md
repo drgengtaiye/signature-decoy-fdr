@@ -18,8 +18,16 @@ install.packages("remotes")
 remotes::install_github("drgengtaiye/signature-decoy-fdr", subdir = "decoyfdr")
 ```
 
-It needs only Rcpp and matrixStats (and a C++ compiler); GSVA from Bioconductor is needed for the GSVA and ssGSEA
+It needs Rcpp, matrixStats and survival (and a C++ compiler); GSVA from Bioconductor is needed for the GSVA and ssGSEA
 engines.
+
+For prognostic risk models, `check_models()` tests any model given as Cox coefficients named by gene, with 32
+co-expressed and 8 random-gene decoys matched to it, in each validation cohort under one rule (median split, log-rank
+P < 0.05, high group worse), and reports the share of its decoys that validate and how many it beats;
+`validation_fdr()` turns that into the estimated share of false validations over a set of models. `cohort_fvr()`
+gives the false-validation rates of the 43 validation cohorts of the paper, also as the searchable page
+`docs/validation_cohorts.html`. The function reproduces the paper's audit of 707 published models from the same
+inputs and seeds (`validation/TOOL_check_models_result.md`).
 
 See `decoyfdr/README.md` and the vignette. Its tests reproduce the response-benchmark calls and estimates of the
 paper from the stored per-cohort statistics.
@@ -34,6 +42,7 @@ paper from the stored per-cohort statistics.
 | `scripts/` | the response and prognostic benchmarks, the dependence between signatures, figures |
 | `decoys/` | the target-decoy estimate on the response benchmark and its calibration (global null, planted signal, intervals) |
 | `validation/` | the analysis plans with their SHA-256 hashes, and the provenance of the immune and breast signatures |
+| `docs/` | the searchable page of validation-cohort false-validation rates |
 
 `README.txt` gives the order in which the scripts run. The analysis scripts carry the absolute paths of the system
 they were run on: lay out the inputs listed in `INPUTS.csv` under a local root and run

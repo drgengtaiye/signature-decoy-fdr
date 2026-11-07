@@ -11,6 +11,10 @@ target's decoys that is called estimates the probability that a structure-matche
 would be called. The estimated FDR is the sum of those shares over targets divided by the number of targets
 called. `calibrate_null()` checks the estimate where the truth is known, by permuting outcomes within cohorts.
 
+For one prognostic risk model or many, `check_models()` asks the same question of each validation: how often does a
+model of the same structure, built from genes unrelated to it, pass the same test in the same cohort? See
+"Checking prognostic risk models" below.
+
 ## Install
 
 ```r
@@ -18,9 +22,9 @@ install.packages("remotes")
 remotes::install_github("drgengtaiye/signature-decoy-fdr", subdir = "decoyfdr")
 ```
 
-Only Rcpp and matrixStats are required (a C++ compiler is needed to build the package). GSVA (Bioconductor) is
-needed only for the `"gsva"` and `"ssgsea"` engines, RSpectra speeds up `"pc1"` for large sets, and survival,
-testthat, knitr and rmarkdown are used by the tests and the vignette (building the vignette needs pandoc).
+Rcpp, matrixStats and survival are required (a C++ compiler is needed to build the package). GSVA (Bioconductor)
+is needed only for the `"gsva"` and `"ssgsea"` engines, RSpectra speeds up `"pc1"` for large sets, and testthat,
+knitr and rmarkdown are used by the tests and the vignettes (building the vignettes needs pandoc).
 
 ## Use
 
@@ -47,6 +51,38 @@ minus the median of its target's null bank gives P < 0.05 with a positive median
 needed. The statistic is the AUC for a binary outcome and Harrell's C for survival, folded (direction chosen
 after the fact) or in the declared direction.
 
+## Checking prognostic risk models
+
+A prognostic risk model is a set of genes with Cox coefficients, fitted in one cohort (often TCGA) and "validated" in
+another when its high-score group fares worse. `check_models()` gives every model of three or more genes 32
+co-expressed and 8 random-gene decoys (gene sets of its size and expression level, the co-expressed ones also of
+its internal co-expression, from genes in no model), each carrying the model's coefficients in a random order and
+the direction of its own association with survival in the training cohort, and tests model and decoys in each
+validation cohort under one rule: the score split at its median, log-rank P < 0.05, high group worse.
+
+```r
+library(decoyfdr)
+tcga  <- dfdr_cohort(expr_tcga, data.frame(time = os_time, event = os_event, row.names = samples), "TCGA_COAD")
+valid <- dfdr_cohort(expr_gse, clin_gse, "GSE39582")            # expression: genes x samples, same gene symbols
+model <- c(GENE1 = 0.21, GENE2 = -0.35, GENE3 = 0.12, GENE4 = 0.40)  # Cox coefficients as printed
+chk <- check_models(model, train = tcga, validate = valid, seed = 1, cores = 4)
+chk                     # validated?, share of the model's decoys validated, rho
+cohort_fvr("GSE39582")  # how often null models fitted in TCGA validated in this cohort in the paper
+```
+
+For each model and validation cohort, `chk$units` gives the model's directed C-index and log-rank P, whether it
+validated, the share of its co-expressed (`d_coex`) and random-gene (`d_rand`) decoys that validated, and `rho`, the
+share of co-expressed decoys it beats. Over a set of models, `validation_fdr(chk)` sums `d_coex` and divides by the
+number validated: the estimated share of the validations that are false. For one model, `d_coex` says how often its
+structure alone validates there; `rho` ranks it among its decoys but does not sort true from false (in the paper,
+validated models with rho >= 0.95 replicated in another independent cohort in 30.5% of pairs, the others in 21.9%).
+Decoys are matched in the training and validation cohorts by default (`match =`); give `exclude =` the gene set the
+model was selected from (for instance a ferroptosis list) to keep it out of the decoys, as the paper did.
+
+`cohort_fvr()` returns the table of the paper's 43 validation cohorts (11 cancer types): for each, the share of
+null models validated there, where a null model is the usual pipeline (univariate Cox screen, then LASSO Cox) run
+in TCGA on a pool of genes outside every published theme and model. The rates run from 0% to 85%.
+
 ## What the estimate estimates
 
 A signature counts as a false call when it is called no more often than a module of non-signature genes with its
@@ -63,3 +99,6 @@ draw of decoys.
 the response benchmark (its first decoy set) from the per-cohort statistics in
 `inst/extdata/response_units_N0.csv.gz`. The scripts in `../applications/` run the package on the response cohorts,
 on 20 TCGA cancer types, on breast cancer cohorts and on the MSigDB Hallmark library, with the seeds given there.
+`check_models()` reproduces round 15 part A of the paper (728 published models, 11 cancer types) from the same inputs
+and seeds: `../applications/v24_check_models_repro.R` runs it, `../decoys/v24_check_models_repro.py` compares the
+output with the paper's tables, and `../validation/TOOL_check_models_acceptance.md` states the criteria.

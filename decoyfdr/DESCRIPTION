@@ -1,7 +1,7 @@
 Package: decoyfdr
 Type: Package
-Title: Matched Decoy Modules for False Discovery Rates of Gene-Expression Signature Libraries
-Version: 0.2.2
+Title: Matched Decoy Modules for False Discovery Rates of Gene-Expression Signatures
+Version: 0.3.0
 Authors@R: person("Gengtai", "Ye", role = c("aut", "cre"),
     email = "337516242+drgengtaiye@users.noreply.github.com")
 Description: Estimates the false discovery rate of a claim about a library of gene-expression
@@ -10,13 +10,16 @@ Description: Estimates the false discovery rate of a claim about a library of ge
     matched to it on size, scoring engine, expression level and internal co-expression in every cohort;
     targets and decoys go through the identical test against size- and engine-matched random gene sets,
     and the decoys' call rate estimates how many target calls are false. The package also calibrates the
-    estimate under the global null by permuting outcomes within cohorts.
+    estimate under the global null by permuting outcomes within cohorts. For prognostic risk models (Cox coefficients
+    named by gene), check_models() tests each model and its matched decoys in validation cohorts under one rule and
+    estimates how many validations are false; cohort_fvr() gives the false-validation rates of 43 public validation
+    cohorts measured with null models.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 4.2)
-Imports: Rcpp, stats, matrixStats, parallel
+Imports: Rcpp, stats, utils, matrixStats, parallel, survival
 LinkingTo: Rcpp
-Suggests: GSVA, RSpectra, SummarizedExperiment, survival, testthat (>= 3.0.0), knitr, rmarkdown
+Suggests: GSVA, RSpectra, SummarizedExperiment, testthat (>= 3.0.0), knitr, rmarkdown
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 RoxygenNote: 7.3.3

@@ -1,3 +1,14 @@
+# decoyfdr 0.3.0
+
+* `check_models()` audits prognostic risk models given as Cox coefficients named by gene: matched co-expressed and
+  random-gene decoys, rule (L) in every validation cohort (median split, log-rank P < 0.05, high group worse), and per
+  model the share of decoys validated and rho. It packages the audit of rounds 13 and 15 of the accompanying paper and
+  reproduces round 15 part A from the same inputs and seed (validation/TOOL_check_models_acceptance.md).
+* `validation_fdr()` gives the decoy-estimated FDR of validation over a set of checked models, with a bootstrap interval.
+* `cohort_fvr()` returns the false-validation rates of the 43 validation cohorts of round 15 (inst/extdata).
+* `dfdr_toy_survival()` simulates a small survival setting for the examples.
+* survival moves from Suggests to Imports. No earlier computation changes.
+
 # decoyfdr 0.2.2
 
 * `dfdr_cohort()` accepts a `SummarizedExperiment` (an assay and the outcome columns of its `colData`); the matrix
