@@ -1,0 +1,30 @@
+GSE31684 | samples 93 | platforms {'GPL570': 93}
+TITLE: Combination of a novel gene expression signature with a clinical nomogram improves the prediction of survival in high-risk bladder cancer
+SUMMARY: Urothelial carcinoma of the bladder is characterized by significant variability in clinical outcomes depending on stage and grade. The addition of molecular information may improve our understanding of such heterogeneity and enhance prognostic prediction. The purpose of this study was to validate and improve published prognostic signatures for high-risk bladder cancer.
+DESIGN: We evaluated microarray data from 93 bladder cancer patients managed by radical cystectomy to determine gene expression patterns associated with clinical and prognostic variables.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA145647
+FIELDS (n values with it | distinct | examples):
+  gender | 93 | 2 | male (x68); female (x25)
+  preopclinstage | 93 | 5 | T2 (x55); T1 (x19); T3 (x10); Ta (x8); T4
+  age at rc | 93 | 92 | 51.33 (x2); 64.06; 62.14; 65.96; 56.1; 68; 69.93; 65
+  survival.months | 93 | 92 | 4.435318 (x2); 103.7864; 13.17454; 19.77823; 16.4271; 13.14168; 87.85216; 173.4045
+  rc_stage | 93 | 5 | pT3 (x42); pT4 (x19); pT2 (x17); pT1 (x10); pTa (x5)
+  rc_histology | 93 | 3 | TCC (x86); TCC/Squamous (x5); TCC/CIS (x2)
+  plnd result | 93 | 4 | Negative (x49); Positive (x28); Nx (x14); NX (x2)
+  rc grade | 93 | 3 | High (x86); Low (x6); high
+  nomogram score | 93 | 90 | 1 (x4); 81.44001734; 81.71198473; 79.95740897; 11.08510015; 49.06355452; 41.39963921; 50.12822813
+  distant mets | 93 | 2 | 0 (x59); 1 (x34)
+  local recurrence | 93 | 2 | 0 (x73); 1 (x20)
+  urothelial recurrence | 93 | 2 | 0 (x84); 1 (x9)
+  metastasis | 93 | 2 | 0 (x57); 1 (x36)
+  last known status | 93 | 3 | DOD (x38); NED (x28); DOC (x27)
+  prerc_chemo | 93 | 3 | No (x89); Yes (x3); no
+  post rc_chemo | 93 | 2 | No (x58); Yes (x35)
+  smoking | 93 | 3 | Former (x56); Current (x19); Never (x18)
+  smokingpack-years | 75 | 20 | 30 (x10); 40 (x9); 60 (x9); 10 (x8); 20 (x5); 80 (x5); 50 (x4); 5 (x4)
+  recurrence free survival months (distant and local) | 93 | 92 | 3.383984 (x2); 103.7864; 7.129363; 10.38193; 15.54004; 13.14168; 2.726899; 87.85216
+  recurrence/dod | 93 | 2 | No (x54); Yes (x39)
+  cluster | 93 | 3 | 1 (x48); 2 (x42); NA (x3)
+  [source_name_ch1] | 93 | 1 | Bladder Cancer (x93)
+  [title] | 93 | 93 | 1_pT2; 2_pT2; 3_pT2; 4_pT4; 5_pT4; 6_pT3; 7_pT1; 8_pT3
+  postchemo type | 35 | 2 | salvage (x19); adjuvant (x16)

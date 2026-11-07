@@ -1,0 +1,18 @@
+GSE42568 | samples 121 | platforms {'GPL570': 121}
+TITLE: Breast Cancer Gene Expression Analysis
+SUMMARY: Analysis of 104 breast cancer biopsies (removed prior to any treatment with tamoxifen or chemotherapeutic agents) from patients aged between 31 years and 89 years at the time of diagnosis (mean age = 58 years). Twenty were less than 50 years and seventy-seven women were 50 years, or older, at diagnosis. The size of the tumours ranged between 0.6 cm and 8.0 cm (mean = 2.79 cm). Eighteen tumours were T1 (<2 cm) in maximal dimension; 83 were T2 (2–5 cm) and 3 tumours were T3 (>5 cm). Eighty-two were invasive ductal carcinoma, 17 were invasive lobular and five were tumours of special type (two tubular and three mucinous). Eleven tumours were grade 1; 40 were grade 2; and 53 were grade 3. Sixty-seven tumours were oestrogen receptor (ER) positive and 34 were ER negative (ER status was determined by Enzyme Immuno-Assay (EIA); a positive result was defined as more than 200 fmol/g protein). ER status was not available for 3 patients. Forty-five tumours had no axillary metastases and 59 tumours had metastasised to axillary lymph nodes. Sixty-nine women were treated with post-operative tamoxifen; 26 did not receive tamoxifen. Fifty patients were treated with adjuvant systemic chemotherapy (CM
+DESIGN: Gene expression profiling of 104 breast cancer and 17 normal breast biopsies.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA182286
+FIELDS (n values with it | distinct | examples):
+  tissue | 121 | 2 | breast cancer (x104); normal breast (x17)
+  age | 121 | 103 | NA (x17); 50.62 (x2); 56.1 (x2); 74.03; 67.26; 53.35; 43.72; 51.47
+  er_status | 121 | 3 | 1 (x67); 0 (x34); NA (x20)
+  size | 121 | 25 | 3 (x19); NA (x17); 2 (x17); 2.5 (x13); 3.5 (x11); 1.5 (x11); 4 (x6); 5 (x5)
+  grade | 121 | 4 | 3 (x53); 2 (x40); NA (x17); 1 (x11)
+  lymph node status | 121 | 3 | 1 (x59); 0 (x45); NA (x17)
+  relapse free survival time_days | 121 | 100 | NA (x17); 755 (x2); 2225 (x2); 2211 (x2); 634 (x2); 365 (x2); 3026; 3014
+  relapse free survival event | 121 | 3 | 0 (x56); 1 (x48); NA (x17)
+  overall survival time_days | 121 | 103 | NA (x17); 2225 (x2); 2211 (x2); 3026; 755; 3014; 1726; 285
+  overall survival event | 121 | 3 | 0 (x69); 1 (x35); NA (x17)
+  [source_name_ch1] | 121 | 2 | Breast tissue, cancer (x104); Breast tissue, normal (x17)
+  [title] | 121 | 121 | Normal breast, N1_15_12_04; Normal breast, N4_14_12_04; Normal breast, N5_15_12_04; Normal breast, N6_14_12_04; Normal breast, P1_15_12_04; Normal breast, P10_26_1_05; Normal breast, P11_25_1_05; Normal breast, P12_25_1_05

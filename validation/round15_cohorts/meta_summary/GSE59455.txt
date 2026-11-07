@@ -1,0 +1,18 @@
+GSE59455 | samples 141 | platforms {'GPL8432': 141}
+TITLE: Whole genome expression data from formalin-fixed parrafin embedded (FFPE) primary and metastatic melanomas
+SUMMARY: The dominant genetic signature found in melanoma is C to T mutations due to UV radiation. Nucleotide excision repair (NER) recognises and repairs UV-induced DNA damage. We aimed to determine the effect of high UV exposure on the melanoma transcriptome and key NER transcripts in melanoma tumours in association with clinical and genetic features of the disease. 196 primary or metastatic melanomas were utilised for this study. Solar elastosis and transcriptome data was collected. mRNA transcript levels of NER components XPC, DDB1 and DDB2 were quantified and compared to clinical parameters. Solar elastosis negatively correlated with Breslow thickness (-0.251, p=0.017) and was significantly lower in BRAFV600E melanomas. Lower XPC expression was associated with BRAFV600E and NRASQ61R mutations, earlier age of diagnosis and poorer survival.  Transcriptome profiling identified an over-representation of DNA repair processes in high vs low solar elastosis. Further analysis revealed DNA repair and kinase activity related transcripts in the low XPC melanomas. XPC deficiency is associated with the presence of kinase mutations and an aggressive disease phenotype, both of which result from the h
+DESIGN: Formalin fixed paraffin embedded (FFPE) primary and metastatic melanoma tumours; collected for diagnostic purposes at the Hunter Area Pathology Service, NSW, Australia between 2004 and 2009; were used for this study. The Hunter New England Area Health Service Human Ethics Committee approved the study. 196 tumours were identified with sufficient tissue (>2mm width and length) and clinical information for the study. Departmental records where searched for melanoma cases reported between 2005 to 2009. The need to access sufficient tumour tissue to allow matching genomic sequencing, gene expressio
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA255368
+FIELDS (n values with it | distinct | examples):
+  gender | 141 | 2 | M (x96); F (x45)
+  kinase mutation | 81 | 28 | BRAF V600E (x28); NRAS Q61R (x14); NRAS Q61L (x7); NRAS Q61K (x4); BRAF V600E, MET T1010I (x3); MET T1010I (x2); BRAF V600R (x2); KRAS G12C
+  braf/nras/wt | 141 | 3 | WT (x73); BRAF (x35); NRAS (x33)
+  primary/metastatic | 141 | 2 | Metastatic (x102); Primary (x39)
+  age at diagosis | 124 | 123 | 88.70089 (x2); 59.501713; 67.1321; 51.854893; 48.30664; 78.48597; 70.92403; 63.386723
+  age at death | 134 | 133 | 89.6345 (x2); 62.094456; 85.20465; 86.83915; 52.678986; 52.41068; 79.509926; 43.750854
+  overall survival (weeks) | 122 | 119 | 48.714287 (x3); 157.28572 (x2); 135.28572; 1028.2858; 43; 214.14285; 53.42857; 237.28572
+  solar elastosis score | 83 | 4 | 3 (x40); 1 (x23); 2 (x15); 0 (x5)
+  likely sun exposure score | 103 | 5 | 2 (x41); 3 (x31); 4 (x24); 1 (x5); 0 (x2)
+  breslow depth | 81 | 56 | 5 (x5); 6 (x5); 2.7 (x3); 2 (x3); 2.2 (x2); 0 (x2); 3.5 (x2); 6.5 (x2)
+  [source_name_ch1] | 141 | 1 | melanoma (x141)
+  [title] | 141 | 141 | 4531335087_A; 4531335087_B; 4531335087_C; 4531335087_D; 4531335087_E; 4531335087_F; 4531335087_G; 4531335087_H

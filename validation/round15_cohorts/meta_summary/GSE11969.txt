@@ -1,0 +1,30 @@
+GSE11969 | samples 163 | platforms {'GPL7015': 163}
+TITLE: Expression Profile-Defined Classification of Lung Adenocarcinoma
+SUMMARY: Expression profiles of 18,175 unique genes and three major genetic changes, p53, EGFR and K-ras, were investigated in 149 patients with non-small cell lung cancer (NSCLC), including 90 patients with adenocarcinomas (AD) to determine their relationships with various clinicopathologic features and Gene Ontology (GO) terms.  Keywords: Disease state analysis
+DESIGN: Expression profiles in 149 patients with NSCLC, 9 patients with SCLC and 5 for normal lung tissue.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA105841
+FIELDS (n values with it | distinct | examples):
+  Annotation | 163 | 163 | AD001; AD002; AD003; AD004; AD005; AD006; AD007; AD008
+  Position in Figure 1 (L to R) | 163 | 150 | NA (x14); 90; 71; 96; 119; 56; 95; 73
+  Age | 163 | 39 | NA (x14); 63 (x9); 60 (x8); 62 (x7); 61 (x7); 71 (x6); 67 (x6); 64 (x6)
+  Sex | 163 | 3 | M (x101); F (x48); NA (x14)
+  Histology | 163 | 7 | AD (x90); SQ (x35); LA (x18); SCLC (x9); Normal lung tissue (x5); AS (x4); LCNEC (x2)
+  Smoking (BI) | 163 | 74 | 0 (x49); NA (x14); 1200 (x4); 400 (x4); 800 (x4); 940 (x4); 1060 (x3); 720 (x3)
+  pTNM | 163 | 14 | T2N0M0 (x42); T1N0M0 (x36); T2N2M0 (x20); NA (x14); T3N0M0 (x12); T1N2M0 (x9); T2N1M0 (x9); T1N1M0 (x5)
+  pStage | 163 | 7 | IB (x42); IA (x36); IIIA (x35); IIB (x21); NA (x14); IIIB (x10); IIA (x5)
+  Status | 163 | 3 | Alive (x75); Dead (x74); NA (x14)
+  Survival (days) | 163 | 140 | NA (x14); 3245 (x2); 2910 (x2); 2702 (x2); 2533 (x2); 2528 (x2); 2353 (x2); 2521 (x2)
+  Evidence of relapse | 163 | 4 | Y (x78); N (x69); NA (x14); Unknown (x2)
+  Site of relapse | 163 | 23 | !Sample_characteristics_ch1 = EGFR status: Wt (x60); PM (x24); NA (x14); !Sample_characteristics_ch1 = EGFR status: Mut (x11); Brain (x10); LN (mediastinal) (x9); Bone (x7); Local rec. (x5)
+  EGFR status | 92 | 3 | Wt (x55); Mut (x23); NA (x14)
+  K-ras Status | 163 | 3 | Wt (x137); NA (x14); Mut (x12)
+  p53 Status | 163 | 3 | Wt (x81); Mut (x68); NA (x14)
+  Gefitinib treatment | 163 | 85 | !Sample_characteristics_ch1 = Position in Figure 2 (L to R): (x57); NA (x14); Y (x10); !Sample_characteristics_ch1 = Position in Figure 2 (L to R): 68; !Sample_characteristics_ch1 = Position in Figure 2 (L to R): 54; !Sample_characteristics_ch1 = Position in Figure 2 (L to R): 65; !Sample_characteristics_ch1 = Position in Figure 2 (L to R): 90; !Sample_characteristics_ch1 = Position in Figure 2 (L
+  Expression profile-based classification | 161 | 5 | !Sample_characteristics_ch1 = Invasion: (x57); Non-TRU (x37); TRU-a (x34); TRU-b (x19); NA (x14)
+  Invasion | 106 | 6 | Definite (x65); Definite but focal (x15); NA (x14); Not obvious (x8); Negative (x2); !Sample_characteristics_ch1 = Necrosis: (x2)
+  Necrosis | 161 | 5 | Negative (x59); !Sample_characteristics_ch1 = Grade: (x57); Positive (x23); NA (x14); Focal (x8)
+  Grade | 106 | 5 | Poorly (x34); Moderately (x31); Well (x25); NA (x14); !Sample_characteristics_ch1 = BAC features: (x2)
+  BAC features | 161 | 4 | - (x64); !Sample_molecule_ch1 = total RNA (x57); + (x26); NA (x14)
+  [source_name_ch1] | 163 | 2 | Primary lung tumor (x158); Normal lung tissue (x5)
+  [title] | 163 | 163 | Patient 001 with adenocarcinoma; Patient 002 with adenocarcinoma; Patient 003 with adenocarcinoma; Patient 004 with adenocarcinoma; Patient 005 with adenocarcinoma; Patient 006 with adenocarcinoma; Patient 007 with adenocarcinoma; Patient 008 with adenocarcinoma
+  Position in Figure 2 (L to R) | 24 | 10 | NA (x14); !Sample_characteristics_ch1 = Expression profile-based classification: (x2); 75; 41; 72; 74; 28; 26

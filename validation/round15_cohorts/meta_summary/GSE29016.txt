@@ -1,0 +1,28 @@
+GSE29016 | samples 72 | platforms {'GPL6947': 72}
+TITLE: Relation between smoking history and gene expression profiles in lung adenocarcinomas
+SUMMARY: Lung cancer is the worldwide leading cause of death from cancer. Tobacco usage is the major pathogenic factor, however, not all lung cancers can be attributable to smoking. The genetic aberrations that differ between smokers' and never-smokers’ lung carcinomas remain to a large extent unclear. We analyzed 72 early-stage primary lung carcinomas including small cell lung cancers LCNEC, adenocarcinomas and squamous cell carcinomas by Illumina HT12 gene expression microarrays.
+DESIGN: Gene expression profiling of 72 lung carcinomas using Illumina HT-12 V3.0 microarrays.
+RELATIONS: SubSeries of: GSE29066; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA143121
+FIELDS (n values with it | distinct | examples):
+  tissue | 72 | 1 | lung carcinoma (x72)
+  assay | 72 | 72 | LU1054; LU111; LU123; LU136; LU137; LU14; LU143; LU145
+  osbin | 72 | 3 | 1 (x50); 0 (x18); NA (x4)
+  os | 72 | 69 | NA (x4); 3.81369863; 4.065753425; 1.375342466; 4.64109589; 10.05479452; 17.56164384; 1.254794521
+  age | 72 | 31 | 64 (x6); 69 (x6); 77 (x5); 71 (x4); 80 (x4); 70 (x4); 62 (x4); 55 (x3)
+  Sex | 72 | 2 | F (x41); M (x31)
+  gexcluster_ac | 72 | 3 | NA (x33); AC1 (x26); AC2 (x13)
+  smoking | 72 | 3 | smoker (x56); never_smoker (x10); NA (x6)
+  tnm | 72 | 14 | T2aN0M0 (x27); T1bN0M0 (x13); T3N0M0 (x7); T1aN0M0 (x5); T2bN0M0 (x5); neo (x4); T4N0M0 (x3); T2aN2M0 (x2)
+  Stage | 72 | 7 | IB (x27); IA (x18); IIA (x8); IIB (x7); NA (x6); IIIA (x5); IA-IIIA
+  ckit_ihc | 72 | 3 | 0 (x43); 1 (x25); NA (x4)
+  her2_ihc | 72 | 3 | 0 (x64); NA (x7); 1
+  pakt_ihc | 72 | 3 | 0 (x36); 1 (x32); NA (x4)
+  pten_ihc | 72 | 3 | 0 (x37); 1 (x31); NA (x4)
+  egfr_ihc | 72 | 3 | 0 (x37); 1 (x31); NA (x4)
+  egfr_amp | 72 | 3 | 0 (x62); 1 (x6); NA (x4)
+  egfr_mut | 72 | 3 | 0 (x64); 1 (x4); NA (x4)
+  pik3ca_mut | 72 | 3 | 0 (x66); NA (x4); 1 (x2)
+  kras_mut | 72 | 3 | 0 (x56); 1 (x12); NA (x4)
+  histology | 72 | 5 | AC (x38); SqCC (x12); LCNEC (x9); SCLC (x7); NA (x6)
+  [source_name_ch1] | 72 | 8 | Lung tumor, adenocarcinoma, smoker (x28); Lung tumor, small cell lung cancer, smoker (x17); Lung tumor, squamous cell carcinoma, smoker (x11); Lung tumor, adenocarcinoma, never smoker (x9); Lung tumor, small cell lung cancer (x3); Lung tumor, adenocarcinoma (x2); Lung tumor, squamous cell carcinoma; Lung tumor, squamous cell carcinoma, never smoker
+  [title] | 72 | 72 | LU1054; LU111; LU123; LU136; LU137; LU14; LU143; LU145

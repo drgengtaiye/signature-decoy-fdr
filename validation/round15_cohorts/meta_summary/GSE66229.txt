@@ -1,0 +1,10 @@
+GSE66229 | samples 400 | platforms {'GPL570': 400}
+TITLE: Molecular analysis of gastric cancer identifies discrete subtypes associated with distinct clinical characteristics and survival outcomes: the ACRG (Asian Cancer Research Group) study
+SUMMARY: This SuperSeries is composed of the SubSeries listed below.
+DESIGN: Refer to individual Series
+RELATIONS: SuperSeries of: GSE62254; SuperSeries of: GSE66222; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA276142
+FIELDS (n values with it | distinct | examples):
+  tissue | 400 | 2 | Gastric tumor (x300); normal gastric tissue (x100)
+  patient | 400 | 302 | 132 (x2); 133 (x2); 134 (x2); 135 (x2); 136 (x2); 138 (x2); 140 (x2); 141 (x2)
+  [source_name_ch1] | 400 | 400 | Tumor from patient 107; Tumor from patient 108; Tumor from patient 109; Normal from patient 132; Normal from patient 133; Normal from patient 134; Normal from patient 135; Normal from patient 136
+  [title] | 400 | 400 | T107; T108; T109; N132; N133; N134; N135; N136

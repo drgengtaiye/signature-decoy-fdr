@@ -1,0 +1,24 @@
+GSE68465 | samples 462 | platforms {'GPL96': 462}
+TITLE: caArray_jacob-00182: Gene expression-based survival prediction in lung adenocarcinoma: a multi-site, blinded validation study
+SUMMARY: Here we report a large, training*testing, multi-site, blinded validation study to characterize the performance of several prognostic models based on gene expression for 442 lung adenocarcinomas. The hypotheses proposed examined whether microarray measurements of gene expression either alone or combined with basic clinical covariates (stage, age, sex) could be used to predict overall survival in lung cancer subjects. Several models examined produced risk scores that substantially correlated with actual subject outcome. Most methods performed better with clinical data, supporting the combined use of clinical and molecular information when building prognostic models for early-stage lung cancer. This study also provides the largest available set of microarray data with extensive pathological and clinical annotation for lung adenocarcinomas.
+DESIGN: jacob-00182 Assay Type: Gene Expression Provider: Affymetrix Array Designs: HG-U133A Organism: Homo sapiens (ncbitax) Material Types: cell, synthetic_RNA, organism_part, whole_organism, total_RNA Disease States: Lung Adenocarcinoma
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA282809
+FIELDS (n values with it | distinct | examples):
+  disease_state | 462 | 2 | Lung Adenocarcinoma (x443); Normal (x19)
+  Sex | 443 | 2 | Male (x223); Female (x220)
+  age | 443 | 50 | 62 (x23); 68 (x20); 60 (x19); 66 (x18); 70 (x18); 72 (x17); 65 (x17); 74 (x16)
+  race | 443 | 6 | White (x295); Unknown (x84); Not Reported (x45); Black or African American (x12); Asian (x6); Native Hawaiian or Other Pacific Islander
+  vital_status | 443 | 2 | Dead (x236); Alive (x207)
+  clinical_treatment_adjuvant_chemo | 443 | 3 | No (x341); Yes (x89); Unknown (x13)
+  clinical_treatment_adjuvant_rt | 443 | 3 | No (x364); Yes (x65); Unknown (x14)
+  disease_stage | 443 | 14 | pN0pT2 (x162); pN0pT1 (x114); pN1pT2 (x55); pN2pT2 (x34); pN1pT1 (x24); pN0pT3 (x16); pN2pT1 (x11); pN0pT4 (x7)
+  first_progression_or_relapse | 443 | 4 | Yes (x205); No (x157); -- (x71); Unknown (x10)
+  months_to_first_progression | 443 | 107 | -- (x265); 5 (x8); 7 (x7); 3 (x5); 4 (x5); 12 (x5); 10 (x5); 11 (x5)
+  mths_to_last_clinical_assessment | 443 | 322 | -- (x10); 40 (x6); 62 (x5); 43 (x5); 50 (x5); 90 (x5); 7 (x5); 48 (x4)
+  months_to_last_contact_or_death | 443 | 333 | 40 (x7); 36 (x6); 62 (x5); 48 (x5); 66 (x4); 43 (x4); 33 (x4); 85 (x4)
+  smoking_history | 443 | 5 | Smoked in the past (x268); Unknown (x92); Never smoked (x49); Currently smoking (x32); -- (x2)
+  surgical_margins | 443 | 3 | ALL MARGINS PATHOLOGICALLY NEGATIVE (x433); MICROSCOPICALLY POSITIVE MARGINS OR MICROSCOPIC RESIDUAL DISEASE (x8); -- (x2)
+  organism_part | 443 | 1 | Lung (x443)
+  histologic_grade | 443 | 4 | Moderate Differentiation (x209); POORLY DIFFERENTIATED (x167); WELL DIFFERENTIATED (x60); -- (x7)
+  [source_name_ch1] | 462 | 5 | MI (x178); MSKCC (x104); DFCI (x82); HLM (x79); Stratagene (x19)
+  [title] | 462 | 462 | jacob-00182: 1; jacob-00182: 2; jacob-00182: 3; jacob-00182: 4; jacob-00182: 5; jacob-00182: 6; jacob-00182: 7; jacob-00182: 9

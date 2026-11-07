@@ -99,14 +99,28 @@ Run order (each step reads the outputs of the steps before it)
    sample annotation was read): validation/round14_search/ holds the GEO search (query.txt, gds_ids.txt,
    geo_filter.py, shortlist.csv) and the screen of every candidate (screen.csv); no cohort was eligible and the tests
    were not run (validation/RESULT_round14_new_checkpoint_cohorts.md).
-9  Figures (validation/PLAN_round8_figure_displays.md and its four amendments: the descriptive displays added last;
-   Figure 5c, j and Additional file 1 Fig. S2: validation/PLAN_round9_standard_fdr_comparison.md; Figure 8:
-   validation/PLAN_round10_content_and_structure.md, and panels f and g validation/PLAN_round11_external_replication.md;
-   Additional file 1 Fig. S9: validation/PLAN_round12_reproducibility_by_type.md).
-   figprep_example.py, figprep_r.R, figprep_roc.py and figprep_km.R write the data of the example panels
-   (icb/v13_fig/); cns.py holds the shared style and cns10.py its palette and the forms of the last redraw. Figure 1
-   scripts/fig1.py; Figure 2 fig2.py; Figure 3 fig3.py; Figure 4 fig4.py; Figure 5 fig5.py; Figure 6 fig6.py; Figure 7
-   fig7.py; Figure 8 fig8.py; Figure 9 fig9.py (round 13). Additional file 1: python figS2.py; python run_restyled.py figS1.py (which also draws the figure set's
-   earlier Figure 4, not used) and figS3.py to figS7.py, whose scripts save under their earlier names (FigS2_calib to
-   FigS6_scale); python figS8.py (round 10: single-cohort estimates and libraries); python figS9.py (round 12: split halves); run_restyled.py applies the palette of cns10.py (fig67_lib.py, figstyle.py and v4kit.py are their
-   shared panels and style).
+9  Published models, validation cohorts and clinical assays (validation/PLAN_round15_literature_cohorts_controls.md and
+   amendments 1-4, each deposited before the step it changes). Part A, the whole search: validation/round15_search/
+   (screen, second extraction, rules), applications/v20_freeze_models.R (validation/published_models_r15.csv),
+   applications/v20_published_models.R <TYPE> and decoys/v20_audit.py (estimates), decoys/v20_citations.py
+   (exploratory citations). Parts B-C, validation cohorts: validation/round15_cohorts/ (candidates, eligibility, GEO
+   metadata in meta_summary/, built cohorts), applications/v20_null_models.R, v20_cohort_scores.R, v20_law.R and
+   decoys/v20_cohorts_audit.py (false-validation rates, H4, H5, the law). Part D, clinical assays:
+   validation/round15_assays/ (genes, weights and stated approximations; RUNLOG_v20_assays.md), applications/
+   v20_assays.R and decoys/v20_assays_audit.py (H7 and sensitivities). Outputs: icb/v20_round15/. A plan for the
+   machine-learning pipelines of the same literature (validation/PLAN_round16_ml_pipeline.md) is deposited and was not run.
+10 Decoy size (validation/PLAN_round17_decoy_size.md and AMENDMENT_1_round17_decoy_size.md): applications/
+   v22_size_check.R (icb/v22_size/).
+11 The law out of sample (validation/PLAN_round18_law_out_of_sample.md): applications/v23_law_split.R and
+   decoys/v23_law_split_audit.py (icb/v23_law_split/).
+12 Figures (validation/PLAN_round8_figure_displays.md and its four amendments; the panels added in the redraw are
+   descriptive under validation/NOTE_figures_v17_descriptive_only.md, except those that show rounds 15 and 18).
+   scripts/pixl_nc.py holds the style and pixl_nc_check.py the checks. Figure n is scripts/fig<n>.py: Figures 2-7
+   are the content and replication analyses (rounds 5-12), Figure 8 the published models, clinical assays and
+   pipeline (rounds 13 and 15), Figure 9 the validation cohorts and the law (rounds 15 and 18). Supplementary Figure
+   n is scripts/figS<n>.py: Supplementary Figure 1 the library's correlation structure, 2-10 the earlier
+   supplementary figures (python figS3.py; python run_restyled.py figS2.py and figS4.py to figS8.py, whose scripts
+   save under their earlier names; python figS9.py, round 10; python figS10.py, round 12), 11 the first-pass sample of
+   published models (round 13). figprep_example.py, figprep_r.R, figprep_roc.py and figprep_km.R write the data of
+   the example panels (icb/v13_fig/); cns.py, cns10.py, run_restyled.py, fig67_lib.py, figstyle.py and v4kit.py are
+   the style of the earlier supplementary figures.

@@ -1,0 +1,11 @@
+GSE15460 | samples 360 | platforms {'GPL570': 329, 'GPL96': 31}
+TITLE: Oncogenic Pathway Combinations Predict Clinical Prognosis in Gastric Cancer
+SUMMARY: This SuperSeries is composed of the SubSeries listed below.
+DESIGN: Refer to individual Series
+RELATIONS: SuperSeries of: GSE15455; SuperSeries of: GSE15456; SuperSeries of: GSE15459; SuperSeries of: GSE15537; SuperSeries of: GSE22183; SuperSeries of: GSE34942; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA115897
+FIELDS (n values with it | distinct | examples):
+  cell line | 70 | 39 | AGS (x4); MKN45 (x4); MKN74 (x3); YCC1 (x3); YCC7 (x3); AZ521 (x2); Fu97 (x2); Hs746T (x2)
+  cell type | 70 | 1 | gastric cancer (x70)
+  [source_name_ch1] | 360 | 289 | gastric cancer cell line (x70); normal skin fibroblasts (x3); primary gastric tumor, 3792; primary gastric tumor, 3793; primary gastric tumor, 3794; primary gastric tumor, 3796; primary gastric tumor, 3798; primary gastric tumor, 3803
+  [title] | 360 | 360 | AGS(1); AGS(2); AGS(3); AZ521; Fu97; Hs746T; IM95; Ist1
+  tissue | 290 | 3 | gastric tumor (x231); gastric adenocarcinoma (x56); skin (x3)

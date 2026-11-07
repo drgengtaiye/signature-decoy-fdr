@@ -1,0 +1,15 @@
+GSE42127 | samples 176 | platforms {'GPL6884': 176}
+TITLE: Expression data for non-small-cell lung cancer
+SUMMARY: Purpose  Prospectively identifying who will benefit from adjuvant chemotherapy (ACT) would improve clinical decisions for individual non-small-cell lung cancer (NSCLC) patients. Most current molecular signatures for lung cancer are prognostic only and provide limited information with regard to the functional importance of the genes selected. In this study, we aim to develop and validate a functional gene set that predicts the clinical benefit of ACT in NSCLC.  Experimental Design  An 18-hub-gene prognosis signature was developed through a systems biology approach using a large NSCLC dataset from the Director’s Challenge Consortium. The prognostic value of this signature was tested in NSCLC patients from UT Lung SPORE cohort and additional five public datasets. The 18-hub-gene set was then integrated with genome-wide functional (RNAi) data and genetic aberration data to derive a 12-gene predictive signature for ACT benefit in NSCLC.   Results  We showed that the 18-hub-gene set can robustly predict the prognosis of patients with adenocarcinoma in all validation datasets across four microarray platforms. The refined 12-gene functional set was successfully validated in two independent
+DESIGN: Patients were eligible to enter the study if they underwent curative resection for NSCLC at MD Anderson Cancer Center between December 1996 and June 2007, and patients with radiation therapy were excluded from the study. All tissue samples were obtained by surgical resection from patients who had provided written informed consent. Tissues were stored at −140°C after being snap frozen in liquid nitrogen. Serial sectioning of each sample was used to histologically evaluate tumor and malignant cells content before RNA extraction. The primary tumor tissues from 176 patients were selected randomly 
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA179189
+FIELDS (n values with it | distinct | examples):
+  had_adjuvant_chemo | 176 | 2 | FALSE (x127); TRUE (x49)
+  overall survival months | 176 | 81 | 14.4 (x6); 50.4 (x5); 62.4 (x5); 20.4 (x5); 33.6 (x4); 38.4 (x4); 64.8 (x4); 18 (x4)
+  survival status | 176 | 2 | A (x112); D (x64)
+  age at surgery | 176 | 145 | 59.8 (x3); 60.3 (x3); 72.2 (x3); 63.8 (x2); 67.6 (x2); 77.1 (x2); 76.5 (x2); 80.0 (x2)
+  gender | 176 | 2 | M (x93); F (x83)
+  final.pat.stage | 176 | 8 | IB (x70); IA (x42); IIB (x23); IIIB (x17); IIIA (x13); IIA (x9); unknown; IV
+  histology | 176 | 2 | Adenocarcinoma (x133); Squamous (x43)
+  [source_name_ch1] | 176 | 1 | Non-Small-Cell Lung Cancer (x176)
+  [title] | 176 | 176 | human lung cancer sample 250-T; human lung cancer sample 259-T; human lung cancer sample 289-T; human lung cancer sample 296-T; human lung cancer sample 309-T; human lung cancer sample 346-T; human lung cancer sample 363-T; human lung cancer sample 374-T

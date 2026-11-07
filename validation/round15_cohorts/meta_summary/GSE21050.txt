@@ -1,0 +1,14 @@
+GSE21050 | samples 310 | platforms {'GPL570': 310}
+TITLE: Expression data from Complex genetics sarcomas (cohort 1 and 2)
+SUMMARY: For this study, we selected, from the French Sarcoma Group (FSG) database, soft tissue sarcomas with no recurrent chromosomal translocations and for which a frozen tissue of the untreated primary tumor was available. Three hundred and ten sarcomas  have been studied. They are split in two cohorts. We used microarrays to detail the global programme of gene expression underlying the tumor biology
+DESIGN: Every cases has been histologically reviewed by the pathologist subgroup and classified according to the 2002 WHO classification using histology, immunohistochemistry and molecular genetic and cytogenetic when needed
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA126435
+FIELDS (n values with it | distinct | examples):
+  cohort | 310 | 2 | cohort 1 (x183); cohort 2 (x127)
+  tissue | 310 | 4 | Extremities (x187); Internal trunk (x66); Trunk wall (x54); Head and neck (x3)
+  cinsarc group | 310 | 2 | C2 (x185); C1 (x125)
+  metastasis | 309 | 2 | no (x188); yes (x121)
+  time | 309 | 236 | 0 (x20); 2.27 (x4); 4.04 (x3); 3.58 (x3); 1.03 (x3); 0.33 (x3); 0.38 (x3); 0.32 (x3)
+  diagnosis | 310 | 4 | Undifferentiated sarcoma (x136); Leiomyosarcoma (x85); Liposarcoma - dedifferentiated (x62); Other (x27)
+  [source_name_ch1] | 310 | 4 | Extremities (x187); Internal trunk (x66); Trunk wall (x54); Head and neck (x3)
+  [title] | 310 | 310 | S1_cohort 1; S10_cohort 1; S100_cohort 1; S101_cohort 1; S102_cohort 1; S103_cohort 1; S104_cohort 1; S105_cohort 1

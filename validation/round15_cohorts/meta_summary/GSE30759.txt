@@ -1,0 +1,25 @@
+GSE30759 | samples 63 | platforms {'GPL8490': 63}
+TITLE: Epigenome analysis of normal and cancer tissue from the uterine cervix
+SUMMARY: The Illumina Infinium 27k Human DNA methylation Beadchip v1.2 was used to obtain DNA methylation profiles across approximately 27,000 CpGs in normal and cancer tissue from the uterine cervix. There are a total of 63 samples, 15 samples of normal histology and 48 cervical cancers. The normal cervical samples were from women who underwent a hysterectomy for uterine fibroids. The 48 cervical cancers were from women who were treated at the Innsbruck Medical University between 1990 and 2006.
+DESIGN: Bisulphite converted DNA from the 63 samples were hybridised to the Illumina Infinium 27k Human Methylation Beadchip v1.2
+RELATIONS: SubSeries of: GSE30760; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA154717
+FIELDS (n values with it | distinct | examples):
+  cell type | 63 | 63 | cells of the uterine cervix 1215; cells of the uterine cervix 1227; cells of the uterine cervix 1279; cells of the uterine cervix 1342; cells of the uterine cervix 1392; cells of the uterine cervix 1408; cells of the uterine cervix 1445; cells of the uterine cervix 1447
+  sample type | 63 | 2 | bisulphite converted genomic DNA from  Cervical Cancer (x48); bisulphite converted genomic DNA from  Normal Cervix (x15)
+  status(0=normal,1=cancer) | 63 | 2 | 1 (x48); 0 (x15)
+  age | 63 | 63 | 34.013699; 45.578082; 33.356164; 70.191781; 67.309589; 39.506849; 62.027397; 73.684932
+  Stage | 63 | 4 | 1 (x26); NA (x16); 3 (x11); 2 (x10)
+  histology(1=squamous,2=adenocarcinoma,3=adenosquamous) | 63 | 4 | 1 (x37); NA (x15); 2 (x10); 3
+  grade | 63 | 4 | 2 (x28); NA (x17); 3 (x11); 1 (x7)
+  surgery | 63 | 3 | 1 (x35); NA (x15); 0 (x13)
+  radiation | 63 | 3 | 1 (x37); NA (x15); 0 (x11)
+  chemotherapy | 63 | 3 | 0 (x38); NA (x15); 1 (x10)
+  survival time (years) | 63 | 49 | NA (x15); 5.071232877; 3.706849315; 16.69041096; 3.235616438; 3.545205479; 16.60821918; 16.93150685
+  death status | 63 | 3 | 1 (x25); 0 (x23); NA (x15)
+  recurrence free survival (years) | 63 | 49 | NA (x15); 4.238356164; 3.120547945; 16.69041096; 1.252054795; 2.054794521; 16.60821918; 16.93150685
+  relapse | 63 | 3 | 1 (x25); 0 (x23); NA (x15)
+  sentrix position | 63 | 12 | F (x6); C (x6); H (x6); J (x6); E (x6); A (x5); D (x5); B (x5)
+  sentrix id | 63 | 6 | 6 (x11); 2 (x11); 1 (x11); 3 (x10); 4 (x10); 5 (x10)
+  bisulphite conversion efficiency (log-scale) | 63 | 63 | 11.1434515863385; 10.9870075239253; 11.4586061756093; 10.848150137437; 11.0370078321217; 11.2155319792501; 11.4831114542859; 11.2945790225126
+  [source_name_ch1] | 63 | 63 | genomic DNA from cells of the uterine cervix 1215; genomic DNA from cells of the uterine cervix 1227; genomic DNA from cells of the uterine cervix 1279; genomic DNA from cells of the uterine cervix 1342; genomic DNA from cells of the uterine cervix 1392; genomic DNA from cells of the uterine cervix 1408; genomic DNA from cells of the uterine cervix 1445; genomic DNA from cells of the uterine cervi
+  [title] | 63 | 63 | Uterine Cervix 1215; Uterine Cervix 1227; Uterine Cervix 1279; Uterine Cervix 1342; Uterine Cervix 1392; Uterine Cervix 1408; Uterine Cervix 1445; Uterine Cervix 1447

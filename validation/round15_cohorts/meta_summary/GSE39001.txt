@@ -1,0 +1,11 @@
+GSE39001 | samples 79 | platforms {'GPL201': 55, 'GPL6244': 24}
+TITLE: Mitosis is the main pathway altered in cervical cancer and is a source of potential markers for screening and survival, and therapeutic targets.
+SUMMARY: The effect of preventive vaccination against Human Papillomavirus (HPV) in reducing the burden of cervical cancer (CC) will not be seen before 30 years. It is still necessary to improve the procedures of screening and treatment against CC. Current methods for screening have low sensitivity (Pap test) or specificity (HPV tests) to detect high-grade cervical intraepithelial neoplasias (CIN) and CC (CIN2+). The objective of this study was the identification and characterization of cellular targets present in most CC and absent in normal cervical tissue that can be considered as potential markers for screening or therapeutic targets.   Methods and Findings.   A pyramidal strategy was used. Initially the expression of 8,638 genes was compared between 43 HPV16-positive CC and 12 healthy cervical epitheliums using the HG-Focus microarray. The expression intensity of 8,370 genes was validated in 24 samples with a second microarray (HG-ST1.0). A total of 997 genes were deregulated in CC and the 21 best ranked were validated and confirmed by qRT-PCR in 67 CC and 25 controls. According to the ROC analysis and the fold change (FC), the best (AUC ≥ 0.97 and FC ≥ 10) six genes (CCNB2, CDC20, PRC
+DESIGN: cervical cancer vs. healthy cervix
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA169562
+FIELDS (n values with it | distinct | examples):
+  clinic | 79 | 2 | Case (x62); Control (x17)
+  sample id | 79 | 79 | CN01E; CN01X; CN03E; CN05X; CN06E; CN07X; CN10E; CN10X
+  tissue | 79 | 4 | HPV16-positive cervical cancer specimen (x43); HPV16-positive  cervical cancer biopsy specimen (x19); Healthy exocervix (x11); Healthy endocervix (x6)
+  [source_name_ch1] | 79 | 3 | Cervical cancer biopsy (x62); Healthy female exocervix (x11); Healthy female endocervix (x6)
+  [title] | 79 | 79 | Healthy female endocervix CN01E; Healthy female exocervix CN01X; Healthy female endocervix CN03E; Healthy female exocervix CN05X; Healthy female endocervix CN06E; Healthy female exocervix CN07X; Healthy female endocervix CN10E; Healthy female exocervix CN10X

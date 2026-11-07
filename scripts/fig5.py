@@ -1,518 +1,604 @@
-"""Figure 5 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
-What the estimate estimates, and how it compares with realized and standard error rates.
-Tables: icb/v12_truth (validation/PLAN_round7_estimand_and_bias.md), icb/v14_standard (validation/PLAN_round9_standard_fdr_comparison.md),
-icb/v10_calib_* (validation/PLAN_calibration_round5.md). New panels are descriptive reads of those tables
-(validation/NOTE_figures_v17_descriptive_only.md)."""
-import glob
+"""Figure 6 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
+The same procedure for prognosis in 20 TCGA cancer types: folded C-index, ten decoy sets.
+Parallel to Figure 7 (one library in TCGA, one in breast cohorts).
+
+Old panels: figscripts/fig6_v10.py. Data: icb/v12_pkg/tcga_* (applications/v12_rerun.R), v11_pkg/tcga_decoy_r_by_type.csv
+(set 1 decoys), calib_v3_units.csv (response), v13_fig/km_tcga.csv (scripts/figprep_km.R), v5_signature_clusters.csv.
+New panels are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md)."""
 import sys
 sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
 from pixl_nc import *  # noqa: F401,F403
-from pixl_nc import np, pd, plt
-from matplotlib.patches import Rectangle
+from pixl_nc import np, pd, plt, fm, TextPath, D
 
 I = D + "/icb/"
-TR = I + "v12_truth/"
-S14 = I + "v14_standard/"
-P0 = pd.read_csv(TR + "null_pi0.csv")
-SN = pd.read_csv(TR + "summary_null.csv").set_index("stat")
-NS = pd.read_csv(I + "v10_calib_null_summary.csv").set_index(["stat", "estimator"])
-PT = pd.read_csv(I + "v10_calib_null_per_target.csv", index_col=0)
-SR = pd.read_csv(TR + "summary_response.csv")
-ST = pd.read_csv(TR + "summary_tcga.csv")
-SIGNAL = pd.concat([pd.read_csv(f) for f in sorted(glob.glob(TR + "signal_*.csv"))])
-TCGAP = pd.concat([pd.read_csv(f) for f in sorted(glob.glob(TR + "tcga_planted_*.csv"))])
-GN = pd.read_csv(S14 + "standard_globalnull.csv")
-SP = pd.read_csv(S14 + "standard_planted.csv")
-Q = pd.read_csv(S14 + "standard_planted_replicates.csv")
-FAMT = pd.read_csv(I + "v5_signature_clusters.csv").set_index("signature")
-TINFO = pd.read_csv(I + "v12_pkg/tcga_decoy_info.csv.gz")
+P = I + "v12_pkg/"
+FAMILY = pd.read_csv(I + "v5_signature_clusters.csv").set_index("signature").family.to_dict()
+FLAB = {"Inflamed/IFN": "inflamed/IFN", "Confounder": "confounder", "Other": "other"}
+EP = ["OS", "DSS", "PFI"]
+F = {e: pd.read_csv(P + f"tcga_{e}_fdr.csv") for e in EP}
+B = {e: pd.read_csv(P + f"tcga_{e}_fdr_by_set.csv") for e in EP}
+CL = {e: pd.read_csv(P + f"tcga_{e}_calls.csv.gz") for e in EP}
+CL = {e: c[c.stat == "fold"] for e, c in CL.items()}
+INFO = pd.read_csv(P + "tcga_decoy_info.csv.gz").drop(columns="genes")
+RP = pd.read_csv(I + "v11_pkg/tcga_decoy_r_by_type.csv")
+GN = pd.read_csv(P + "tcga_OS_globalnull_summary.csv")
+GP = pd.read_csv(P + "tcga_OS_globalnull_per_perm.csv")
+GT = pd.read_csv(P + "tcga_OS_globalnull_per_target.csv")
+U0 = pd.read_csv(I + "calib_v3_units.csv")
+U0 = U0[(U0["null"] == "N0") & (U0.kind == "target") & (U0.stat == "fold")]
+UO = pd.read_csv(P + "tcga_OS_units.csv.gz", usecols=["cohort", "n", "unit", "kind", "target", "class", "set", "fold_obs", "fold_med", "fold_p95"])
+UO["dC"] = UO.fold_obs - UO.fold_med
+UT = UO[UO.kind == "target"].drop_duplicates(["cohort", "target"])
+KMD = pd.read_csv(I + "v13_fig/km_tcga.csv")
+KMD["years"] = KMD.time / 365.25
+EXS = "CIN70_Carter"
 
-check_palette("scenario", SCEN)
-
-# TCGA settings keep the hue the old sheet gave them: library as P1, outside as P3, both as P2.
-GROUPS = ["P1", "P2", "P3", "T1", "T2", "T3"]
-HUE = {"P1": SCEN["P1"], "P2": SCEN["P2"], "P3": SCEN["P3"], "T1": SCEN["P1"], "T2": SCEN["P3"], "T3": SCEN["P2"]}
-GLAB = {"P1": "3 inflamed signatures", "P2": "3 other signatures", "P3": "outside every signature",
-        "T1": "2 signatures", "T2": "1 Hallmark set", "T3": "both"}
-GROW = {"P1": "inflamed", "P2": "other", "P3": "outside", "T1": "library", "T2": "outside", "T3": "both"}
-STAT = {"fold": "F", "dir": "D"}
-DOT = (0, (1.0, 1.5))
+SHORT = {"TUMOR-VASCULATURE-UP_Lu": "Tumor vasculature (Lu)", "CD39-CD8Tcell_Chow": "CD39 CD8 (Chow)",
+         "Tcell-inflamed_Ayers": "T-cell-inflamed (Ayers)", "WNT-beta-catenin_Takeuchi": "WNT/β-catenin (Takeuchi)"}
 
 
-def grp(s):
-    s = s.replace("TCGA ", "")
-    return s.split()[0]
+def lab(s):
+    if s in SHORT:
+        return SHORT[s]
+    if "_" in s:
+        a, b = s.rsplit("_", 1)
+        return f"{a.replace('_', ' ')} ({b})"
+    return s
 
 
-def mark(ax, x, y, hue, stat="fold", strong=True, small=False, opened=False, zorder=5):
-    """A planted setting: circle folded, triangle directed; small 6 cohorts; light the lower beta; open pi0-corrected."""
-    m = "o" if stat == "fold" else "^"
-    s = (2.3 if small else 3.5) * (1.1 if m == "^" else 1)
-    if opened:
-        ax.plot(x, y, marker=m, ms=s, mfc="white", mec=hue if strong else tint(hue, 0.55), mew=0.6, ls="none", zorder=zorder)
-    else:
-        ax.plot(x, y, marker=m, ms=s, mfc=hue if strong else tint(hue, 0.45), mec="white" if strong else hue, mew=0.3,
-                ls="none", zorder=zorder)
+def row(df, decoys="coex", boot="clusters", st="fold"):
+    return df[(df.stat == st) & (df.decoys == decoys) & (df.boot == boot)].iloc[0]
 
 
-def logmini(pg, x, y, w, h, lim, ticks, ylab=False):
-    ax = pg.ax(x, y, w, h)
-    ax.set_xscale("log"); ax.set_yscale("log")
-    ax.set_xlim(lim); ax.set_ylim(lim)
-    ax.plot(lim, lim, color=INK, lw=0.5, ls=DOT, zorder=1)
-    for f in (ax.set_xticks, ax.set_yticks):
-        f(ticks, [f"{t:g}" for t in ticks])
-    ax.tick_params(which="minor", length=0)
-    ax.xaxis.set_minor_formatter(plt.NullFormatter()); ax.yaxis.set_minor_formatter(plt.NullFormatter())
-    if ylab:
-        ax.set_ylabel("estimate (%)")
-    return ax
+def swarm(v, bin_w, step, limit):
+    """offsets that lay points of similar value side by side: bins of bin_w, neighbours step apart, at most limit from the centre"""
+    v = np.asarray(v, float)
+    off = np.zeros(len(v))
+    idx = np.floor(v / bin_w).astype(int)
+    for b in np.unique(idx):
+        k = np.where(idx == b)[0]
+        k = k[np.argsort(v[k])]
+        off[k] = np.array([0] + [s for i in range(1, len(k)) for s in (i, -i)])[:len(k)] * step
+    return np.clip(off, -limit, limit)
 
 
-def setting_title(pg, x, y, g):
-    pg.c.plot(x + 0.7, y, "o", ms=3.0, mfc=HUE[g], mec="white", mew=0.2, zorder=4)
-    pg.txt(x + 1.9, y, f"{g}, {GLAB[g]}")
+def strip2(ax, k, vals, c, m="o", ms=1.8, bin_w=0.01, step=0.04, limit=0.3, horizontal=False, mew=0.12, med_half=0.3):
+    """points of one group, side by side, with a black median"""
+    vals = np.asarray(vals, float)
+    o = k + swarm(vals, bin_w, step, limit)
+    a, b = (vals, o) if horizontal else (o, vals)
+    point(ax, a, b, c, m=m, ms=ms, mew=mew)
+    q = float(np.median(vals))
+    (xs, ys) = (([q, q], [k - med_half, k + med_half]) if horizontal else ([k - med_half, k + med_half], [q, q]))
+    ax.plot(xs, ys, color=INK, lw=0.7, zorder=5, solid_capstyle="butt")
 
 
-def row_key(pg, x, y, items):
-    """value key in millimetres: (colour, line style, label, value), one per line; the value right-aligned at x + 17.2"""
-    for i, (c, ls, lab, v) in enumerate(items):
-        yy = y + 2.25 * i
-        pg.c.plot([x, x + 2.2], [yy, yy], color=c, lw=0.8, ls=ls, solid_capstyle="butt", zorder=6)
-        pg.txt(x + 2.8, yy, lab, zorder=6)
-        pg.txt(x + 17.2, yy, v, ha="right", zorder=6)
+def half_up(v, nd=2):
+    return f"{np.floor(v * 10 ** nd + 0.5) / 10 ** nd:.{nd}f}"
+
+
+def regions(ax, x, y, color, xlim, ylim, levels=(0.5, 0.75, 0.9, 0.97), n=120, bw=0.15, z=2):
+    """regions holding the stated shares of the density, as in fig6_v10.py: pale fills of one hue and a hairline at each level"""
+    from scipy.stats import gaussian_kde
+    x, y = np.asarray(x, float), np.asarray(y, float)
+    k = gaussian_kde(np.vstack([x, y]), bw_method=bw)
+    gx, gy = np.meshgrid(np.linspace(*xlim, n), np.linspace(*ylim, n))
+    dz = k(np.vstack([gx.ravel(), gy.ravel()])).reshape(gx.shape)
+    s = np.sort(dz.ravel())[::-1]
+    cs = np.cumsum(s) / s.sum()
+    th = sorted(s[np.searchsorted(cs, lv)] for lv in levels)
+    ax.contourf(gx, gy, dz, levels=list(th) + [dz.max() * 1.01], colors=[tint(color, f) for f in (0.10, 0.17, 0.26, 0.38)], zorder=z)
+    ax.contour(gx, gy, dz, levels=th, colors=[color], linewidths=0.3, zorder=z + 0.1)
+
+
+def km_curve(time, event):
+    t, e = np.asarray(time, float), np.asarray(event, int)
+    s, xs, ys = 1.0, [0.0], [1.0]
+    for u in np.unique(t[e == 1]):
+        s *= 1 - ((t == u) & (e == 1)).sum() / (t >= u).sum()
+        xs.append(u)
+        ys.append(s)
+    return np.array(xs), np.array(ys)
+
+
+def logrank_p(time, event, group):
+    """two-group log-rank P, the function behind the old sheet's printed P (cns.logrank_p)"""
+    from scipy.stats import chi2
+    t, e, g = np.asarray(time, float), np.asarray(event, int), np.asarray(group, bool)
+    oe, v = 0.0, 0.0
+    for u in np.unique(t[e == 1]):
+        at = t >= u
+        nn, n1 = at.sum(), (at & g).sum()
+        d, d1 = ((t == u) & (e == 1)).sum(), ((t == u) & (e == 1) & g).sum()
+        if nn > 1:
+            oe += d1 - d * n1 / nn
+            v += d * (n1 / nn) * (1 - n1 / nn) * (nn - d) / (nn - 1)
+    return float(chi2.sf(oe ** 2 / v, 1))
+
+
+def textw(s, size=5.0, weight="normal"):
+    """width of a string in mm"""
+    return TextPath((0, 0), s, prop=fm.FontProperties(family="Helvetica", size=size, weight=weight)).get_extents().width * 25.4 / 72
+
+
+def fam_mark(pg, x, y, f, w=1.0, h=1.2):
+    pg.box(x, y - h / 2, w, h, FAM[f], z=3)
 
 
 pg = Page(240)
 
-# ---------------------------------------------------------------- a, b  false calls under permutation
-for lt, st, xa, lab in (("a", "fold", 8, "folded"), ("b", "dir", 38, "directed")):
-    pg.panel(xa - 7 if lt == "a" else xa - 4.5, 3, lt, f"False calls, {lab}")
-    ax = pg.ax(xa, 10, 24, 22)
-    x = P0[P0.stat == st]
-    hist(ax, x.R[x.R <= 8], np.arange(-0.5, 9.5), weights=100 * np.ones((x.R <= 8).sum()) / len(x))
-    r, e, e0, nom = x.R.mean(), x.E.mean(), x.E0.mean(), 52 * 0.025
-    ax.axvline(nom, color=NOM, lw=0.7, ls=(0, (3, 1.5)), zorder=4)
-    ax.axvline(e0, color=PI0, lw=0.7, ls=DOT, zorder=4)
-    ax.axvline(e, color=EST, lw=0.7, zorder=4)
-    ax.axvline(r, color=INK, lw=0.7, zorder=4)
-    ax.set_xlim(-0.6, 8.6); ax.set_xticks([0, 2, 4, 6, 8]); ax.set_ylim(0, 62); ax.set_yticks([0, 20, 40, 60])
-    ax.set_xlabel("false calls per library")
-    if lt == "a":
-        ax.set_ylabel("permutations (%)")
-    row_key(pg, xa + 7.5, 11.2, [(INK, "-", "realized", f"{r:.2f}"), (EST, "-", "decoys", f"{e:.2f}"),
-                                 (PI0, DOT, "π0-corrected", f"{e0:.2f}"), (NOM, (0, (3, 1.5)), "52 × 2.5%", f"{nom:.2f}")])
-    pg.txt(xa + 24, 21.6, f"> 8: {(x.R > 8).sum()} of {len(x):,}", ha="right")
-    pg.src(lt, x[["perm", "R", "E", "pi0", "E0"]].assign(nominal=nom))
+# ---------------------------------------------------------------- a  calls per endpoint
+pg.panel(1, 3, "a", "Calls per endpoint")
+ya, ha = 12.0, 19.0
+ax = pg.ax(9.5, ya, 15.5, ha)
+out = []
+for i, e in enumerate(EP):
+    r = row(F[e])
+    ci(ax, 0, r.exp_true, i, SIG, lw=3.2)
+    ci(ax, r.exp_true, r.called, i, COEX, lw=3.2)
+    yy = ya + ha * (i + 0.5) / 3
+    for xx, s in zip((29.2, 33.8, 38.6, 43.4), (f"{r.called:.0f}", f"{r.exp_false:.1f}", f"{r.fdr:.0f}%", f"{r.fdr_pi0:.0f}%")):
+        pg.txt(xx, yy, s, ha="right")
+    out.append((e, r.called, r.exp_true, r.exp_false, r.fdr, r.fdr_pi0))
+for xx, s in zip((29.2, 33.8, 38.6, 43.4), ("called", "exp.", "FDR", "π0")):
+    pg.txt(xx, ya - 1.4, s, ha="right", weight="bold")
+ax.set_yticks(range(3), EP, fontsize=5.5)
+ax.set_ylim(2.5, -0.5)
+ax.set_xlim(0, 26)
+ax.set_xticks([0, 10, 20])
+ax.set_xlabel("signatures called (of 52)")
+key(pg, 4.6, 7.3, [(SIG, "expected true"), (COEX, "expected false")], gap=1.6)
+pg.src("a", pd.DataFrame(out, columns=["endpoint", "called", "expected_true", "expected_false", "fdr_pct", "fdr_pi0_pct"]))
 
-# ---------------------------------------------------------------- c  estimate against false calls, per permutation
-pg.panel(66, 3, "c", "Per permutation")
-rng = np.random.default_rng(5)      # display jitter of the whole-number false calls only
-for j, (st, m) in enumerate((("fold", "o"), ("dir", "^"))):
-    ax = pg.ax(72 + 13.2 * j, 10, 12, 22)
-    x = P0[P0.stat == st]
-    ax.plot(x.R + rng.uniform(-0.25, 0.25, len(x)), x.E, m, ms=1.5, mfc=EST, mec="none", alpha=0.6, ls="none", rasterized=True, zorder=3)
-    ax.set_xscale("symlog", linthresh=2, linscale=0.8)
-    ax.plot([0, 8], [0, 8], color=INK, lw=0.5, ls=DOT, zorder=2)
-    ax.set_xlim(-0.5, 32); ax.set_xticks([0, 2, 10], ["0", "2", "10"]); ax.xaxis.set_minor_locator(plt.NullLocator())
-    ax.set_ylim(0, 8); ax.set_yticks([0, 2, 4, 6, 8])
-    if j == 0:
-        ax.set_ylabel("decoy estimate")
-    else:
-        ax.set_yticklabels([])
-    r_ = np.corrcoef(x.R, x.E)[0, 1]
-    pg.txt(72 + 13.2 * j + 0.2, 8.4, f"r = {r_:.2f}")
-    pg.txt(72 + 13.2 * j + 12, 11.2, STAT[st], ha="right", weight="bold")
-pg.txt(72 + 12.6, 37.0, "false calls", size=6, ha="center")
-pg.src("c", P0[["perm", "stat", "R", "E"]])
+# ---------------------------------------------------------------- b  the estimate with intervals over correlation clusters
+pg.panel(47.5, 3, "b", "Estimate and interval")
+yb, hb = 9.6, 25.4
+ax = pg.ax(66, yb, 24.5, hb)
+DL = {"coex": "co-expr.", "coex closest": "closest", "rand": "random"}
+rows_ = [(e, dc) for e in EP for dc in DL]
+XC = 150
+out, ys = [], []
+for k, (e, dc) in enumerate(rows_):
+    y = k + 0.55 * EP.index(e)
+    ys.append(y)
+    r = row(F[e], dc)
+    ci(ax, r.fdr_lo, min(r.fdr_hi, XC), y, EST, lw=0.7)
+    if r.fdr_hi > XC:
+        ax.plot(XC, y, marker=">", ms=2.2, mfc=EST, mec="none", clip_on=False, zorder=4)
+    point(ax, r.fdr_pi0, y, PI0, ms=2.9, filled=False, mew=0.5)
+    point(ax, r.fdr, y, EST, ms=3.3)
+    out.append((e, dc, r.fdr, r.fdr_lo, r.fdr_hi, r.fdr_pi0, r.fdr_pi0_lo, r.fdr_pi0_hi))
+ymax = max(ys)
+for y, o in zip(ys, out):
+    ym = yb + hb * (y + 0.6) / (ymax + 1.2)
+    pg.txt(102.4, ym, f"{o[2]:.0f} ({o[3]:.0f}–{o[4]:.0f})", ha="right")
+    pg.txt(114.6, ym, f"{o[5]:.0f} ({o[6]:.0f}–{o[7]:.0f})", ha="right")
+pg.txt(102.4, yb - 1.4, "estimate", ha="right", weight="bold")
+pg.txt(114.6, yb - 1.4, "π0-corrected", ha="right", weight="bold")
+key(pg, 66.2, yb - 1.4, [(EST, "estimate", "o"), (PI0, "π0-corrected", "open-o")], sw=1.4, gap=1.4)
+ax.set_yticks(ys, [f"{e} {DL[dc]}" for e, dc in rows_], fontsize=5)
+ax.set_ylim(ymax + 0.6, -0.6)
+ax.set_xlim(0, XC)
+ax.set_xticks([0, 50, 100, 150])
+ax.set_xlabel("estimated FDR (%)")
+pg.src("b", pd.DataFrame(out, columns=["endpoint", "decoys", "fdr", "fdr_lo", "fdr_hi", "fdr_pi0", "fdr_pi0_lo", "fdr_pi0_hi"]))
 
-# ---------------------------------------------------------------- d  per signature, permuted labels
-pg.panel(98.5, 3, "d", "Call rate per signature")
-ax = pg.ax(105, 10, 19.5, 22)
-ax.plot([0, 6], [0, 6], color=INK, lw=0.5, ls=DOT, zorder=1)
-point(ax, 100 * PT.dir_decoy_callrate, 100 * PT.dir_target_callrate, SIG, "^", ms=2.3)
-point(ax, 100 * PT.fold_decoy_callrate, 100 * PT.fold_target_callrate, SIG, "o", ms=2.3)
-ax.set_xlim(0, 6); ax.set_ylim(0, 6); ax.set_xticks([0, 2, 4, 6]); ax.set_yticks([0, 2, 4, 6])
-ax.set_xlabel("decoys called (%)"); ax.set_ylabel("signature called (%)")
-rf, rd = NS.loc[("fold", "coex A"), "per_target_r"], NS.loc[("dir", "coex A"), "per_target_r"]
-key(pg, 110.2, 28.2, [(SIG, f"folded, r = {rf:.2f}", "o")], sw=1.2)
-key(pg, 110.2, 30.6, [(SIG, f"directed, r = {rd:.2f}", "^")], sw=1.2)
-pg.src("d", PT.reset_index(names="signature").assign(r_fold=rf, r_dir=rd))
+# ---------------------------------------------------------------- c  decoy co-expression
+pg.panel(116.5, 3, "c", "Decoy co-expression")
+ax = pg.ax(124.5, 9, 22, 26)
+SET1 = INFO[INFO.set == 1]
+for cls in ("rand", "coex"):
+    g = SET1[SET1["class"] == cls]
+    regions(ax, g.r_target_med, g.r_achieved_med, UNIT[cls], (0, 1), (-0.05, 1))
+    ax.plot(g.r_target_med, g.r_achieved_med, ls="none", marker=MARK[cls], ms=0.7, mfc=UNIT[cls], mec="none", alpha=0.6, zorder=3, rasterized=True)
+ax.plot([0, 1], [0, 1], color=INK, lw=0.5, ls=(0, (1.0, 1.5)), zorder=4)
+ax.set_xlim(0, 1)
+ax.set_ylim(-0.05, 1)
+ax.set_xticks([0, 0.5, 1], ["0", "0.5", "1"])
+ax.set_yticks([0, 0.5, 1], ["0", "0.5", "1"])
+ax.set_xlabel("signature r")
+ax.set_ylabel("decoy r")
+key(pg, 125.2, 10.3, [(COEX, "co-expressed", "s")], sw=1.4)
+key(pg, 125.2, 12.7, [(RAND, "random-gene", "D")], sw=1.4)
+pg.src("c", SET1[["decoy", "target", "class", "r_target_med", "r_achieved_med"]])
 
-# ---------------------------------------------------------------- e  estimated over realized, every analysis
-pg.panel(128, 3, "e", "Estimated over realized false calls")
-ax = pg.ax(148.5, 11.5, 15.5, 20.5)
-ALAB = {("response", "fold"): "response, folded", ("response", "dir"): "response, directed", ("tcga_OS", "fold"): "TCGA survival",
-        ("breast_pc1", "fold"): "breast, PC1", ("hallmark_OS", "fold"): "Hallmark"}
-ax.axvspan(0.8, 1.25, color=EMPTY, lw=0, zorder=0)
-zero(ax, 1.0)
-for i, r in enumerate(GN.itertuples()):
-    yy = len(GN) - 1 - i
-    ci(ax, r.decoy_lo, r.decoy_hi, yy + 0.17, EST, lw=0.7)
-    ci(ax, r.nominal_lo, r.nominal_hi, yy - 0.17, NOM, lw=0.7)
-    point(ax, r.decoy_ratio, yy + 0.17, EST, "o", ms=3.0, zorder=5)
-    point(ax, r.nominal_ratio, yy - 0.17, NOM, "D", ms=2.3, filled=False, zorder=5)
-    ax.text(1.03, yy, f"{r.decoy_ratio:.2f}", transform=ax.get_yaxis_transform(), va="center", fontsize=5)
-    ax.text(1.42, yy, f"{r.nominal_ratio:.2f}", transform=ax.get_yaxis_transform(), va="center", fontsize=5)
-ax.text(1.03, 4.72, "dec.", transform=ax.get_yaxis_transform(), va="bottom", fontsize=5, weight="bold")
-ax.text(1.42, 4.72, "nom.", transform=ax.get_yaxis_transform(), va="bottom", fontsize=5, weight="bold")
-ax.set_xscale("log"); ax.set_xlim(0.38, 2.1); ax.set_xticks([0.5, 1, 2], ["0.5", "1", "2"]); ax.xaxis.set_minor_locator(plt.NullLocator())
-ax.set_yticks(range(len(GN))[::-1], [ALAB[(a, s)] for a, s in zip(GN.analysis, GN.stat)], fontsize=5)
-ax.set_ylim(-0.6, 4.6); ax.set_xlabel("estimated / realized")
-kx = key(pg, 128.5, 8.2, [(EST, "decoys", "o"), (NOM, "nominal", "open-D"), (INK, "95% interval", "line")], gap=1.6, sw=1.6)
-key(pg, kx, 8.2, [("#E2E2E2", "0.8–1.25")], sw=1.6)
-pg.src("e", GN)
+# ---------------------------------------------------------------- d  ten decoy sets
+pg.panel(149.5, 3, "d", "Ten decoy sets")
+ax = pg.ax(158, 9, 21, 26)
+out = []
+for i, e in enumerate(EP):
+    b = B[e][B[e].stat == "fold"]
+    r = row(F[e])
+    point(ax, i + np.linspace(-0.26, 0.26, len(b)), b.fdr.to_numpy(), EST, ms=2.3)
+    ax.plot([i - 0.32, i + 0.32], [r.fdr] * 2, color=INK, lw=0.8, zorder=5, solid_capstyle="butt")
+    ax.text(i, b.fdr.max() + 2.2, f"{r.fdr:.1f}", ha="center", va="bottom", fontsize=5)
+    assert abs(b.fdr.min() - r.fdr_set_min) < 1e-6 and abs(b.fdr.max() - r.fdr_set_max) < 1e-6
+    out += [(e, int(s), f) for s, f in zip(b.set, b.fdr)] + [(e, "pooled", r.fdr)]
+ax.set_xticks(range(3), EP, fontsize=5.5)
+ax.tick_params(axis="x", length=0)
+ax.set_xlim(-0.55, 2.55)
+ax.set_ylim(0, 80)
+ax.set_yticks([0, 25, 50, 75])
+ax.set_ylabel("estimated FDR (%)")
+pg.src("d", pd.DataFrame(out, columns=["endpoint", "set", "fdr_pct"]))
 
-# ---------------------------------------------------------------- f  planted, truth by gene content
-LIM_G = {"P1": ((10, 50), [10, 20, 50]), "P2": ((30, 100), [30, 50, 100]), "P3": ((50, 300), [50, 100, 200])}
-LIM_F = {"P1": ((0.1, 30), [0.1, 1, 10]), "P2": ((5, 100), [10, 30, 100]), "P3": ((20, 300), [30, 100, 300])}
-LIM_T = {"T1": ((1, 50), [1, 3, 10, 30]), "T2": ((5, 200), [10, 30, 100]), "T3": ((5, 100), [10, 30, 100])}
-RESP = SP[SP.data == "response"].assign(g=lambda d: d.scenario.map(grp))
-RY, RH, RW, RS = 47.5, 21.0, 21.5, 27.5
+# ---------------------------------------------------------------- e, f, g  cancer types, shared rows
+TORD = UT.groupby("cohort").fold_med.median().sort_values(ascending=False).index.tolist()
+NT = UT.drop_duplicates("cohort").set_index("cohort").n
+Y0, PT = 49.4, 2.72
+HT = PT * len(TORD)
 
-pg.panel(1, 41, "f", "Planted signal, truth by gene content")
-for j, g in enumerate(("P1", "P2", "P3")):
-    xa = 10 + RS * j
-    setting_title(pg, xa - 1.5, 45.2, g)
-    ax = logmini(pg, xa, RY, RW, RH, *LIM_G[g], ylab=j == 0)
-    for r in RESP[RESP.g == g].itertuples():
-        mark(ax, [r.realized_gc], [r.decoy], HUE[g], r.stat, r.beta == 1, r.cohorts == 6)
-    if j == 1:
-        ax.set_xlabel("realized FDR (%)")
-pg.src("f", RESP[["setting", "stat", "cohorts", "beta", "realized_gc", "decoy"]].rename(columns={"decoy": "estimate"}))
 
-# ---------------------------------------------------------------- g  planted, formal truth
-pg.panel(92, 41, "g", "Planted signal, formal truth")
-for j, g in enumerate(("P1", "P2", "P3")):
-    xa = 101 + RS * j
-    setting_title(pg, xa - 1.5, 45.2, g)
-    ax = logmini(pg, xa, RY, RW, RH, *LIM_F[g], ylab=j == 0)
-    for r in RESP[RESP.g == g].itertuples():
-        ax.plot([r.realized, r.realized], [r.decoy_pi0, r.decoy], color=OTHER, lw=0.4, zorder=2)
-        mark(ax, [r.realized], [r.decoy_pi0], HUE[g], r.stat, r.beta == 1, r.cohorts == 6, opened=True)
-        mark(ax, [r.realized], [r.decoy], HUE[g], r.stat, r.beta == 1, r.cohorts == 6)
-    if j == 1:
-        ax.set_xlabel("realized FDR (%)")
-pg.src("g", RESP[["setting", "stat", "cohorts", "beta", "realized", "decoy", "decoy_pi0"]].rename(columns={"decoy": "estimate", "decoy_pi0": "estimate_pi0"}))
+def ymm(i):
+    return Y0 + PT * (i + 0.5)
 
-# the marks of f, g, h, in one key
-yk = 77.0
-kx = key(pg, 10, yk, [(INK, "folded", "o"), (INK, "directed", "^"), (INK, "π0-corrected", "open-o")], gap=2.2)
-pg.c.plot(kx + 0.9, yk, "o", ms=2.3, mfc=INK, mec="white", mew=0.2, zorder=3)
-pg.txt(kx + 2.4, yk, "6 cohorts")
-kx += 11.6
-pg.c.plot(kx + 0.9, yk, "o", ms=3.5, mfc=tint(INK, 0.45), mec=INK, mew=0.3, zorder=3)
-pg.txt(kx + 2.4, yk, "β = 0.5 (TCGA 0.3)")
-kx += 21.5
-pg.c.plot(kx + 0.9, yk, "o", ms=3.5, mfc=INK, mec="white", mew=0.3, zorder=3)
-pg.txt(kx + 2.4, yk, "β = 1 (TCGA 0.6)")
-kx += 19.5
-pg.line(kx, yk, kx + 2.0, yk, color=INK, lw=0.5, ls=DOT)
-pg.txt(kx + 2.6, yk, "identity; axes differ between panels")
 
-# ---------------------------------------------------------------- h  planted, TCGA
-TC = SP[SP.data == "tcga"].assign(g=lambda d: d.scenario.map(grp))
-pg.panel(1, 81, "h", "TCGA survival, new causal sets")
-c_ = TINFO[(TINFO["class"] == "coex") & (TINFO.set == 1)]
-pg.txt(86.8, 85.2 - 4.0, f"co-expression, decoys {c_.r_achieved_med.median():.2f}, signatures {c_.r_target_med.median():.2f}", ha="right")
-for j, g in enumerate(("T1", "T2", "T3")):
-    xa = 10 + RS * j
-    setting_title(pg, xa - 1.5, 85.2, g)
-    ax = logmini(pg, xa, 87.2, RW, RH, *LIM_T[g], ylab=j == 0)
-    for r in TC[TC.g == g].itertuples():
-        ax.plot([r.realized, r.realized], [r.decoy_pi0, r.decoy], color=OTHER, lw=0.4, zorder=2)
-        mark(ax, [r.realized], [r.decoy_pi0], HUE[g], "fold", r.beta == 0.6, False, opened=True)
-        mark(ax, [r.realized], [r.decoy], HUE[g], "fold", r.beta == 0.6, False)
-    if j == 1:
-        ax.set_xlabel("realized FDR (%)")
-pg.src("h", TC[["setting", "beta", "realized", "decoy", "decoy_pi0"]].rename(columns={"decoy": "estimate", "decoy_pi0": "estimate_pi0"}).assign(
-    r_decoys=c_.r_achieved_med.median(), r_signatures=c_.r_target_med.median()))
+pg.panel(1, 43, "e", "Null median folded C")
+ax = pg.ax(9.4, Y0, 19.6, HT)
+for i, co in enumerate(TORD):
+    v = UT[UT.cohort == co].fold_med.to_numpy()
+    q = np.quantile(v, [0.05, 0.25, 0.5, 0.75, 0.95])
+    point(ax, v, i + swarm(v, 0.0015, 0.065, 0.42), NULLC, ms=1.5, mew=0)
+    ci(ax, q[0], q[4], i, MUTED, lw=0.5, zorder=5)
+    ci(ax, q[1], q[3], i, INK, lw=1.2, zorder=5)
+    ax.plot([q[2], q[2]], [i - 0.42, i + 0.42], color=INK, lw=0.7, zorder=6, solid_capstyle="butt")
+    pg.txt(8.8, ymm(i), co, ha="right")
+    pg.txt(35.2, ymm(i), f"{NT[co]:,}", ha="right")
+pg.txt(35.2, Y0 - 1.5, "n", ha="right", weight="bold")
+zero(ax, 0.5)
+ax.set_ylim(len(TORD) - 0.5, -0.5)
+ax.set_yticks([])
+ax.spines["left"].set_visible(False)
+ax.set_xlim(0.495, 0.655)
+ax.set_xticks([0.5, 0.55, 0.6, 0.65], ["0.50", "0.55", "0.60", "0.65"])
+ax.set_xlabel("null median folded C")
+pg.src("e", UT[["cohort", "n", "target", "fold_med"]])
 
-# ---------------------------------------------------------------- i  signature minus its decoys, by family
-pg.panel(92, 81, "i", "Signature minus decoys")
-ax = pg.ax(107, 85.4, 20, 22.8)
-fam = FAMT.family.reindex(PT.index)
-rows_ = [("Inflamed/IFN", "fold"), ("Inflamed/IFN", "dir"), ("Confounder", "fold"), ("Confounder", "dir"), ("Other", "fold"), ("Other", "dir")]
-ox = []
-for i, (f, st) in enumerate(rows_):
-    yy = len(rows_) - 1 - i
-    v = 100 * (PT[f"{st}_target_callrate"] - PT[f"{st}_decoy_callrate"])[fam == f]
-    strip(ax, yy, v, FAM[f], m="o" if st == "fold" else "^", ms=1.9, spread=0.27, horizontal=True)
-    ax.text(1.02, yy, str(len(v)), transform=ax.get_yaxis_transform(), va="center", fontsize=5)
-    ox += [dict(signature=s, family=f, stat=st, minus=val) for s, val in v.items()]
-ax.text(1.02, 5.62, "n", transform=ax.get_yaxis_transform(), va="bottom", fontsize=5, weight="bold")
+pg.panel(37.5, 43, "f", "Above the null")
+ax = pg.ax(38.6, Y0, 18, HT)
+above = UO.assign(above=UO.fold_obs > UO.fold_p95)
+A = above.assign(unit_class=above["class"].where(above.kind == "decoy", "signature")).groupby(["cohort", "unit_class"]).above.agg(["sum", "size"])
+out = []
+for i, co in enumerate(TORD):
+    s, c, rr = (A.loc[(co, k)] for k in ("signature", "coex", "rand"))
+    ax.plot([0, 60], [i, i], color=EMPTY, lw=0.3, zorder=1)
+    point(ax, 100 * rr["sum"] / rr["size"], i, RAND, "D", ms=2.0, zorder=3)
+    point(ax, 100 * c["sum"] / c["size"], i, COEX, "s", ms=2.2, zorder=4)
+    point(ax, 100 * s["sum"] / s["size"], i, SIG, "o", ms=2.6, zorder=5)
+    pg.txt(60.8, ymm(i), f"{int(s['sum'])}", ha="right")
+    out.append((co, int(s["sum"]), int(s["size"]), 100 * s["sum"] / s["size"], 100 * c["sum"] / c["size"], int(c["size"]), 100 * rr["sum"] / rr["size"], int(rr["size"])))
+pg.txt(60.8, Y0 - 1.5, "of 52", ha="right", weight="bold")
+zero(ax, 5)
+ax.set_ylim(len(TORD) - 0.5, -0.5)
+ax.set_yticks([])
+ax.spines["left"].set_visible(False)
+ax.set_xlim(-2, 60)
+ax.set_xticks([0, 25, 50])
+ax.set_xlabel("above null 95th\npercentile (%)", linespacing=1.0)
+for k, (c, l_, m_) in enumerate(((SIG, "signatures", "o"), (COEX, "co-expressed", "s"), (RAND, "random-gene", "D"))):
+    key(pg, 45.0, ymm(15 + k), [(c, l_, m_)], sw=1.4)
+pg.src("f", pd.DataFrame(out, columns=["cohort", "signatures_above", "signatures", "signatures_pct", "coex_decoys_pct", "coex_decoy_tests", "rand_decoys_pct", "rand_decoy_tests"]))
+
+pg.panel(62.5, 43, "g", "Shortfall by type")
+ax = pg.ax(63, Y0, 21.5, HT)
+RP["gap"] = RP.r_target - RP.r_decoy_med
+out = []
+for i, co in enumerate(TORD):
+    q = np.nanpercentile(RP[RP.cohort == co].gap, [5, 25, 50, 75, 95])
+    ci(ax, q[0], q[4], i, tint(COEX, 0.5), lw=0.6)
+    ci(ax, q[1], q[3], i, COEX, lw=1.4)
+    point(ax, q[2], i, "white", "o", ms=1.9, zorder=5, mew=0.4)
+    ax.plot(q[2], i, marker="o", ms=1.9, mfc="white", mec=COEX, mew=0.5, zorder=6)
+    out.append((co, *q))
 zero(ax, 0)
-FL = {"Inflamed/IFN": "inflamed", "Confounder": "confounder", "Other": "other"}
-ax.set_yticks(range(6)[::-1], [f"{FL[f]}, {STAT[s]}" for f, s in rows_], fontsize=5)
-ax.set_ylim(-0.6, 5.6); ax.set_xlim(-2.5, 1.8); ax.set_xticks([-2, 0, 1], ["−2", "0", "1"]); ax.set_xlabel("difference (points)")
-pg.src("i", pd.DataFrame(ox))
+ax.set_ylim(len(TORD) - 0.5, -0.5)
+ax.set_yticks([])
+ax.spines["left"].set_visible(False)
+ax.set_xticks([0, 0.2, 0.4], ["0", "0.2", "0.4"])
+ax.set_xlabel("signature − decoy r")
+pg.src("g", pd.DataFrame(out, columns=["cohort", "q05", "q25", "median", "q75", "q95"]))
 
-# ---------------------------------------------------------------- j  estimated over realized under permutation, by decoy class
-pg.panel(134, 81, "j", "Null ratio by decoy class")
-ax = pg.ax(158, 85.4, 14.5, 22.8)
-CL = [("coex A", "co-expressed", COEX, "s", True), ("coex A, closest", "closest-matched", COEX, "s", True), ("coex B", "no TME genes", COEX, "s", True),
-      ("random A", "random genes", RAND, "D", True), ("pi0", "π0-corrected", COEX, "s", False)]
-ax.axvspan(0.8, 1.25, color=EMPTY, lw=0, zorder=0)
-zero(ax, 1.0)
-lab, oj = [], []
-for si, st in enumerate(("fold", "dir")):
-    for ci_, (k, name, c, m, fl) in enumerate(CL):
-        yy = 11 - ci_ - (si * 6.0) - (0 if si == 0 else 0.4)
-        if k == "pi0":
-            v, lo, hi = SN.loc[st, "ratio_pi0"], SN.loc[st, "ratio_pi0_lo"], SN.loc[st, "ratio_pi0_hi"]
-        else:
-            r = NS.loc[(st, k)]
-            v, lo, hi = r.rho, r.rho_lo, r.rho_hi
-        ci(ax, lo, hi, yy, c, lw=0.6)
-        point(ax, v, yy, c, m, ms=2.2, filled=fl, zorder=5)
-        ax.text(1.04, yy, f"{v:.2f}", transform=ax.get_yaxis_transform(), va="center", fontsize=5)
-        lab.append((yy, name))
-        oj.append(dict(stat=st, decoys=name, ratio=v, lo=lo, hi=hi))
-    pg.txt(140.4, 85.4 + 22.8 * (11.55 - (11 - 2 - si * 6.4)) / 12.3, STAT[st], weight="bold")
-ax.set_yticks([l[0] for l in lab], [l[1] for l in lab], fontsize=5)
-ax.tick_params(axis="y", length=0, pad=1)
-ax.set_ylim(-0.75, 11.55); ax.set_xscale("log"); ax.set_xlim(0.66, 1.5)
-ax.set_xticks([0.8, 1, 1.25], ["0.8", "1", "1.25"]); ax.xaxis.set_minor_locator(plt.NullLocator())
-ax.set_xlabel("estimated / realized")
-pg.src("j", pd.DataFrame(oj))
+# ---------------------------------------------------------------- h  permuted survival
+pg.panel(87.5, 43, "h", "Permuted survival")
+ax = pg.ax(95.5, 48.5, 18, 21.5)
+g = GP[GP.stat == "fold"]
+gs = GN[GN.stat == "fold"].iloc[0]
+hist(ax, g.R, np.arange(-0.5, 18.5))
+ax.axvline(g.R.mean(), color=INK, lw=0.7, zorder=4)
+ax.axvline(g.E.mean(), color=EST, lw=0.7, ls=(0, (2.2, 1.6)), zorder=5)
+ax.set_xlim(-0.8, 17.8)
+ax.set_xticks([0, 5, 10, 15])
+ax.set_ylim(0, 56)
+ax.set_yticks([0, 25, 50])
+ax.set_xlabel("false calls per library")
+ax.set_ylabel("permutations")
+ax.text(17.8, 56, f"ratio {gs.ratio:.2f}\n({gs.ratio_lo:.2f}–{gs.ratio_hi:.2f})", ha="right", va="top", fontsize=5, linespacing=1.1)
+key(pg, 100.6, 56.4, [(INK, f"mean {half_up(g.R.mean())}", "line")], sw=1.4)
+pg.line(100.6, 58.8, 102.0, 58.8, color=EST, lw=0.8, ls=(0, (2.2, 1.0)))
+pg.txt(102.6, 58.8, f"estimate {half_up(g.E.mean())}")
+pg.src("h", g.assign(mean_realized=g.R.mean(), mean_estimate=g.E.mean(), ratio=gs.ratio, ratio_lo=gs.ratio_lo, ratio_hi=gs.ratio_hi))
 
-# ---------------------------------------------------------------- k, l  the 22 planted settings, on shared rows
-SP["g"] = SP.scenario.map(grp)
-SP["o"] = SP.g.map({g: i for i, g in enumerate(GROUPS)})
-SP["co"] = (SP.cohorts == 6).astype(int)
-SP["so"] = SP.stat.map({"fold": 0, "dir": 1})
-S22 = SP.sort_values(["o", "co", "beta", "so"]).reset_index(drop=True)
-assert len(S22) == 22
-Y0, RH_, GAP = 128.6, 2.38, 0.9
-ys, y_ = [], Y0
-for i, r in S22.iterrows():
-    if i and S22.g[i] != S22.g[i - 1]:
-        y_ += GAP
-    ys.append(y_); y_ += RH_
-Y_END = y_
-S22["y"] = ys
+# ---------------------------------------------------------------- i  permuted survival, per signature
+pg.panel(115.5, 43, "i", "Call rate, permuted")
+ax = pg.ax(123.5, 48.5, 18.5, 21.5)
+gt = GT[GT.stat == "fold"].set_index("target")
+OSC = CL["OS"][CL["OS"].kind == "target"].set_index("target").call
+ax.plot([0, 9], [0, 9], color=INK, lw=0.5, ls=(0, (1.0, 1.5)), zorder=1)
+for c_ in (False, True):
+    m_ = OSC.reindex(gt.index).astype(bool) == c_
+    point(ax, 100 * gt.decoy_rate[m_], 100 * gt.rate[m_], SIG, ms=2.6, filled=c_, mew=None if c_ else 0.5, zorder=5 if c_ else 4)
+ax.set_xlim(0, 9)
+ax.set_ylim(0, 9)
+ax.set_xticks([0, 3, 6, 9])
+ax.set_yticks([0, 3, 6, 9])
+ax.set_xlabel("decoys (%)")
+ax.set_ylabel("signature (%)")
+ax.text(8.9, 0.25, f"r = {np.corrcoef(gt.decoy_rate, gt.rate)[0, 1]:.2f}, n = {len(gt)}", ha="right", va="bottom", fontsize=5)
+gt = gt.assign(called=OSC.reindex(gt.index)).reset_index()
+pg.src("i", gt[["target", "rate", "decoy_rate", "called"]])
 
-pg.panel(1, 119, "k", "Planted settings, FDR (%)")
-COLS = [("R", "mean", "calls", None), ("realized_gc", "", "gene", "fdr"), ("realized", "", "formal", "fdr"), ("decoy", "", "plain", "fdr"),
-        ("decoy_pi0", "", "π0", "fdr"), ("nominal", "", "nominal", "fdr"), ("permutation", "", "perm.", "fdr")]
-x0, cw = 23.4, 6.75
-
-
-def fdr_c(v):
-    return PURPLE(np.clip((np.log10(v) + 1) / (np.log10(300) + 1), 0, 1))
-
-
-def num(v):
-    return f"{v:.1f}" if v < 9.95 else f"{v:.0f}"
-
-
-for j, (c, h1, h2, kind) in enumerate(COLS):
-    if h1:
-        pg.txt(x0 + cw * j + cw / 2 - 0.1, 123.8, h1, ha="center", weight="bold")
-    pg.txt(x0 + cw * j + cw / 2 - 0.1, 126.6, h2, ha="center", weight="bold")
-pg.txt(x0 + cw * 2 - 0.1, 123.8, "realized", ha="center", weight="bold")
-pg.txt(x0 + cw * 4 - 0.1, 123.8, "decoys", ha="center", weight="bold")
-pg.txt(x0 + cw * 6 - 0.1, 123.8, "standard", ha="center", weight="bold")
-for a_, b_ in ((1, 3), (3, 5), (5, 7)):
-    pg.line(x0 + cw * a_ + 0.3, 125.2, x0 + cw * b_ - 0.5, 125.2, lw=0.3)
-pg.txt(x0 - 0.8, 126.6, "β, cohorts", ha="right", weight="bold")
-for i, r in S22.iterrows():
-    pg.txt(x0 - 0.8, r.y + RH_ / 2 - 0.05, f"{r.beta:g}, {r.cohorts}, {STAT[r.stat]}", ha="right")
-    for j, (c, _, _, kind) in enumerate(COLS):
-        v = r[c]
-        if not np.isfinite(v):
-            tile(pg, x0 + cw * j, r.y, cw, RH_, EMPTY)
-        elif kind == "fdr":
-            tile(pg, x0 + cw * j, r.y, cw, RH_, fdr_c(v), num(v))
-        else:
-            tile(pg, x0 + cw * j, r.y, cw, RH_, BLUE(v / 45), f"{v:.1f}")
-for g in GROUPS:
-    s = S22[S22.g == g]
-    pg.box(11.2, s.y.min(), 0.8, s.y.max() + RH_ - s.y.min() - 0.15, HUE[g], z=2)
-    ym = (s.y.min() + s.y.max() + RH_) / 2
-    pg.txt(1, ym - 1.0, g, weight="bold")
-    pg.txt(1, ym + 1.0, GROW[g])
-pg.cbar(x0 + 8, Y_END + 1.6, 22, 1.4, PURPLE, -1, np.log10(300), [-1, 0, 1, 2], "FDR (%)", labels=["0.1", "1", "10", "100"])
-pg.src("k", S22[["setting", "stat", "reps", "R", "realized_gc", "realized", "decoy", "decoy_pi0", "nominal", "permutation"]])
-
-pg.panel(73, 119, "l", "Parts of the plain estimate")
-ax = pg.ax(74.5, Y0, 41, Y_END - Y0)
-ax.set_ylim(Y_END, Y0); ax.set_xlim(0, 245)
-SR_ = SR.set_index(["scenario", "beta", "cohorts", "stat"])
-ST_ = ST.set_index(["kind", "beta"])
-ol = []
-for r in S22.itertuples():
-    if r.data == "response":
-        p = SR_.loc[(r.scenario, r.beta, r.cohorts, r.stat)]
+# ---------------------------------------------------------------- j  response against survival
+pg.panel(144.5, 43, "j", "Response vs survival")
+ax = pg.ax(153, 48.5, 26, 21.5)
+ost = CL["OS"][CL["OS"].kind == "target"].set_index("target")
+rsp = U0.set_index("unit")
+J = pd.DataFrame({"resp": rsp.med_delta, "os": ost.med_delta, "rc": rsp.call.astype(str) == "True", "oc": ost.call}).dropna()
+J["family"] = J.index.map(FAMILY)
+for s, r in J.iterrows():
+    c = FAM[r.family]
+    if r.rc and r.oc:
+        point(ax, r.resp, r.os, c, ms=3.0, zorder=6)
+    elif r.rc or r.oc:
+        point(ax, r.resp, r.os, c, ms=2.8, filled=False, zorder=5, mew=0.6)
     else:
-        p = ST_.loc[(r.scenario.replace("TCGA ", ""), r.beta)]
-    yy = r.y + RH_ / 2
-    left = 0
-    for v, col in ((p.exp_V, INK), (p.excess_null, HUE[r.g]), (p.part_true, tint(HUE[r.g], 0.4))):
-        ax.barh(yy, v, 1.5, left=left, color=col, edgecolor="white", linewidth=0.25, zorder=3)
-        left += v
-    point(ax, p.estimate_pi0, yy, INK, "D", ms=2.2, filled=False, mew=0.5, zorder=6)
-    ol.append(dict(setting=r.setting, stat=r.stat, false_calls_null=p.exp_V, decoy_excess=p.excess_null, decoy_rates_true=p.part_true, estimate_pi0=p.estimate_pi0))
-ax.set_yticks([]); ax.set_xticks([0, 50, 100, 150, 200]); ax.set_xlabel("% of calls (expected)")
-ex = SCEN["P3"]
-for i, (c, lab_, k) in enumerate(((INK, "false calls of null signatures", "b"), (ex, "decoys' excess over null signatures", "b"),
-                                  (tint(ex, 0.4), "decoy rates of true signatures", "b"), (INK, "π0-corrected estimate", "d"))):
-    yy = Y0 + 1.4 + 2.5 * i
-    if k == "b":
-        pg.box(83.0, yy - 0.75, 1.8, 1.5, c, z=2)
-    else:
-        pg.c.plot(83.9, yy, "D", ms=2.2, mfc="white", mec=c, mew=0.5, zorder=3)
-    pg.txt(85.6, yy, lab_)
-pg.src("l", pd.DataFrame(ol))
-
-# ---------------------------------------------------------------- m  estimate over realized, four estimates in the 22 settings
-pg.panel(119, 119, "m", "Standard estimates beside decoys, 22 settings")
-ax = pg.ax(128, 124.5, 50, 26.5)
-ESTS = [("nominal", "nominal (BH)"), ("permutation", "permutation (SAM)"), ("decoy", "decoys"), ("decoy_pi0", "decoys, π0-corrected")]
-ax.axhspan(0.25, 1, color=EMPTY, lw=0, zorder=0)
-zero(ax, 1, axis="y")
-LANE = {"P1": -0.34, "P2": -0.22, "P3": -0.10, "T1": 0.12, "T3": 0.24, "T2": 0.36}
-om = []
-for xi, (col, _) in enumerate(ESTS):
-    s = S22[S22[col].notna()]
-    ratio = s[col] / s.realized
-    for r, q in zip(s.itertuples(), ratio):
-        off = 0 if r.data == "tcga" else (-0.025 if r.stat == "fold" else 0.025)
-        strong = r.beta in (1.0, 0.6)
-        mark(ax, [xi + LANE[r.g] + off], [q], HUE[r.g], r.stat, strong, r.cohorts == 6, zorder=4)
-        om.append(dict(setting=r.setting, stat=r.stat, estimate=col, ratio=q))
-    nb = int((ratio < 1).sum())
-    ax.text(xi, 880, f"{nb} of {len(s)} below", ha="center", va="top", fontsize=5)
-ax.set_yscale("log"); ax.set_ylim(0.25, 900); ax.set_yticks([0.3, 1, 10, 100], ["0.3", "1", "10", "100"]); ax.yaxis.set_minor_locator(plt.NullLocator())
-ax.set_xlim(-0.5, 3.5); ax.set_ylabel("estimate / realized FDR")
-ticks, tl = [], []
-for xi, (_, name) in enumerate(ESTS):
-    ticks += [xi - 0.22, xi + 0.24]; tl += ["resp.", "TCGA"]
-ax.set_xticks(ticks, tl, fontsize=5)
-ax.tick_params(axis="x", length=0, pad=1)
-for xi, (_, name) in enumerate(ESTS):
-    a, b = (name.split(" (") if " (" in name else name.split(", ") if ", " in name else (name, ""))
-    b = f"({b}" if " (" in name else b
-    ax.text(xi, -0.135, a, transform=ax.get_xaxis_transform(), ha="center", va="top", fontsize=5)
-    if b:
-        ax.text(xi, -0.215, b, transform=ax.get_xaxis_transform(), ha="center", va="top", fontsize=5)
-ax.text(3.47, 0.28, "estimate too low", ha="right", va="bottom", fontsize=5)
-pg.src("m", pd.DataFrame(om))
-
-# ---------------------------------------------------------------- n  replicates at or above the realized proportion
-pg.panel(119, 162.2, "n", "Replicates at or above realized (%)")
-Q["g"] = Q.scenario.map(grp)
-Q["lab"] = np.where(Q.data == "tcga", Q.g, Q.g + " " + Q.stat.map(STAT))
-LABS = ["P1 F", "P1 D", "P2 F", "P2 D", "P3 F", "P3 D", "T1", "T2", "T3"]
-x0n, cwn, y0n, chn = 129.5, 10.6, 169.6, 2.38
-HEAD = [("nominal", "nominal"), ("permutation", "perm."), ("decoy", "decoys"), ("decoy_pi0", "π0-corr.")]
-for j, (_, h) in enumerate(HEAD):
-    pg.txt(x0n + cwn * j + cwn / 2, y0n - 1.4, h, ha="center", weight="bold")
-pg.txt(x0n + cwn * 4 + 5.9, y0n - 1.4, "n", ha="right", weight="bold")
-on = []
-for i, l in enumerate(LABS):
-    s = Q[Q.lab == l]
-    yy = y0n + chn * i
-    pg.txt(x0n - 0.8, yy + chn / 2 - 0.05, l, ha="right")
-    for j, (c, _) in enumerate(HEAD):
-        y = s[s[c].notna()]
-        v = 100 * np.mean(y[c] >= y.realized - 1e-9)
-        tile(pg, x0n + cwn * j, yy, cwn, chn, BLUE(np.clip((v - 50) / 50, 0, 1)), f"{v:.0f}")
-        on.append(dict(group=l, estimate=c, replicates=len(y), at_or_above_pct=v))
-    pg.txt(x0n + cwn * 4 + 5.9, yy + chn / 2 - 0.05, f"{len(s)}", ha="right")
-pg.src("n", pd.DataFrame(on))
-
-# ---------------------------------------------------------------- o, p, q  replicate by replicate, and its two margins
-pg.panel(1, 196.5, "o", "Replicate by replicate")
-ax = pg.ax(9, 202, 28, 30)
-sub = SIGNAL[(SIGNAL.stat == "fold") & (SIGNAL.beta == 1.0) & (SIGNAL.cohorts == 12) & (SIGNAL.R > 0)].copy()
-sub["est"] = 100 * sub.E / sub.R
-sub["real"] = 100 * sub.V_cp / sub.R
-sub["g"] = sub.scenario.map(grp)
-FL_, TOP = 0.5, 2000.0     # log axes; a realized FDR of 0 is drawn at 0.5%
-lgc = lambda v: np.log10(np.clip(v, FL_, TOP))  # noqa: E731
-rng = np.random.default_rng(2)
-for g in ("P1", "P2", "P3"):
-    s = sub[sub.g == g]
-    jit = np.where(s.real <= 0, rng.uniform(-0.06, 0.06, len(s)), 0)
-    ax.plot(lgc(s.est), lgc(s.real) + jit, "o", ms=1.7, mfc=HUE[g], mec="none", alpha=0.75, ls="none", zorder=3)
-ax.plot([lgc(FL_), lgc(TOP)], [lgc(FL_), lgc(TOP)], color=INK, lw=0.5, ls=DOT, zorder=1)
-ax.axhline(lgc(FL_) + 0.15, color=OTHER, lw=0.3, zorder=1)
-tk = np.array([1, 10, 100, 1000])
-ax.set_xlim(lgc(FL_) - 0.1, lgc(TOP)); ax.set_ylim(lgc(FL_) - 0.15, 2.2)
-ax.set_xticks(np.log10(tk), ["1", "10", "100", "1,000"])
-ax.set_yticks(np.r_[lgc(FL_), np.log10(tk[:3])], ["0", "1", "10", "100"])
-ax.set_xlabel("estimated FDR (%)"); ax.set_ylabel("realized FDR (%)")
-above = 100 * (sub.est >= sub.real).mean()
-ax.text(lgc(FL_) - 0.03, 2.2, f"estimate ≥ realized,\n{above:.0f}% of {len(sub)}", ha="left", va="top", fontsize=5, linespacing=1.15)
-key(pg, 11.2, 215, [(HUE["P1"], "P1", "o")], sw=1.2); key(pg, 11.2, 217.4, [(HUE["P2"], "P2", "o")], sw=1.2); key(pg, 11.2, 219.8, [(HUE["P3"], "P3", "o")], sw=1.2)
-pg.src("o", sub[["scenario", "rep", "R", "est", "real"]].rename(columns={"est": "estimated_fdr", "real": "realized_fdr"}))
-
-
-def margin(ax, v, g, bins, top):
-    all_ = np.asarray(v)
-    hist(ax, all_, bins)
-    for k in ("P1", "P2", "P3"):
-        h, _ = np.histogram(all_[np.asarray(g) == k], bins)
-        ax.step(bins, np.r_[h, h[-1]], where="post", color=HUE[k], lw=0.8, zorder=4)
-    ax.set_ylim(0, top)
-
-
-pg.panel(41, 196.5, "p", "Estimated FDR, replicates")
-ax = pg.ax(48, 202, 26, 30)
-b = np.arange(1.0, 3.3001, 0.125)
-margin(ax, lgc(sub.est), sub.g, b, 104)
-ax.set_xlim(1.0, 3.3); ax.set_xticks([1, 2, 3], ["10", "100", "1,000"])
-ax.set_xlabel("estimated FDR (%)"); ax.set_ylabel("replicates")
-mE = sub.groupby("g").est.median()
-ax.text(3.3, 104, "median", ha="right", va="top", fontsize=5, weight="bold")
-for i, g in enumerate(("P1", "P2", "P3")):
-    ax.text(3.3, 104 - 8.6 * (i + 1), f"{g}, {mE[g]:.0f}", ha="right", va="top", fontsize=5)
-pg.src("p", sub[["scenario", "rep", "est"]].rename(columns={"est": "estimated_fdr"}))
-
-pg.panel(78, 196.5, "q", "Realized FDR, replicates")
-ax = pg.ax(85, 202, 26, 30)
-b = np.r_[lgc(FL_) - 0.09, lgc(FL_) + 0.09, np.arange(0.375, 2.0001 + 0.125, 0.125)]
-vq = lgc(sub.real)
-margin(ax, vq, sub.g, b, 260)
-ax.set_xlim(lgc(FL_) - 0.15, 2.2); ax.set_xticks(np.r_[lgc(FL_), 1, 2], ["0", "10", "100"])
-ax.set_xlabel("realized FDR (%)"); ax.set_ylabel("replicates")
-mR = sub.groupby("g").real.median()
-ax.text(2.2, 260, "median", ha="right", va="top", fontsize=5, weight="bold")
-for i, g in enumerate(("P1", "P2", "P3")):
-    ax.text(2.2, 260 - 21.5 * (i + 1), f"{g}, {mR[g]:.0f}", ha="right", va="top", fontsize=5)
-pg.src("q", sub[["scenario", "rep", "real"]].rename(columns={"real": "realized_fdr"}))
-
-# ---------------------------------------------------------------- r  estimate minus realized, every replicate
-pg.panel(115, 196.5, "r", "Estimate minus realized, every replicate")
-ax = pg.ax(123, 202, 55, 30)
-ALLR = SIGNAL[SIGNAL.R > 0].copy()
-ALLR["gap"] = 100 * (ALLR.E - ALLR.V_cp) / ALLR.R
-ALLR["g"] = ALLR.scenario.map(grp)
-ALLT = TCGAP[TCGAP.R > 0].copy()
-ALLT["gap"] = 100 * (ALLT.E - ALLT.V_cp) / ALLT.R
-ALLT["g"] = ALLT.kind.map(grp)
-GR = [(f"{g} {STAT[st]}", ALLR[(ALLR.g == g) & (ALLR.stat == st)].gap, HUE[g], "o" if st == "fold" else "^") for g in ("P1", "P2", "P3") for st in ("fold", "dir")]
-GR += [(g, ALLT[ALLT.g == g].gap, HUE[g], "o") for g in ("T1", "T2", "T3")]
-XP = [0, 1, 2.3, 3.3, 4.6, 5.6, 6.9, 7.9, 8.9]
-rng = np.random.default_rng(7)      # display jitter only
-ax.set_yscale("symlog", linthresh=100, linscale=1.15)
-TOPR = 1750
-or_ = {}
-for xp, (l, v, c, m) in zip(XP, GR):
-    v = np.asarray(v, float)
-    ax.plot(xp + rng.uniform(-0.3, 0.3, len(v)), v, m, ms=1.25, mfc=c, mec="none", alpha=0.55, ls="none", rasterized=True, zorder=3)
-    q1, q2, q3 = np.percentile(v, [25, 50, 75])
-    ax.add_patch(Rectangle((xp - 0.33, q1), 0.66, q3 - q1, fc="none", ec=INK, lw=0.5, zorder=5))
-    ax.plot([xp - 0.33, xp + 0.33], [q2, q2], color=INK, lw=1.0, solid_capstyle="butt", zorder=6)
-    ax.text(xp, TOPR * 1.25, f"{100 * (v >= 0).mean():.0f}%", ha="center", va="bottom", fontsize=5)
-    or_[l] = dict(group_replicates=len(v), group_share_at_or_above_pct=100 * (v >= 0).mean(), group_q25=q1, group_median=q2, group_q75=q3)
+        ax.plot(r.resp, r.os, marker="o", ms=1.8, mfc=tint(c, 0.45), mec="none", ls="none", zorder=3)
+zero(ax, 0)
 zero(ax, 0, axis="y")
-ax.set_xlim(-0.6, 9.5); ax.set_xticks(XP, [g[0] for g in GR], fontsize=5.5); ax.tick_params(axis="x", length=0)
-ax.set_ylim(-100, TOPR); ax.set_yticks([-50, 0, 50, 100, 500, 1000], ["−50", "0", "50", "100", "500", "1,000"]); ax.yaxis.set_minor_locator(plt.NullLocator())
-ax.set_ylabel("percentage points")
-rr = pd.concat([ALLR.assign(group=ALLR.g + " " + ALLR.stat.map(STAT), data="response")[["data", "group", "scenario", "beta", "cohorts", "rep", "stat", "gap"]],
-                ALLT.assign(group=ALLT.g, data="tcga", stat="fold", cohorts=20).rename(columns={"kind": "scenario"})[["data", "group", "scenario", "beta", "cohorts", "rep", "stat", "gap"]]])
-pg.src("r", rr.join(pd.DataFrame(or_).T, on="group"))
+ax.set_xlabel("median ΔAUC, response")
+ax.set_ylabel("median ΔC, survival")
+ax.set_xlim(-0.012, 0.112)
+ax.set_ylim(-0.0135, 0.061)
+ax.set_xticks([0, 0.05, 0.1], ["0", "0.05", "0.1"])
+ax.set_yticks([-0.01, 0, 0.01, 0.02, 0.03], ["−0.01", "0", "0.01", "0.02", "0.03"])
+both, one, none = int((J.rc & J.oc).sum()), int((J.rc ^ J.oc).sum()), int((~J.rc & ~J.oc).sum())
+pg.src("j", J.reset_index(names="signature").rename(columns={"rc": "called_response", "oc": "called_os"}))
+key(pg, 154.2, 49.6, [(INK, f"both ({both})", "o")], sw=1.4)
+key(pg, 154.2, 51.8, [(INK, f"one ({one})", "open-o")], sw=1.4)
+pg.c.plot(154.9, 54.0, "o", ms=1.8, mfc=tint(INK, 0.45), mec="none", zorder=3)
+pg.txt(156.2, 54.0, f"neither ({none})")
+for k, f_ in enumerate(("Inflamed/IFN", "Confounder", "Other")):
+    fam_mark(pg, 167.2, 49.6 + 2.2 * k, f_, w=1.2, h=1.4)
+    pg.txt(168.9, 49.6 + 2.2 * k, FLAB[f_])
 
-pg.save("Fig5")
+# ---------------------------------------------------------------- k  the example across cancer types
+pg.panel(87.5, 80.5, "k", "CIN70 (Carter) and its 32 co-expressed decoys, every cancer type")
+ax = pg.ax(95.5, 85.5, 83.5, 19.5)
+Ud = UO[(UO.target == EXS) & (((UO.kind == "decoy") & (UO["class"] == "coex") & (UO.set == 1)) | (UO.kind == "target"))]
+tg = Ud[Ud.kind == "target"].drop_duplicates("cohort").set_index("cohort").dC.sort_values(ascending=False)
+for i, co in enumerate(tg.index):
+    dv = Ud[(Ud.cohort == co) & (Ud.kind == "decoy")].dC.to_numpy()
+    point(ax, i + swarm(dv, 0.0065, 0.09, 0.38), dv, COEX, "s", ms=1.5, zorder=3, mew=0.15)
+    ax.plot([i - 0.32, i + 0.32], [np.median(dv)] * 2, color=INK, lw=0.7, zorder=4, solid_capstyle="butt")
+    point(ax, i, tg[co], SIG, ms=3.4, zorder=5)
+zero(ax, 0, axis="y")
+ax.set_xticks(range(len(tg)), tg.index, rotation=90, fontsize=5)
+ax.tick_params(axis="x", length=0, pad=1)
+ax.set_xlim(-0.6, len(tg) - 0.4)
+ax.set_ylim(-0.1, 0.22)
+ax.set_yticks([-0.1, 0, 0.1, 0.2], ["−0.1", "0", "0.1", "0.2"])
+ax.set_ylabel("ΔC")
+key(pg, 136.5, 87, [(SIG, "CIN70 (Carter)", "o"), (COEX, "32 decoys", "s"), (INK, "decoy median", "line")], sw=1.4, gap=1.5)
+pg.src("k", Ud[["cohort", "kind", "unit", "dC"]].assign(unit=lambda d: d.unit.where(d.kind == "decoy", EXS)))
+
+# ---------------------------------------------------------------- l, m, n  every signature, shared rows
+T0 = CL["OS"][CL["OS"].kind == "target"].set_index("target")
+ORD = T0.med_delta.sort_values(ascending=False).index.tolist()
+Y1, PS = 127.2, 1.95
+HS = PS * len(ORD)
+
+
+def ysig(i):
+    return Y1 + PS * (i + 0.5)
+
+
+pg.panel(1, 118, "l", "Signature and 320 co-expressed decoys")
+ax = pg.ax(25.5, Y1, 31.5, HS)
+dq = CL["OS"][(CL["OS"].kind == "decoy") & (CL["OS"]["class"] == "coex")].groupby("target").med_delta.quantile([0.05, 0.25, 0.5, 0.75, 0.95]).unstack()
+out = []
+for i, s in enumerate(ORD):
+    q = dq.loc[s].to_numpy()
+    ci(ax, q[0], q[4], i, tint(COEX, 0.45), lw=0.6, zorder=2)
+    ci(ax, q[1], q[3], i, COEX, lw=1.4, zorder=3)
+    ax.plot([q[2], q[2]], [i - 0.36, i + 0.36], color=INK, lw=0.5, zorder=4, solid_capstyle="butt")
+    point(ax, T0.loc[s, "med_delta"], i, SIG, ms=2.8, filled=bool(T0.loc[s, "call"]), zorder=5)
+    pg.txt(23.4, ysig(i), lab(s), ha="right")
+    fam_mark(pg, 23.8, ysig(i), FAMILY[s], w=1.0, h=PS - 0.15)
+    out.append((s, FAMILY[s], T0.loc[s, "med_delta"], bool(T0.loc[s, "call"]), *q))
+zero(ax, 0)
+ax.set_ylim(len(ORD) - 0.5, -0.5)
+ax.set_yticks([])
+ax.spines["left"].set_visible(False)
+ax.set_xlim(-0.022, 0.05)
+ax.set_xticks([-0.02, 0, 0.02, 0.04], ["−0.02", "0", "0.02", "0.04"])
+ax.set_xlabel("median ΔC, overall survival")
+pg.src("l", pd.DataFrame(out, columns=["signature", "family", "median_dC", "called", "d05", "d25", "d50", "d75", "d95"]))
+key(pg, 46.4, ysig(30.5), [(SIG, "called", "o")], sw=1.4)
+key(pg, 46.4, ysig(31.8), [(SIG, "not called", "open-o")], sw=1.4)
+pg.txt(46.4, ysig(33.1), "decoys")
+pg.line(47.1, ysig(34.4) - 0.7, 47.1, ysig(34.4) + 0.7, color=INK, lw=0.5)
+pg.txt(48.4, ysig(34.4), "median")
+pg.line(46.4, ysig(35.7), 47.8, ysig(35.7), color=COEX, lw=1.4)
+pg.txt(48.4, ysig(35.7), "25–75%")
+pg.line(46.4, ysig(37), 47.8, ysig(37), color=tint(COEX, 0.45), lw=0.6)
+pg.txt(48.4, ysig(37), "5–95%")
+for k, f_ in enumerate(("Inflamed/IFN", "Confounder", "Other")):
+    fam_mark(pg, 9.0, 231.2 + 2.4 * k, f_, w=1.2, h=1.5)
+    pg.txt(10.8, 231.2 + 2.4 * k, FLAB[f_])
+
+# m  median gain and calls per endpoint
+pg.panel(58.5, 118, "m", "Endpoints")
+xm, cwm = 59.2, 2.8
+LM = 0.03
+out = []
+for j, e in enumerate(EP):
+    t = CL[e][CL[e].kind == "target"].set_index("target")
+    pg.txt(xm + cwm * j + cwm / 2, Y1 - 0.8, e, ha="center", va="bottom", rotation=90)
+    for i, s in enumerate(ORD):
+        v, c = t.loc[s, "med_delta"], bool(t.loc[s, "call"])
+        tile(pg, xm + cwm * j, Y1 + PS * i, cwm, PS, TEALOR((v + LM) / (2 * LM)))
+        if c:
+            pg.c.plot(xm + cwm * j + (cwm - 0.15) / 2, Y1 + PS * i + (PS - 0.15) / 2, "o", ms=1.7, mfc=SIG, mec="white", mew=0.3, zorder=4)
+        out.append((s, e, v, c))
+pg.src("m", pd.DataFrame(out, columns=["signature", "endpoint", "median_dC", "called"]))
+pg.cbar(59.2, 231.0, 11, 1.4, TEALOR, -LM, LM, [-0.03, 0, 0.03], "median ΔC", labels=["−0.03", "0", "≥ 0.03"])
+
+# n  gain per signature and cancer type, same rows
+pg.panel(75, 118, "n", "Gain over the null, by type")
+HM = UT.pivot_table(index="cohort", columns="target", values="dC")
+tord = HM.median(axis=1).sort_values(ascending=False).index
+xn, cwn = 70.2, 2.4
+HL = 0.1
+for j, co in enumerate(tord):
+    pg.txt(xn + cwn * j + cwn / 2, Y1 - 0.8, co, ha="center", va="bottom", rotation=90)
+    for i, s in enumerate(ORD):
+        tile(pg, xn + cwn * j, Y1 + PS * i, cwn, PS, TEALOR((np.clip(HM.loc[co, s], -HL, HL) + HL) / (2 * HL)))
+pg.cbar(90, 231.0, 22, 1.4, TEALOR, -HL, HL, [-0.1, 0, 0.1], "ΔC", labels=["−0.1", "0", "≥ 0.1"])
+pg.src("n", UT[["cohort", "target", "fold_obs", "fold_med", "dC"]])
+
+# ---------------------------------------------------------------- o, p  Kaplan-Meier pair
+XMAX, TICKS = 10, [0, 2.5, 5, 7.5, 10]
+KMY, KMH = 123, 20
+KM_OUT = {}
+
+
+def km_pair(x, w, col, c, letter, title, show_y):
+    pg.panel(x - (7.4 if show_y else 3.0), 118, letter, title)
+    a = pg.ax(x, KMY, w, KMH)
+    v = KMD[col].to_numpy()
+    hi = v > np.median(v)
+    t, e = KMD.years.to_numpy(), KMD.event.to_numpy()
+    lo_c = tint(c, 0.45)
+    for m, cc in ((hi, c), (~hi, lo_c)):
+        xs, ys_ = km_curve(t[m], e[m])
+        a.step(xs, ys_, where="post", color=cc, lw=0.8, zorder=3)
+        ct = t[m][e[m] == 0]
+        a.plot(ct, ys_[np.clip(np.searchsorted(xs, ct, side="right") - 1, 0, len(ys_) - 1)], ls="none", marker="|", ms=1.4, mew=0.3, color=cc, zorder=4)
+    p = logrank_p(t, e, hi)
+    a.set_xlim(0, XMAX)
+    a.set_ylim(0, 1.04)
+    a.set_xticks(TICKS, ["0", "2.5", "5", "7.5", "10"])
+    a.set_yticks([0, 0.5, 1], ["0", "0.5", "1"] if show_y else [])
+    a.set_xlabel("years")
+    if show_y:
+        a.set_ylabel("overall survival")
+    xl = x + 0.8
+    yl = KMY + KMH - 8.0
+    pg.line(xl, yl, xl + 1.8, yl, color=c, lw=0.8)
+    pg.txt(xl + 2.4, yl, "above median")
+    pg.line(xl, yl + 2.2, xl + 1.8, yl + 2.2, color=lo_c, lw=0.8)
+    pg.txt(xl + 2.4, yl + 2.2, "below")
+    # the P on the old sheet: a power of ten below 0.001, otherwise two figures; the exponent set as its own 5 pt text
+    if p >= 0.001:
+        pg.txt(xl, yl + 4.5, f"log-rank P = {p:.2f}")
+    else:
+        m_, ex = f"{p:.0e}".split("e")
+        s0 = f"log-rank P = {m_}×10"
+        pg.txt(xl, yl + 4.5, s0)
+        pg.txt(xl + textw(s0) + 0.25, yl + 3.9, f"−{int(ex.lstrip('-'))}")
+    rows_y = (KMY + KMH + 9.3, KMY + KMH + 11.6)
+    for yy, m, cc, nm in ((rows_y[0], hi, c, "above"), (rows_y[1], ~hi, INK, "below")):
+        for tt in TICKS:
+            pg.txt(x + w * tt / XMAX, yy, str(int((t[m] >= tt).sum())), ha="center", color=cc)
+        if show_y:
+            pg.txt(x - 2.6, yy, nm, ha="right")
+    if show_y:
+        pg.txt(x - 2.6, KMY + KMH + 7.0, "at risk", ha="right", weight="bold")
+    KM_OUT[letter] = p
+    return p
+
+
+km_pair(128.4, 23, "target", SIG, "o", "CIN70 (Carter), KIRP", True)
+km_pair(155, 23, "decoy", COEX, "p", "Median decoy, KIRP", False)
+km_src = KMD[["time", "event", "target", "decoy"]].sort_values("time").reset_index(drop=True)
+pg.src("o", km_src[["time", "event", "target"]].assign(log_rank_P=KM_OUT["o"]).rename(columns={"time": "days", "target": "score"}))
+pg.src("p", km_src[["time", "event", "decoy"]].assign(log_rank_P=KM_OUT["p"]).rename(columns={"time": "days", "decoy": "score"}))
+
+# ---------------------------------------------------------------- q  decoys called per signature
+pg.panel(121, 160, "q", "Decoys called, per signature")
+ax = pg.ax(129, 165.5, 50, 26.5)
+out = []
+for i, e in enumerate(EP):
+    d = CL[e][CL[e].kind == "decoy"].groupby(["target", "class"]).call.mean().unstack()
+    for off, cls in ((-0.21, "coex"), (0.21, "rand")):
+        v = 100 * d[cls]
+        strip2(ax, i + off, v, UNIT[cls], m=MARK[cls], ms=1.9 if cls == "coex" else 1.7, bin_w=1.25 if cls == "coex" else 1.25, step=0.042, limit=0.19, med_half=0.19, mew=0.15)
+        ax.text(i + off, 38, f"{row(F[e], cls).decoy_rate:.1f}", ha="center", va="top", fontsize=5)
+        out += [(e, cls, s, x_) for s, x_ in v.items()]
+ax.set_xticks(range(3), EP, fontsize=5.5)
+ax.tick_params(axis="x", length=0)
+ax.set_xlim(-0.55, 2.55)
+ax.set_ylim(-1, 38)
+ax.set_yticks([0, 10, 20, 30])
+ax.set_ylabel("decoys called (%)")
+key(pg, 152.6, 163.0, [(COEX, "co-expressed", "s"), (RAND, "random-gene", "D")], sw=1.4, gap=1.2)
+pg.src("q", pd.DataFrame(out, columns=["endpoint", "class", "signature", "decoys_called_pct"]))
+
+# ---------------------------------------------------------------- r  rank among decoys
+pg.panel(121, 198.5, "r", "Rank among decoys")
+ax = pg.ax(129, 204, 19.5, 25.5)
+
+
+def rank_q(calls):
+    """q as decoy_fdr() computes it for pi0: (1 + decoys at or above the target's signed -log10 P) / (1 + decoys)"""
+    st = lambda x: np.sign(x.med_delta) * -np.log10(np.maximum(x.p, 1e-300))  # noqa: E731
+    t = calls[calls.kind == "target"]
+    d = calls[(calls.kind == "decoy") & (calls["class"] == "coex")]
+    sd = st(d).groupby(d.target)
+    return pd.Series({s: (1 + (sd.get_group(s) >= v - 1e-12).sum()) / (1 + sd.get_group(s).size) for s, v in zip(t.target, st(t))})
+
+
+QS = {e: rank_q(CL[e]) for e in EP}
+for e in EP:
+    assert abs(2 * (QS[e] > 0.5).mean() - row(F[e]).pi0) < 1e-9, e
+hist(ax, QS["OS"], np.linspace(0, 1, 11))
+ax.axhline(row(F["OS"]).pi0 * 52 / 10, color=INK, lw=0.5, ls=(0, (1.0, 1.5)), zorder=4)
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 24)
+ax.set_xticks([0, 0.5, 1], ["0", "0.5", "1"])
+ax.set_yticks([0, 10, 20])
+ax.set_xlabel("q, overall survival")
+ax.text(0.98, 23.6 - 2.9 * 3, "n = 52", ha="right", va="top", fontsize=5)
+ax.set_ylabel("signatures")
+for k, e in enumerate(EP):
+    ax.text(0.98, 23.6 - 2.9 * k, f"π0 {e} {row(F[e]).pi0:.2f}", ha="right", va="top", fontsize=5)
+pg.src("r", pd.DataFrame(QS).reset_index(names="signature").rename(columns={e: f"q_{e}" for e in EP}))
+
+# ---------------------------------------------------------------- s  called, by family
+pg.panel(150.5, 198.5, "s", "Called, by family")
+x0, y0, cw, ch = 164.2, 207.0, 3.7, 5.6
+HD = ("resp.", "OS", "DSS", "PFI")
+FORD = ("Inflamed/IFN", "Confounder", "Other")
+TAB = {"resp.": J.groupby("family").rc.sum().to_dict()}
+for e in EP:
+    t = CL[e][CL[e].kind == "target"]
+    TAB[e] = t[t.call].target.map(FAMILY).value_counts().to_dict()
+NF = pd.Series(FAMILY).value_counts()
+out = []
+for j, h in enumerate(HD):
+    pg.txt(x0 + cw * j + cw / 2, y0 - 1.3, h, ha="center", weight="bold")
+for i, f_ in enumerate(FORD + ("all",)):
+    nf = NF[f_] if f_ != "all" else int(NF.sum())
+    if f_ != "all":
+        fam_mark(pg, 150.6, y0 + ch * i + ch / 2 - 0.08, f_, w=1.1, h=ch - 0.15)
+    pg.txt(152.2, y0 + ch * i + ch / 2 - 1.0, FLAB.get(f_, f_))
+    pg.txt(152.2, y0 + ch * i + ch / 2 + 0.9, f"n = {nf}")
+    for j, h in enumerate(HD):
+        n_ = int(TAB[h].get(f_, 0)) if f_ != "all" else int(sum(TAB[h].values()))
+        tile(pg, x0 + cw * j, y0 + ch * i, cw, ch, BLUE(n_ / nf), str(n_))
+        out.append((f_, int(nf), h, n_))
+pg.src("s", pd.DataFrame(out, columns=["family", "signatures", "endpoint", "called"]))
+pg.cbar(164.2, 231.0, 12.6, 1.4, BLUE, 0, 100, [0, 50, 100], None, labels=["0", "50", "100"])
+pg.txt(151.0, 231.7, "family called (%)")
+
+pg.save("Fig6")
+print("called", {e: (int(row(F[e]).called), round(row(F[e]).fdr, 1), round(row(F[e]).fdr_pi0, 1)) for e in EP}, "both/one/neither", both, one, none, "km P", KM_OUT)

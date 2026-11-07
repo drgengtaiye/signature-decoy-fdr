@@ -1,0 +1,15 @@
+GSE14764 | samples 80 | platforms {'GPL96': 80}
+TITLE: A Prognostic Gene Expression Index in Ovarian Cancer
+SUMMARY: Ovarian carcinoma has the highest mortality rate among gynecological malignancies. In this project, we investigated the hypothesis that molecular markers are able to predict outcome of ovarian cancer independently of classical clinical predictors, and that these molecular markers can be validated using independent data sets.   We applied a semi-supervised method for prediction of patient survival. Microarrays from a cohort of 80 ovarian carcinomas (TOC cohort) were used for the development of a predictive model, which was then evaluated in an entirely independent cohort of 118 carcinomas (Duke cohort).  A 300 gene ovarian prognostic index (OPI) was generated and validated in a leave-one-out approach in the TOC cohort (Kaplan-Meier analysis, p=0.0087). In a second validation step the prognostic power of the OPI was confirmed in an independent data set (Duke cohort, p=0.0063). In multivariate analysis, the OPI was independent of the postoperative residual tumour, the main clinico-pathological prognostic parameter with an adjusted hazard ratio of 6.4 (TOC cohort, CI 1.8 – 23.5, p=0.0049) and 1.9 (Duke cohort, CI 1.2 – 3.0, p=0.0068). We constructed a combined score of molecular data (
+DESIGN: RNA from 80 frozen ovarian cancer samples was analysed with oligonucleotide microarrays
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA112261
+FIELDS (n values with it | distinct | examples):
+  tissue | 80 | 1 | frozen tumor (x80)
+  figo stage | 80 | 8 | 3 (x36); 3c (x29); 3b (x4); 1a (x4); 1c (x3); 4 (x2); 2b; 1b
+  grade | 80 | 3 | III (x54); II (x23); I (x3)
+  histological type | 80 | 7 | serous ovca (x68); endometr ovca (x6); clear cell ovca (x2); transitional cell ca; endometr, clear cell ovca; sarcomatoid; undifferentiated ovca
+  residual tumor | 80 | 3 | 0 (x50); 1 (x26); NA (x4)
+  overall survival time | 80 | 43 | 37 (x4); 40 (x4); 20 (x4); 35 (x3); 27 (x3); 36 (x3); 12 (x3); 45 (x3)
+  overall survival event | 80 | 2 | 0 (x59); 1 (x21)
+  [source_name_ch1] | 80 | 1 | ovarian cancer (x80)
+  [title] | 80 | 80 | ovarian cancer: O1; ovarian cancer: O2; ovarian cancer: O3; ovarian cancer: O4; ovarian cancer: O5; ovarian cancer: O6; ovarian cancer: O7; ovarian cancer: O8

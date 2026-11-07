@@ -1,0 +1,22 @@
+GSE20711 | samples 90 | platforms {'GPL570': 90}
+TITLE: Epigenetic portraits of human breast cancers (expression data)
+SUMMARY: Breast cancer is a molecularly, biologically and clinically heterogeneous group of disorders. Understanding this diversity is essential to improving diagnosis and optimising treatment. Both genetic and acquired epigenetic abnormalities participate in cancer, but information is scant on the involvement of the epigenome in breast cancer and its contribution to the complexity of the disease. Here we used the Infinium Methylation Platform to profile at single-CpG resolution (over 14,000 genes interrogated) the methylomes of 119 breast tumours. It emerges that many genes whose expression is linked to the ER status are epigenetically controlled (or/ we show that the two major phenotypes of breast cancers determined by ER status are widely involving epigenetic regulatory mechanisms), offering the prospect of a novel approach to treating ER-positive tumours. We have distinguished methylation-profile-based tumour clusters, some coinciding with known “expression subtypes” but also new entities that may provide a meaningful basis for refining breast tumour typology. We show that methylation patterns may reflect the cellular origins of tumours. Having highlighted an unexpectedly strong epigene
+DESIGN: 92 bgene expression profiling reast cancer patients. Study of epigenetic variation (methylation) linked to gene expression. No replicate, no reference sample.  Two samples (Breast tumor from patient P_64 and Normal breast tissue N6) were of poor quality and were not processed for a final of 90 gene expression Samples.
+RELATIONS: SubSeries of: GSE20713; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA129577
+FIELDS (n values with it | distinct | examples):
+  quality control | 90 | 1 | 1 (x90)
+  methylation barcode | 90 | 90 | 4690141010_D; 4690141010_J; 4690141011_A; 4690141010_I; 4690141011_E; 4690141010_K; 4690141013_D; 4690141010_E
+  subtypeihc | 90 | 5 | Basal (x27); HER2 (x26); LumB (x22); LumA (x13); Normal (x2)
+  grade | 90 | 4 | 3 (x70); 1 (x13); 2 (x5); NA (x2)
+  node | 90 | 3 | 1 (x59); 0 (x29); NA (x2)
+  size (bin) | 90 | 3 | 0 (x46); 1 (x42); NA (x2)
+  age (bin) | 90 | 3 | 1 (x61); 0 (x27); NA (x2)
+  er status | 90 | 3 | 0 (x45); 1 (x42); NA (x3)
+  her2 status | 90 | 3 | 0 (x62); 1 (x26); NA (x2)
+  subtypege | 90 | 5 | LumA (x23); LumB (x22); Basal (x22); HER2+ (x21); NA (x2)
+  e.rfs | 90 | 3 | 0 (x49); 1 (x39); NA (x2)
+  t.rfs | 90 | 86 | 2.56 (x2); 0 (x2); 2.05 (x2); NA (x2); 0.93; 1.22; 8.64; 8.4
+  e.os | 90 | 3 | 0 (x63); 1 (x25); NA (x2)
+  t.os | 90 | 88 | 7.08 y (x2); NA (x2); 8.28 y; 3.39 y; 8.64 y; 8.4 y; 7.21 y; 8.19 y
+  [source_name_ch1] | 90 | 2 | Breast tumor (x88); Normal breast tissue (x2)
+  [title] | 90 | 90 | Breast tumor from patient P_1 (expression data); Breast tumor from patient P_2 (expression data); Breast tumor from patient P_3 (expression data); Breast tumor from patient P_4 (expression data); Breast tumor from patient P_6 (expression data); Breast tumor from patient P_7 (expression data); Breast tumor from patient P_10 (expression data); Breast tumor from patient P_11 (expression data)

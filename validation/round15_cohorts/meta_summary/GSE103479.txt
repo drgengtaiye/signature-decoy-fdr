@@ -1,0 +1,37 @@
+GSE103479 | samples 156 | platforms {'GPL23985': 156}
+TITLE: Gene expression data from stage II and III treated and untreated colorectal cancer patients
+SUMMARY: Colorectal cancer (CRC) has one of the highest worldwide incidences and mortality rates. Compared to surgery alone, adjuvant 5-Fluorouracil (5FU)-based chemotherapy improves 5-year overall survival (OS) in only 3-4% of stage II and 15-20% of stage III patients in unselected populations. Significant advances have been made in the molecular stratification of CRC, with the emerging Consensus Molecular Subtype (CMS) and Colorectal Cancer Intrinsic Signature (CRIS) transcriptomics-based classification systems; however, the therapeutic impact of molecular stratification has so far been limited. In an effort to identify subgroups of patients benefitting from chemotherapy, we assessed which CMS and CRIS subgroups of stage II and III CRC benefitted from adjuvant 5FU-based chemotherapy using in-house and published datasets.
+DESIGN: The colorectal cancer cohort was assembled from 363 stage II and III patients from 4 European Centres (Barcelona, Dublin, Florence, Aberdeen).  Within this cohort, samples from 194 patients with 50% or more tumour content as assessed by Hematoxylin and eosin (H&E ) staining were taken forward for RNA and DNA extraction.  High quality transcriptomics data were obtained for 156 samples using the Almac  Xcel array (Almac Diagnostics, Craigavion, UK).
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA401787
+FIELDS (n values with it | distinct | examples):
+  tissue | 156 | 1 | colorectal cancer biopsy (x156)
+  site | 156 | 4 | Barcelona (x63); SVH Dublin (x49); Aberdeen (x27); Florence (x17)
+  age diagnosis | 156 | 131 | 48.0 (x3); 67.0 (x3); 73.0 (x3); 69.6 (x3); 80.0 (x2); 57.0 (x2); 84.0 (x2); 61.0 (x2)
+  gender | 156 | 2 | Male (x88); Female (x68)
+  total number of lymph nodes excised | 156 | 40 | 15 (x12); 14 (x11); 10 (x10); 18 (x9); 16 (x8); 22 (x8); 23 (x8); 12 (x7)
+  positive lymph nodes | 156 | 15 | 0 (x84); 1 (x31); 3 (x10); 2 (x7); 6 (x6); 4 (x5); 5 (x3); 7 (x3)
+  perineural_invasion | 156 | 3 | No (x99); NA (x44); Yes (x13)
+  evi | 156 | 5 | No (x106); NA (x29); Yes (x19); Extensive; Yes - Extensive
+  lvi | 156 | 3 | No (x63); Yes (x49); NA (x44)
+  tumour_size | 156 | 31 | 4 (x27); 5 (x17); NA (x12); 6 (x10); 4.5 (x10); 3.5 (x10); 7 (x9); 5.5 (x9)
+  tumour site | 156 | 24 | Sigmoid (x41); Right colon (x28); Left Colon (x13); Caecum (x12); Rectum (x12); Ascending colon (x8); Upper rectum (x8); Hepatic flexure (x5)
+  type of surgery | 156 | 42 | Right Hemicolectomy (x27); Sigmoidectomy (x24); Sigmoid colectomy (x15); Right hemicolectomy (x12); Laparoscopic Anterior Resection (x9); Laparoscopic right hemicolectomy (x8); Open right hemicolectomy (x7); Open Anterior Resection (x6)
+  curative resection | 156 | 2 | R0 (x153); R1 (x3)
+  dukes | 156 | 2 | B (x84); C (x72)
+  stage ii\iii | 156 | 6 | IIA (x70); IIIB (x47); IIIC (x19); IIB (x8); IIIA (x6); IIC (x6)
+  tstage | 156 | 7 | pT3 (x109); pT4b (x15); pT4a (x14); pT4 (x10); pT2 (x6); pT1; PT3
+  nstage | 156 | 8 | pN0 (x83); pN1 (x28); pN1a (x13); pN2 (x10); pN1b (x9); pN2a (x7); pN2b (x5); PN0
+  mstage | 156 | 2 | pM0 (x86); pMx (x70)
+  differentiation | 156 | 7 | Moderate (x117); Poor (x29); Well (x6); colloid; adenoca. Colloid express; NA; Moderate + colloid expression
+  adjuvanttreatment | 156 | 3 | No (x87); Yes (x66); NA (x3)
+  status alive.dead | 156 | 3 | Alive (x95); Dead (x60); NA
+  recurrence | 156 | 3 | No (x112); Yes (x42); NA (x2)
+  overall survival time | 156 | 151 | 41.622 (x2); 44.877 (x2); 47.803 (x2); 43.397 (x2); 59.704 (x2); 87.814; 39.616; 88.208
+  progression-free survival time | 156 | 149 | 19.463 (x3); 0.362 (x2); 41.622 (x2); NA (x2); 47.803 (x2); 5.293 (x2); 87.814; 39.616
+  cms subgroup | 156 | 5 | CMS2 (x60); CMS4 (x28); CMS1 (x25); CMS3 (x22); UNK (x21)
+  cris subgroup | 156 | 5 | CRISC (x44); CRISA (x36); CRISD (x28); CRISB (x26); CRISE (x22)
+  braf (v600e) | 156 | 3 | WT (x122); NA (x19); MT (x15)
+  kras (codons 12, 13, 61) | 156 | 3 | WT (x83); MT (x54); NA (x19)
+  p53 | 156 | 3 | MT (x78); WT (x59); NA (x19)
+  [source_name_ch1] | 156 | 1 | Fresh frozen colorectal cancer biopsy (x156)
+  [title] | 156 | 156 | S0849-00001 R1_V; S0849-00002 R1; S0849-00003 R1; S0849-00004 R1; S0849-00005 R1; S0849-00009 R1; S0849-00010 R1; S0849-00011 R1

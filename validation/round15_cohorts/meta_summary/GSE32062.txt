@@ -1,0 +1,18 @@
+GSE32062 | samples 270 | platforms {'GPL6480': 260, 'GPL570': 10}
+TITLE: Immune-activation as a therapeutic direction for patients with high-risk ovarian cancer based on gene expression signature (1)
+SUMMARY: The Japanese Serous Ovarian Cancer Study Group Advanced-stage ovarian cancer is one of the most lethal gynecologic malignancies. To improve prognosis of patients with ovarian cancers, a predictive biomarkers leading to personalized treatments are required. In this large-scale cross-platform study of six microarray datasets consisting of 1054 ovarian cancer patients, we developed a novel risk classification system based on a 126-gene expression signature for predicting overall survival by applying elastic net7 and 10-fold cross validation to a Japanese dataset A (n = 260). We further validated its predictive ability with the five other datasets using multivariate analysis. Also, through gene ontology and pathway analyses of 1109 high-risk ovarian cancer specific transcripts, we identified a significant reduction of expression of immune-response related genes, especially on the antigen presentation pathway. Furthermore, an immunohistochemical analysis demonstrated that the number of CD8 T lymphocytes infiltrating into tumor tissue was significantly decreased in high-risk ovarian cancers. These predictive biomarkers based on the 126-gene expression signature will identify high-risk ov
+DESIGN: Two hundred sixty patients who were diagnosed as advanced-stage high-grade serous ovarian cancer were analyzed in this study.  Microaray data from 10 patients who were diagnosed as advanced-stage high-grade serous ovarian cancer were analyzed to investigate coefficient of correlation in each probes between Agilent Whole Human Genome Oligo Microarray and Affymetrix HG-U133Plus2.0.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA147617
+FIELDS (n values with it | distinct | examples):
+  tissue | 270 | 1 | high-grade serous ovarian cancer tumor (x270)
+  grading | 260 | 2 | 2 (x131); 3 (x129)
+  Stage | 260 | 4 | IIIc (x180); IV (x56); IIIb (x20); IIIa (x4)
+  surgery status | 260 | 3 | suboptimal (x157); optimal (x102); Optimal
+  taxane | 260 | 1 | 1 (x260)
+  platinum | 260 | 1 | 1 (x260)
+  pfs (m) | 260 | 79 | 12 (x15); 14 (x12); 19 (x12); 6 (x11); 15 (x9); 5 (x9); 18 (x8); 8 (x8)
+  rec (1) | 260 | 2 | 1 (x193); 0 (x67)
+  os (m) | 260 | 91 | 28 (x7); 49 (x7); 36 (x7); 42 (x6); 21 (x6); 57 (x6); 30 (x6); 48 (x6)
+  death (1) | 260 | 2 | 0 (x139); 1 (x121)
+  [source_name_ch1] | 270 | 1 | high-grade serous ovarian cancer (x270)
+  [title] | 270 | 270 | serous ovarian cancer 10d; serous ovarian cancer 11d; serous ovarian cancer 115d; serous ovarian cancer 116d; serous ovarian cancer 117d; serous ovarian cancer 119d; serous ovarian cancer 12d; serous ovarian cancer 120d

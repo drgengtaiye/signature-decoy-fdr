@@ -1,0 +1,14 @@
+GSE27020 | samples 109 | platforms {'GPL96': 109}
+TITLE: Identification and validation of a multigene predictor of recurrence in primary laryngeal cancer.
+SUMMARY: Background: Local recurrence is the major manifestation of treatment failure in patients with operable laryngeal carcinoma. Established clinicopathological factors cannot sufficiently predict patients that are likely to recur after treatment. Additional tools are therefore required to accurately identify patients at high risk for recurrence.  Methods: Using Affymetrix U133A Genechips, we profiled fresh-frozen tumor tissues from 59 patients with operable laryngeal cancer. All patients were treated locally with surgery, with or without radiation therapy. We performed Cox regression proportional hazards modeling to identify multigene predictors of recurrence. The end-point of our analysis was disease-free survival (DFS). Gene models were directly validated in a separate, similarly treated cohort of 50 patients using Affymetrix chips. In an attempt to further validate our results, we profiled 12 selected genes of our model in formalin-fixed tumor tissues from an independent cohort of 75 patients, using quantitative real time-polymerase chain reaction (qRT-PCR).   Results: We focused on genes univariately associated with DFS (p<0.05) in the training set. Among several gene models compri
+DESIGN: Training set comprises 59 samples and validation set 50 samples
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA137701
+FIELDS (n values with it | distinct | examples):
+  dfs (months) | 109 | 61 | 43 (x5); 8 (x4); 42 (x4); 20 (x4); 64 (x3); 46 (x3); 13 (x3); 34 (x3)
+  dfs status (1 = recurred) | 109 | 2 | 0 (x75); 1 (x34)
+  grade | 107 | 3 | 2 (x49); 1 (x42); 3 (x16)
+  age | 109 | 39 | 60 (x8); 67 (x7); 69 (x6); 68 (x5); 74 (x5); 72 (x5); 70 (x4); 64 (x4)
+  tissue | 109 | 1 | fresh frozen laryngeal tumor (x109)
+  group | 109 | 2 | training set (x59); validation set (x50)
+  [source_name_ch1] | 109 | 1 | fresh frozen laryngeal tumor (x109)
+  [title] | 109 | 109 | patient 1 HN2200a; patient 2 HN2201a; patient 3 HN2202ms; patient 4 HN2203ms; patient 5 HN2205ms; patient 6 HN2206ms; patient 7 HN2207ms; patient 8 HN2208ms

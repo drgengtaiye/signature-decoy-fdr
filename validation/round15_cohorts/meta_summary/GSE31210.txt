@@ -1,0 +1,27 @@
+GSE31210 | samples 246 | platforms {'GPL570': 246}
+TITLE: Gene expression data for pathological stage I-II lung adenocarcinomas
+SUMMARY: Identification of genes up-regulated in ALK-positive and EGFR/KRAS/ALK-negative lung adenocarcinomas. To elucidate molecular characteristics of lung adenocarcinomas (ADCs) with ALK mutations and those without EGFR, KRAS and ALK mutations, 226 primary lung ADCs of pathological stage I-II, examined for the status of EGFR, KRAS and ALK mutations, were subjected to genome-wide expression profiling, and genes up-regulated in lung ADCs with ALK mutations and those without EGFR, KRAS and ALK mutations were identified.  One hundred and seventy-four genes, including ALK, were selected as being up-regulated specifically in 79 lung ADCs without EGFR and KRAS mutations.  These 79 cases were divided into:  11 cases of ALK-positive ADCs, 36 cases of group A triple-negative ADCs, and 32 cases of group B triple-negative ADCs, by unsupervised clustering according to the expression of the 174 genes.  In ALK-positive ADCs, 30 genes, including ALK itself and GRIN2A, were significantly overexpressed.  Group A triple-negative ADC cases showed significantly worse prognoses for relapse and death than ADC cases with EGFR, KRAS or ALK mutations and group B triple-negative ADC cases.  Nine genes were identif
+DESIGN: Expression profiles in of 226 lung adenocarcinomas (127 with EGFR mutation, 20 with KRAS mutation, 11 with EML4-ALK fusion and 68 triple negative cases).
+RELATIONS: Affiliated with: GSE67639; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA145977
+FIELDS (n values with it | distinct | examples):
+  tissue | 246 | 2 | primary lung tumor (x226); normal lung (x20)
+  age (years) | 241 | 35 | 64 (x20); 61 (x15); 68 (x14); 66 (x14); 62 (x14); 60 (x12); 65 (x12); 63 (x11)
+  gender | 246 | 2 | female (x130); male (x116)
+  smoking status | 246 | 2 | Never-smoker (x123); Ever-smoker (x123)
+  bi | 231 | 72 | 0 (x116); 820 (x5); 800 (x5); 840 (x4); 880 (x3); 1200 (x3); 740 (x3); 390 (x3)
+  pathological stage | 226 | 3 | IA (x114); II (x58); IB (x54)
+  pstage iorii | 226 | 2 | I (x168); II (x58)
+  gene alteration status | 226 | 4 | EGFR mutation + (x127); EGFR/KRAS/ALK - (x68); KRAS mutation + (x20); ALK-fusion + (x11)
+  myc | 226 | 3 | Low (x207); High (x17); nd (x2)
+  myc_copy | 226 | 173 | 1.09 (x5); 1.005 (x4); 1.148 (x3); 0.988 (x3); 1.075 (x3); 1.009 (x3); 1.028 (x3); 0.998 (x3)
+  cluster | 79 | 2 | Cluster1 (x47); Cluster2 (x32)
+  relapse | 226 | 2 | not relapsed (x162); relapsed (x64)
+  days before relapse/censor | 226 | 213 | 1856 (x4); 253 (x2); 1879 (x2); 538 (x2); 1475 (x2); 818 (x2); 1637 (x2); 1941 (x2)
+  months before relapse/censor | 452 | 272 | 61.8666666666667 (x8); 62.6333333333333 (x4); 49.1666666666667 (x4); 27.2666666666667 (x4); 54.5666666666667 (x4); 64.7 (x4); 61.9666666666667 (x4); 41.0333333333333 (x4)
+  death | 226 | 2 | alive (x191); dead (x35)
+  days before death/censor | 226 | 210 | 1856 (x4); 1879 (x2); 1841 (x2); 1475 (x2); 1482 (x2); 818 (x2); 1637 (x2); 1941 (x2)
+  exclude for prognosis analysis due to incomplete resection or adjuvant therapy | 226 | 2 | none (x204); exclude (x22)
+  [source_name_ch1] | 246 | 17 | frozen tissue of primary lung tumors (x226); Frozen normal lung tissue (x5); Frozen normal lung tissue for KH007; Frozen normal lung tissue for KH009; Frozen normal lung tissue for KH017; Frozen normal lung tissue for KH039; Frozen normal lung tissue for KH081; Frozen normal lung tissue for KH025
+  [title] | 246 | 246 | KH024; KH081; KH007; KH066; KH012; KH027; KH083; KH119
+  group | 68 | 2 | GroupA (x36); GroupB (x32)
+  age | 5 | 5 | 54; 89; 75; 70; 74

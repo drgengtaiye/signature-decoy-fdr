@@ -1,0 +1,23 @@
+GSE29013 | samples 55 | platforms {'GPL570': 55}
+TITLE: Robust Gene Expression Signature from Formalin-Fixed Paraffin-Embedded Samples Predicts Prognosis of Non-Small-Cell Lung Cancer Patients
+SUMMARY: The requirement of frozen tissues for microarray experiments limits the clinical usage of genome-wide expression profiling using microarray technology. Keywords:  Lung Cancer Prognosis, Gene Expression Signature, Formalin Fixed Paraffin Embedded Samples The goal of this study is to test the feasibility of developing lung cancer prognosis gene signatures using genome-wide expression profiling of formalin-fixed paraffin-embedded (FFPE) samples, which are widely available and provide a valuable rich source for studying the association of molecular changes in cancer and associated clinical outcomes. FFPE tumor specimens were collected, and total RNA was processed for analysis on the Affymetrix U133 plus 2.0 arrays according to Affymetrix protocols.  The quality control procedure for microarray data analysis was based on the percentage of present calls calculated by the MAS5 package. We selected 55 arrays with at least 15% of probe sets present, and we selected 1400 probe sets that present on all 55 arrays for data analysis. After microarray analysis QC, we used the RMA background correction algorithm to remove non-specific background  noise. A robust regression model was fitted to the 
+DESIGN: We micro dissected tumor area from FFPE specimen, and used Affymetrix U133 plus 2.0 arrays to obtain gene expression data.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA140467
+FIELDS (n values with it | distinct | examples):
+  tissue | 55 | 1 | lung (x55)
+  spor.n | 55 | 55 | 1724; 1663; 1623; 1576; 1547; 1537; 1510; 1505
+  specimen.number | 55 | 55 | MDA5; MDA9; MDA10; MDA14; MDA18; MDA20; MDA21; MDA23
+  histology | 55 | 2 | Adenocarcinoma (x30); Squamous (x25)
+  final.pat.stage | 55 | 6 | IB (x21); IIB (x11); IIIB (x10); IIIA (x7); IIA (x3); IA (x3)
+  time_to_progression | 55 | 55 | 2.384668036; 2.264202601; 0.377823409; 2.819986311; 2.896646133; 2.130047912; 2.721423682; 2.899383984
+  progression | 55 | 2 | 1 (x28); 0 (x27)
+  death_time | 55 | 55 | 2.384668036; 2.264202601; 1.404517454; 2.819986311; 2.896646133; 2.130047912; 2.721423682; 2.899383984
+  death_event | 55 | 2 | 0 (x37); 1 (x18)
+  Stage | 55 | 3 | 1 (x24); 3 (x17); 2 (x14)
+  age.at.surgery | 55 | 26 | 65 (x6); 67 (x5); 69 (x4); 72 (x3); 70 (x3); 63 (x3); 60 (x3); 75 (x3)
+  gender | 55 | 2 | M (x38); F (x17)
+  race | 55 | 2 | Caucasian (x53); African American (x2)
+  smoking | 55 | 2 | 1 (x53); 0 (x2)
+  adj_chemo | 55 | 2 | Yes (x34); No (x21)
+  [source_name_ch1] | 55 | 1 | Non-Small-Cell Lung Cancer (x55)
+  [title] | 55 | 55 | human lung cancer sample MDA5; human lung cancer sample MDA9; human lung cancer sample MDA10; human lung cancer sample MDA14; human lung cancer sample MDA18; human lung cancer sample MDA20; human lung cancer sample MDA21; human lung cancer sample MDA23

@@ -1,0 +1,20 @@
+GSE50081 | samples 181 | platforms {'GPL570': 181}
+TITLE: Validation of a histology-independent prognostic gene signature for early stage, non-small cell lung cancer including stage IA patients
+SUMMARY: Background: Patients with early stage non-small cell lung carcinoma (NSCLC) may benefit from treatments based on more accurate prognosis. A 15-gene prognostic classifier for NSCLC was identified from mRNA expression profiling of tumor samples from the NCIC CTG JBR.10 trial. Here, we assessed its value in an independent set of cases. Methods: Expression profiling was performed on RNA from frozen, resected tumor tissues corresponding to 181 Stage I and II NSCLC cases collected at University Health Network (UHN181). Kaplan-Meier methodology was used to estimate three year overall survival probabilities and the prognostic effect of the classifier was assessed using log-rank testing. Cox proportional hazards model evaluated the signature's effect adjusting for clinical prognostic factors. Results: Expression data of the 15-gene classifier stratified UHN181 cases into high and low-risk subgroups with significantly different overall survival (HR=1.92, 95% CI: 1.15-3.23, p=0.012). Its strength as a prognostic classifier was superior to stage alone (HR=1.52, 95% CI: 0.90-2.55, p-value=0.11). In subgroup analysis, this classifier predicted survival in 127 Stage I patients (HR=2.17, 95% CI: 1
+DESIGN: Expression profiling was performed on RNA from frozen, resected tumor tissues corresponding to 181 Stage I and II NSCLC cases collected at University Health Network (UHN181). !Series_contributor = Sandy,D,Der
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA215955
+FIELDS (n values with it | distinct | examples):
+  Sex | 181 | 2 | M (x98); F (x83)
+  histology | 181 | 7 | adenocarcinoma (x127); squamous cell carcinoma (x42); large cell carcinoma (x7); adenosquamous carcinoma (x2); NSClarge cell carcinoma-mixed; NSCLC-favor adenocarcinoma; squamous cell carcinoma X2
+  t-stage | 181 | 3 | 2 (x122); 1 (x57); 3 (x2)
+  n-stage | 181 | 2 | 0 (x129); 1 (x52)
+  m-stage | 181 | 1 | 0 (x181)
+  Stage | 181 | 4 | 1B (x79); 1A (x48); 2B (x45); 2A (x9)
+  age | 181 | 173 | 70.56 (x2); 72.96 (x2); 73.23 (x2); 61.13 (x2); 63.1 (x2); 69.07 (x2); 70.52 (x2); 70.73 (x2)
+  smoking | 181 | 4 | Ex-smoker (x79); Current (x57); Never (x24); Unable to determine (x21)
+  survival time | 181 | 162 | 5.84 (x3); 5.18 (x3); 1.91 (x2); 5.32 (x2); 4.95 (x2); 6.37 (x2); 5.96 (x2); 6.11 (x2)
+  status | 181 | 2 | alive (x106); dead (x75)
+  disease-free survival time | 181 | 176 | 0.709 (x2); 5.843 (x2); 2.927 (x2); 2.708 (x2); 0.093 (x2); 4.115; 7.521; 7.324
+  recurrence | 181 | 3 | N (x126); Y (x51); U (x4)
+  [source_name_ch1] | 181 | 1 | Primary NSCLC (x181)
+  [title] | 181 | 181 | MB001; MB002; MB003; MB004; MB005; MB006; MB007; MB008

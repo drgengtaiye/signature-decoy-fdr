@@ -1,0 +1,28 @@
+GSE26939 | samples 116 | platforms {'GPL9053': 116}
+TITLE: Human lung adenocarcinoma mRNA expression and gene mutations.
+SUMMARY: Lung adenocarcinoma expression subtypes have unknown origins.  This study associated distinct mutations with the subtypes.
+DESIGN: RNA from tumors and a common reference were hybridized to Agilent two color microarrays.
+RELATIONS: SubSeries of: GSE36471; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA155477
+FIELDS (n values with it | distinct | examples):
+  subtype | 116 | 3 | bronchioid (x47); magnoid (x40); squamoid (x29)
+  age (90=greater than or equal to 90) | 116 | 43 | 66 (x10); 53 (x7); 69 (x6); 65 (x6); 64 (x6); 75 (x5); 74 (x5); 70 (x4)
+  Sex | 100 | 2 | F (x51); M (x49)
+  smoking_status(0=nonsmoker,1=smoker) | 113 | 2 | Smoker (x101); NeverSmoker (x12)
+  pack_years | 93 | 34 | 0 (x11); 40 (x8); 100 (x7); 80 (x7); 50 (x7); 60 (x6); 30 (x5); 15 (x3)
+  Stage | 87 | 6 | IA (x30); IB (x25); IIIA (x14); IIB (x12); IIA (x4); IV (x2)
+  grade | 111 | 3 | 2 (x58); 3 (x44); 1 (x9)
+  tumor_percent | 104 | 20 | 100 (x23); 70 (x15); 90 (x11); 80 (x11); 95 (x11); 60 (x8); 30 (x5); 50 (x4)
+  marked_lymphocytes | 116 | 2 | 0 (x101); 1 (x15)
+  adenosquamous_content (0='no', 1='yes') | 116 | 2 | 0 (x106); 1 (x10)
+  bronchioloalveolar_content (0='no', 1='yes') | 116 | 2 | 0 (x110); 1 (x6)
+  survival_months | 115 | 114 | 47.5728952772074 (x2); 43.6632443531828; 17.9712525667351; 5.3223819301848; 12.5831622176591; 7.42505133470226; 13.864476386037; 17.8398357289528
+  survival_status(0='alive',1='dead') | 115 | 2 | 1 (x66); 0 (x49)
+  egfr (0='wt',1='mutated') | 81 | 2 | 0 (x70); 1 (x11)
+  kras (0='wt',1='mutated') | 109 | 2 | 0 (x89); 1 (x20)
+  tp53 (0='wt',1='mutated') | 107 | 2 | 0 (x76); 1 (x31)
+  stk11 (0='wt',1='mutated') | 81 | 2 | 0 (x75); 1 (x6)
+  [source_name_ch1] | 116 | 1 | lung adenocarcinoma tumor RNA (x116)
+  [title] | 116 | 116 | tumor  1 [EXPID10496]; tumor  2 [EXPID10500]; tumor  3 [EXPID10504]; tumor  4 [EXPID10505]; tumor  5 [EXPID10509]; tumor  6 [EXPID10510]; tumor  7 [EXPID10513]; tumor  8 [EXPID10517]
+  fibrosis_percent | 50 | 13 | 0 (x14); 5 (x9); 10 (x8); 20 (x4); 40 (x3); 30 (x3); 80 (x2); 70 (x2)
+  sex | 16 | 2 | F (x12); M (x4)
+  stage | 15 | 5 | IB (x6); IIIA (x5); IIB (x2); IIA; IA

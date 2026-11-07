@@ -1,0 +1,9 @@
+GSE14333 | samples 290 | platforms {'GPL570': 290}
+TITLE: Expression data from 290 primary colorectal cancers
+SUMMARY: Samples were taken from colorectal cancers in surgically resected specimens in 290 colorectal cancer patients. The expression profiles were determined using Affymetrix Human Genome U133Plus 2.0 arrays. The training set of our prognosis classifier included the stage A and D samples. Validation used our stage B and C samples.  Keywords: Expression profiling by array
+DESIGN: mRNA from 290 primary colorectal tumour samples were extracted and hybridized to HG-U133Plus 2.0 expression arrays. The MAS5.0 procedure was used to make calls of expression. Data from the Stage A and D samples were quantile normalized and used with microarray data from the expO set to build a classifier. The Stage B and C samples were were quantile normalized with reference to a training set prior to application of our prognosis classifier.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA111511
+FIELDS (n values with it | distinct | examples):
+  Location | 290 | 284 | Left; DukesStage: D; Age_Diag: 79; Gender: M; DFS_Time: NA; DFS_Cens: NA; AdjXRT: N; AdjCTX: N (x3); Left; DukesStage: B; Age_Diag: 65; Gender: F; DFS_Time: 22.38; DFS_Cens: 0; AdjXRT: Y; AdjCTX: Y (x2); Left; DukesStage: D; Age_Diag: 66; Gender: M; DFS_Time: NA; DFS_Cens: NA; AdjXRT: N; AdjCTX: Y (x2); Left; DukesStage: D; Age_Diag: 82; Gender: F; DFS_Time: NA; DFS_Cens: NA; AdjXRT: N; AdjCTX: N 
+  [source_name_ch1] | 290 | 1 | primary colorectal adenocarcinoma (x290)
+  [title] | 290 | 290 | T5266A1; T521B; T1856A; T4919A1; T5589B1; T5287A1; T866D; T552G

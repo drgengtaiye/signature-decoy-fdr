@@ -1,0 +1,21 @@
+GSE29621 | samples 65 | platforms {'GPL570': 65}
+TITLE: mRNA and microRNA profile in colon cancer [mRNA data]
+SUMMARY: Compariosn of mRNA and miRNA profile in colon cancer
+DESIGN: mRNA was extracted from  colon tissues for microarray analysis
+RELATIONS: SubSeries of: GSE29623; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA153829
+FIELDS (n values with it | distinct | examples):
+  corresponding to gse17536 | 65 | 64 | NA (x2); GSM437213; GSM437206; GSM437199; GSM437209; GSM437266; GSM437205; GSM437261
+  gender | 65 | 2 | MALE (x40); FEMALE (x25)
+  t stage | 65 | 3 | 3 (x52); 2 (x8); 4 (x5)
+  n stage | 65 | 4 | 0 (x32); 1 (x25); 2 (x7); X
+  m stage (0 | 65 | 3 | no; 1: metastasis): 0 (x46); no; 1: metastasis): 1 (x18); no; 1: metastasis): X
+  histologic grade | 65 | 3 | MOD DIFF (x51); POORLY DIFF (x10); WELL DIFF (x4)
+  ajcc staging | 65 | 4 | Stage 2 (x22); Stage 3 (x18); Stage 4 (x18); Stage 1 (x7)
+  adjuvant chemo | 65 | 2 | Y (x38); N (x27)
+  preoperative chemo | 65 | 1 | N (x65)
+  overall survival (os) | 65 | 64 | 58.45 (x2); 52.86; 54.9; 74.07; 59.34; 32.67; 38.72; 42.27
+  os event | 65 | 2 | alive (x40); dead (x25)
+  disease-free survival time (dfs) | 65 | 54 | NA (x12); 52.86; 54.9; 24.85; 59.34; 17.32; 38.72; 13.08
+  dfs event | 65 | 3 | no recurrence (x44); NA (x12); recurrence (x9)
+  [source_name_ch1] | 65 | 1 | frozen colon tissue (x65)
+  [title] | 65 | 65 | T4088A; T3254B; T2875A1; T3701A1; T5513A1.1; T3216A; T4956A1; T5102A1

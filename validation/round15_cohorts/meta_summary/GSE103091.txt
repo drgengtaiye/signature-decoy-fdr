@@ -1,0 +1,23 @@
+GSE103091 | samples 238 | platforms {'GPL570': 238}
+TITLE: Gene-expression molecular subtyping of triple-negative breast cancer tumors
+SUMMARY: This SuperSeries is composed of the SubSeries listed below.
+DESIGN: Refer to individual Series
+RELATIONS: SuperSeries of: GSE58812; SuperSeries of: GSE83937; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA400182
+FIELDS (n values with it | distinct | examples):
+  diagnosis | 107 | 1 | triple negative breast cancer (x107)
+  age at diag | 107 | 107 | 72.79124; 66.26421; 67.75633; 49.54963; 84.63245; 36.98015; 59.01985; 68.18891
+  meta | 107 | 2 | 0 (x76); 1 (x31)
+  mfs (days) | 107 | 105 | 2009 (x2); 783 (x2); 1184; 984; 877; 905; 340; 2081
+  death | 107 | 2 | 0 (x78); 1 (x29)
+  os (days) | 107 | 105 | 1430 (x2); 1632 (x2); 1520; 1281; 1066; 1050; 422; 2081
+  er-ihc | 107 | 1 | 0 (x107)
+  pr-ihc | 107 | 1 | 0 (x107)
+  her2-ihc | 107 | 1 | 0 (x107)
+  [source_name_ch1] | 238 | 1 | Breast tumor biospsie (x238)
+  [title] | 238 | 238 | GP_001; GP_002; GP_003; GP_004; GP_005; GP_006; GP_007; GP_008
+  ihc | 131 | 1 | TNBC (x131)
+  er | 131 | 1 | 0 (x131)
+  pr | 131 | 1 | 0 (x131)
+  her2 | 131 | 1 | 0 (x131)
+  pathological type | 131 | 3 | ductal (x118); lobular (x7); other (x6)
+  adjuvant chemotherapy | 131 | 2 | 1 (x130); 0

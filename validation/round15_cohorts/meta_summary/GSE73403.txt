@@ -1,0 +1,16 @@
+GSE73403 | samples 69 | platforms {'GPL6480': 69}
+TITLE: Sixty-nine samples obtained from surgical excision with overall survival.
+SUMMARY: To further development of our gene expression signature for survival prediction, we conducted expression profiles of lung squamous carcinoma samples with overall survival information as the training cohort.
+DESIGN: Sixty-nine LSQC samples with OS information were obtained from patients at the Cancer Institute and Hospital, Chinese Academy of Medical Sciences
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA296897
+FIELDS (n values with it | distinct | examples):
+  tissue | 69 | 1 | Cancer survival tissue (x69)
+  gender | 69 | 2 | Male (x65); Female (x4)
+  age | 69 | 32 | 66 (x8); 54 (x6); 58 (x4); 56 (x3); 59 (x3); 74 (x3); 55 (x3); 62 (x3)
+  smoking index (package*year) | 69 | 23 | 30 (x16); 0 (x11); 40 (x10); 60 (x6); 20 (x4); 15 (x2); 10 (x2); 45 (x2)
+  tnm | 69 | 11 | T2N0M0 (x22); T2N1M0 (x12); T3N0M0 (x9); T2N2M0 (x8); T3N2M0 (x7); T3N1M0 (x4); T1N0M0 (x3); T4N2M0
+  Stage | 69 | 3 | 1 (x25); 3 (x23); 2 (x21)
+  survival (year) | 69 | 34 | 3.08 (x6); 2.42 (x6); 2.33 (x5); 1.58 (x4); 2.58 (x3); 3 (x3); 3.5 (x3); 1.5 (x3)
+  events (death = 1, alive = 0) | 69 | 2 | 0 (x41); 1 (x28)
+  [source_name_ch1] | 69 | 1 | Lung Squamous Carcinoma Survival Tissue (x69)
+  [title] | 69 | 69 | Lung_Squamous_Carcinoma_Survival_Patient1; Lung_Squamous_Carcinoma_Survival_Patient2; Lung_Squamous_Carcinoma_Survival_Patient3; Lung_Squamous_Carcinoma_Survival_Patient4; Lung_Squamous_Carcinoma_Survival_Patient5; Lung_Squamous_Carcinoma_Survival_Patient6; Lung_Squamous_Carcinoma_Survival_Patient7; Lung_Squamous_Carcinoma_Survival_Patient8

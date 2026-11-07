@@ -1,0 +1,33 @@
+GSE96058 | samples 3409 | platforms {'GPL11154': 3069, 'GPL18573': 340}
+TITLE: Clinical Value of RNA Sequencing–Based Classifiers for Prediction of the Five Conventional Breast Cancer Biomarkers: A Report From the Population-Based Multicenter Sweden Cancerome Analysis Network—Breast Initiative [cohort 3273]
+SUMMARY: PURPOSE In early breast cancer (BC), five conventional biomarkers—estrogen receptor (ER), progesterone receptor (PgR), human epidermal growth factor receptor 2 (HER2), Ki67, and Nottingham histologic grade (NHG)—are used to determine prognosis and treatment. We aimed to develop classifiers for these biomarkers that were based on tumor mRNA sequencing (RNA-seq), compare classification performance, and test whether such predictors could add value for risk stratification.  METHODS In total, 3,678 patients with BC were studied. For 405 tumors, a comprehensive multi-rater histopathologic evaluation was performed. Using RNA-seq data, single-gene classifiers and multigene classifiers (MGCs) were trained on consensus histopathology labels. Trained classifiers were tested on a prospective population-based series of 3,273 BCs that included a median follow-up of 52 months (Sweden Cancerome Analysis Network—Breast [SCAN-B], ClinicalTrials.gov identifier: NCT02306096), and results were evaluated by agreement statistics and Kaplan-Meier and Cox survival analyses.  RESULTS Pathologist concordance was high for ER, PgR, and HER2 (average κ, 0.920, 0.891, and 0.899, respectively) but moderate for Ki
+DESIGN: Illumina paired-end RNA-sequencing and expression estimation were performed for two cohorts: a training cohort with 405 samples (GSE81538), and a validation cohort with 3273 samples (of which 136 cases have technical replicates) (GSE96058).  A comprehensive histopathological evaluation was performed on the 405-cohort to estimate inter-pathologist variability on original diagnostic slides as well as on repeat immunostains, leading to consensus scores for five clinical biomarkers.  Subtyping was performed using the PAM50 gene list.  Please note that there are "primary sample" (e.g F30) and "tech
+RELATIONS: SubSeries of: GSE81540; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA378692
+FIELDS (n values with it | distinct | examples):
+  scan-b external id | 3409 | 3409 | Q008818.C008840.S000215.l.r.m2.c.lib.g.k.a.t; Q008769.C008792.S000250.l.r.m.c.lib.g.k.a.t; Q008568.C008577.S000424.l.r.m3.c.lib.g.k.a.t; Q008909.C009000.S000084.l.r.m.c.lib.g.k.a.t; Q008781.C008782.S000260.l.r.m.c.lib.g.k.a.t; Q008815.C008853.S000200.l.r.m2.c.lib.g.k.a.t; Q008861.C008874.S000184.l2.r.m.c.lib.g.k.a.t; Q008860.C008864.S000189.l2.r.m2.c.lib.g.k.a.t
+  instrument model | 3409 | 2 | HiSeq 2000 (x3069); NextSeq 500 (x340)
+  age at diagnosis | 3409 | 72 | 69 (x132); 67 (x128); 66 (x124); 68 (x118); 64 (x107); 65 (x106); 70 (x102); 63 (x101)
+  tumor size | 3409 | 81 | 15 (x256); 12 (x208); 20 (x204); 11 (x187); 14 (x182); 18 (x164); 13 (x156); 17 (x148)
+  lymph node group | 3409 | 5 | NodeNegative (x2027); 1to3 (x897); 4toX (x312); NA (x101); SubMicroMet (x72)
+  lymph node status | 3409 | 3 | NodeNegative (x2099); NodePositive (x1209); NA (x101)
+  er status | 3409 | 3 | 1 (x2935); 0 (x254); NA (x220)
+  pgr status | 3409 | 3 | 1 (x2644); 0 (x407); NA (x358)
+  her2 status | 3409 | 3 | 0 (x2843); 1 (x438); NA (x128)
+  ki67 status | 3409 | 3 | NA (x1818); 1 (x940); 0 (x651)
+  nhg | 3409 | 4 | G2 (x1593); G3 (x1246); G1 (x505); NA (x65)
+  er prediction mgc | 3409 | 2 | 1 (x2716); 0 (x693)
+  pgr prediction mgc | 3409 | 2 | 1 (x2629); 0 (x780)
+  her2 prediction mgc | 3409 | 2 | 0 (x2958); 1 (x451)
+  ki67 prediction mgc | 3409 | 2 | 0 (x2383); 1 (x1026)
+  nhg prediction mgc | 3409 | 2 | G2 (x2385); G3 (x1024)
+  er prediction sgc | 3409 | 2 | 1 (x3015); 0 (x394)
+  pgr prediction sgc | 3409 | 2 | 1 (x2645); 0 (x764)
+  her2 prediction sgc | 3409 | 2 | 0 (x3093); 1 (x316)
+  ki67 prediction sgc | 3409 | 2 | 1 (x2013); 0 (x1396)
+  pam50 subtype | 3409 | 5 | LumA (x1709); LumB (x767); Basal (x360); Her2 (x348); Normal (x225)
+  overall survival days | 3409 | 1171 | 1212 (x15); 1543 (x11); 1235 (x11); 2325 (x11); 1900 (x10); 1473 (x10); 1640 (x10); 1912 (x10)
+  overall survival event | 3409 | 2 | 0 (x3056); 1 (x353)
+  endocrine treated | 3409 | 3 | 1 (x2626); 0 (x761); NA (x22)
+  chemo treated | 3409 | 3 | 0 (x2017); 1 (x1371); NA (x21)
+  [source_name_ch1] | 3409 | 1 | Primary breast tumor (x3409)
+  [title] | 3409 | 3409 | F1; F2; F3; F4; F5; F6; F7; F8

@@ -1,0 +1,15 @@
+GSE84437 | samples 483 | platforms {'GPL6947': 483}
+TITLE: Molecular subtypes in gastric cancer.
+SUMMARY: This SuperSeries is composed of the SubSeries listed below.
+DESIGN: Refer to individual Series
+RELATIONS: SuperSeries of: GSE84426; SuperSeries of: GSE84433; SuperSeries of: GSE147163; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA329144
+FIELDS (n values with it | distinct | examples):
+  tissue | 483 | 1 | gastric cancer (x483)
+  age | 433 | 56 | 68 (x26); 63 (x20); 61 (x19); 64 (x19); 65 (x16); 66 (x16); 62 (x15); 53 (x15)
+  Sex | 433 | 2 | male (x296); female (x137)
+  ptstage | 433 | 4 | T4 (x292); T3 (x92); T2 (x38); T1 (x11)
+  pnstage | 433 | 4 | N1 (x188); N2 (x132); N0 (x80); N3 (x33)
+  death | 433 | 2 | 0 (x224); 1 (x209)
+  duration overall survival | 433 | 138 | 23 (x9); 37 (x9); 12 (x8); 77 (x8); 33 (x7); 70 (x6); 4 (x6); 21 (x6)
+  [source_name_ch1] | 483 | 1 | Human gastric cancer (x483)
+  [title] | 483 | 483 | Y10052T; Y10055T; Y10056T; Y10057T; Y10058T; Y10060T; Y10063T; Y10065T

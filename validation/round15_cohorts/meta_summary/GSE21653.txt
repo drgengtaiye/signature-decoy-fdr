@@ -1,0 +1,22 @@
+GSE21653 | samples 266 | platforms {'GPL570': 266}
+TITLE: A gene expression signature identifies two prognostic subgroups of basal breast cancer
+SUMMARY: Medullary breast cancers (MBC) display a basal profile, but a favorable prognosis. We hypothesized that a previously published 368-gene expression signature associated with MBC might serve to define a prognostic classifier in basal cancers. We collected public gene expression and histoclinical data of 2145 invasive early breast adenocarcinomas. We developed a Support Vector Machine (SVM) classifier based on this 368-gene list in a learning set, and tested its predictive performances in an independent validation set. Then, we assessed its prognostic value and that of six prognostic signatures for disease-free survival (DFS) in the remaining 2034 samples. The SVM model accurately classified all MBC samples in the learning and validation sets. A total of 466 cases were basal across other sets. The SVM classifier separated them into two subgroups, subgroup 1 (resembling MBC) and subgroup 2 (not resembling MBC). Subgroup 1 exhibited 71% 5-year DFS, whereas subgroup 2 exhibited 50% (p=9.93E-05). The classifier outperformed the classical prognostic variables in multivariate analysis, conferring lesser risk for relapse in subgroup 1 (HR=0.52, p=3.9E-04). This prognostic value was specific 
+DESIGN: The IPC series contained frozen tumor samples obtained from 266 early breast cancer patients who underwent initial surgery in our institution between 1992 and 2004. They included 227 cases previously reported {Finetti, 2008 #1758} and 39 additional cases, all similarly profiled using Affymetrix U133 Plus 2.0 human oligonucleotide microarrays as previously described {Finetti, 2008 #1758}. The study was approved by the IPC review board, and informed consent was available for each case. Gene expression data of 266 BCs  were quantified by using whole-genome DNA microarrays (HG-U133 plus 2.0, Affym
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA125879
+FIELDS (n values with it | distinct | examples):
+  age at diagnosis | 266 | 60 | 53 (x13); 60 (x12); 61 (x11); 49 (x10); 51 (x9); 66 (x9); 54 (x8); 69 (x8)
+  histology | 262 | 6 | IDC (x213); ILC (x22); other (x10); MIX (x10); TUB (x6); MUC
+  pt | 253 | 3 | pT2 (x126); pT3 (x68); pT1 (x59)
+  pn | 266 | 3 | 1 (x140); 0 (x120); NA (x6)
+  sbr grade | 266 | 4 | 3 (x125); 2 (x89); 1 (x45); NA (x7)
+  er ihc | 266 | 3 | 1 (x150); 0 (x113); NA (x3)
+  pr ihc | 266 | 3 | 1 (x136); 0 (x127); NA (x3)
+  erbb2 | 266 | 3 | 0 (x216); 1 (x29); NA (x21)
+  p53 ihc | 266 | 3 | 0 (x125); NA (x72); 1 (x69)
+  ki67 ihc | 266 | 3 | 1 (x144); NA (x64); 0 (x58)
+  dfs evt | 266 | 3 | 0 (x169); 1 (x83); NA (x14)
+  dfs time (months) | 252 | 241 | 0.00 (x4); 20.70 (x2); 95.44 (x2); 113.77 (x2); 91.93 (x2); 11.47 (x2); 54.70 (x2); 8.51 (x2)
+  molecular subtype | 266 | 5 | LuminalA (x89); Basal (x75); LuminalB (x49); Normal (x29); ERBB2 (x24)
+  tissue | 266 | 1 | breast cancer tumor (x266)
+  [source_name_ch1] | 266 | 1 | human breast cancer tumors (x266)
+  [title] | 266 | 266 | BC1; BC2; BC3; BC4; BC5; BC6; BC7; BC8

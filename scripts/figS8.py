@@ -1,83 +1,60 @@
-"""Additional file 1 Fig. S8 (GB v14): panels f and g of the GB v13 Figure 8, moved here when Figure 8 took the
-external replication (validation/PLAN_round11_external_replication.md). Unchanged in content. Original docstring:
-Figure 8 (GB v13) - gene content and co-expression structure, by endpoint, family and cancer type
-(validation/PLAN_round10_content_and_structure.md; icb/v15_content from decoys/v15_content_structure.py).
+"""Additional file 1: Fig. S6 (GB v7) - the decoy pool at library scale (analysis 8 of
+validation/PLAN_round7_estimand_and_bias.md), on the 20 TCGA cancer types.
 
-rho(s, c) = the share of a signature's 320 co-expressed decoys whose gain over the null in cohort c lies below its own
-(0.5 when its genes add nothing to a module of its structure).
-a  rho over every signature x cohort test, by family, for response and for overall survival
-b  each signature's mean rho for response against overall survival; content calls
-c  family means of rho with intervals over correlation clusters, per setting
-d  the atlas: rho for every signature in every response cohort and TCGA type; calls and single-cohort estimates above
-e  the five tumor types of the response cohorts: inflamed and confounder rho, response against survival
-f  single-cohort estimates against the inflamed family's rho
-g  libraries: structure (decoys' per-test clearance) against content (mean rho of called targets)
+a  genes left for decoys (measured in all 20 types and in no set) as the library grows: the 52 immune signatures, MSigDB
+   Hallmark, Hallmark + C2 canonical pathways, Hallmark + C2 CP + C5 GO biological process
+b  for each of the 50 Hallmark sets, the internal correlation its decoys reach (median of 4) against its own, from each
+   MSigDB pool
+c  the Hallmark library on overall survival (mean z, folded C-index, ten decoy sets): calls and the estimated FDR
+   (plain, and pi0-corrected beneath), with the global null
 """
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
 import numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
-import cns10 as K
-from matplotlib.colors import LinearSegmentedColormap, Normalize
+import sys; sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import v4kit as K
+import figstyle as fs
+from fig67_lib import bars2, C_FOLD, C_SIG, C_DEC
 K.apply()
-V = K.D + "/icb/v15_content/"
-FAMD = pd.read_csv(K.D + "/icb/v5_signature_clusters.csv").set_index("signature").family
-FAMS = ["Inflamed/IFN", "Other", "Confounder"]
-CELL = {k: pd.read_csv(V + f"cells_{k}.csv.gz") for k in ("response", "tcga_OS")}
-SIG = {k: pd.read_csv(V + f"signature_{k}.csv", index_col=0) for k in ("response", "tcga_OS")}
-FBS = pd.read_csv(V + "family_by_setting.csv")
-PC = pd.read_csv(V + "primary_contrast.csv")
-MT = pd.read_csv(V + "matched_tumor_types.csv")
-AT = pd.read_csv(V + "atlas_by_type.csv")
-LIB = pd.read_csv(V + "libraries.csv")
-ICB_TUM = {"ICB_Gide": "melanoma", "ICB_Hugo": "melanoma", "ICB_Liu": "melanoma", "ICB_Riaz": "melanoma",
-           "ICB_Van_Allen": "melanoma", "ICB_Puch": "melanoma", "ICB_Braun": "kidney", "ICB_Miao1": "kidney",
-           "ICB_Jung": "lung", "ICB_Limagne1": "lung", "ICB_Mariathasan": "bladder", "ICB_Kim": "gastric"}
-RHO = LinearSegmentedColormap.from_list("rho", [K.AQUA, "#9fd3c3", "#f4f4f2", "#9aa3ad", "#2b3440"])
-SETL = {"response": "response", "tcga_OS": "overall survival"}
+P = K.D + "/icb/v12_pkg/"
+TT = 6.9
+PS = pd.read_csv(P + "hallmark_pool_sizes.csv")
+PD = pd.read_csv(P + "hallmark_pool_decoys.csv.gz")
+F = pd.read_csv(P + "hallmark_OS_fdr.csv")
+GN = pd.read_csv(P + "hallmark_OS_globalnull_summary.csv")
+LAB = {"immune": "52 immune\nsignatures", "hallmark": "Hallmark", "hallmark_cp": "+ C2\npathways",
+       "hallmark_cp_gobp": "+ GO\nprocesses"}
+PCOL = {"hallmark": C_SIG, "hallmark_cp": fs.AMBER, "hallmark_cp_gobp": fs.VERM}
+C = K.Canvas(62)
 
+ax = C.ax(15, 13, 42, 38)
+for i, r in enumerate(PS.itertuples()):
+    ax.bar(i, r.pool / 1000, .65, color=PCOL.get(r.library, C_DEC), lw=0, zorder=3)
+    ax.text(i, r.pool / 1000 + .3, f"{r.pool:,}\n({r.sets:,} sets)", ha="center", va="bottom", fontsize=K.T_SMALL - .3)
+ax.set_xticks(range(len(PS))); ax.set_xticklabels([LAB[x] for x in PS.library], fontsize=K.T_SMALL - .3)
+ax.tick_params(axis="x", length=0); ax.set_ylabel("genes left for decoys (thousands)"); ax.set_ylim(0, 23)
+fs.note(ax, .98, .97, f"of {PS.universe.iloc[0]:,} genes measured\nin all 20 types", size=K.T_SMALL, color=fs.SLATE, ha="right")
+K.frame(ax)
+C.title(15, 7, "The pool shrinks as the library grows", size=TT, fontweight="bold"); C.letter(7.5, 6.5, "a")
 
+ax = C.ax(75, 13, 38, 38)
+for pool, g in PD.groupby("pool", sort=False):
+    m = g.groupby("target").agg(t=("r_target_med", "first"), a=("r_achieved_med", "median"))
+    ax.scatter(m.t, m.a, s=7, color=PCOL[pool], lw=0, alpha=.85, zorder=3,
+               label={"hallmark": "Hallmark pool", "hallmark_cp": "+ C2 canonical pathways", "hallmark_cp_gobp": "+ GO biological processes"}[pool])
+lim = max(PD.r_target_med.max(), PD.r_achieved_med.max()) * 1.08
+ax.plot([0, lim], [0, lim], color=fs.INK, lw=.5, ls=(0, (3, 2)))
+ax.set_xlim(0, lim); ax.set_ylim(0, lim)
+ax.set_xlabel("Hallmark set internal $r$"); ax.set_ylabel("its decoys' internal $r$ (median of 4)")
+ax.legend(fontsize=K.T_SMALL - .3, loc="upper left", frameon=False, handletextpad=.2, markerscale=1.4)
+K.frame(ax)
+C.title(75, 7, "Decoys still reach the sets' coherence", size=TT, fontweight="bold"); C.letter(67.5, 6.5, "b")
 
-C = K.Canvas(70)
-# ================================================================== f  single-cohort estimates
-ax = C.panel("a", 16, 12, 62, 46, head="Single-cohort estimates")
-CAP = 150
-FLAB = {"SKCM": (0.70, 22), "CESC": (0.64, 9), "Gide": (1.06, 27), "SARC": (0.97, 44), "KIRC": (0.157, 158),
-        "LUSC": (0.29, 158), "STAD": (0.23, 127)}
-for k_, mk, col, fill in (("tcga_OS", "o", K.SLATE, False), ("response", "D", K.INK, True)):
-    q = AT[(AT.setting == k_) & (AT.calls > 0)]
-    for _, rr in q.iterrows():
-        y = min(rr.fdr, CAP)
-        K.dots(ax, [rr.rho_inflamed], [y], col, s=4 + 0.45 * rr.calls, filled=fill, marker=mk, z=5)
-        name = K.COHORT.get(rr.cohort, rr.cohort)
-        if name in FLAB:
-            tx, ty = FLAB[name]
-            lead = abs(tx - rr.rho_inflamed) > 0.05 or abs(ty - y) > 10
-            ax.annotate(name, (rr.rho_inflamed, y), (tx, ty), ha="center" if name in ("KIRC", "LUSC", "Gide", "SARC")
-                        else ("left" if tx > rr.rho_inflamed else "right"), va="center", fontsize=4.3, color=K.INK2,
-                        arrowprops=dict(arrowstyle="-", lw=0.35, color=K.INK2, shrinkA=1, shrinkB=2) if lead else None)
-ax.axhline(CAP, color=K.RULE, lw=0.4, ls=(0, (1, 1.5)))
-ax.set_xlim(0.1, 1.12); ax.set_ylim(0, CAP + 14); ax.set_xticks([.25, .5, .75, 1]); ax.set_yticks([0, 50, 100, 150])
-ax.set_yticklabels(["0", "50", "100", "≥150"])
-ax.set_xlabel("mean ρ, inflamed family"); ax.set_ylabel("estimated FDR (%)")
-K.legend(ax, [(K.SLATE, "TCGA type", "o", False), (K.INK, "response cohort", "D", True)], x=0.55, y=0.80, dy=0.085,
-         s=7, size=K.T_SMALL)
-
-# ================================================================== g  libraries
-ax = C.panel("b", 106, 12, 70, 46, head="Libraries")
-LL = {"response": "immune, response", "tcga_OS": "immune, OS", "tcga_DSS": "immune, DSS", "tcga_PFI": "immune, PFI",
-      "breast_pc1_origin_out": "breast, PC1", "breast_mean": "breast, mean z", "hallmark_OS": "Hallmark, OS"}
-OFF = {"response": (4, 0.0), "tcga_OS": (4, 0.008), "tcga_DSS": (4, 0.004), "tcga_PFI": (4, -0.012),
-       "breast_pc1_origin_out": (-4, 0.0), "breast_mean": (-4, 0.0), "hallmark_OS": (4, 0.0)}
-for _, q in LIB[LIB.library.isin(LL)].iterrows():
-    x_, y_ = 100 * q.decoy_clear, q.rho_bar_called
-    K.dots(ax, [x_], [y_], K.INK, s=14, z=5)
-    dx, dy = OFF[q.library]
-    ax.text(x_ + dx * 0.35, y_ + dy, f"{LL[q.library]} {q.fdr_reported:.0f}%", ha="left" if dx > 0 else "right",
-            va="center", fontsize=4.3, color=K.INK2)
-K.ref(ax, 5, axis="v")
-ax.set_xlim(3, 17); ax.set_ylim(0.6, 0.92); ax.set_xticks([5, 10, 15])
-ax.set_xlabel("decoys above the null's 95th pct (%)"); ax.set_ylabel("mean ρ of the called")
-
-C.save("FigS8_content_GB14")
-print("FigS8_content_GB14")
+ax = C.ax(130, 13, 26, 38)
+row = lambda d, b="clusters": F[(F["class"] == d) & (F.boot == b)].iloc[0]
+combos = [("co-expressed", row("coex"), C_FOLD), ("random-gene", row("rand"), C_DEC)]
+bars2(ax, combos, max(c[1].called for c in combos) * 1.45 + 2)
+ax.set_ylabel("Hallmark sets called (of 50)")
+g = GN[GN.stat == "fold"].iloc[0]
+fs.note(ax, .03, .97, f"global null: ratio\n{g.ratio:.2f} ({g.ratio_lo:.2f}–{g.ratio_hi:.2f})", size=K.T_SMALL, color=fs.SLATE)
+C.title(130, 7, "Hallmark, overall survival", size=TT, fontweight="bold"); C.letter(122.5, 6.5, "c")
+C.save("FigS6_scale_GB7")

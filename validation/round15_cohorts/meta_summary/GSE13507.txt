@@ -1,0 +1,27 @@
+GSE13507 | samples 256 | platforms {'GPL6102': 256}
+TITLE: Predective Value of Prognosis-Related Gene Expression Study in Primary Bladder Cancer
+SUMMARY: This study aimed to identify the genetic signatures associated with disease prognosis in bladder cancer. We used 165 primary bladder cancer samples, 23 recurrent non-muscle invasive tumor tissues, 58 normal looking bladder mucosae surrounding cancer and 10 normal bladder mucosae for microarray analysis. Hierarchical clustering was used to stratify the prognosis-related gene classifiers. For validation, real-time reverse-transcriptase polymerase chain reaction (RT-PCR) of top-ranked 14 genes was performed. On unsupervised hierarchical clustering using prognosis related gene-classifier, tumors were divided into 2 groups. The high risk gene signatures had significantly poor prognosis compared to low risk gene signatures (P<0.001 by the log-rank test, respectively). The prognosis-related gene classifiers correlated significantly with recurrence of non-muscle invasive bladder cancer (hazard ratio, 4.09; 95% confidence interval [CI], 1.94 to 8.64; P<0.001), and progression (hazard ratio, 23.68; 95% confidence interval [CI], 4.91 to 114.30; P<0.001), cancer-specific survival (hazard ratio, 29.25; 95% confidence interval [CI], 3.47 to 246.98; P=0.002) and overall survival (hazard ratio, 23
+DESIGN: 165 primary bladder cancer samples and 23 recurrent non-muscle invasive tumor tissues from 14 patients were taken in the Chungbuk National University Hospital. Only histologically verified transitional cell carcinoma samples were selected. Simultaneously 58 normal looking bladder mucosae surrounding cancer were obtained during the operation, which were histologically confirmed normal. Also, 10 normal bladder mucosae were obtained from patients with benign disease. The normal controls were determined to be free of cancer after revealing no malignant cells on urine cytology and no observable bla
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA110111
+FIELDS (n values with it | distinct | examples):
+  biological source | 255 | 4 | primary bladder cancer (x165); bladder mucosae surrounding cancer (x58); recurrent non-muscle invasive tumor (x23); normal bladder mucosae (x9)
+  [source_name_ch1] | 256 | 5 | Primary bladder cancer (x165); Bladder mucosae surrounding cancer (x58); Recurrent non-muscle invasive tumor (x23); Normal bladder mucosae (x9); Multipotent Progenitor Cells (MPPs)
+  [title] | 256 | 256 | Control C010; Control C017; Control C029; Control C030; Control C040; Vav-Control MPP RNA-seq 1; Control C044; Control C045
+  strain | 1 | 1 | C57BL/6
+  genotype | 1 | 1 | Wild-type
+  age | 1 | 1 | 8-weeks
+  cre-driver | 1 | 1 | Vav-CRE
+  cell type | 1 | 1 | Multipotent Progenitor Cells (MPPs)
+  indexes | 1 | 1 | CGTCGCT
+  SEX | 165 | 2 | M (x135); F (x30)
+  AGE | 165 | 51 | 67 (x11); 66 (x10); 68 (x8); 63 (x8); 80 (x7); 64 (x7); 72 (x6); 79 (x6)
+  invasiveness | 165 | 2 | non-muscle invasive (x103); muscle invasive (x62)
+  intravesical therapy | 103 | 2 | Yes (x56); No (x47)
+  systemic chemo | 165 | 2 | No (x138); Yes (x27)
+  stage | 165 | 23 | T1N0M0 (x80); TaN0M0 (x23); T2N0M0 (x22); T3bN0M0 (x6); T3aN0M0 (x4); T4N0M0 (x4); T3N1M0 (x3); T3N0M0 (x3)
+  grade | 165 | 2 | low (x105); high (x60)
+  recurrence | 103 | 2 | No (x67); Yes (x36)
+  progression | 165 | 2 | No (x134); Yes (x31)
+  overall survival | 165 | 2 | survival (x96); death (x69)
+  cancer specific survival | 165 | 2 | survival (x133); death (x32)
+  survival month | 165 | 158 | 65.93 (x2); 120.6 (x2); 83.63 (x2); 75.13 (x2); 15.1 (x2); 23.57 (x2); 21.23 (x2); 18.17

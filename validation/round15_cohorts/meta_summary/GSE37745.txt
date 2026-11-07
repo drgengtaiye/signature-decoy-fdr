@@ -1,0 +1,18 @@
+GSE37745 | samples 196 | platforms {'GPL570': 196}
+TITLE: Biomarker discovery in non-small cell lung cancer: integrating gene expression profiling, meta-analysis and tissue microarray validation
+SUMMARY: Background: Global gene expression profiling has been widely used in lung cancer research to identify clinically relevant molecular subtypes as well as to predict prognosis and therapy response. So far, the value of these multi-gene signatures in clinical practice is unclear and the biological importance of individual genes is difficult to assess as the published signatures virtually do not overlap.  Methods: Here we describe a novel single institute cohort, including 196 non-small lung cancer (NSCLC) cases with clinical information and long-term follow-up, which was used as a training set to screen for single genes with prognostic impact. The top 450 gene probe sets identified using a univariate Cox regression model (significance level p<0.01) were tested in a meta-analysis including five publicly available independent lung cancer cohorts (n=860).  Results: The meta-analysis revealed that 17 probe sets were significantly associated with survival (p<0.0005) with a false discovery rate of 1%. The prognostic impact of one of these genes, the cell adhesion molecule 1 (CADM1), was confirmed by use of immunohistochemistry on a tissue microarray including 355 NSCLC samples. Low CADM1 pro
+DESIGN: Fresh frozen tissue of 196 consecutive NSCLC patients, operated between 1995 and 2005 were analyzed using Affymetrix microarrays HG-U133-Plus2. Clinical data were retrieved from the regional lung cancer registry.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA165697
+FIELDS (n values with it | distinct | examples):
+  dead | 196 | 2 | yes (x145); no (x51)
+  days to determined death status | 196 | 191 | 281 (x3); 6 (x2); 556 (x2); 912 (x2); 3418; 3186; 162; 3158
+  histology | 196 | 3 | adeno (x106); squamous (x66); large (x24)
+  tumor stage | 196 | 7 | 1b (x90); 1a (x40); 2b (x29); 3a (x21); 3b (x6); 2a (x6); 4 (x4)
+  performance status corresponding to who criteria | 196 | 4 | 0 (x105); 1 (x75); 2 (x12); 3 (x4)
+  age | 196 | 41 | 70 (x14); 66 (x12); 67 (x11); 62 (x9); 65 (x8); 68 (x7); 56 (x7); 61 (x7)
+  gender | 196 | 2 | male (x107); female (x89)
+  adjuvant treatment | 196 | 3 | not known (x96); no (x71); yes (x29)
+  recurrence | 196 | 3 | not known (x100); yes (x49); no (x47)
+  days to recurrence / to last visit | 196 | 93 | not known (x100); 245 (x2); 239 (x2); 54 (x2); 2086 (x2); 2637; 3223; 154
+  [source_name_ch1] | 196 | 196 | cancer cells from patient 6; cancer cells from patient 11; cancer cells from patient 12; cancer cells from patient 13; cancer cells from patient 14; cancer cells from patient 19; cancer cells from patient 22; cancer cells from patient 23
+  [title] | 196 | 196 | Patient 6, male, squamous; Patient 11, female, adeno; Patient 12, male, adeno; Patient 13, male, squamous; Patient 14, male, squamous; Patient 19, female, adeno; Patient 22, male, adeno; Patient 23, female, adeno

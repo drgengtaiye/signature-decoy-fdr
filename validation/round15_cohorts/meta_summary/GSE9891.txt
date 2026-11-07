@@ -1,0 +1,13 @@
+GSE9891 | samples 285 | platforms {'GPL570': 285}
+TITLE: Expression profile of 285 ovarian tumour samples
+SUMMARY: We used microarrays to profile the expression levels of 285 ovarian samples in order to identify molecular subtypes of the tumour Keywords: disease state analysis
+DESIGN: Randomly selected samples from the AOCS ( Australian Ovarian Cancer Study) was expression profiled on the affymetrix U133_plus2 platform to identify novel subtypes of ovarian tumour
+RELATIONS: SubSeries of: GSE9899; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA105139
+FIELDS (n values with it | distinct | examples):
+  Primary.Site | 285 | 3 | Ovary (x243); Peritoneum (x34); Fallopian (x8)
+  Type | 285 | 2 | Malignant (x267); LMP (x18)
+  Subtype | 285 | 3 | Ser/PapSer (x264); Endo (x20); Adeno
+  StageCode | 285 | 13 | IIIC (x187); IV (x22); IIIB (x15); IIC (x14); IA (x11); IC (x11); IIIA (x10); III (x5)
+  Consolidated.Grade | 285 | 4 | 3 (x161); 2 (x99); 1 (x20); NA (x5)
+  [source_name_ch1] | 285 | 1 | Carcinoma of ovary, fallopian tube or peritonem (x285)
+  [title] | 285 | 285 | X60120; X32117; X23066; X60267; X51174; X51068; X23177; X23052

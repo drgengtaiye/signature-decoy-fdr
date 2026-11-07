@@ -1,0 +1,19 @@
+GSE17536 | samples 177 | platforms {'GPL570': 177}
+TITLE: Metastasis Gene Expression Profile Predicts Recurrence and Death in Colon Cancer Patients (Moffitt Samples)
+SUMMARY: Background and Aims: Staging inadequately predicts metastatic risk in colon cancer patients.  We used a gene expression profile derived from invasive murine colon cancer cells that were highly metastatic in an immunocompetent mouse model to identify colon cancer patients at risk for recurrence in a phase I, exploratory biomarker study.  Methods:  55 colorectal cancer patients from Vanderbilt Medical Center (VMC) were used as the training dataset and 177 patients from the Moffitt Cancer Center were used as the independent dataset. The metastasis-associated gene expression profile developed from the mouse model was refined using comparative functional genomics in the VMC gene expression profiles to identify a 34-gene classifier associated with high risk of metastasis and death from colon cancer.  A recurrence score derived from the biologically based classifier was tested in the Moffitt dataset.  Results:  A high score was significantly associated with increased risk of metastasis and death from colon cancer across all pathological stages and specifically in stage II and stage III patients.  The recurrence score was shown to independently predict risk of cancer recurrence and death i
+DESIGN: Gene expression array differences between highly invasive mouse colon cancer cells and non-invasive colon cancer cells were used to develop a metastasis gene expression profile.  It was refined using gene expression data from 55 patient (VMC) samples and trained using 177 patient (Moffitt) samples.
+RELATIONS: SubSeries of: GSE17538; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA123343
+FIELDS (n values with it | distinct | examples):
+  age | 177 | 52 | 63 (x10); 78 (x10); 71 (x10); 66 (x8); 74 (x8); 58 (x7); 73 (x6); 51 (x6)
+  gender | 177 | 2 | male (x96); female (x81)
+  ethnicity | 177 | 4 | caucasian (x151); other (not caucasian, black, or hispanic) (x16); black (x9); hispanic
+  ajcc_stage | 177 | 4 | 2 (x57); 3 (x57); 4 (x39); 1 (x24)
+  grade | 177 | 3 | 2 - Moderately differentiated (MD) (x134); 3 - Poorly differentiated (PD) (x27); 1 - Well differentiated (WD) (x16)
+  overall_event (death from any cause) | 177 | 2 | no death (x104); death (x73)
+  dss_event (disease specific survival; death from cancer) | 177 | 2 | no death (x122); death (x55)
+  dfs_event (disease free survival; cancer recurrence) | 177 | 3 | no recurrence (x109); recurrence (x36); NA (x32)
+  overall survival follow-up time | 177 | 170 | 67.82 (x2); 37.31 (x2); 83.99 (x2); 58.45 (x2); 95.07 (x2); 0.92 (x2); 5.72 (x2); 142.55
+  dss_time | 177 | 170 | 67.82 (x2); 37.31 (x2); 83.99 (x2); 58.45 (x2); 95.07 (x2); 0.92 (x2); 5.72 (x2); 142.55
+  dfs_time | 177 | 143 | 0 (x32); 37.31 (x2); 22.38 (x2); 36.92 (x2); 142.55; 122.72; 28.96; 119.21
+  [source_name_ch1] | 177 | 1 | Moffitt Cancer Center (x177)
+  [title] | 177 | 177 | MCC Patient 1; MCC Patient 2; MCC Patient 3; MCC Patient 4; MCC Patient 5; MCC Patient 6; MCC Patient 7; MCC Patient 8

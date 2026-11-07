@@ -1,0 +1,22 @@
+GSE17538 | samples 244 | platforms {'GPL570': 238, 'GPL1261': 6}
+TITLE: Experimentally Derived Metastasis Gene Expression Profile Predicts Recurrence and Death in Colon Cancer Patients
+SUMMARY: This SuperSeries is composed of the SubSeries listed below.
+DESIGN: Refer to individual Series
+RELATIONS: SuperSeries of: GSE17537; SuperSeries of: GSE19072; SuperSeries of: GSE19073; SuperSeries of: GSE17536; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA118645
+FIELDS (n values with it | distinct | examples):
+  age | 238 | 58 | 63 (x12); 78 (x12); 66 (x10); 74 (x10); 71 (x10); 51 (x9); 69 (x8); 56 (x7)
+  gender | 238 | 2 | male (x124); female (x114)
+  ethnicity | 238 | 5 | caucasian (x206); other (not caucasian, black, or hispanic) (x16); black (x13); hispanic (x2); not specified
+  ajcc_stage | 232 | 4 | 3 (x76); 2 (x72); 4 (x56); 1 (x28)
+  grade | 213 | 5 | 2 - Moderately differentiated (MD) (x134); 3 - Poorly differentiated (PD) (x30); 2 - Moderately differentiated(MD) (x25); 1 - Well differentiated (WD) (x17); 2 - Moderately differentiated(MD).1 - Well differentiated (WD) - Moderate to poorly differentiated (MPD) (x7)
+  overall_event (death from any cause) | 232 | 2 | no death (x139); death (x93)
+  dss_event (disease specific survival; death from cancer) | 177 | 2 | no death (x122); death (x55)
+  dfs_event (disease free survival; cancer recurrence) | 232 | 3 | no recurrence (x145); recurrence (x55); NA (x32)
+  overall survival follow-up time | 232 | 224 | 67.82 (x2); 37.31 (x2); 83.99 (x2); 58.45 (x2); 95.07 (x2); 0.92 (x2); 5.72 (x2); 60.0328767123288 (x2)
+  dss_time | 177 | 170 | 67.82 (x2); 37.31 (x2); 83.99 (x2); 58.45 (x2); 95.07 (x2); 0.92 (x2); 5.72 (x2); 142.55
+  dfs_time | 232 | 184 | 0 (x45); 37.31 (x2); 22.38 (x2); 36.92 (x2); 60.0328767123288 (x2); 142.55; 122.72; 28.96
+  [source_name_ch1] | 244 | 14 | Moffitt Cancer Center (x177); Vanderbilt University Medical Center (x55); VMC Patient 56; VMC Patient 57; VMC Patient 58; VMC Patient 59; VMC Patient 60; VMC Patient 61
+  [title] | 244 | 244 | MCC Patient 1; MCC Patient 2; MCC Patient 3; MCC Patient 4; MCC Patient 5; MCC Patient 6; MCC Patient 7; MCC Patient 8
+  adenoma type | 6 | 3 | Tubulovillous (x3); Adenoma (x2); Villous adenoma
+  location | 6 | 4 | Left (x3); Right; Recto-sigmoid; Sigmoid
+  cancer cell type | 6 | 2 | parental (x3); metastatic (x3)

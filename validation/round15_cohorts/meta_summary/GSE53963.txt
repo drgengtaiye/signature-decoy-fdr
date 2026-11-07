@@ -1,0 +1,9 @@
+GSE53963 | samples 174 | platforms {'GPL6480': 174}
+TITLE: Gene Expression Profiling of Human High-Grade Serous Ovarian Tumor Samples
+SUMMARY: The goal of the study was to further delineate the molecular signatures associated with high-grade serous ovarian cancer in order to develop validated clinically useful prognostic signatures with the potential to guide therapy decisions.   Fresh frozen samples were prospectively collected from a series of 174 consecutive women with high-grade serous ovarian, primary peritonial, or fallopian tube cancer who underwent surgery by a gynecologic oncologist at Mayo Clinic betweern 1994 and 2005.  All patients received postoperative chemotherapy with a platinum agent, and 75% received a taxane.  All patients signed an Institutional Review Board approved consent for bio-banking, clinical data extraction and molecular analysis. Median follow-up time was 35 months (range, 1-202 months).  Fourteen patients (8%) were included in the TCGA study.
+DESIGN: High grade serous ovarian tumors (n=174) were compared to a reference pool of 106 ovarian samples. Mixed reference includes normal, benign, borderline, and malignant sample of various histolgies.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA234050
+FIELDS (n values with it | distinct | examples):
+  tissue | 174 | 1 | ovarian (x174)
+  [source_name_ch1] | 174 | 1 | 106 pooled ovarian samples (x174)
+  [title] | 174 | 174 | Ov_Tumor_Ref_Mix  vs. 266; Ov_Tumor_Ref_Mix  vs. 270; Ov_Tumor_Ref_Mix  vs. 282; Ov_Tumor_Ref_Mix  vs. 283; Ov_Tumor_Ref_Mix  vs. 284; Ov_Tumor_Ref_Mix  vs. 304; Ov_Tumor_Ref_Mix  vs. 305; Ov_Tumor_Ref_Mix  vs. 308

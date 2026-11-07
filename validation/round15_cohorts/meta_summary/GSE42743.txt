@@ -1,0 +1,34 @@
+GSE42743 | samples 103 | platforms {'GPL570': 103}
+TITLE: Oral Cavity Cancer Compared to Adjacent "Normal" Tissue [Validation Set]
+SUMMARY: Oral Cavity Cancer
+DESIGN: Comparative analysis of gene expression using Affymetrix U133 plus 2.0 microarrays to compare differences between oral cancer samples (most HPV-) and adjacent "normal" mucosa.   We have 24 matched pairs of tumor and normal from the same patient
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA182989
+FIELDS (n values with it | distinct | examples):
+  tu-vs-nl | 103 | 2 | cancer (x74); normal (x29)
+  age@dx | 103 | 41 | 62 (x7); 58 (x6); 75 (x5); 65 (x5); 44 (x5); 64 (x4); 67 (x4); 57 (x4)
+  gender | 103 | 2 | Male (x79); Female (x24)
+  smoking status | 103 | 3 | Former (x42); Current (x40); NeverSmoker (x21)
+  oc vs. op | 103 | 2 | Oral cavity (x100); Oropharynx (x3)
+  t stage | 103 | 4 | 2 (x45); 3 (x36); 4 (x19); 1 (x3)
+  cn stage | 103 | 6 | 0 (x58); 1 (x20); 2b (x12); 2c (x9); 2 (x2); 2a (x2)
+  pn stage | 103 | 6 | 0 (x41); 2B (x32); 1 (x18); 2C (x10); 2A; 2b
+  dm? | 206 | 3 | 0 (x163); ? (x34); 1 (x9)
+  ecs | 103 | 2 | N (x66); Y (x37)
+  treatment* | 102 | 9 | S, RT (x52); S (x36); S, cRT (x6); IC, S, RT (x2); Surgery (x2); cRT, surgery; IC, S; S, IC, S, cRT
+  dxdate | 103 | 78 | 21-Aug-06 (x2); 7-Sep-06 (x2); 25-Sep-06 (x2); 23-Oct-00 (x2); 16-Oct-00 (x2); 27-Nov-00 (x2); 17-Apr-00 (x2); 6-Mar-01 (x2)
+  txdate | 103 | 79 | 28-Sep-06 (x2); 4-Oct-06 (x2); 6-Oct-06 (x2); 1-Nov-00 (x2); 9-Nov-00 (x2); 1-Dec-00 (x2); 27-Apr-00 (x2); 26-Mar-01 (x2)
+  localrecur | 103 | 3 | 0 (x80); ? (x14); 1 (x9)
+  nodalrecur | 103 | 3 | 0 (x71); 1 (x17); ? (x15)
+  survivallastfollowup | 103 | 8 | Living NED (x44); Dead with Disease (x25); Dead, unknown disease status (x11); Dead, due to disease (x8); Dead, other cause (x5); Dead, no disease (x4); Died, due to treatment of disease (x3); Dead (x3)
+  vital | 103 | 5 | Alive (x32); . (x29); Dead-OSCC (x23); Dead-other (x11); Dead-unknown (x8)
+  lastfudt | 103 | 78 | 9-May-06 (x2); 15-Dec-08 (x2); 12-Oct-06 (x2); 11-Nov-08 (x2); 3-Apr-01 (x2); 11-Nov-00 (x2); 4-Apr-01 (x2); 23-Aug-04 (x2)
+  futime | 103 | 74 | 128 (x4); 163 (x3); 890 (x3); 26 (x3); 239 (x2); 847 (x2); 35 (x2); 778 (x2)
+  ajcc4 | 103 | 4 | 4 (x53); 2 (x26); 3 (x21); 1 (x3)
+  ajcc2 | 103 | 2 | 1 (x74); 0 (x29)
+  osccdeath | 103 | 2 | 0 (x80); 1 (x23)
+  alldeath | 103 | 2 | 1 (x71); 0 (x32)
+  [source_name_ch1] | 103 | 2 | cancer (x74); normal (x29)
+  [title] | 103 | 103 | MDA-HNS-024; MDA-HNS-025; MDA-HNS-026; MDA-HNS-027; MDA-HNS-029; MDA-HNS-030; MDA-HNS-031; MDA-HNS-032
+  nodrecurdt | 16 | 12 | 24-Jan-07 (x2); 22-May-07 (x2); 10-Dec-01 (x2); 11-May-99 (x2); 13-Aug-99; 24-Feb-04; 20-Dec-05; 17-Jul-00
+  locrecurdt | 10 | 8 | 24-Jan-07 (x2); 22-Jan-02 (x2); 24-Feb-04; 2-Jan-03; 19-Nov-04; 17-Jan-01; 23-Jan-02; 6-Jun-00
+  dm date? | 9 | 6 | 4-Dec-07 (x2); 26-Nov-01 (x2); 28-May-02 (x2); 2-Dec-03; 27-Jan-06; 6-Jun-00

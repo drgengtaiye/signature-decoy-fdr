@@ -1,81 +1,289 @@
-"""Additional file 1, Fig. S2 (GB v11): the panels of the v10 Figure 5 moved out of the main figure, unchanged in content
-(validation/PLAN_round9_standard_fdr_comparison.md, B), in the order the text cites them.
+"""Figure 4 and Additional file 1: Fig. S1 (GB v6) - the target-decoy false discovery rate.
 
-a  per unit: the call rate of signatures and of each decoy class under the global null against the nominal 2.5% (v10 5c)
-b  the pi0 estimate in each of the 1,000 label permutations (v10 5l)
-c  how many signatures each truth counts as true (v10 5f)
-d  how often the intervals contain the setting's realized FDR (v10 5i)
+Figure 4: panels a-d of the GB v5 figure; its panels e and f, the calibration, are in Figure 5 (fig5_gb6.py).
+a  expected true and false discoveries for each null x statistic, FDR above each bar
+b  decoys reproduce their target's co-expression cohort by cohort
+c  calibrated per test is not calibrated per library (folded statistic, N0)
+d  the two statistics by the signatures' own co-expression (closest-matched decoys)
+
+Fig. S1: decoy call rates (a), spread (b), the enriched pool (c), the target's bank against the decoy's own (d),
+each signature against its own decoys (e). Intervals: bootstrap over the 52 targets, each carried with its decoys.
 """
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
-import glob, numpy as np, pandas as pd, warnings
+import glob, os, numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
-import cns10 as K
+import matplotlib.pyplot as plt
+from matplotlib.colors import TwoSlopeNorm, LinearSegmentedColormap
+import sys; sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import v4kit as K
+import figstyle as fs
 K.apply()
-D = K.D + "/icb/"; T = D + "v12_truth/"
-P0 = pd.read_csv(T + "null_pi0.csv")
-NS = pd.read_csv(D + "v10_calib_null_summary.csv").set_index(["stat", "estimator"])
-SR = pd.read_csv(T + "summary_response.csv"); ST = pd.read_csv(T + "summary_tcga.csv")
-SIG = pd.concat([pd.read_csv(f) for f in sorted(glob.glob(T + "signal_*.csv"))])
-SCOL = {"P1 inflamed": K.BLUE, "P2 non-inflamed": K.ORANGE, "P3 outside signatures": K.AQUA}
+D = K.D + "/icb/"
+RNG = np.random.default_rng(20261019)
+C_FOLD, C_DIR, C_SIG, C_DEC = fs.GREY, fs.BLUE, fs.TEAL, fs.SLATE
+TT = 6.9
 
-C = K.Canvas(52)
+U = pd.read_csv(D + "calib_v3_units.csv")
+F = pd.read_csv(D + "calib_v3_fdr.csv")
+X = pd.concat([pd.read_csv(f) for f in sorted(glob.glob(D + "calib_v3/ICB_*_v3.csv"))])
+DIRN = X.drop_duplicates("unit").set_index("unit").dirn
+U["dirn"] = U.unit.map(DIRN); U["tdirn"] = U.target.map(DIRN)
+OWN = pd.read_csv(D + "calib_v3_ownbank_compare.csv") if os.path.exists(D + "calib_v3_ownbank_compare.csv") else None
+NULLS = [n for n in ("N0", "N1", "N2", "N1nat", "N2nat") if n in set(F["null"])]
+COMBO = [(n, s) for n in NULLS for s in ("fold", "dir")]
+NLAB = {"N0": "N0", "N1": "N1", "N2": "N2", "N1nat": "N1", "N2nat": "N2"}
 
-# ================================================================== a  per unit
-ax = C.panel("a", 14, 12, 34, 28, head="Per unit, all null")
-groups = [("sig.", None), ("co-expr.", "coex A"), ("no-TME", "coex B"), ("random", "random A")]
-for gi, (lab, est) in enumerate(groups):
-    for si, st in enumerate(("fold", "dir")):
-        r = NS.loc[(st, "coex A" if est is None else est)]
-        v = r.target_test_rate if est is None else r.decoy_test_rate
-        ax.bar(gi + (si - .5) * .36, v, .34, color=K.STAT[st], edgecolor="white", linewidth=0.5, zorder=3)
-K.ref(ax, 2.5, label="2.5%", pos=0.995)
-ax.set_xticks(range(4)); ax.set_xticklabels([g[0] for g in groups]); ax.tick_params(axis="x", length=0)
-ax.set_ylabel("called (%)"); ax.set_ylim(0, 4.4); ax.set_xlim(-.6, 4.1)
-K.legend(ax, [(K.SLATE, "folded", "box"), (K.BLUE, "directed", "box")], x=0.70, y=0.97, dy=0.1, s=8, size=K.T_SMALL)
+def boot_rate(df, col="call", nb=4000):
+    per = df.groupby("target")[col].mean().to_numpy(float)
+    bs = [per[RNG.integers(0, len(per), len(per))].mean() for _ in range(nb)]
+    return 100 * per.mean(), 100 * np.percentile(bs, 2.5), 100 * np.percentile(bs, 97.5)
 
-# ================================================================== b  how many are true
-ax = C.panel("c", 108, 12, 22, 28, head="Signatures true")
-nt = SIG.groupby("scenario")[["n_true_gc", "n_true_cp"]].mean()
-for yy, sc in enumerate(["P1 inflamed", "P2 non-inflamed", "P3 outside signatures"]):
-    ax.barh(yy - 0.18, nt.loc[sc, "n_true_gc"], 0.34, color=K.LGRAY, edgecolor="white", linewidth=0.4)
-    ax.barh(yy + 0.18, nt.loc[sc, "n_true_cp"], 0.34, color=SCOL[sc], edgecolor="white", linewidth=0.4)
-ax.set_yticks(range(3)); ax.set_yticklabels(["P1", "P2", "P3"]); ax.set_ylim(2.6, -0.6); K.frame(ax, left=False)
-ax.set_xlim(0, 52); ax.set_xticks([0, 25, 50]); ax.set_xlabel("signatures (mean)")
-K.legend(ax, [(K.LGRAY, "gene content", "box"), (K.SLATE, "formal (scenario hue)", "box")], x=0.38, y=0.16, dy=0.10, s=7,
-         size=K.T_SMALL - 0.4)
+C = K.Canvas(106)
 
-# ================================================================== c  coverage
-ax = C.panel("d", 150, 12, 28, 28, head="Interval coverage (%)")
-grp = [("P1", SR[SR.scenario.str.startswith("P1")]), ("P2", SR[SR.scenario.str.startswith("P2")]),
-       ("P3", SR[SR.scenario.str.startswith("P3")]), ("TCGA T1", ST[ST.kind.str.startswith("T1")]),
-       ("TCGA T2", ST[ST.kind.str.startswith("T2")]), ("TCGA T3", ST[ST.kind.str.startswith("T3")])]
-cov = np.array([[g.cov_t_fdr.mean(), g.cov_c_fdr.mean(), g.cov0_t_fdr.mean(), g.cov0_c_fdr.mean()] for _, g in grp]) * 100
-ax.imshow(cov, aspect="auto", cmap=K.SEQ_BLUE, vmin=0, vmax=100)
-for i in range(cov.shape[0]):
-    for j in range(cov.shape[1]):
-        ax.text(j, i, f"{cov[i, j]:.0f}", ha="center", va="center", fontsize=K.T_SMALL, color="white" if cov[i, j] > 55 else K.INK)
-ax.set_yticks(range(len(grp))); ax.set_yticklabels([g[0] for g in grp])
-ax.set_xticks(range(4)); ax.set_xticklabels(["sig.", "clust.", "sig.", "clust."]); ax.tick_params(length=0)
-[sp.set_visible(False) for sp in ax.spines.values()]
-ax.text(0.5, -0.62, "plain", ha="center", va="bottom", fontsize=K.T_SMALL)
-ax.text(2.5, -0.62, "π0-corrected", ha="center", va="bottom", fontsize=K.T_SMALL)
-ax.axvline(1.5, color="white", lw=1.5)
+# ================================================================= a  headline
+ax = C.ax(15, 17, 99, 32)
+fa = F[(F.pool == "A") & (F.decoys == "coex")].set_index(["null", "stat"])
+xs, w = [], .72
+gap = {"N0": 0, "N1": .5, "N2": .5, "N1nat": 1.0, "N2nat": 1.0}
+for i, (nl, st) in enumerate(COMBO):
+    x = i + gap[nl]; xs.append(x); r = fa.loc[(nl, st)]
+    cc = C_FOLD if st == "fold" else C_DIR
+    et, ef = r.called - r.exp_false, r.exp_false
+    elo, ehi = r.decoy_lo * 52 / 100, r.decoy_hi * 52 / 100
+    ax.bar(x, et, w, color=cc, lw=0, zorder=3)
+    ax.bar(x, ef, w, bottom=et, color="white", edgecolor=cc, hatch="/////", lw=.6, zorder=3)
+    ax.errorbar(x, et, yerr=[[max(0, ehi - ef)], [max(0, ef - elo)]], fmt="none", ecolor=fs.INK,
+                lw=.6, capsize=1.4, zorder=4)
+    ax.text(x, r.called + .8, f"{r.fdr:.0f}%", ha="center", va="bottom", fontsize=K.T_SMALL,
+            color=cc, fontweight="bold")
+ax.set_xticks(xs)
+ax.set_xticklabels([("folded" if s == "fold" else "directed") for _, s in COMBO], fontsize=5.0)
+ax.tick_params(axis="x", length=0, pad=1.5)
+tx = ax.get_xaxis_transform()
+for nl in NULLS:
+    ii = [x for x, (n, _) in zip(xs, COMBO) if n == nl]
+    ax.text(np.mean(ii), -.115, NLAB[nl], transform=tx, ha="center", va="top", fontsize=K.T_SMALL,
+            color=fs.INK, fontweight="bold")
+for grp, lab in [(("N0",), "size and engine"), (("N1", "N2"), "signature-enriched pool"),
+                 (("N1nat", "N2nat"), "natural pool")]:
+    ii = [x for x, (n, _) in zip(xs, COMBO) if n in grp]
+    if not ii: continue
+    ax.plot([min(ii) - .36, max(ii) + .36], [-.215, -.215], transform=tx, color=fs.SLATE, lw=.5, clip_on=False)
+    ax.text(np.mean(ii), -.235, lab, transform=tx, ha="center", va="top", fontsize=K.T_SMALL, color=fs.SLATE)
+from matplotlib.patches import Patch
+ax.legend(handles=[Patch(facecolor=fs.SLATE, lw=0, label="expected true"),
+                   Patch(facecolor="white", edgecolor=fs.SLATE, hatch="/////", lw=.6, label="expected false"),
+                   Patch(facecolor="none", lw=0, label="%  target-decoy FDR")],
+          fontsize=K.T_SMALL, loc="upper left", ncol=3, handlelength=1.2, borderpad=.15, columnspacing=1.0,
+          handletextpad=.4, frameon=False)
+ax.set_ylabel("signatures called (of 52)")
+ax.set_ylim(0, 40); ax.set_yticks([0, 10, 20, 30, 40]); ax.set_xlim(min(xs) - .7, max(xs) + .7)
+K.frame(ax)
+C.title(15, 11, "Matching the null on co-expression halves the folded estimate; direction adds calls",
+        size=TT, fontweight="bold")
+C.letter(7.5, 10.5, "a")
 
-# ================================================================== d  pi0 under the global null
-ax = C.panel("b", 64, 12, 28, 28, head="π0 when all are null")
-bins = np.linspace(0, 1, 27)
-for st in ("fold", "dir"):
-    v = P0[P0.stat == st].pi0
-    if st == "fold":
-        K.hist_steps(ax, v, bins, K.STAT[st], alpha=0.5)
-    else:
-        ax.hist(v, bins=bins, histtype="step", color=K.STAT[st], lw=0.9, density=True, zorder=3)
-    ax.axvline(v.mean(), color=K.STAT[st], lw=0.9, ls=(0, (2, 1.2)), zorder=4)
-ax.set_xlim(0, 1.02); ax.set_xticks([0, 0.5, 1]); ax.set_xlabel("π0 estimate"); ax.set_ylabel("density")
-K.legend(ax, [(K.SLATE, f"folded, mean {P0[P0.stat == 'fold'].pi0.mean():.2f}", "box"),
-              (K.BLUE, f"directed, mean {P0[P0.stat == 'dir'].pi0.mean():.2f}", "line")], x=0.03, y=0.97, dy=0.1, s=7,
-         size=K.T_SMALL)
+# ================================================================= b  matching
+ax = C.ax(131, 17, 34, 32)
+x0 = X[X["null"] == "N0"]
+tr = x0[x0.kind == "target"].set_index(["target", "cohort"]).r_int
+for (p, s), cc, lab in [(("A", "rand"), C_DEC, "random-gene"), (("A", "coex"), C_SIG, "co-expressed")]:
+    dd = x0[(x0.kind == "decoy") & (x0.pool == p) & (x0.structure == s)].groupby(["target", "cohort"]).r_int.median()
+    j = pd.concat([tr, dd], axis=1, keys=["t", "d"]).dropna()
+    ax.scatter(j.t, j.d, s=3, color=cc, alpha=.55, lw=0, zorder=3, label=lab)
+ax.plot([0, 1], [0, 1], color=fs.INK, lw=.55, ls=(0, (3, 2)), zorder=2)
+ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.set_xticks([0, .3, .6, .9]); ax.set_yticks([0, .3, .6, .9])
+ax.set_xlabel("signature internal $r$"); ax.set_ylabel("its decoys' internal $r$")
+K.key(ax, [(C_SIG, "co-expressed decoys"), (C_DEC, "random-gene decoys")], x=.04, y=.95, s=9, size=K.T_SMALL)
+fs.note(ax, .04, .80, "one point per\nsignature × cohort", size=K.T_SMALL, color=fs.SLATE)
+K.frame(ax)
+C.title(131, 11, "Matched in every cohort", size=TT, fontweight="bold")
+C.letter(123.5, 10.5, "b")
 
-C.save("FigS2_calib_extra_GB11")
-print("FigS2_calib_extra_GB11 | n true", nt.round(1).to_dict(), "| pi0 mean", P0.groupby("stat").pi0.mean().round(3).to_dict())
+# ================================================================= d  per test vs per library
+ax = C.ax(15, 73, 58, 26)
+x0 = X[(X["null"] == "N0") & (X.kind == "decoy") & (X.pool == "A")].copy()
+x0["clear"] = (x0.fold_obs > x0.fold_p95).astype(float)
+vals = {}
+for s in ("rand", "coex"):
+    vals[("test", s)] = boot_rate(x0[x0.structure == s], "clear")
+    vals[("lib", s)] = boot_rate(U[(U.kind == "decoy") & (U.pool == "A") & (U.structure == s) & (U["null"] == "N0") & (U.stat == "fold")])
+for gi, (g, nom, lab) in enumerate([("test", 5, "each test:\nabove the null 95th pct"), ("lib", 2.5, "each module:\nWilcoxon over 12 cohorts")]):
+    for si, (s, cc) in enumerate([("rand", C_DEC), ("coex", C_SIG)]):
+        v = vals[(g, s)]; x = gi * 1.0 + (si - .5) * .36
+        ax.bar(x, v[0], .34, color=cc, lw=0, zorder=3)
+        ax.errorbar(x, v[0], yerr=[[v[0] - v[1]], [v[2] - v[0]]], fmt="none", ecolor=fs.INK, lw=.6, capsize=1.4, zorder=4)
+        ax.text(x, v[2] + .25, f"{v[0]:.1f}", ha="center", va="bottom", fontsize=K.T_SMALL, color=cc, fontweight="bold")
+    ax.plot([gi - .42, gi + .42], [nom, nom], color=fs.INK, lw=.6, ls=(0, (3, 2)), zorder=5)
+    ax.text(gi + .44, nom, f"{nom:g}%", fontsize=K.T_SMALL, va="center", ha="left", color=fs.INK)
+ax.set_xticks([0, 1]); ax.set_xticklabels(["each test:\nabove null 95th pct", "each module:\nWilcoxon, 12 cohorts"], fontsize=K.T_SMALL)
+ax.tick_params(axis="x", length=0)
+ax.set_ylabel("decoys called (%)"); ax.set_ylim(0, 11); ax.set_xlim(-.6, 1.75)
+K.key(ax, [(C_DEC, "random-gene decoys"), (C_SIG, "co-expressed decoys")], x=.04, y=.96, s=9, size=K.T_SMALL)
+K.frame(ax)
+C.title(15, 67, "Calibrated per test, not per library", size=TT, fontweight="bold")
+C.letter(7.5, 66.5, "c")
+DVAL = vals
+
+
+# ================================================================= d  by co-expression (new)
+ax = C.ax(104, 73, 58, 26)
+SC = pd.read_csv(D + "calib_v3_fdr_diff_close.csv")                       # calib_v3_robust.py, closest-matched decoys
+for gi, (sub, lab) in enumerate([("targets r <= 0.5", "internal $r$ ≤ 0.5\n(30 signatures)"),
+                                 ("targets r > 0.5", "internal $r$ > 0.5\n(22 signatures)")]):
+    q = SC[(SC.subset == sub) & (SC.alt == "N0-dir")]
+    et = q[q.quantity == "exp_true"].iloc[0]; fd = q[q.quantity == "fdr"].iloc[0]
+    for si, (called, true_, fdr_, cc) in enumerate([(et.ref_called, et.ref_value, fd.ref_value, C_FOLD),
+                                                    (et.alt_called, et.alt_value, fd.alt_value, C_DIR)]):
+        x = gi + (si - .5) * .36
+        ax.bar(x, true_, .34, color=cc, lw=0, zorder=3)
+        ax.bar(x, called - true_, .34, bottom=true_, color="white", edgecolor=cc, hatch="/////", lw=.6, zorder=3)
+        ax.text(x, called + .4, f"{fdr_:.0f}%", ha="center", va="bottom", fontsize=K.T_SMALL, color=cc, fontweight="bold")
+ax.set_xticks([0, 1]); ax.set_xticklabels(["internal $r$ ≤ 0.5\n(30 signatures)", "internal $r$ > 0.5\n(22)"], fontsize=K.T_SMALL)
+ax.tick_params(axis="x", length=0)
+ax.set_ylabel("signatures called"); ax.set_ylim(0, 18); ax.set_xlim(-.6, 1.6)
+K.key(ax, [(C_FOLD, "folded"), (C_DIR, "directed")], x=.04, y=.96, s=9, size=K.T_SMALL, marker="s")
+fs.note(ax, .04, .74, "closest-matched decoys", size=K.T_SMALL, color=fs.SLATE)
+K.frame(ax)
+C.title(104, 67, "Direction lowers the estimate only for weak co-expression", size=TT, fontweight="bold")
+C.letter(96.5, 66.5, "d")
+
+
+C.save("Figure4_GB6")
+
+
+# ----------------------------------------------------------------- Additional file 1: Fig. S3
+C = K.Canvas(172)
+# ================================================================= c  heatmap of decoy call rates
+ax = C.ax(42, 17, 72, 21)
+ROWS = [("A", "coex", "co-expressed decoys"), ("B", "coex", "co-expressed, no TME gene"),
+        ("A", "rand", "random-gene decoys")]
+M = np.full((len(ROWS), len(COMBO)), np.nan)   # the 208-decoy own-bank check is panel h
+for i, (p, s, _) in enumerate(ROWS):
+    for j, (nl, st) in enumerate(COMBO):
+        d = U[(U.kind == "decoy") & (U.pool == p) & (U.structure == s) & (U["null"] == nl) & (U.stat == st)]
+        M[i, j] = 100 * d.call.mean()
+rl = [r[2] for r in ROWS]
+cm = LinearSegmentedColormap.from_list("td", ["#2F6DB5", "#F4F6F8", "#E9A07E", "#C1401A", "#7A1F0A"])
+nrm = TwoSlopeNorm(vmin=0, vcenter=2.5, vmax=20)
+ax.imshow(M, cmap=cm, norm=nrm, aspect="auto", interpolation="nearest")
+for i in range(M.shape[0]):
+    for j in range(M.shape[1]):
+        if np.isfinite(M[i, j]):
+            ax.text(j, i, f"{M[i, j]:.1f}", ha="center", va="center", fontsize=K.T_SMALL,
+                    color="white" if M[i, j] > 11 or M[i, j] < .6 else fs.INK)
+        else:
+            ax.text(j, i, "–", ha="center", va="center", fontsize=K.T_SMALL, color=fs.GREY)
+ax.set_yticks(range(len(rl))); ax.set_yticklabels(rl, fontsize=K.T_SMALL)
+ax.set_xticks(range(len(COMBO)))
+ax.set_xticklabels([f"{NLAB[n]}{'·nat' if 'nat' in n else ''}\n{'fold' if s=='fold' else 'dir'}" for n, s in COMBO], fontsize=K.T_SMALL)
+ax.tick_params(length=0)
+for x in np.arange(1.5, len(COMBO) - 1, 2):
+    ax.axvline(x, color="white", lw=1.6)
+for sp in ax.spines.values(): sp.set_visible(False)
+cax = C.ax(42, 46.5, 26, 1.8)
+cb = plt.colorbar(plt.cm.ScalarMappable(norm=nrm, cmap=cm), cax=cax, orientation="horizontal")
+cb.set_ticks([0, 2.5, 10, 20]); cb.ax.tick_params(labelsize=K.T_SMALL, length=1.5); cb.outline.set_visible(False)
+C.text(70, 47.6, "% of decoys called; nominal 2.5% (two-sided P < 0.05, positive)", size=K.T_SMALL, va="center")
+C.title(15, 11, "Decoys called at the paper's own unit of analysis", size=TT, fontweight="bold")
+C.letter(7.5, 10.5, "a")
+
+# ================================================================= e  spread
+ax = C.ax(131, 17, 34, 21)
+x0 = X[X["null"] == "N0"].copy()
+x0["signed"] = np.where(x0.dirn == 1, x0.dir_obs, 1 - x0.dir_obs)
+sp = x0[x0.kind == "decoy"].groupby(["cohort", "structure"]).signed.std().unstack()
+sp = sp[sp.index.isin(X.cohort.unique())]
+ax.scatter(sp.rand, sp.coex, s=10, color=C_SIG, lw=.4, edgecolor="white", zorder=3)
+ANN = {"ICB_Miao1": (3, -2, "left"), "ICB_Jung": (-3, 2, "right"), "ICB_Kim": (3, 0, "left"),
+       "ICB_Van_Allen": (3, 0, "left"), "ICB_Mariathasan": (3, 0, "left")}
+for c, r in sp.iterrows():
+    if c in ANN:
+        dx, dy, ha = ANN[c]
+        ax.annotate(c.replace("ICB_", "").replace("_", " "), (r.rand, r.coex), xytext=(dx, dy), textcoords="offset points",
+                    fontsize=5.0, color=fs.SLATE, va="center", ha=ha)
+lo_, hi_ = .04, .14
+ax.plot([lo_, hi_], [lo_, hi_], color=fs.INK, lw=.55, ls=(0, (3, 2)), zorder=2)
+ax.set_xlim(lo_, hi_); ax.set_ylim(lo_, hi_); ax.set_xticks([.05, .1]); ax.set_yticks([.05, .1])
+ax.set_xlabel("sd of AUC, random-gene decoys"); ax.set_ylabel("sd, co-expressed")
+K.frame(ax)
+C.title(131, 11, "Co-expression widens the spread", size=TT, fontweight="bold")
+C.letter(123.5, 10.5, "b")
+
+# ================================================================= g  direction
+ax = C.ax(15, 68, 41, 26)
+gn = [n for n in NULLS]
+for gi, nl in enumerate(gn):
+    for si, (dn, cc, lab) in enumerate([(1, C_DIR, "sensitivity"), (-1, fs.VERM, "resistance")]):
+        d = U[(U.kind == "decoy") & (U.pool == "A") & (U.structure == "coex") & (U["null"] == nl) & (U.stat == "dir") & (U.dirn == dn)]
+        v = boot_rate(d); x = gi + (si - .5) * .36
+        ax.bar(x, v[0], .34, color=cc, lw=0, zorder=3, label=lab if gi == 0 else None)
+        ax.errorbar(x, v[0], yerr=[[v[0] - v[1]], [v[2] - v[0]]], fmt="none", ecolor=fs.INK, lw=.6, capsize=1.2, zorder=4)
+ax.axhline(2.5, color=fs.INK, lw=.55, ls=(0, (3, 2)), zorder=2)
+ax.set_xticks(range(len(gn)))
+ax.set_xticklabels([NLAB[n] for n in gn], fontsize=K.T_SMALL)
+ax.tick_params(axis="x", length=0, pad=1.5)
+tx = ax.get_xaxis_transform()
+for grp, lab in [(("N0",), "published"), (("N1", "N2"), "enriched pool"), (("N1nat", "N2nat"), "natural pool")]:
+    ii = [i for i, n in enumerate(gn) if n in grp]
+    if not ii: continue
+    ax.plot([min(ii) - .36, max(ii) + .36], [-.13, -.13], transform=tx, color=fs.SLATE, lw=.5, clip_on=False)
+    ax.text(np.mean(ii), -.15, lab, transform=tx, ha="center", va="top", fontsize=K.T_SMALL, color=fs.SLATE)
+ax.set_ylabel("decoys called (%)"); ax.set_ylim(0, 26)
+ax.legend(fontsize=K.T_SMALL, loc="upper right", handlelength=1.0, borderpad=.15, labelspacing=.3,
+          handletextpad=.4, title="declared direction", title_fontsize=K.T_SMALL, frameon=False)
+K.frame(ax)
+C.title(15, 62, "An enriched pool favors one direction", size=TT, fontweight="bold")
+C.letter(7.5, 61.5, "c")
+
+# ================================================================= h  shared vs own bank
+ax = C.ax(131, 68, 34, 26)
+if OWN is not None:
+    for nl, cc, mk, lab in [("N0", fs.GREY, "o", "N0"), ("N2", fs.VERM, "s", "N2 enriched"), ("N2nat", C_DIR, "^", "N2 natural")]:
+        q = OWN[(OWN["null"] == nl) & (OWN.stat == "dir")].pivot_table(index="unit", columns="src", values="med").dropna()
+        if not len(q): continue
+        ax.scatter(q.shared, q.own, s=4, color=cc, marker=mk, lw=0, alpha=.7, zorder=3,
+                   label=f"{lab}, r = {np.corrcoef(q.shared, q.own)[0, 1]:.2f}")
+    lim = (-.12, .12)
+    ax.plot(lim, lim, color=fs.INK, lw=.55, ls=(0, (3, 2)), zorder=2); ax.set_xlim(lim); ax.set_ylim(lim)
+    ax.set_xticks([-.1, 0, .1]); ax.set_yticks([-.1, 0, .1])
+    ax.set_xticklabels([K.minus("-0.1"), "0", "0.1"]); ax.set_yticklabels([K.minus("-0.1"), "0", "0.1"])
+    ax.legend(fontsize=K.T_SMALL, loc="upper left", handlelength=.8, borderpad=.15, labelspacing=.3, handletextpad=.3)
+else:
+    fs.note(ax, .5, .5, "pending", ha="center", va="center")
+ax.set_xlabel("median ΔAUC, target's bank"); ax.set_ylabel("own bank")
+K.frame(ax)
+C.title(131, 62, "Target's bank vs its own", size=TT, fontweight="bold")
+C.letter(123.5, 61.5, "d")
+
+# ================================================================= f  per signature
+ax = C.ax(15, 110, 150, 26)
+t = U[(U.kind == "target") & (U["null"] == "N0") & (U.stat == "dir")].set_index("target")
+d = U[(U.kind == "decoy") & (U.pool == "A") & (U.structure == "coex") & (U["null"] == "N0") & (U.stat == "dir")]
+order = t.med_delta.sort_values(ascending=False).index.tolist()
+for i, s in enumerate(order):
+    v = d[d.target == s].med_delta.to_numpy()
+    lo, hi = np.percentile(v, [5, 95])
+    ax.plot([i, i], [lo, hi], color=fs.LIGHT, lw=2.2, solid_capstyle="butt", zorder=2)
+    ax.plot([i - .3, i + .3], [np.median(v)] * 2, color=C_DEC, lw=.6, zorder=3)
+    r = t.loc[s]
+    fc = C_SIG if r.call else "white"; ec = fs.VERM if r.neg else C_SIG
+    ax.scatter(i, r.med_delta, s=11, facecolor=fc, edgecolor=ec, lw=.7 if not r.neg else 1.0, zorder=4)
+ax.axhline(0, color=fs.INK, lw=.5, zorder=1)
+ax.set_xticks(range(len(order)))
+ax.set_xticklabels([K.lab(s) for s in order], rotation=90, fontsize=5.0)
+ax.tick_params(axis="x", length=1.2, pad=1)
+ax.set_xlim(-.8, len(order) - .2)
+ax.set_ylabel("median ΔAUC,\ndirected, N0")
+K.key(ax, [(C_SIG, "signature, called"), ("white", "signature, not called")], x=.80, y=.95, s=10, size=K.T_SMALL)
+ax.scatter([.80], [.95 - .085], s=10, facecolor="white", edgecolor=C_SIG, lw=.7, transform=ax.transAxes, zorder=11, clip_on=False)
+ax.scatter([.80], [.95 - .17], s=10, facecolor="white", edgecolor=fs.VERM, lw=1.0, transform=ax.transAxes, zorder=11, clip_on=False)
+ax.text(.835, .95 - .17, "significantly negative", transform=ax.transAxes, va="center", fontsize=K.T_SMALL, color=fs.INK)
+ax.plot([.785, .815], [.95 - .255] * 2, color=fs.LIGHT, lw=2.2, transform=ax.transAxes, clip_on=False)
+ax.text(.835, .95 - .255, "its 32 decoys, 5–95%", transform=ax.transAxes, va="center", fontsize=K.T_SMALL, color=fs.INK)
+K.frame(ax)
+C.title(15, 104, "Each signature against its own decoys", size=TT, fontweight="bold")
+C.letter(7.5, 103.5, "e")
+
+C.save("FigS1_decoys_GB6")
+print("Fig_targetdecoy |", ", ".join(f"{n}-{s} {fa.loc[(n,s)].called:.0f} FDR {fa.loc[(n,s)].fdr:.1f}" for n, s in COMBO))
+print("  d:", {k: tuple(round(x, 1) for x in v) for k, v in DVAL.items()})

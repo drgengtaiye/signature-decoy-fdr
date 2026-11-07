@@ -1,0 +1,26 @@
+GSE22153 | samples 57 | platforms {'GPL6102': 57}
+TITLE: Gene Experssion Profiling-Based Identification of Molecular Subtypes in Stage IV Melanoma with Different Clinical Outcome (test set)
+SUMMARY: Purpose: The incidence of malignant melanoma is increasing worldwide in fair-skinned populations.  Melanomas respond poorly to systemic therapy, and metastatic melanomas inevitably become fatal. Although  spontaneous regression, likely due to immune defense activation, rarely occurs, we lack a biological  rationale and predictive markers in selecting patients for immune therapy.  Experimental Design: We performed unsupervised hierarchical clustering of global gene expression  data from stage IV melanomas in 57 patients. For further characterization, we used immunohistochemistry  of selected markers, genome-wide DNA copy number analysis, genetic and epigenetic analysis of the  Q3 CDKN2A locus, and NRAS/BRAF mutation screening.  Results: The analysis revealed four distinct subtypes with gene signatures characterized by expression  of immune response, pigmentation differentiation, proliferation, or stromal composition genes. Although  all subtypes harbored NRAS and BRAF mutations, there was a significant difference between subtypes  (P < 0.01), with no BRAF/NRAS wild-type samples in the proliferative subtype. Additionally, the proliferative  subtype was characterized by a high frequen
+DESIGN: Expression profiles of 57 lymphnode and subcutaneous melanoma metastases
+RELATIONS: SubSeries of: GSE22155; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA129217
+FIELDS (n values with it | distinct | examples):
+  tissue | 57 | 1 | Melanoma metastasis (x57)
+  os (days) | 57 | 54 | - (x3); 316 (x2); 373; 181; 436; 82; 646; 114
+  event (0=alive, 1=dead) | 57 | 3 | 1 (x47); 0 (x7); - (x3)
+  sex | 57 | 2 | Male (x31); Female (x26)
+  age at metastases | 57 | 35 | 61 (x5); 68 (x5); 51 (x3); 76 (x3); 59 (x2); 53 (x2); 38 (x2); 36 (x2)
+  type of metastases | 57 | 4 | Subcutaneous (x38); Lymphnode (x17); n/a; Lymohnode
+  age at primary diagnosis | 57 | 38 | 54 (x3); 68 (x3); 36 (x3); 50 (x3); 60 (x2); 79 (x2); 58 (x2); 53 (x2)
+  localization of primary melanoma | 57 | 8 | Trunk (x23); No primary detected (x12); Lower extremity (x9); Upper extremity (x6); Head (x4); Upper extremity, acral; Head and eye; Lower extremity, acral
+  type | 57 | 3 | NMM (x19); SSM (x19); n/a (x19)
+  breslow | 57 | 23 | n/a (x19); 2 (x7); 1.5 (x3); 4 (x3); 3 (x3); 1 (x3); 4.5 (x2); 7 (x2)
+  clark | 57 | 6 | n/a (x21); 4 (x15); 3 (x11); 5 (x5); 1 (x3); 2 (x2)
+  stage | 57 | 2 | IV (x54); III (x3)
+  braf/nras | 57 | 7 | BRAF-V600E (x26); - (x17); NRAS-Q61K (x5); NRAS-Q61L (x4); NRAS-Q61R (x3); BRAF-V600K; BRAF- V600E
+  cdkn2a (hd=homozygous deletion, *=germline) | 57 | 8 | - (x32); p16INK4A methylation (x12); HD (x7); p16INK4A A148T* (x2); p16INK4A P114L; p16INK4A A127S*; p16INK4A  A148T*, HD; p14ARF and p16INK4A, -6093ex1α-168ex2*
+  molecular subtype | 57 | 4 | Pigmentation (x22); High-immune response (x15); Proliferative (x12); Normal-like (x8)
+  cd3 immunohistochemistry | 57 | 4 | non-brisk (x25); brisk (x14); NA (x9); absent (x9)
+  cd20 immunohistochemistry | 57 | 4 | absent (x32); non-brisk (x12); NA (x9); brisk (x4)
+  ki67 (0=<30%, 1=>30%) | 57 | 3 | 1 (x24); 0 (x23); NA (x10)
+  [source_name_ch1] | 57 | 1 | Melanoma metastasis (x57)
+  [title] | 57 | 57 | MM01; MM02; MM03; MM04; MM06; MM08; MM09; MM10

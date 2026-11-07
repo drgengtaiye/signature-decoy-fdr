@@ -1,0 +1,22 @@
+GSE74777 | samples 107 | platforms {'GPL17586': 107}
+TITLE: Expression profiling of Early Stage Lung Squamous Cell Carcinomas
+SUMMARY: One hundred and seven lung Squamous Cell Carcinomas collected from early stage (stage I+II; AJCC 7th edition) patients at the National Cancer Center Hospital (Tokyo, Japan) between 1997 and 2008 were hybridized to the Human Transcriptome (HT) Array 2.0
+DESIGN: Fresh frozen tissues collected from 107 lung SCC were analyzed with the Affymetrix Human Transcriptome (HT) Array 2.0
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA301457
+FIELDS (n values with it | distinct | examples):
+  tissue | 107 | 1 | lung squamous cell carcinoma (x107)
+  tumor size(cm) | 107 | 44 | 5 (x9); 3.5 (x7); 4.5 (x6); 3 (x5); 2.8 (x5); 2 (x5); 2.5 (x4); 4 (x4)
+  pt | 107 | 5 | 2a (x52); 3 (x16); 1b (x14); 2b (x13); 1a (x12)
+  pn | 107 | 3 | 0 (x72); 1 (x33); NA (x2)
+  pm | 107 | 2 | 0 (x106); NA
+  7th pstage | 107 | 4 | IB (x31); IIA (x28); IIB (x25); IA (x23)
+  gender | 107 | 2 | Male (x96); Female (x11)
+  age | 107 | 31 | 67 (x13); 69 (x8); 66 (x8); 64 (x7); 62 (x6); 59 (x5); 60 (x5); 65 (x5)
+  smoking status | 107 | 3 | Current (x54); Ever (x50); Never (x3)
+  pack-year | 107 | 49 | 35 (x6); 47 (x6); 36 (x5); 39 (x5); 52 (x4); 44 (x4); 45 (x4); 43 (x4)
+  relapse | 107 | 2 | not relapsed (x79); relapsed (x28)
+  days before relapse/censor | 107 | 103 | 2605 (x3); 1889 (x2); 2241 (x2); 3156; 564; 1402; 1362; 1991
+  death | 107 | 2 | alive (x65); dead (x42)
+  days before death/censor | 107 | 104 | 1889 (x2); 2605 (x2); 2241 (x2); 3156; 754; 1402; 1489; 2008
+  [source_name_ch1] | 107 | 1 | lung SCC (x107)
+  [title] | 107 | 107 | 20_SQ11-101T; 78_SQ11-105T; 79_SQ11-109T; 54_SQ11-10T; 80_SQ11-110T; 21_SQ11-111T; 22_SQ11-113T; 81_SQ11-114T

@@ -1,0 +1,18 @@
+GSE48075 | samples 142 | platforms {'GPL6947': 142}
+TITLE: Identification of subsets of urothelial carcinoma
+SUMMARY: Identification of bladder cancer subsets
+DESIGN: 142 primary bladder tumors including superficial and invasive tumors were arrayed. 73 invasive tumors out of 142 tumors were used for muscle invasive baldder cancer classification
+RELATIONS: SubSeries of: GSE48277; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA209058
+FIELDS (n values with it | distinct | examples):
+  cstage | 142 | 25 | cT2N0M0 (x36); cT1N0M0 (x25); cTaN0M0 (x24); cT3bN0M0 (x12); cT1 (x4); cT3bN+M0 (x4); cTaN0 (x4); cTa (x3)
+  gender | 69 | 4 | male (x32); Male (x20); Female (x13); female (x4)
+  [source_name_ch1] | 142 | 1 | Bladder tumor (x142)
+  [title] | 142 | 142 | MDA1; MDA2; MDA4; MDA5; MDA6; MDA7; MDA8; MDA9
+  fgfr3 mutation (1;yes, 0;no) | 73 | 3 | 0 (x54); 1 (x12); NA (x7)
+  ras mutation (1;yes, 0;no) | 73 | 3 | 0 (x63); NA (x7); 1 (x3)
+  rb1 mutation (1;yes, 0;no) | 73 | 3 | 0 (x59); NA (x7); 1 (x7)
+  p53 mutation (1;yes, 0;no) | 73 | 3 | 0 (x43); 1 (x23); NA (x7)
+  age (at specimen collection) | 73 | 65 | 83.1 (x2); 69.1 (x2); 65.4 (x2); 72.1 (x2); 63.3 (x2); 67.7 (x2); 57.5 (x2); 71.4 (x2)
+  os censor | 73 | 2 | uncensored (x45); censored (x28)
+  dss censor | 73 | 2 | censored (x38); uncensored (x35)
+  survival (mo) | 73 | 71 | 3.4 (x2); 8.0 (x2); 37.2; 60.0; 2.9; 7.6; 20.4; 68.1

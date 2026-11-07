@@ -1,0 +1,15 @@
+GSE157011 | samples 484 | platforms {'GPL570': 484}
+TITLE: Multi-institutional prospective validation of prognostic mRNA signatures in early stage squamous lung cancer (Alliance)
+SUMMARY: This SuperSeries is composed of the SubSeries listed below.
+DESIGN: Refer to individual Series
+RELATIONS: SuperSeries of: GSE157009; SuperSeries of: GSE157010; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA659802
+FIELDS (n values with it | distinct | examples):
+  diagnosis | 484 | 1 | Squamous Cell Carcinoma of Lung (x484)
+  tissue | 484 | 1 | lung (x484)
+  age | 484 | 45 | 71 (x26); 65 (x25); 66 (x24); 72 (x24); 63 (x24); 73 (x23); 70 (x20); 69 (x20)
+  Sex | 484 | 2 | Male (x314); Female (x170)
+  Stage | 484 | 6 | T2a (x152); T1b (x113); T2b (x95); T1a (x73); T3 (x49); NA (x2)
+  os_mo | 484 | 444 | 51.1232876712329 (x3); 69.041095890411 (x3); 60.6904109589041 (x3); 55.6931506849315 (x3); 12.7890410958904 (x2); 85.9068493150685 (x2); 57.7315068493151 (x2); 7.62739726027397 (x2)
+  os_event | 484 | 2 | 1 (x264); 0 (x220)
+  [source_name_ch1] | 484 | 1 | Squamous Cell Carcinoma of Lung (x484)
+  [title] | 484 | 484 | DUK453; DUK442; DUK428; UM138; PMH528; BWH208; BWH209; BWH210

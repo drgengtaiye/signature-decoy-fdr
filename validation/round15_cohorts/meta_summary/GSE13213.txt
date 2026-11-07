@@ -1,0 +1,23 @@
+GSE13213 | samples 117 | platforms {'GPL6480': 117}
+TITLE: Relapse-related molecular signature in lung adenocarcinomas identifies patients with dismal prognosis
+SUMMARY: We identified a relapse-related molecular signature represented by 82 probes (RRS-82) through genome-wide expression profiling analysis of a training set of 60 patients. The robustness of RRS-82 in the selection of patients with a high probability of relapse was then validated with a completely blinded test set of 27 adenocarcinoma patients, showing a clear association of high risk RRS-82 with very poor patient prognosis regardless of disease stage. The discriminatory power of RRS-82 was further validated using an additional independent cohort of 30 Stage I patients who underwent surgery at a distinct period of time.  Keywords: Disease state analysis
+DESIGN: Expression profiles in 117 patients with lung adenocarcinomas.
+RELATIONS: Affiliated with: GSE67639; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA109445
+FIELDS (n values with it | distinct | examples):
+  Annotation | 117 | 117 | AD001; AD002; AD003; AD004; AD005; AD006; AD007; AD008
+  Cohort | 117 | 2 | dataset I (x87); dataset II (x30)
+  Age | 117 | 37 | 60 (x9); 61 (x8); 67 (x6); 62 (x6); 49 (x5); 66 (x5); 64 (x5); 56 (x5)
+  Sex | 117 | 2 | M (x60); F (x57)
+  Histology | 117 | 1 | AD (x117)
+  Smoking (BI) | 117 | 48 | 0 (x56); 800 (x4); 900 (x4); 400 (x3); 1020 (x2); 120 (x2); 1200 (x2); 840 (x2)
+  TNM (Pathological) | 117 | 11 | T1N0M0 (x42); T2N0M0 (x37); T2N2M0 (x10); T1N2M0 (x8); T3N0M0 (x6); T1N1M0 (x4); T2N1M0 (x3); T4N2M0 (x3)
+  Stage (Pathological ) | 117 | 6 | IA (x42); IB (x37); IIIA (x20); IIB (x9); IIIB (x5); IIA (x4)
+  Status | 117 | 2 | Alive (x68); Dead (x49)
+  Survival (days) | 117 | 115 | 3245 (x2); 2702 (x2); 1326; 3275; 1687; 3214; 1200; 223
+  Evidence of relapse | 117 | 3 | Y (x58); N (x58); Unknown
+  Site of relapse | 117 | 16 | !Sample_characteristics_ch1 = EGFR status: Wt (x42); PM (x22); !Sample_characteristics_ch1 = EGFR status: Mut (x19); Brain (x8); Bone (x6); Local rec. (x5); LN (neck) (x4); Liver (x2)
+  EGFR status | 56 | 2 | Wt (x30); Mut (x26)
+  K-ras Status | 117 | 2 | Wt (x102); Mut (x15)
+  p53 Status | 117 | 3 | Wt (x78); Mut (x38); N/A
+  [source_name_ch1] | 117 | 1 | Primary lung tumor (x117)
+  [title] | 117 | 117 | Patient 001 with adenocarcinoma; Patient 002 with adenocarcinoma; Patient 003 with adenocarcinoma; Patient 004 with adenocarcinoma; Patient 005 with adenocarcinoma; Patient 006 with adenocarcinoma; Patient 007 with adenocarcinoma; Patient 008 with adenocarcinoma

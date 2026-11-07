@@ -1,0 +1,17 @@
+GSE17674 | samples 62 | platforms {'GPL570': 62}
+TITLE: Inflammatory gene profiling of Ewing sarcoma family of tumors (set B)
+SUMMARY: Purpose: Unlike in most adult-onset cancers, an association between typical paediatric neoplasms and inflammatory triggers is rare. We studied whether immune system related genes are activated and have prognostic significance in Ewing sarcoma family of tumours (ESFT). Experimental design: Data-analysis was performed on gene expression profiles of 44 ESFT patient, 11 ESFT cell line, and 18 normal muscle tissue samples. 238 inflammation related genes were selected based on literature and a macrophage gene expression signature was derived from SymAtlas. Differential expression of the genes was analysed by t-test and survival analysis was performed according to gene expression.  Results: Inflammatory genes are activated in ESFT patient samples, as 38 of 238 (16%) inflammatory genes were significantly upregulated (p<0.001) when compared to ESFT cell lines. This inflammatory gene activation was characterized by significant enrichment of macrophage related gene expression with 58 of 299 (19%) of these genes being upregulated (p<0.001). By combining expression data from ESFT patients, cell lines and muscle tissue samples we were able to identify a total of 32 presumptive inflammatory genes
+DESIGN: 44 Ewing sarcoma family of tumor patient and 18 normal muscle samples obtained from GSE6798 and GSE3526.
+RELATIONS: SubSeries of: GSE17679; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA123393
+FIELDS (n values with it | distinct | examples):
+  sample id | 44 | 44 | R194; R196; R29; R30; R33; R34; R35; R37
+  diagnosis | 62 | 4 | Ewing (x32); normal (x18); PNET (x10); Askin (x2)
+  tissue | 50 | 3 | tumor (x32); vastus lateralis muscle (x13); skeletal muscle (x5)
+  state | 44 | 3 | Primary (x32); Metastasis (x7); Recurrence (x5)
+  age | 44 | 25 | 16 (x5); 15 (x4); 11 (x3); 24 (x3); 22 (x3); 32 (x2); 21 (x2); 18 (x2)
+  sex | 44 | 2 | M (x28); F (x16)
+  efs (months) | 44 | 42 | 4.6 (x2); 9.8 (x2); 11.7; 14; 28.6; 16.6; 19.4; 10
+  ovs (months) | 44 | 44 | 15.6; 20.7; 4.6; 48.9; 16.6; 56.5; 13.6; 9.8
+  status | 44 | 3 | Dead (x26); NED (x17); AWD
+  [source_name_ch1] | 62 | 3 | fresh frozen tissue sample (x44); Vastus lateralis muscle (x13); skeletal_muscle (x5)
+  [title] | 62 | 62 | Ewing sarcoma patient sample R194 (set B); Ewing sarcoma patient sample R196 (set B); Ewing sarcoma patient sample R29 (set B); Ewing sarcoma patient sample R30 (set B); Ewing sarcoma patient sample R33 (set B); Ewing sarcoma patient sample R34 (set B); Ewing sarcoma patient sample R35 (set B); Ewing sarcoma patient sample R37 (set B)

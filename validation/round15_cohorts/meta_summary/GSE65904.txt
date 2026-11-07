@@ -1,0 +1,16 @@
+GSE65904 | samples 214 | platforms {'GPL10558': 214}
+TITLE: Whole-genome expression analysis of melanoma tumor biopsies from a population-based cohort.
+SUMMARY: Analysis of gene expression profiles in metastatic melanoma to validate prognostic signatures.
+DESIGN: Total RNA was extracted from fresh-frozen melanoma tumors and genome-wide expression profiling was performed using Illlumina Human HT-12V4.0 BeadChip arrays by standard methods. After removal of replicate samples there were 214 unique melanoma samples left.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA275358
+FIELDS (n values with it | distinct | examples):
+  gender | 214 | 3 | Male (x124); Female (x89); NA
+  age | 214 | 65 | 65 (x11); 71 (x10); 77 (x8); 55 (x7); 67 (x7); 73 (x7); 59 (x6); 61 (x6)
+  tumor stage | 214 | 6 | Regional (x139); General (x23); Primary (x16); In-transit (x15); Local (x11); NA (x10)
+  tissue | 214 | 6 | Lymph node (x130); Subcutaneous (x33); Cutaneous (x22); NA (x18); Visceral (x10); Other
+  distant metastasis free survival in days | 214 | 145 | NA (x64); 875 (x2); 229 (x2); 727 (x2); 207 (x2); 338 (x2); 235 (x2); 1714
+  distant metastasis free survival (1=death, 0=alive) | 214 | 3 | 1 (x83); 0 (x67); NA (x64)
+  disease specific survival in days | 214 | 196 | NA (x4); 66 (x3); 194 (x3); 93 (x2); 195 (x2); 189 (x2); 435 (x2); 634 (x2)
+  disease specific survival (1=death, 0=alive) | 214 | 3 | 0 (x108); 1 (x102); NA (x4)
+  [source_name_ch1] | 214 | 1 | Malignant melanoma (x214)
+  [title] | 214 | 214 | Melanoma tumor sample from patient 1; Melanoma tumor sample from patient 2; Melanoma tumor sample from patient 3; Melanoma tumor sample from patient 4; Melanoma tumor sample from patient 5; Melanoma tumor sample from patient 6; Melanoma tumor sample from patient 7; Melanoma tumor sample from patient 8

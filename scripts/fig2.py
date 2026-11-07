@@ -1,576 +1,489 @@
-"""Figure 2 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
-The 52 signatures as one correlated library. Old sheet: fig2_v10.py -> Figure2_GB10.
-Tables: v3_dissociation.csv, v4_standardised_effects.csv (standardised_effects.py), v4_permutation_inference.csv (perm_inference.py),
-calib_v3/ICB_*_v3.csv (declared direction), v12_pkg/response_calls.csv.gz (calls), scores/*_sig.csv.gz (signature scores),
-SignatureSets-main/data-raw/IO/*.csv (gene lists). Correlation and clusters computed as in v5_clusters.py.
-New panels are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md)."""
-import glob
-import os
+"""Figure 3 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
+Immune signatures and response to checkpoint blockade: the same tables as fig3_v10.py, with the marginals of the old matrix split
+out and new descriptive panels read from existing tables (validation/NOTE_figures_v17_descriptive_only.md).
+
+Tables: icb/native_response_matched_v2.csv (v10_apply_signed.py), icb/v3_dissociation.csv (p_resp, family, n_genes),
+icb/v4_permutation_inference.csv and icb/v4_permutation_null_draws.csv.gz (perm_inference.py, signed nulls of round 5),
+icb/cf_cohort_stats.csv (cf1_cohort_stats.R; patients and responders)."""
 import sys
-import warnings
-from collections import Counter
 sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd, plt
-from matplotlib.collections import LineCollection
 from matplotlib.colors import Normalize
-from matplotlib.patches import Rectangle
-from scipy.cluster.hierarchy import dendrogram, fcluster, linkage
-from scipy.spatial.distance import squareform
-import networkx as nx
+from scipy.stats import binom
+from statsmodels.stats.proportion import proportion_confint
 
-warnings.filterwarnings("ignore")
-I = D + "/icb"
-COHORT = {"ICB_Braun": "Braun", "ICB_Gide": "Gide", "ICB_Hugo": "Hugo", "ICB_Jung": "Jung", "ICB_Kim": "Kim", "ICB_Limagne1": "Limagne",
-          "ICB_Liu": "Liu", "ICB_Mariathasan": "Mariathasan", "ICB_Miao1": "Miao", "ICB_Puch": "Puch", "ICB_Riaz": "Riaz", "ICB_Van_Allen": "Van Allen"}
-TUM = {"ICB_Gide": "melanoma", "ICB_Hugo": "melanoma", "ICB_Liu": "melanoma", "ICB_Riaz": "melanoma", "ICB_Van_Allen": "melanoma",
-       "ICB_Puch": "melanoma", "ICB_Braun": "kidney", "ICB_Miao1": "kidney", "ICB_Jung": "lung", "ICB_Limagne1": "lung",
-       "ICB_Mariathasan": "bladder", "ICB_Kim": "gastric"}
-SHORT = {"TUMOR-VASCULATURE-UP_Lu": "Tumor vasculature (Lu)", "CD39-CD8Tcell_Chow": "CD39 CD8 (Chow)",
-         "Tcell-inflamed_Ayers": "T-cell-inflamed (Ayers)", "WNT-beta-catenin_Takeuchi": "WNT/β-catenin (Takeuchi)"}
+I = D + "/icb/"
+R = pd.read_csv(I + "native_response_matched_v2.csv")
+R = R[R.cohort != "ICB_VanDenEnde"].copy()
+R["delta"] = R.AUC - R.rand_med
+R["clear"] = R.AUC > R.rand_p95
+X = pd.read_csv(I + "v3_dissociation.csv").set_index("signature")
+R["family"] = R.signature.map(X.family)
+TUMS = ["melanoma", "kidney", "lung", "bladder", "gastric"]
+ICB_TUM = {"ICB_Gide": "melanoma", "ICB_Hugo": "melanoma", "ICB_Liu": "melanoma", "ICB_Riaz": "melanoma", "ICB_Van_Allen": "melanoma",
+           "ICB_Puch": "melanoma", "ICB_Braun": "kidney", "ICB_Miao1": "kidney", "ICB_Jung": "lung", "ICB_Limagne1": "lung",
+           "ICB_Mariathasan": "bladder", "ICB_Kim": "gastric"}  # figstyle.ICB_TUM
+R["tum"] = R.cohort.map(ICB_TUM)
 FAMORD = ["Inflamed/IFN", "Other", "Confounder"]
-FAMLAB = {"Inflamed/IFN": "inflamed/IFN", "Confounder": "confounder", "Other": "other"}
-ENGORD = ["GSVA", "ssGSEA", "Weighted Mean"]
-ENGLAB = {"GSVA": "GSVA", "ssGSEA": "ssGSEA", "Weighted Mean": "wt. mean"}
-ENGC = {"GSVA": "#E9ECD2", "ssGSEA": "#B5C26C", "Weighted Mean": "#566F2F"}
-assert check_palette("engine", ENGC)
+FAMLAB = {"Inflamed/IFN": "inflamed/IFN", "Other": "other", "Confounder": "confounder"}
+famd = X.family
+sigp = X.p_resp
+med = R.groupby("signature").delta.median()
+nsig = int((sigp < 0.05).sum())
+assert nsig == 20 and len(R) == 623 and (med[sigp < 0.05] > 0).all()
+assert np.allclose(med, X.d_resp.reindex(med.index))
+P = pd.read_csv(I + "v4_permutation_inference.csv")
+DR = pd.read_csv(I + "v4_permutation_null_draws.csv.gz")
+HEAD = "12 cohorts (headline)"
+ph = P[(P.analysis == HEAD) & (P.statistic == "signatures with P<0.05")].iloc[0]
+pc_ = P[(P.analysis == HEAD) & (P.statistic == "inflamed-confounder clearance (pp)")].iloc[0]
+dv = DR[(DR.analysis == HEAD) & (DR.statistic == "signatures with P<0.05")].value.to_numpy()
+dc = DR[(DR.analysis == HEAD) & (DR.statistic == "inflamed-confounder clearance (pp)")].value.to_numpy()
+assert len(dv) == 2000 and int(ph.observed) == nsig
+CS = pd.read_csv(I + "cf_cohort_stats.csv").set_index("cohort")
+
+SHORT = {"CD39-CD8Tcell_Chow": "CD39 CD8 (Chow)", "TUMOR-VASCULATURE-UP_Lu": "Tumor vasculature (Lu)", "Tcell-inflamed_Ayers": "T-cell-inflamed (Ayers)",
+         "WNT-beta-catenin_Takeuchi": "WNT/β-catenin (Takeuchi)"}  # cns.SHORT, as the old sheet labels them
+GENES = {}   # signature names are labels, roman on every sheet
 
 
-def lab(s):
+def lab(s, italic=True):
+    if italic and s in GENES:
+        return GENES[s]
     if s in SHORT:
         return SHORT[s]
     a, b = s.rsplit("_", 1)
     return f"{a.replace('_', ' ')} ({b})"
 
 
-def sgn(v, nd=2):
-    return minus(f"{v:+.{nd}f}")
+def coh(c):
+    return c.replace("ICB_", "").replace("_", " ")
 
 
-def vbar(pg, x, y, w, h, cmap, lo, hi, ticks, label):
-    a = pg.ax(x, y, w, h)
-    a.imshow(np.linspace(1, 0, 200)[:, None], aspect="auto", cmap=cmap, extent=(0, 1, lo, hi), rasterized=True)
-    a.set_xticks([]); a.yaxis.tick_right()
-    a.set_yticks(ticks, [minus(t) for t in ticks], fontsize=5)
-    a.tick_params(length=1.5, pad=1, width=0.4)
-    for s in a.spines.values():
-        s.set_visible(False)
-    pg.txt(x + w / 2, y - 1.5, label, ha="center")
+def swarm(vals, step):
+    """tied values side by side, centred (for shares that take few values)"""
+    vals = np.asarray(vals, float)
+    off = np.zeros(len(vals))
+    for u in np.unique(np.round(vals, 6)):
+        k = np.where(np.round(vals, 6) == u)[0]
+        off[k] = (np.arange(len(k)) - (len(k) - 1) / 2) * step
+    return off
 
 
-# ---------------------------------------------------------------- tables, as in fig2_v10.py
-EFF = pd.read_csv(f"{I}/v4_standardised_effects.csv")
-T = pd.read_csv(f"{I}/v3_dissociation.csv")[["signature", "family", "n_genes", "method"]].merge(
-    EFF[["signature", "z_resp", "z_prog"]], on="signature")
-DIRN = pd.concat([pd.read_csv(f, usecols=["unit", "kind", "dirn"]) for f in sorted(glob.glob(f"{I}/calib_v3/ICB_*_v3.csv"))])
-DIRN = DIRN[DIRN.kind == "target"].drop_duplicates("unit").rename(columns={"unit": "signature"})[["signature", "dirn"]]
-T = T.merge(DIRN, on="signature", how="left")
-assert T.dirn.notna().all() and len(T) == 52
-RC = pd.read_csv(f"{I}/v12_pkg/response_calls.csv.gz")
-CALL = RC[(RC.kind == "target") & (RC.stat == "fold")].set_index("target").call
-assert int(CALL.sum()) == 21
-T["called"] = T.signature.map(CALL).astype(bool)
-fam_of = T.set_index("signature").family
-ng = T.set_index("signature").n_genes
-order = []
-for f in FAMORD:
-    order += T[T.family == f].sort_values("z_resp", ascending=False).signature.tolist()
-TO = T.set_index("signature").loc[order]
+def qjit(vals, width, nbins=14):
+    """deterministic spread for a strip of many points: low-discrepancy offsets, scaled by the local density"""
+    vals = np.asarray(vals, float)
+    if len(vals) < 2:
+        return np.zeros(len(vals))
+    h, e = np.histogram(vals, bins=nbins)
+    dens = h[np.clip(np.digitize(vals, e) - 1, 0, nbins - 1)] / h.max()
 
-# ---------------------------------------------------------------- score correlation and clusters (v5_clusters.py, fig2_v10.py)
-cohorts = sorted(os.path.basename(p)[:-11] for p in glob.glob(f"{I}/scores/*_sig.csv.gz"))
-cohorts = [c for c in cohorts if c != "ICB_VanDenEnde"]
-assert len(cohorts) == 12
-sigs = sorted(EFF.signature)
-S_IDX = {s: i for i, s in enumerate(sigs)}
-nS = len(sigs)
-iu = np.triu_indices(nS, 1)
-zsum, wsum = np.zeros((nS, nS)), np.zeros((nS, nS))
-EIG, RV, RFULL = {}, {}, {}
-for co in cohorts:
-    S = pd.read_csv(f"{I}/scores/{co}_sig.csv.gz")
-    cols = [c for c in S.columns if c in S_IDX]
-    A = S[cols].to_numpy(float)
-    r0 = np.corrcoef(A, rowvar=False)
-    r = np.clip(np.nan_to_num(r0, nan=0.0), -.999999, .999999)
-    idx = [S_IDX[c] for c in cols]
-    w = max(len(S) - 3, 1)
-    zsum[np.ix_(idx, idx)] += np.arctanh(r) * w
-    wsum[np.ix_(idx, idx)] += w
-    cols2 = [c for c in sigs if c in S.columns]
-    A2 = S[cols2].to_numpy(float)
-    ok = np.nanstd(A2, 0) > 0
-    A2 = A2[:, ok]
-    r2 = np.corrcoef(A2, rowvar=False)
-    EIG[co] = np.sort(np.linalg.eigvalsh(r2))[::-1]
-    full = pd.DataFrame(np.nan, index=sigs, columns=sigs)
-    keep = [c for c, o in zip(cols2, ok) if o]
-    full.loc[keep, keep] = r2
-    RFULL[co] = full.to_numpy()
-    RV[co] = RFULL[co][iu]
-Rm = np.tanh(np.divide(zsum, wsum, out=np.zeros_like(zsum), where=wsum > 0))
-np.fill_diagonal(Rm, 1.0)
-dist = 1 - np.abs(Rm)
-np.fill_diagonal(dist, 0)
-dist = (dist + dist.T) / 2
-Z = linkage(squareform(dist, checks=False), method="average")
-cl = fcluster(Z, t=.5, criterion="distance")
-CLS = pd.Series(cl, index=sigs)
-assert CLS.nunique() == 13
-assert (CLS == pd.read_csv(f"{I}/v5_signature_clusters.csv").set_index("signature").cluster_fixed.reindex(CLS.index)).all()
-leaves = dendrogram(Z, no_plot=True)["leaves"]
-csize = CLS.value_counts()
-big_cl = sorted([c for c in csize.index if csize[c] >= 3], key=lambda c: -csize[c])
-rv = Rm[iu]
-same = (cl[:, None] == cl[None, :])[iu]
+    def vdc(i):
+        x, f = 0.0, 0.5
+        while i:
+            x += f * (i & 1); i >>= 1; f /= 2
+        return x
+    off = np.zeros(len(vals))
+    off[np.argsort(vals)] = [2 * vdc(i + 1) - 1 for i in range(len(vals))]
+    return off * width * np.sqrt(dens)
 
-# ---------------------------------------------------------------- gene lists and Jaccard (fig2_v10.py)
-genes = {}
-for s in T.signature:
-    genes[s] = set(pd.read_csv(f"{I}/SignatureSets-main/data-raw/IO/{s}.csv", encoding="latin-1").get("gene_name", pd.Series(dtype=str)).dropna())
-assert len(genes) == 52
-sl = sorted(genes)
-Gx = nx.Graph()
-Gx.add_nodes_from(sl)
-JM = pd.DataFrame(0.0, index=sl, columns=sl)
-for i in range(len(sl)):
-    for j in range(i + 1, len(sl)):
-        a_, b_ = genes[sl[i]], genes[sl[j]]
-        jac = len(a_ & b_) / len(a_ | b_) if (a_ and b_) else 0.0
-        JM.loc[sl[i], sl[j]] = JM.loc[sl[j], sl[i]] = jac
-        if jac >= .08:
-            Gx.add_edge(sl[i], sl[j], w=jac)
-iso = sorted([s for s in Gx.nodes if Gx.degree(s) == 0], key=lambda s: (FAMORD.index(fam_of[s]), s))
-H = Gx.subgraph([s for s in Gx.nodes if Gx.degree(s) > 0]).copy()
-comps = sorted(nx.connected_components(H), key=lambda c: (-len(c), sorted(c)))
-deg = dict(H.degree())
-hubs = sorted(deg, key=lambda k: (-deg[k], k))[:2]
-JAC = np.array([JM.loc[sigs[a], sigs[b]] for a, b in zip(*iu)])
-z0 = JAC == 0
-hi_r0, hi_r = int(((rv > 0.5) & z0).sum()), int((rv > 0.5).sum())
-cnt_g = Counter(g for s_ in genes.values() for g in s_)
-top = sorted(cnt_g.items(), key=lambda kv: (-kv[1], kv[0]))[:12]
-holders = [s for s in order if any(g in genes[s] for g, _ in top)]
 
-P = pd.read_csv(f"{I}/v4_permutation_inference.csv")
-PC = P[P.analysis.str.startswith("per-cohort") & (P.cohort != "ICB_VanDenEnde")].copy()
-PC["lab"] = PC.cohort.map(COHORT)
-PC = PC.sort_values(["meff_li_ji", "lab"], ascending=[False, True]).reset_index(drop=True)
-med_meff = PC.meff_li_ji.median()
-pc1 = np.median([v[0] / v.sum() for v in EIG.values()])
-corder = sorted(cohorts, key=lambda c: (TUM[c], COHORT[c]))
-SIM = np.array([[pd.Series(RV[a]).corr(pd.Series(RV[b])) for b in corder] for a in corder])
+def no_x(ax):
+    ax.set_xticks([])
+    ax.spines["bottom"].set_visible(False)
 
-# ---- agreement with the deposited tables and with the old sheet
-_s = pd.read_csv(f"{I}/v13_fig/cohort_similarity.csv", index_col=0).loc[corder, corder].to_numpy()
-assert np.allclose(_s, SIM, atol=1e-6)
-_e = pd.read_csv(f"{I}/v13_fig/eigen_by_cohort.csv")
-for c in cohorts:
-    assert np.allclose(_e[c].dropna().to_numpy()[:len(EIG[c])], EIG[c], atol=1e-6), c
-_f = pd.read_csv(f"{I}/v13_fig/family_cluster_call.csv").set_index("signature")
-assert (_f.cluster.reindex(sigs) == CLS).all() and (_f.called_response_folded.reindex(sigs) == T.set_index("signature").called.reindex(sigs)).all()
-_m = pd.read_csv(f"{I}/v13_fig/most_shared_genes.csv")
-assert list(_m.gene) == [g for g, _ in top] and list(_m.n_signatures) == [n for _, n in top]
-for _, r_ in PC.iterrows():    # the table's mean |r| is the mean over the same per-cohort matrix drawn here
-    assert abs(np.nanmean(np.abs(RV[r_.cohort])) - r_.mean_abs_r) < 1e-6, r_.cohort
-assert set(iso) == {s for s in sl if JM.loc[s].drop(s).max() < .08}
-assert (len(iso), round(med_meff, 6), round(pc1, 2), int(same.sum()), int((~same).sum()), hi_r0, hi_r, len(holders)) == (20, 17.0, 0.47, 353, 973, 183, 427, 23)
 
 pg = Page(240)
 
-# ================================================================ a  the 52 signatures, one row each
-pg.panel(1, 3, "a", "The 52 signatures")
-Y0, RH, GAP = 13.5, 2.0, 0.9
-ROW, yy = {}, Y0
+# ================================================================= a  the matrix
+rows = []
 for f in FAMORD:
-    y_start = yy
-    for s in TO[TO.family == f].index:
-        ROW[s] = yy
-        yy += RH
-    pg.txt(1.7, (y_start + yy) / 2, FAMLAB[f], ha="center", rotation=90)
-    pg.line(3.0, y_start + 0.1, 3.0, yy - 0.25, color=INK, lw=0.4)
-    yy += GAP
-YEND = yy - GAP
-XC = {"family": (26.6, 2.3), "engine": (28.9, 7.6), "genes": (36.5, 5.6), "direction": (42.1, 2.5), "response": (44.6, 6.6),
-      "prognosis": (51.2, 6.6), "called": (57.8, 2.8), "cluster": (60.6, 4.4)}
-for k, (x, w) in XC.items():
-    pg.txt(x + w / 2 - 0.08, Y0 - 0.7, k, ha="center", va="bottom", rotation=90, weight="bold")
-LOG0, LOG1 = np.log10(3), np.log10(434)
-for s, r in TO.iterrows():
-    y = ROW[s]
-    pg.txt(26.2, y + RH / 2 - 0.07, lab(s), ha="right", weight="bold" if r.called else "normal")
-    tile(pg, *[XC["family"][0], y], XC["family"][1], RH, FAM[r.family])
-    tile(pg, XC["engine"][0], y, XC["engine"][1], RH, ENGC[r.method], ENGLAB[r.method])
-    tile(pg, XC["genes"][0], y, XC["genes"][1], RH, BLUE((np.log10(r.n_genes) - LOG0) / (LOG1 - LOG0)), f"{r.n_genes:g}")
-    tile(pg, XC["direction"][0], y, XC["direction"][1], RH, PUOR(0.80 if r.dirn == 1 else 0.20), "+" if r.dirn == 1 else "−")
-    for k, v in (("response", r.z_resp), ("prognosis", r.z_prog)):
-        tile(pg, XC[k][0], y, XC[k][1], RH, PUOR(float(np.clip(0.5 + v / 5, 0, 1))), sgn(v))
-    point(pg.c, XC["called"][0] + XC["called"][1] / 2 - 0.08, y + RH / 2 - 0.07, SIG, ms=2.5, filled=bool(r.called))
-    pg.txt(XC["cluster"][0] + XC["cluster"][1] / 2, y + RH / 2 - 0.07, f"C{CLS[s]}", ha="center")
-key(pg, 3.5, YEND + 2.2, [(SIG, f"called ({int(TO.called.sum())})", "o"), (SIG, f"not called ({int((~TO.called).sum())})", "open-o")])
-pg.cbar(37.5, YEND + 1.5, 16, 1.3, PUOR, -2.5, 2.5, [-2.5, 0, 2.5], "null SD")
-pg.src("a", TO.reset_index().assign(cluster=lambda d: ["C%d" % CLS[s] for s in d.signature],
-                                    label=lambda d: [lab(s) for s in d.signature])[
-    ["signature", "label", "family", "method", "n_genes", "dirn", "z_resp", "z_prog", "called", "cluster"]])
-
-# ================================================================ b  each signature's r with the other 51
-RDF = pd.DataFrame(Rm, index=sigs, columns=sigs)
-pg.panel(66.4, 3, "b", "Score r, other 51")
-ax = pg.ax(68.5, Y0, 19, YEND - Y0)
-out = []
-for s in order:
-    v = RDF.loc[s].drop(s).to_numpy()
-    y = ROW[s] + RH / 2 - 0.07
-    q = np.quantile(v, [0, 0.25, 0.5, 0.75, 1])
-    ax.plot([q[0], q[4]], [y, y], color=OTHER, lw=0.35, solid_capstyle="butt", zorder=2)
-    ax.plot([q[1], q[3]], [y, y], color=MUTED, lw=1.0, solid_capstyle="butt", zorder=3)
-    point(ax, q[2], y, FAM[fam_of[s]], ms=2.3, zorder=5)
-    out.append((s, *q))
-zero(ax, 0)
-ax.set_xlim(-0.8, 1.0); ax.set_ylim(YEND, Y0); ax.set_yticks([]); ax.spines["left"].set_visible(False)
-ax.set_xticks([-0.5, 0, 0.5, 1], ["−0.5", "0", "0.5", "1"]); ax.set_xlabel("score r")
-pg.src("b", pd.DataFrame(out, columns=["signature", "r_min", "r_q25", "r_median", "r_q75", "r_max"]))
-
-# ================================================================ c  each signature's largest Jaccard index
-pg.panel(89.8, 3, "c", "Largest Jaccard")
-ax = pg.ax(92, Y0, 15.5, YEND - Y0)
-out = []
-for s in order:
-    v = JM.loc[s].drop(s)
-    y = ROW[s] + RH / 2 - 0.07
-    point(ax, v.max(), y, FAM[fam_of[s]], ms=2.3)
-    out.append((s, v.max(), v.idxmax()))
-zero(ax, 0.08)
-ax.set_xlim(0, 0.62); ax.set_ylim(YEND, Y0); ax.set_yticks([]); ax.spines["left"].set_visible(False)
-ax.set_xticks([0, 0.2, 0.4, 0.6], ["0", "0.2", "0.4", "0.6"]); ax.set_xlabel("Jaccard")
-pg.src("c", pd.DataFrame(out, columns=["signature", "largest_jaccard", "partner"]))
-
-
-# ================================================================ d  network of shared genes
-def fit(p_, x0, x1, y0, y1):
-    a_ = np.array(list(p_.values()))
-    lo, hi = a_.min(0), a_.max(0)
-    sc = np.array([(x1 - x0) / max(hi[0] - lo[0], 1e-9), (y1 - y0) / max(hi[1] - lo[1], 1e-9)])
-    mid = (lo + hi) / 2
-    return {k_: np.array([(x0 + x1) / 2, (y0 + y1) / 2]) + (v_ - mid) * sc for k_, v_ in p_.items()}
-
-
-big = nx.Graph()
-big.add_nodes_from(sorted(comps[0]))
-big.add_edges_from(sorted(tuple(sorted(e)) for e in H.subgraph(comps[0]).edges))
-dsp = dict(nx.shortest_path_length(big))
-pos = nx.kamada_kawai_layout(big, dist={u: {v: np.sqrt(dsp[u][v]) for v in big} for u in big})
-pos = fit(pos, 0.03, 0.70, 0.04, 0.95)
-for k, c in enumerate(comps[1:]):
-    sub = nx.Graph()
-    sub.add_nodes_from(sorted(c))
-    sub.add_edges_from(sorted(tuple(sorted(e)) for e in H.subgraph(c).edges))
-    yy_ = 0.86 - k * 0.24
-    if len(c) > 2:
-        pos.update(fit(nx.circular_layout(sub), 0.80, 0.97, yy_ - 0.10, yy_ + 0.10))
-    else:
-        for i_, u in enumerate(sorted(c)):
-            pos[u] = np.array([0.82 + 0.13 * i_, yy_])
-pg.panel(112, 3, "d", "Shared genes")
-ax = pg.ax(113, 6, 66, 42)
-segs = sorted(H.edges(data=True), key=lambda e: e[2]["w"])
-ax.add_collection(LineCollection([[pos[u], pos[v]] for u, v, _ in segs], linewidths=[0.25 + 2.4 * d["w"] for _, _, d in segs],
-                                 colors=[tint(MUTED, 0.3 + 0.7 * min(d["w"] / 0.5, 1)) for _, _, d in segs], zorder=1))
-AREA = lambda n: 5 + 4.2 * np.log2(n)  # noqa: E731
-for s in H.nodes:
-    ax.scatter([pos[s][0]], [pos[s][1]], s=AREA(ng[s]), color=FAM[fam_of[s]], edgecolors="white", linewidths=0.3, zorder=3)
-cen = np.mean([pos[s] for s in big.nodes], axis=0)
-for s in hubs:
-    d_ = pos[s] - cen
-    sx = np.sign(d_[0]) if abs(d_[0]) > 1e-6 else 1
-    ax.annotate(lab(s), pos[s], xytext=pos[s] + np.array([0.20 * sx, 0.20]), ha="right" if sx < 0 else "left", va="center", fontsize=5,
-                arrowprops=dict(arrowstyle="-", lw=0.3, color=INK, shrinkA=1, shrinkB=2.5), annotation_clip=False, zorder=6)
-for k, gsz in enumerate((5, 20, 100)):
-    ax.scatter([0.80 + k * 0.075], [0.12], s=AREA(gsz), color=OTH, edgecolors="white", linewidths=0.3, zorder=3)
-    ax.text(0.80 + k * 0.075, 0.045, str(gsz), ha="center", va="center", fontsize=5)
-ax.text(0.875, 0.20, "genes", ha="center", va="center", fontsize=5)
-ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
-for yk, (c_, l_) in zip((39.6, 42.1, 44.6), ((INFL, "inflamed/IFN"), (OTH, "other"), (CONF, "confounder"))):
-    key(pg, 146.5, yk, [(c_, l_, "o")])
-pg.src("d", pd.DataFrame([{"signature_a": u, "signature_b": v, "jaccard": d["w"]} for u, v, d in segs]))
-
-# ================================================================ e  signatures sharing none
-pg.panel(112, 50.5, "e", "No Jaccard ≥ 0.08 with any other (20)")
-for k, s in enumerate(iso):
-    cx, cy = (113.6, 133.6, 156.0)[k // 7], 55.0 + (k % 7) * 2.6
-    pg.c.scatter([cx], [cy], s=AREA(ng[s]), color=FAM[fam_of[s]], edgecolors="white", linewidths=0.3, zorder=3)
-    pg.txt(cx + 1.9, cy, lab(s))
-pg.src("e", pd.DataFrame({"signature": iso, "family": [fam_of[s] for s in iso], "n_genes": [ng[s] for s in iso],
-                          "largest_jaccard": [JM.loc[s].drop(s).max() for s in iso]}))
-
-# ================================================================ f  family, cluster and call: tile cross-table
-pg.panel(112, 73.5, "f", "Family, cluster and call")
-cname = {c: f"C{c}" for c in big_cl}
-TO["cl_row"] = [cname.get(CLS[s], "≤ 2") for s in TO.index]
-crow = [cname[c] for c in big_cl] + ["≤ 2"]
-x0, y0, cw, ch = 119.6, 81.4, 6.5, 2.5
-FX = {}
-for i, f in enumerate(FAMORD):
-    xf = x0 + cw * 2 * i
-    pg.txt(xf + cw - 0.08, 77.2, f"{FAMLAB[f]}, {int((TO.family == f).sum())}", ha="center")
-    pg.line(xf + 0.2, 78.2, xf + cw * 2 - 0.35, 78.2, lw=0.4)
-    FX[f] = xf
-    pg.txt(xf + cw / 2 - 0.08, 79.9, "called", ha="center", weight="bold")
-    pg.txt(xf + cw * 1.5 - 0.08, 79.9, "not", ha="center", weight="bold")
-xm = x0 + cw * 6 + 1.0
-pg.txt(xm + cw - 0.08, 77.2, "cluster", ha="center")
-pg.line(xm + 0.2, 78.2, xm + cw * 3 - 0.35, 78.2, lw=0.4)
-for j, h_ in enumerate(("called", "not", "n")):
-    pg.txt(xm + cw * j + cw / 2 - 0.08, 79.9, h_, ha="center", weight="bold")
-out = []
-for i, c in enumerate(crow):
-    y = y0 + ch * i
-    pg.txt(x0 - 0.8, y + ch / 2 - 0.07, c, ha="right")
-    g = TO[TO.cl_row == c]
-    rec = {"cluster": c}
-    for f in FAMORD:
-        for k, v in ((0, True), (1, False)):
-            n = int(((g.family == f) & (g.called == v)).sum())
-            tile(pg, FX[f] + cw * k, y, cw, ch, BLUE(float(np.sqrt(n / 16))), str(n))
-            rec[f"{f} {'called' if v else 'not called'}"] = n
-    for j, n in enumerate((int(g.called.sum()), int((~g.called).sum()), len(g))):
-        tile(pg, xm + cw * j, y, cw, ch, PURPLE(float(np.sqrt(n / 26))), str(n))
-    rec.update({"cluster called": int(g.called.sum()), "cluster not called": int((~g.called).sum()), "cluster n": len(g)})
-    out.append(rec)
-y = y0 + ch * len(crow)
-pg.txt(x0 - 0.8, y + ch / 2 - 0.07, "all", ha="right", weight="bold")
+    rows += sorted([s for s in med.index if famd[s] == f], key=lambda s: -med[s])
+ncoh = R.groupby("cohort").n.first()
+cols = sorted(ncoh.index, key=lambda c: (TUMS.index(ICB_TUM[c]), -ncoh[c]))
+M = R.pivot_table(index="signature", columns="cohort", values="delta").loc[rows][cols]
+CL = R.pivot_table(index="signature", columns="cohort", values="clear").loc[rows][cols]
+LIM = 0.15
+norm = Normalize(-LIM, LIM)
+M0, MT, cw, rh, gap = 27.5, 15.2, 4.5, 2.04, 0.9
+MW = cw * len(cols)
+ypos, y_ = {}, MT
+span = {}
 for f in FAMORD:
-    for k, v in ((0, True), (1, False)):
-        pg.txt(FX[f] + cw * k + cw / 2 - 0.08, y + ch / 2 - 0.07, str(int(((TO.family == f) & (TO.called == v)).sum())), ha="center", weight="bold")
-for j, n in enumerate((int(TO.called.sum()), int((~TO.called).sum()), len(TO))):
-    pg.txt(xm + cw * j + cw / 2 - 0.08, y + ch / 2 - 0.07, str(n), ha="center", weight="bold")
-pg.src("f", pd.DataFrame(out))
-
-# ================================================================ g  family, engine and direction
-pg.panel(112, 106.3, "g", "Family, engine and direction")
-x0, y0, cw, ch = 130.6, 113.6, 8.4, 2.45
-hdr = [ENGLAB[e] for e in ENGORD] + ["higher", "lower"]
-pg.txt(x0 + cw * 1.5 - 0.08, 109.9, "engine", ha="center")
-pg.line(x0 + 0.2, 110.8, x0 + cw * 3 - 0.35, 110.8, lw=0.4)
-xdir = x0 + cw * 3 + 1.0
-pg.txt(xdir + cw - 0.08, 109.9, "direction", ha="center")
-pg.line(xdir + 0.2, 110.8, xdir + cw * 2 - 0.35, 110.8, lw=0.4)
-xs = [x0 + cw * k for k in range(3)] + [xdir, xdir + cw]
-for xx, h_ in zip(xs, hdr):
-    pg.txt(xx + cw / 2 - 0.08, 112.3, h_, ha="center", weight="bold")
-xn = xdir + cw * 2 + 0.6
-pg.txt(xn + 2.5, 112.3, "n", ha="center", weight="bold")
-out = []
-for i, f in enumerate(FAMORD):
-    y = y0 + ch * i
-    g = TO[TO.family == f]
-    pg.txt(x0 - 0.8, y + ch / 2 - 0.07, FAMLAB[f], ha="right")
-    vals = [int((g.method == e).sum()) for e in ENGORD] + [int((g.dirn == 1).sum()), int((g.dirn == -1).sum())]
-    for xx, n in zip(xs, vals):
-        tile(pg, xx, y, cw, ch, BLUE(float(np.sqrt(n / 18))), str(n))
-    pg.txt(xn + 2.5, y + ch / 2 - 0.07, str(len(g)), ha="center")
-    out.append({"family": f, **dict(zip(hdr, vals)), "n": len(g)})
-y = y0 + ch * 3
-pg.txt(x0 - 0.8, y + ch / 2 - 0.07, "all", ha="right", weight="bold")
-vals = [int((TO.method == e).sum()) for e in ENGORD] + [int((TO.dirn == 1).sum()), int((TO.dirn == -1).sum())]
-for xx, n in zip(xs, vals):
-    pg.txt(xx + cw / 2 - 0.08, y + ch / 2 - 0.07, str(n), ha="center", weight="bold")
-pg.txt(xn + 2.5, y + ch / 2 - 0.07, str(len(TO)), ha="center", weight="bold")
-out.append({"family": "all", **dict(zip(hdr, vals)), "n": len(TO)})
-pg.src("g", pd.DataFrame(out))
-
-# ================================================================ h  correlation matrix with 13 clusters
-XH, YH, SH = 5.0, 137.0, 52.0
-pg.panel(1, 127.5, "h", "Score correlation, 12 cohorts")
-axd = pg.ax(XH, 130.6, SH, YH - 130.6 - 0.3)
-dendrogram(Z, ax=axd, color_threshold=0, above_threshold_color=MUTED, no_labels=True)
-for coll in axd.collections:
-    coll.set_linewidth(0.35)
-axd.axis("off")
-axd.axhline(0.5, color=INK, lw=0.5, ls=(0, (1.0, 1.5)))
-ax = pg.ax(XH, YH, SH, SH)
-M = Rm[np.ix_(leaves, leaves)]
-ax.imshow(M, cmap=PUOR, norm=Normalize(-1, 1), aspect="auto", interpolation="nearest")
-lab_cl = cl[leaves]
+    fs_ = [s for s in rows if famd[s] == f]
+    span[f] = (y_, y_ + rh * len(fs_))
+    for s in fs_:
+        ypos[s] = y_
+        y_ += rh
+    y_ += gap
+MB = y_ - gap
+pg.panel(1, 3, "a", "Gain over the matched null")
+for f in FAMORD:
+    y0, y1 = span[f]
+    pg.box(2.75, y0, 0.9, y1 - y0 - 0.15, FAM[f], z=2)
+    pg.txt(1.25, (y0 + y1) / 2, FAMLAB[f], ha="center", rotation=90)
+for s in rows:
+    pg.txt(M0 - 0.5, ypos[s] + rh / 2, lab(s), ha="right")
+    for j, c in enumerate(cols):
+        v = M.loc[s, c]
+        if np.isnan(v):
+            tile(pg, M0 + cw * j, ypos[s], cw, rh, EMPTY)
+            continue
+        tile(pg, M0 + cw * j, ypos[s], cw, rh, PUOR(norm(v)))
+        if CL.loc[s, c] == 1:
+            pg.c.plot(M0 + cw * j + (cw - 0.15) / 2, ypos[s] + (rh - 0.15) / 2, "o", ms=1.35, mfc=INK, mec="white", mew=0.25, zorder=4)
+for j, c in enumerate(cols):
+    pg.txt(M0 + cw * j + cw / 2 - 0.6, MT - 0.7, coh(c), ha="left", va="bottom", rotation=45, rotation_mode="anchor")
 start = 0
-blocks = []
-for k in range(1, len(leaves) + 1):
-    if k == len(leaves) or lab_cl[k] != lab_cl[start]:
-        blocks.append((int(lab_cl[start]), start, k))
-        if k - start > 1:
-            ax.add_patch(Rectangle((start - .5, start - .5), k - start, k - start, fill=False, ec=INK, lw=0.55))
-            ax.text(k - .5 + 0.2, start - .7, f"C{lab_cl[start]}", fontsize=5, va="bottom", ha="right", color=INK)
-        start = k
-# clusters of one have no box: named beside their cells, in leaf order
-ax.text(7.6, 1.0, ", ".join(f"C{c}" for c, a_, b_ in blocks if b_ <= 3), fontsize=5, va="center", ha="left", color=INK)
-ax.text(11.4, 8.5, ", ".join(f"C{c}" for c, a_, b_ in blocks if 7 <= a_ and b_ <= 11), fontsize=5, va="center", ha="left", color=INK)
-ax.set_xticks([]); ax.set_yticks([])
-for sp in ax.spines.values():
-    sp.set_visible(False)
-ss = [sigs[li] for li in leaves]
-for i, s in enumerate(ss):
-    pg.box(XH - 2.6, YH + i, 2.0, 1.0, FAM[fam_of[s]], z=2)
-    pg.box(XH + i, YH + SH + 0.6, 1.0, 2.0, FAM[fam_of[s]], z=2)
-vbar(pg, XH + SH + 1.0, YH + 21, 1.4, 22, PUOR, -1, 1, [-1, 0, 1], "r")
-pg.src("h", pd.DataFrame(M, index=ss, columns=ss).reset_index().rename(columns={"index": "signature"}))
+for t in TUMS:
+    n_ = sum(ICB_TUM[c] == t for c in cols)
+    pg.box(M0 + cw * start, MB + 0.25, cw * n_ - 0.3, 0.8, TYPE[t], z=2)
+    pg.txt(M0 + cw * (start + n_ / 2) - 0.15, MB + 2.5, t if n_ > 1 else t[:3] + ".", ha="center")
+    start += n_
+pg.txt(6, 6.5, "ΔAUC vs matched null")
+pg.cbar(6, 7.8, 18.5, 1.25, PUOR, -LIM, LIM, [-0.15, 0, 0.15])
+pg.c.plot(6.7, 13.3, "o", ms=1.6, mfc=INK, mec="white", mew=0.25, zorder=4)
+pg.txt(8, 13.3, "clears null 95th pct")
+pg.src("a", R[["signature", "family", "cohort", "tum", "n", "AUC", "rand_med", "rand_p95", "delta", "clear", "null_signed"]])
 
-# ================================================================ i  similarity between cohorts
-pg.panel(63.5, 127.5, "i", "Similarity between cohorts")
-x0, y0, cs = 77.4, 133.0, 3.72
+# ================================================================= b  right marginal: median gain per signature, aligned rows
+pg.panel(82, 3, "b", "Median gain")
+ax = pg.ax(82.5, MT, 12, MB - MT)
+zero(ax, 0)
+for s in rows:
+    point(ax, med[s], ypos[s] + rh / 2, FAM[famd[s]], ms=2.5, filled=bool(sigp[s] < 0.05))
+ax.set_ylim(MB, MT); ax.set_yticks([]); ax.spines["left"].set_visible(False)
+ax.set_xlim(-0.015, 0.13); ax.set_xticks([0, 0.1], ["0", "0.1"]); ax.set_xlabel("median ΔAUC", labelpad=1)
+clearn = R.groupby("signature").clear.sum()
+for xx, h_ in ((98.2, "genes"), (103.4, "clear"), (109.3, "P")):
+    pg.txt(xx, MT - 1.2, h_, ha="right", weight="bold")
+for s in rows:
+    yy = ypos[s] + rh / 2
+    pg.txt(98.2, yy, f"{X.n_genes[s]:.0f}", ha="right")
+    pg.txt(103.4, yy, f"{clearn[s]:.0f}", ha="right")
+    pg.txt(109.3, yy, f"{sigp[s]:.3f}", ha="right")
+pg.c.plot(96.4, 6.8, "o", ms=2.5, mfc=INK, mec="white", mew=0.3, zorder=4)
+pg.txt(97.8, 6.8, "P < 0.05")
+pg.c.plot(96.4, 9.6, "o", ms=2.3, mfc="white", mec=INK, mew=0.5, zorder=4)
+pg.txt(97.8, 9.6, "P ≥ 0.05")
+pg.src("b", pd.DataFrame({"signature": rows, "family": [famd[s] for s in rows], "median_gain": med[rows].values, "genes": X.n_genes[rows].values,
+                          "cohorts_clearing": clearn[rows].values, "signed_rank_P": sigp[rows].values}))
+
+# ================================================================= c  clearance by family (old b)
+CAX, CBX, CW = 120.5, 155, 23.5
+RY2, RY3, RH = 46.0, 89.0, 28.5
+pg.panel(112.5, 3, "c", "Tests clearing, by family")
+ax = pg.ax(CAX, 8, CW, RH)
+PSIG = R.groupby(["family", "signature"]).clear.mean().mul(100).reset_index()
+zero(ax, 5, axis="y")
 out = []
-for i, a in enumerate(corder):
-    pg.txt(x0 - 1.8, y0 + cs * i + cs / 2 - 0.07, COHORT[a], ha="right")
-    pg.box(x0 - 1.3, y0 + cs * i, 1.0, cs - 0.15, TYPE[TUM[a]], z=2)
-    pg.txt(x0 + cs * i + cs / 2 - 0.07, y0 + cs * 12 + 0.5, COHORT[a], ha="center", va="top", rotation=90)
-    for j, b in enumerate(corder[: i + 1]):
+for i, f in enumerate(FAMORD):
+    g = R[R.family == f]; k, n = int(g.clear.sum()), len(g)
+    lo, hi = proportion_confint(k, n, method="wilson")
+    v = PSIG.loc[PSIG.family == f, "clear"].to_numpy()
+    ax.plot(i - 0.13 + swarm(v, 0.095), v, "o", ms=1.9, mfc=FAM[f], mec="white", mew=0.2, ls="none", zorder=3)
+    ci(ax, 100 * lo, 100 * hi, i + 0.34, INK, lw=0.7, horizontal=False)
+    ax.plot([i + 0.34 - 0.12, i + 0.34 + 0.12], [100 * k / n] * 2, color=INK, lw=1.0, solid_capstyle="butt", zorder=4)
+    ax.text(i + 0.02, 67.5, f"{100 * k / n:.0f}%\n{100 * lo:.0f}–{100 * hi:.0f}", ha="center", va="top", fontsize=5, linespacing=1.1)
+    out.append((f, k, n, 100 * k / n, 100 * lo, 100 * hi))
+ax.text(2.56, 3.6, "chance (5%)", ha="right", va="top", fontsize=5, color=MUTED)
+ax.set_xticks(range(3), ["inflamed/\nIFN", "other", "confounder\ncontrol"], fontsize=5)
+ax.tick_params(axis="x", length=0)
+ax.set_ylim(-3.5, 68); ax.set_xlim(-0.55, 2.58); ax.set_yticks([0, 10, 20, 30, 40, 50]); ax.set_ylabel("tests clearing the null (%)")
+pg.src("c", pd.concat([pd.DataFrame(out, columns=["family", "tests_clearing", "tests", "pooled_pct", "wilson_lo", "wilson_hi"]),
+                       PSIG.rename(columns={"clear": "signature_pct"})]))
+
+# ================================================================= d  count against the permutation null (old c)
+pg.panel(147, 3, "d", "Signatures at P < 0.05")
+ax = pg.ax(CBX, 8, CW, RH)
+bins = np.arange(-0.5, 31.5)
+hist(ax, dv[dv < nsig], bins, weights=np.full((dv < nsig).sum(), 100 / len(dv)))
+hist(ax, dv[dv >= nsig], bins, color=SIG, weights=np.full((dv >= nsig).sum(), 100 / len(dv)))
+kk = np.arange(0, 31)
+pmf = binom.pmf(kk, 52, 0.05) * 100
+ax.plot(kk[pmf > 1e-2], pmf[pmf > 1e-2], color=INK, lw=0.6, zorder=3)
+ax.plot([nsig, nsig], [0.01, 6.5], color=SIG, lw=0.8, zorder=4)
+ax.text(nsig - 0.7, 2.6, f"observed {nsig}\nP = {ph.perm_P:.3f}", ha="right", va="center", fontsize=5, linespacing=1.15)
+ax.set_yscale("log"); ax.set_ylim(0.01, 60); ax.set_yticks([0.1, 1, 10], ["0.1", "1", "10"]); ax.minorticks_off()
+ax.set_xlim(-1, 30); ax.set_xticks([0, 10, 20, 30]); ax.set_xlabel("P < 0.05, of 52 signatures"); ax.set_ylabel("permutations (%)")
+key(pg, CBX + 8.0, 8.8, [(NULLC, "permutation null")], gap=0)
+key(pg, CBX + 8.0, 11.2, [(INK, "binomial", "line")], gap=0)
+pg.src("d", pd.DataFrame({"signatures_at_P05": kk, "permutations_pct": [(dv == k_).mean() * 100 for k_ in kk], "binomial_pct": pmf}))
+
+# ================================================================= e  family contrast against the same permutations (new)
+pg.panel(112.5, RY2, "e", "Inflamed − confounder gap")
+ax = pg.ax(CAX, RY2 + 5, CW, RH)
+ob = float(pc_.observed)
+bins = np.arange(-15, 27, 2)
+hist(ax, dc[dc < ob], bins, weights=np.full((dc < ob).sum(), 100 / len(dc)))
+hist(ax, dc[dc >= ob], bins, color=SIG, weights=np.full((dc >= ob).sum(), 100 / len(dc)))
+h_, e_ = np.histogram(dc, bins)
+top_ = 100 * h_.max() / len(dc)
+ax.plot([ob, ob], [0, top_ * 1.02], color=SIG, lw=0.8, zorder=4)
+ax.text(25, top_ * 1.42, f"observed {ob:.1f}", ha="right", va="top", fontsize=5, linespacing=1.15)
+ax.set_xlim(-15, 25); ax.set_xticks([-10, 0, 10, 20], ["−10", "0", "10", "20"]); ax.set_ylim(0, top_ * 1.42); ax.set_yticks([0, 5, 10, 15])
+ax.set_xlabel("inflamed − confounder (pct pts)"); ax.set_ylabel("permutations (%)")
+pg.src("e", pd.DataFrame({"bin_left_pp": e_[:-1], "permutations_pct": 100 * h_ / len(dc), "observed_pp": ob, "null_median_pp": pc_.perm_null_median,
+                          "null_p95_pp": pc_.perm_null_p95, "null_max_pp": pc_.perm_null_max}))
+
+# ================================================================= f  published against random (old d)
+pg.panel(147, RY2, "f", "AUC, signatures and null")
+ax = pg.ax(CBX, RY2 + 5, CW, RH)
+bins = np.arange(0.30, 0.96, 0.025)
+hist(ax, R.AUC, bins, color=tint(SIG, 0.85))
+hist(ax, R.rand_med, bins, weights=-np.ones(len(R)))
+ax.axhline(0, color=INK, lw=0.4, zorder=3)
+h1, _ = np.histogram(R.AUC, bins); h0, _ = np.histogram(R.rand_med, bins)
+ma, mr = R.AUC.median(), R.rand_med.median()
+ax.plot([ma, ma], [0, h1.max() * 1.04], color=INK, lw=0.6, zorder=4); ax.plot([mr, mr], [0, -h0.max() * 1.02], color=INK, lw=0.6, zorder=4)
+ax.text(0.96, h1.max() * 1.0, f"published\nmedian {ma:.3f}", ha="right", va="top", fontsize=5, linespacing=1.1)
+ax.text(0.96, -h0.max() * 0.5, f"matched random\nmedian {mr:.3f}", ha="right", va="top", fontsize=5, linespacing=1.1)
+ax.set_xlim(0.33, 0.96); ax.set_ylim(-h0.max() * 1.08, h1.max() * 1.12); ax.set_xticks([0.4, 0.6, 0.8], ["0.4", "0.6", "0.8"])
+ax.set_yticks([-200, -100, 0, 100], ["200", "100", "0", "100"]); ax.set_xlabel("AUC for response"); ax.set_ylabel("signature × cohort tests")
+pg.src("f", pd.DataFrame({"bin_left": bins[:-1], "signature_tests": h1, "matched_random_tests": h0}))
+
+# ================================================================= g  every test against the null 95th percentile (new)
+pg.panel(112.5, RY3, "g", "AUC and null 95th pct")
+ax = pg.ax(CAX, RY3 + 5, CW, RH)
+no = R[~R.clear]
+ax.hexbin(no.rand_p95, no.AUC, gridsize=(13, 16), cmap=GREYHEX, mincnt=1, linewidths=0, rasterized=True, extent=(0.57, 0.80, 0.5, 0.9))
+ax.plot([0.5, 1], [0.5, 1], color=INK, lw=0.5, ls=(0, (1.0, 1.5)), zorder=2)
+for f in ("Other", "Confounder", "Inflamed/IFN"):
+    s_ = R[R.clear & (R.family == f)]
+    point(ax, s_.rand_p95, s_.AUC, FAM[f], ms=1.9, mew=0.2)
+ax.set_xlim(0.58, 0.80); ax.set_ylim(0.5, 0.96); ax.set_xticks([0.6, 0.7, 0.8], ["0.6", "0.7", "0.8"]); ax.set_yticks([0.5, 0.7, 0.9], ["0.5", "0.7", "0.9"])
+ax.text(0.584, 0.955, f"{int(R.clear.sum())} of {len(R)}\nclearing", ha="left", va="top", fontsize=5, linespacing=1.1)
+ax.set_xlabel("null 95th percentile"); ax.set_ylabel("AUC")
+pg.src("g", R[["signature", "family", "cohort", "rand_p95", "AUC", "clear"]])
+
+# ================================================================= h  median AUC per signature (new)
+pg.panel(147, RY3, "h", "Signature median AUC")
+ax = pg.ax(CBX, RY3 + 5, CW, RH)
+ms = R.groupby("signature").agg(auc=("AUC", "median"), null=("rand_med", "median")).sort_values("auc", ascending=False)
+ms["rank"] = np.arange(1, len(ms) + 1)
+point(ax, ms["rank"], ms["null"], NULLC, ms=1.7, mew=0.2)
+for s, r in ms.iterrows():
+    point(ax, r["rank"], r["auc"], FAM[famd[s]], ms=2.0, mew=0.25 if sigp[s] < 0.05 else 0.45, filled=bool(sigp[s] < 0.05))
+ax.text(4, ms.auc.max() + 0.002, f"{lab(ms.index[0])} {ms.auc.max():.3f}", ha="left", va="center", fontsize=5)
+ax.set_xlim(-1, 54); ax.set_xticks([1, 26, 52]); ax.set_ylim(0.53, 0.70); ax.set_yticks([0.55, 0.6, 0.65, 0.7], ["0.55", "0.60", "0.65", "0.70"])
+ax.set_xlabel("signature rank"); ax.set_ylabel("median AUC")
+key(pg, CBX + 1.0, RY3 + 5 + RH - 3.4, [(NULLC, "matched random", "o")], gap=0)
+pg.src("h", ms.reset_index().assign(family=lambda d: d.signature.map(famd), signed_rank_P=lambda d: d.signature.map(sigp)).rename(columns={"auc": "median_AUC", "null": "median_random_set_median"}))
+
+# ================================================================= i  top marginal: share clearing per cohort, aligned columns
+Y_I = MB + 7.6
+pg.panel(1, Y_I, "i", "Tests clearing, per cohort")
+ax = pg.ax(M0, Y_I + 2.4, MW, 12.5)
+pc = {c: 100 * R[R.cohort == c].clear.mean() for c in cols}
+zero(ax, 5, axis="y")
+for j, c in enumerate(cols):
+    point(ax, j + 0.5, pc[c], TYPE[ICB_TUM[c]], ms=3.0)
+    ax.text(j + 0.5, pc[c] + 7, f"{pc[c]:.0f}", ha="center", va="bottom", fontsize=5)
+ax.set_xlim(0, len(cols)); ax.set_ylim(-3, 84); ax.set_yticks([0, 25, 50]); ax.set_ylabel("% clear", labelpad=1)
+no_x(ax)
+for k_, t in enumerate(TUMS):
+    key(pg, 4.5, Y_I + 4.2 + 2.25 * k_, [(TYPE[t], t, "o")], gap=0)
+pg.src("i", pd.DataFrame({"cohort": cols, "tumor": [ICB_TUM[c] for c in cols], "tests": [int((R.cohort == c).sum()) for c in cols],
+                          "clearing": [int(R[R.cohort == c].clear.sum()) for c in cols], "pct_clearing": [pc[c] for c in cols]}))
+
+# ================================================================= j  family clearing per cohort (old e)
+Cc = []
+for c in cols:
+    g = R[R.cohort == c]
+    Cc.append(dict(cohort=c, tum=ICB_TUM[c], infl=100 * g[g.family == "Inflamed/IFN"].clear.mean(), conf=100 * g[g.family == "Confounder"].clear.mean()))
+Cc = pd.DataFrame(Cc).sort_values("infl", kind="stable").reset_index(drop=True)
+TAB = {"melanoma": "mel", "kidney": "kidn", "lung": "lung", "bladder": "blad", "gastric": "gast"}
+NAME = {"ICB_Limagne1": "Limagne", "ICB_Miao1": "Miao"}
+Y_J = Y_I
+pg.panel(84.5, Y_J, "j", "Family clearing, per cohort")
+ax = pg.ax(101, Y_J + 6.2, 17, 26)
+zero(ax, 5)
+for i, r in Cc.iterrows():
+    ax.plot([r.conf, r.infl], [i, i], color=OTHER, lw=0.5, zorder=2)
+    point(ax, r.conf, i, CONF, ms=2.7)
+    point(ax, r.infl, i, INFL, ms=2.7)
+    yy = Y_J + 6.2 + 26 * (1 - (i + 0.7) / (len(Cc) + 0.4))
+    pg.txt(121.8, yy, f"{r.infl:.0f}", ha="right")
+    pg.txt(126.4, yy, f"{r.conf:g}", ha="right")
+pg.txt(121.8, Y_J + 4.8, "infl.", ha="right", weight="bold"); pg.txt(126.4, Y_J + 4.8, "conf.", ha="right", weight="bold")
+ax.set_yticks(range(len(Cc)), [f"{NAME.get(c, coh(c))} ({TAB[t]})" for c, t in zip(Cc.cohort, Cc.tum)], fontsize=5)
+ax.tick_params(axis="y", length=0); ax.set_ylim(-0.7, len(Cc) - 0.3); ax.spines["left"].set_visible(False)
+ax.set_xlim(-4, 104); ax.set_xticks([0, 50, 100]); ax.set_xlabel("clearing the null (%)")
+pg.src("j", Cc.rename(columns={"infl": "inflamed_pct", "conf": "confounder_pct"}))
+
+# ================================================================= k  agreement between cohorts (new)
+pg.panel(128, Y_J, "k", "Gains between cohorts")
+RHO = M.corr(method="spearman")
+x0, y0, cx, cy = 138.8, Y_J + 9.6, 3.33, 2.44
+for j, c in enumerate(cols):
+    pg.txt(x0 + cx * j + cx / 2 - 0.5, y0 - 0.5, NAME.get(c, coh(c)), ha="left", va="bottom", rotation=62, rotation_mode="anchor")
+for i, a_ in enumerate(cols):
+    pg.txt(x0 - 0.5, y0 + cy * i + cy / 2, NAME.get(a_, coh(a_)), ha="right")
+    for j, b_ in enumerate(cols):
         if i == j:
-            tile(pg, x0 + cs * j, y0 + cs * i, cs, cs, BLUE(1.0))
-        else:
-            tile(pg, x0 + cs * j, y0 + cs * i, cs, cs, BLUE(float(np.clip((SIM[i, j] - 0.4) / 0.6, 0, 1))), f"{SIM[i, j]:.2f}"[1:])
-            out.append({"cohort_a": a, "cohort_b": b, "r": SIM[i, j]})
-pg.cbar(x0 + cs * 5.8, y0 + 0.6, 18, 1.4, BLUE, 0.4, 1.0, [0.4, 0.7, 1.0], "r")
-for k, t_ in enumerate(["melanoma", "kidney", "lung", "bladder", "gastric"]):
-    pg.box(x0 + cs * 8.0, y0 + 6.6 + k * 2.3 - 0.8, 1.6, 1.6, TYPE[t_], z=2)
-    pg.txt(x0 + cs * 8.0 + 2.2, y0 + 6.6 + k * 2.3, t_)
-pg.src("i", pd.DataFrame(out))
+            tile(pg, x0 + cx * j, y0 + cy * i, cx, cy, EMPTY)
+            continue
+        v = RHO.loc[a_, b_]
+        tile(pg, x0 + cx * j, y0 + cy * i, cx, cy, TEALOR((v + 1) / 2), f"{v + 0.0:.1f}".replace("-0.0", "0.0").replace("-", "−"))
+pg.src("k", RHO.rename_axis("cohort").reset_index())
 
-# ================================================================ j  eigenvalue spectra
-pg.panel(124.3, 127.5, "j", "Eigenvalues")
-ax = pg.ax(131.5, 132, 18.5, 22.4)
-mx = max(len(v) for v in EIG.values())
-E = np.array([np.r_[v, [np.nan] * (mx - len(v))] for v in EIG.values()])
-xs_ = np.arange(1, mx + 1)
-medev = np.nanmedian(E, 0)
-for v in E:
-    ax.plot(xs_, np.clip(v, 1e-3, None), color=OTHER, lw=0.35, zorder=1)
-ax.plot(xs_, np.clip(medev, 1e-3, None), color=INK, lw=0.9, zorder=3)
-zero(ax, 1, axis="y")
-ax.set_yscale("log"); ax.set_ylim(1e-3, 50); ax.set_xlim(0.5, 52.5); ax.set_xticks([1, 26, 52])
-ax.set_yticks([1e-3, 1e-1, 10], ["0.001", "0.1", "10"]); ax.minorticks_off()
-ax.set_xlabel("component"); ax.set_ylabel("eigenvalue")
-point(ax, 1, medev[0], INK, ms=2.6, zorder=5)
-ax.text(4.5, medev[0], f"PC1 {100 * pc1:.0f}%", va="center", fontsize=5)
-ax.text(52.5, 1.35, "independent", ha="right", va="bottom", fontsize=5)
-pg.src("j", pd.DataFrame(E.T, columns=list(EIG)).assign(component=xs_, median=medev))
-
-# ================================================================ k  pairs in the same and in different clusters
-pg.panel(153.3, 127.5, "k", "Pairs of signatures")
-ax = pg.ax(160.5, 132, 18.5, 22.4)
-bins = np.arange(-0.8, 1.0001, 0.05)
-hist(ax, [rv[~same], rv[same]], bins, color=[NULLC, MUTED], stacked=True)
-top_y = ax.get_ylim()[1]
-for v_, c_ in ((np.median(rv[~same]), MUTED), (np.median(rv[same]), INK)):
-    ax.plot([v_, v_], [0, top_y * 1.02], color=c_, lw=0.5, ls=(0, (1.0, 1.5)), zorder=5)
-ax.set_ylim(0, top_y * 1.32)
-ax.text(-0.74, top_y * 1.30, f"different\n({int((~same).sum())})", ha="left", va="top", fontsize=5, linespacing=1.05)
-ax.text(1.0, top_y * 1.30, f"same cluster\n({int(same.sum())})", ha="right", va="top", fontsize=5, linespacing=1.05, color=INK)
-ax.set_xlabel("score r"); ax.set_ylabel("pairs"); ax.set_xlim(-0.8, 1.0); ax.set_xticks([-0.5, 0, 0.5, 1], ["−0.5", "0", "0.5", "1"])
-pg.src("k", pd.DataFrame({"a": [sigs[a] for a in iu[0]], "b": [sigs[b] for b in iu[1]], "r": rv, "same_cluster": same}))
-
-# ================================================================ l  shared genes against score correlation
-pg.panel(124.3, 162.3, "l", "Score r, shared genes")
-ax = pg.ax(131.5, 167, 21, 20.6)
-rng = np.random.default_rng(4)
-jit = np.where(z0, rng.uniform(-0.068, -0.012, z0.size), JAC)
-for msk, c_, s_, zz in ((~same, OTHER, 0.9, 2), (same, INK, 1.3, 3)):
-    ax.scatter(jit[msk], rv[msk], s=s_, color=c_, lw=0, zorder=zz, rasterized=True)
+# ================================================================= l  gains per cohort: the data behind the marginal (new)
+Y_L = Y_I + 18.0
+pg.panel(1, Y_L, "l", "Gain, per cohort")
+ax = pg.ax(M0, Y_L + 2.2, MW, 18.5)
 zero(ax, 0, axis="y")
-zero(ax, 0.5, axis="y")
-ax.set_xlim(-0.08, 0.45); ax.set_ylim(-0.98, 1.05); ax.set_xticks([0, 0.2, 0.4], ["0", "0.2", "0.4"]); ax.set_yticks([-0.5, 0, 0.5, 1], ["−0.5", "0", "0.5", "1"])
-ax.set_xlabel("Jaccard"); ax.set_ylabel("score r")
-ax.text(-0.074, -0.96, "none", ha="left", va="bottom", fontsize=5)
-ax.text(0.45, -0.96, f"{hi_r0} of {hi_r} pairs,\nr > 0.5, none", ha="right", va="bottom", fontsize=5, linespacing=1.05)
-pg.src("l", pd.DataFrame({"a": [sigs[a] for a in iu[0]], "b": [sigs[b] for b in iu[1]], "jaccard": JAC, "r": rv, "same_cluster": same}))
+for j, c in enumerate(cols):
+    g = R[R.cohort == c]
+    off = qjit(g.delta, 0.34)
+    for f in ("Other", "Confounder", "Inflamed/IFN"):
+        s = (g.family == f).to_numpy()
+        ax.plot(j + 0.5 + off[s], g.delta[s], "o", ms=1.45, mfc=FAM[f], mec="white", mew=0.12, ls="none", zorder=3)
+    q = g.delta.median()
+    ax.plot([j + 0.16, j + 0.84], [q, q], color=INK, lw=0.8, solid_capstyle="butt", zorder=5)
+ax.set_xlim(0, len(cols)); ax.set_ylim(-0.12, 0.34); ax.set_yticks([-0.1, 0, 0.1, 0.2, 0.3], ["−0.1", "0", "0.1", "0.2", "0.3"]); ax.set_ylabel("ΔAUC", labelpad=1)
+no_x(ax)
+for k_, f in enumerate(FAMORD):
+    key(pg, 4.5, Y_L + 4.6 + 2.25 * k_, [(FAM[f], FAMLAB[f], "o")], gap=0)
+pg.line(4.5, Y_L + 4.6 + 2.25 * 3, 6.3, Y_L + 4.6 + 2.25 * 3, lw=0.8)
+pg.txt(6.9, Y_L + 4.6 + 2.25 * 3, "median")
+pg.src("l", R[["cohort", "tum", "signature", "family", "delta"]])
 
-# ================================================================ m  how many signatures each gene sits in
-pg.panel(155, 162.3, "m", "Gene sharing")
-ax = pg.ax(161.5, 167, 17.5, 20.6)
-cv = np.array(list(cnt_g.values()))
-hist(ax, cv, np.arange(0.5, cv.max() + 1.5), log=True)
-ax.set_xlim(0.5, cv.max() + 0.5); ax.set_xticks([1, 5, 9, 13]); ax.set_ylim(0.7, len(cv) * 3)
-ax.set_yticks([1, 10, 100, 1000], ["1", "10", "100", "1,000"]); ax.minorticks_off()
-ax.set_xlabel("signatures"); ax.set_ylabel("genes")
-ax.text(cv.max() + 0.5, len(cv) * 2.6, f"n = {len(cv):,}", ha="right", va="top", fontsize=5)
-pg.src("m", pd.DataFrame({"gene": list(cnt_g), "n_signatures": cv}).sort_values(["n_signatures", "gene"], ascending=[False, True]))
+# ================================================================= n  share clearing against cohort size (old i)
+Y_R3 = Y_J + 40.8
+Y_M = Y_R3
+pg.panel(84.5, Y_M, "n", "Clearing and cohort size")
+ax = pg.ax(92, Y_M + 5.0, 33, 18.5)
+nco = ncoh; shr = R.groupby("cohort").clear.mean() * 100
+OFF = {"ICB_Gide": (1.09, 0, "left"), "ICB_Puch": (1.09, 0, "left"), "ICB_Jung": (0.91, 0, "right"), "ICB_Kim": (1.09, 0, "left"), "ICB_Limagne1": (1.09, 0, "left"),
+       "ICB_Mariathasan": (1.0, 7, "center"), "ICB_Liu": (1.09, 0, "left"), "ICB_Braun": (1.09, 1.8, "left"), "ICB_Hugo": (0.91, 0, "right"), "ICB_Miao1": (0.91, -3.0, "right"),
+       "ICB_Riaz": (1.09, 3.6, "left"), "ICB_Van_Allen": (1.09, -3.2, "left")}
+zero(ax, 5, axis="y")
+for c in cols:
+    point(ax, nco[c], shr[c], TYPE[ICB_TUM[c]], ms=2.9)
+    fx, dy, ha = OFF[c]
+    ax.text(nco[c] * fx, shr[c] + dy, NAME.get(c, coh(c)), fontsize=5, va="center", ha=ha)
+rs = pd.DataFrame({"n": nco, "s": shr}).corr(method="spearman").iloc[0, 1]
+ax.text(320, 71, f"Spearman r = {rs:.2f}\nn = {len(cols)}".replace("-", "−"), ha="right", va="top", fontsize=5, linespacing=1.1)
+ax.set_xscale("log"); ax.set_xticks([30, 60, 120, 240], ["30", "60", "120", "240"]); ax.minorticks_off()
+ax.set_xlim(15.5, 320); ax.set_ylim(-3, 72); ax.set_yticks([0, 25, 50]); ax.set_xlabel("patients", labelpad=1); ax.set_ylabel("% of 52 clearing")
+pg.src("n", pd.DataFrame({"cohort": cols, "tumor": [ICB_TUM[c] for c in cols], "patients": [nco[c] for c in cols], "pct_clearing": [shr[c] for c in cols]}).assign(spearman_r=rs))
 
-# ================================================================ cohort band: rows shared by n, o and p
-YC, RC_ = 200.8, 2.68
-HC = RC_ * 12
-pg.panel(1, 195.5, "n", "Effective tests")
-ax = pg.ax(13.5, YC, 24, HC)
-for i, r in PC.iterrows():
-    y = YC + RC_ * i + RC_ / 2 - 0.07
-    pg.txt(12.9, y, r.lab, ha="right")
-    point(ax, r.meff_li_ji, y, TYPE[TUM[r.cohort]], ms=3.0)
-    pg.txt(42.0, y, f"{r.n:.0f}", ha="right")
-    pg.txt(47.0, y, f"{r.meff_li_ji:.0f}", ha="right")
-zero(ax, med_meff)
-pg.txt(13.5 + 24 * med_meff / 52, YC - 1.2, f"median {med_meff:.0f}", ha="center")
-pg.txt(42.0, YC - 1.2, "n", ha="right", weight="bold")
-pg.txt(47.0, YC - 1.2, "tests", ha="right", weight="bold")
-ax.set_xlim(0, 52); ax.set_ylim(YC + HC, YC); ax.set_xticks([0, 26, 52]); ax.set_yticks([]); ax.spines["left"].set_visible(False)
-ax.set_xlabel("effective tests (of 52)")
-pg.src("n", PC[["cohort", "n", "meff_li_ji"]].assign(tumor=PC.cohort.map(TUM)))
+# ================================================================= m  the cohorts, aligned columns (new)
+Y_N = Y_R3
+pg.panel(1, Y_N, "m", "Cohorts")
+T = pd.DataFrame({"patients": ncoh[cols], "responders": CS.n_resp[cols]})
+assert (CS.n[cols] == ncoh[cols]).all() and T.patients.sum() == 827
+T["response (%)"] = 100 * T.responders / T.patients
+g = R.groupby("cohort")
+T["median AUC"] = g.AUC.median()[cols]; T["random median"] = g.rand_med.median()[cols]; T["median gain"] = g.delta.median()[cols]
+ch = 2.5
+for i, (c_, fmt, fc) in enumerate((("patients", "{:.0f}", lambda v: BLUE(np.log(v / 20) / np.log(14))), ("responders", "{:.0f}", lambda v: BLUE(np.log(v / 7) / np.log(11))),
+                                   ("response (%)", "{:.0f}", lambda v: PURPLE(v / 60)), ("median AUC", "{:.2f}", lambda v: BLUE((v - 0.5) / 0.25)),
+                                   ("random median", "{:.2f}", lambda v: BLUE((v - 0.5) / 0.25)), ("median gain", "{:.2f}", lambda v: PUOR(norm(v))))):
+    yy = Y_N + 2.2 + ch * i
+    pg.txt(M0 - 0.5, yy + ch / 2, c_, ha="right")
+    for j, c in enumerate(cols):
+        tile(pg, M0 + cw * j, yy, cw, ch, fc(T.loc[c, c_]), fmt.format(T.loc[c, c_]).replace("-", "−"))
+for j, c in enumerate(cols):
+    pg.txt(M0 + cw * j + cw / 2 + 0.6, Y_N + 2.2 + ch * 6 + 0.5, coh(c), ha="right", va="top", rotation=45, rotation_mode="anchor")
+pg.src("m", T.rename_axis("cohort").reset_index())
 
-pg.panel(48.8, 195.5, "o", "Abs. r, PC share")
-x0, cw = 50.0, 5.65
-hdr = ["abs. r", "PC1", "PC2", "PC3"]
-for j, h_ in enumerate(hdr):
-    pg.txt(x0 + cw * j + cw / 2 - 0.08, YC - 1.2, h_, ha="center", weight="bold")
+# ================================================================= o  tumor type by family (new)
+Y_O = Y_R3
+pg.panel(128, Y_O, "o", "Tumor type and family")
+x0, y0, tw, tc = 141, Y_O + 8.6, 6.2, 2.85
+GR = R.groupby(["tum", "family"])
 out = []
-for i, r in PC.iterrows():
-    y = YC + RC_ * i
-    v = EIG[r.cohort]
-    sh = 100 * v[:3] / v.sum()
-    tile(pg, x0, y, cw, RC_, BLUE(float(np.clip((r.mean_abs_r - 0.2) / 0.4, 0, 1))), f"{r.mean_abs_r:.2f}")
-    for j, s_ in enumerate(sh):
-        tile(pg, x0 + cw * (j + 1), y, cw, RC_, PURPLE(float(np.clip(s_ / 60, 0, 1))), f"{s_:.0f}")
-    out.append({"cohort": r.cohort, "mean_abs_r": r.mean_abs_r, "PC1_pct": sh[0], "PC2_pct": sh[1], "PC3_pct": sh[2]})
-pg.src("o", pd.DataFrame(out))
+for k_, (hd, xs) in enumerate((("median gain", x0), ("clearing (%)", x0 + 3 * tw + 0.9))):
+    pg.txt(xs + 1.5 * tw, y0 - 5.0, hd, ha="center", weight="bold")
+    pg.line(xs + 0.2, y0 - 3.9, xs + 3 * tw - 0.3, y0 - 3.9, lw=0.4)
+    for j, f in enumerate(FAMORD):
+        pg.txt(xs + tw * j + tw / 2, y0 - 2.0, {"Inflamed/IFN": "infl.", "Other": "other", "Confounder": "conf."}[f], ha="center")
+for i, t in enumerate(TUMS):
+    pg.txt(x0 - 0.5, y0 + tc * i + tc / 2, t, ha="right")
+    for j, f in enumerate(FAMORD):
+        g_ = R[(R.tum == t) & (R.family == f)]
+        mm = g_.groupby("signature").delta.median().median()
+        sh = 100 * g_.clear.mean()
+        tile(pg, x0 + tw * j, y0 + tc * i, tw, tc, PUOR(norm(mm)), f"{mm:.3f}".replace("-", "−"))
+        tile(pg, x0 + 3 * tw + 0.9 + tw * j, y0 + tc * i, tw, tc, BLUE(sh / 60), f"{sh:.0f}")
+        out.append((t, f, mm, int(g_.clear.sum()), len(g_), sh))
+pg.src("o", pd.DataFrame(out, columns=["tumor", "family", "family_median_of_signature_medians", "tests_clearing", "tests", "pct_clearing"]))
 
-pg.panel(74.3, 195.5, "p", "Within-cluster r, by cohort")
-x0, cw = 75.6, 5.65
-cr = [cname[c] for c in big_cl]
-for j, h_ in enumerate(cr + ["same", "diff."]):
-    pg.txt(x0 + cw * j + (0.5 if j >= len(cr) else 0) + cw / 2 - 0.08, YC - 1.2, h_, ha="center", weight="bold")
+# ================================================================= p  by tumor type (old f)
+Y_P = 202.0
+pg.panel(1, Y_P, "p", "Gain, by tumor type")
+ax = pg.ax(9.5, Y_P + 5, 58, 26.5)
+zero(ax, 0, axis="y")
+qs = []
+for i, t in enumerate(TUMS):
+    for j, f in enumerate(FAMORD):
+        v = R[(R.tum == t) & (R.family == f)].groupby("signature").delta.median()
+        xx = i + (j - 1) * 0.29
+        ax.plot(xx - 0.03 + qjit(v, 0.065, nbins=8), v, "o", ms=1.45, mfc=FAM[f], mec="white", mew=0.12, ls="none", zorder=3)
+        q = np.percentile(v, [5, 25, 50, 75, 95])
+        ci(ax, q[0], q[4], xx + 0.085, INK, lw=0.35, horizontal=False)
+        ci(ax, q[1], q[3], xx + 0.085, INK, lw=1.0, horizontal=False)
+        ax.plot(xx + 0.085, q[2], "o", ms=2.1, mfc="white", mec=INK, mew=0.5, ls="none", zorder=5)
+        qs.append((t, f, *q))
+ax.set_xticks(range(5), [f"{t}\n({R[R.tum == t].cohort.nunique()})" for t in TUMS], fontsize=5); ax.tick_params(axis="x", length=0)
+ax.set_xlim(-0.5, 4.5); ax.set_ylim(-0.16, 0.30); ax.set_yticks([-0.1, 0, 0.1, 0.2, 0.3], ["−0.1", "0", "0.1", "0.2", "0.3"]); ax.set_ylabel("median ΔAUC per signature")
+key(pg, 31, Y_P + 0.1, [(FAM[f], {"Inflamed/IFN": "inflamed/IFN", "Other": "other", "Confounder": "confounder control"}[f], "o") for f in FAMORD], gap=1.6)
+pg.src("p", pd.DataFrame(qs, columns=["tumor", "family", "q05", "q25", "q50", "q75", "q95"]))
+
+# ================================================================= q  volcano (old g)
+pg.panel(71.5, Y_P, "q", "Effect and evidence")
+ax = pg.ax(80, Y_P + 5, 27, 26.5)
+lp = -np.log10(sigp)
+ax.plot([0, 0], [0, 3.05], color=INK, lw=0.5, ls=(0, (1.0, 1.5)), zorder=1)
+ax.axhline(-np.log10(0.05), color=INK, lw=0.5, ls=(0, (2, 1.5)), zorder=1)
+ax.text(0.128, -np.log10(0.05) - 0.06, "P = 0.05", ha="right", va="top", fontsize=5)
+for f in ("Other", "Confounder", "Inflamed/IFN"):
+    s_ = [s for s in sigp.index if famd[s] == f]
+    for s in s_:
+        ms_ = np.sqrt(4 + 2.2 * np.log2(X.n_genes[s])) * 0.72
+        point(ax, med[s], lp[s], FAM[f], ms=ms_, filled=bool(sigp[s] < 0.05), mew=0.25 if sigp[s] < 0.05 else 0.45)
+top4 = lp.sort_values(ascending=False).index[:4]
+stack = sorted(top4, key=lambda s: (s != "APM_Thompson", -med[s]))
+for k, s in enumerate(stack):
+    ax.annotate(lab(s), (med[s], lp[s]), xytext=(0.072, 4.42 - k * 0.37), fontsize=5, ha="right", va="center",
+                arrowprops=dict(arrowstyle="-", lw=0.25, color=MUTED, shrinkA=0.5, shrinkB=1.2, relpos=(1, 0.5)))
+ax.set_xlim(-0.03, 0.13); ax.set_xticks([0, 0.05, 0.1], ["0", "0.05", "0.10"]); ax.set_ylim(0, 4.6); ax.set_yticks([0, 1, 2, 3])
+ax.set_xlabel("median ΔAUC"); ax.set_ylabel("−log10 P (signed rank)")
+pg.src("q", pd.DataFrame({"signature": sigp.index, "family": famd[sigp.index].values, "median_gain": med[sigp.index].values, "signed_rank_P": sigp.values, "genes": X.n_genes[sigp.index].values}))
+
+# ================================================================= r  every test by family (old h)
+pg.panel(110.5, Y_P, "r", "Every test, by family")
+ax = pg.ax(118.5, Y_P + 5, 26, 26.5)
+zero(ax, 0, axis="y")
 out = []
-for i, r in PC.iterrows():
-    y = YC + RC_ * i
-    rf = RFULL[r.cohort]
-    rec = {"cohort": r.cohort}
-    for j, c in enumerate(big_cl):
-        m_ = np.flatnonzero(cl == c)
-        ij = np.triu_indices(len(m_), 1)
-        v = np.nanmedian(rf[np.ix_(m_, m_)][ij])
-        tile(pg, x0 + cw * j, y, cw, RC_, PUOR(float((v + 1) / 2)), minus(f"{v:.2f}"))
-        rec[f"C{c}"] = v
-    for j, (name_, msk) in enumerate((("same", same), ("different", ~same))):
-        v = np.nanmedian(rf[iu][msk])
-        tile(pg, x0 + cw * (len(cr) + j) + 0.5, y, cw, RC_, PUOR(float((v + 1) / 2)), minus(f"{v:.2f}"))
-        rec[name_] = v
-    out.append(rec)
-pg.src("p", pd.DataFrame(out))
-pg.cbar(50, YC + HC + 1.3, 22.4, 1.2, PURPLE, 0, 60, [0, 30, 60], "% of variance")
-pg.cbar(90, YC + HC + 1.3, 22, 1.2, PUOR, -1, 1, [-1, 0, 1], "median r")
+for i, f in enumerate(FAMORD):
+    v = R[R.family == f].delta.to_numpy()
+    ax.plot(i + qjit(v, 0.3, nbins=16), v, "o", ms=1.3, mfc=FAM[f], mec="white", mew=0.1, ls="none", zorder=3)
+    q = np.percentile(v, [25, 50, 75])
+    ci(ax, q[0], q[2], i + 0.4, INK, lw=0.8, horizontal=False)
+    ax.plot([i - 0.32, i + 0.46], [q[1], q[1]], color=INK, lw=0.8, solid_capstyle="butt", zorder=5)
+    out.append((f, len(v), *q))
+ax.set_xticks(range(3), [f"{FAMLAB[f]}\n({(R.family == f).sum()})" for f in FAMORD], fontsize=5); ax.tick_params(axis="x", length=0)
+ax.set_xlim(-0.5, 2.6); ax.set_ylim(-0.14, 0.36); ax.set_yticks([-0.1, 0, 0.1, 0.2, 0.3], ["−0.1", "0", "0.1", "0.2", "0.3"]); ax.set_ylabel("ΔAUC")
+pg.src("r", pd.concat([pd.DataFrame(out, columns=["family", "tests", "q25", "median", "q75"]), R[["signature", "family", "cohort", "delta"]]]))
 
-# ================================================================ q  most-shared genes
-pg.panel(123.8, 195.5, "q", "Most-shared genes")
-ax = pg.ax(134.5, YC, 39.5, HC)
-for i, (g, n_) in enumerate(top):
-    y = YC + RC_ * i + RC_ / 2 - 0.07
-    pg.txt(133.9, y, g, ha="right", style="italic")
-    pg.txt(178.6, y, str(n_), ha="right")
-    ax.plot([-0.5, len(holders) - 0.5], [y, y], color="#d9d9d9", lw=0.3, zorder=0)
-    for j, s in enumerate(holders):
-        if g in genes[s]:
-            point(ax, j, y, FAM[fam_of[s]], ms=2.2, zorder=3)
-pg.txt(178.6, YC - 1.2, "n", ha="right", weight="bold")
-ax.set_ylim(YC + HC, YC); ax.set_xlim(-0.7, len(holders) - 0.3); ax.set_yticks([]); ax.set_xticks([])
-ax.spines["left"].set_visible(False)
-ax.set_xlabel(f"signatures containing them ({len(holders)})", labelpad=2)
-pg.src("q", pd.DataFrame([{"gene": g, "n_signatures": n_, "signatures": ";".join(s for s in holders if g in genes[s])} for g, n_ in top]))
+# ================================================================= s  gain against size (old j)
+pg.panel(147.5, Y_P, "s", "Gain and signature size")
+ax = pg.ax(155.5, Y_P + 5, 23, 26.5)
+zero(ax, 0, axis="y")
+for f in ("Other", "Confounder", "Inflamed/IFN"):
+    s_ = [s for s in med.index if famd[s] == f]
+    for s in s_:
+        point(ax, X.n_genes[s], med[s], FAM[f], ms=2.3, filled=bool(sigp[s] < 0.05), mew=0.25 if sigp[s] < 0.05 else 0.45)
+rg = pd.DataFrame({"g": X.n_genes[med.index], "m": med}).corr(method="spearman").iloc[0, 1]
+ax.text(560, 0.128, f"Spearman r = {rg:.2f}\nn = {len(med)}".replace("-", "−"), ha="right", va="top", fontsize=5, linespacing=1.1)
+ax.set_xscale("log"); ax.set_xticks([3, 10, 30, 100, 300], ["3", "10", "30", "100", "300"]); ax.minorticks_off(); ax.set_xlim(2.4, 560)
+ax.set_xlabel("genes"); ax.set_ylabel("median ΔAUC"); ax.set_ylim(-0.03, 0.13); ax.set_yticks([0, 0.05, 0.1], ["0", "0.05", "0.10"])
+pg.src("s", pd.DataFrame({"signature": med.index, "family": famd[med.index].values, "genes": X.n_genes[med.index].values, "median_gain": med.values, "signed_rank_P": sigp[med.index].values}).assign(spearman_r=rg))
 
-pg.save("Fig2")
-print(f"called {int(CALL.sum())} | nodes {H.number_of_nodes()} edges {H.number_of_edges()} isolates {len(iso)} hubs {hubs} | meff median {med_meff} "
-      f"| clusters {CLS.nunique()} sizes {sorted(csize.tolist(), reverse=True)} | r same {np.median(rv[same]):.3f} diff {np.median(rv[~same]):.3f} | pc1 {pc1:.3f} "
-      f"| r>0.5 no gene {hi_r0}/{hi_r} | holders {len(holders)} | genes {len(cnt_g)} | blocks {blocks}")
+check_palette("tumor type", TYPE)
+check_palette("family", FAM)
+pg.sources = dict(sorted(pg.sources.items())); pg.letters = sorted(pg.letters)
+pg.save("Fig3")

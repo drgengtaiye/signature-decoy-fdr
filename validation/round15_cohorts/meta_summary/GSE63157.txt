@@ -1,0 +1,24 @@
+GSE63157 | samples 85 | platforms {'GPL5175': 85}
+TITLE: Gene Expression Profiling of Ewing Sarcoma Tumors Reveals the Prognostic Importance of Tumor-Stromal Interactions: A Report from the Children's Oncology Group
+SUMMARY: This SuperSeries is composed of the SubSeries listed below.
+DESIGN: Refer to individual Series
+RELATIONS: SuperSeries of: GSE63155; SuperSeries of: GSE63156; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA266831
+FIELDS (n values with it | distinct | examples):
+  diagnosis | 85 | 1 | Ewing sarcoma (x85)
+  study | 85 | 4 | AEWS0031 (x38); 99 (x30); 92 (x9); INT-0154 (x8)
+  Sex | 85 | 4 | Male (x27); 2 (x20); Female (x19); 1 (x19)
+  age at enrollment (days) | 46 | 46 | 5861; 2834; 3228; 5873; 4803; 5316; 4522; 5030
+  primary tumor site | 46 | 3 | Other (x31); Extremity (x9); Pelvis (x6)
+  efs event | 46 | 3 | No event (x28); Relapse (x17); SMN
+  efs time (days) | 46 | 46 | 1624; 2706; 2404; 2253; 2195; 516; 592; 2583
+  survival status | 46 | 2 | Alive (x32); Dead (x14)
+  survival time (days) | 46 | 46 | 1624; 2706; 2404; 2253; 2195; 602; 1591; 2583
+  experiment date | 46 | 9 | 2007-12-11 (x12); 2008-03-26 (x8); 2007-04-21 (x6); 2007-05-15 (x5); 2008-09-09 (x4); 2010-06-09 (x3); 2007-07-18 (x3); 2008-09-28 (x3)
+  tumor content | 46 | 3 | >70% (x33); <70% (x10); unknown (x3)
+  [source_name_ch1] | 85 | 1 | Primary tumor (x85)
+  [title] | 85 | 85 | L308; L309; L310; L311; L312; L313; L388; L389
+  age (years) | 39 | 38 | 9.19 (x2); 6.47; 15.86; 19.19; 9.22; 15.90; 35.09; 19.98
+  efs (0=no event, 1=event) | 39 | 2 | 0 (x23); 1 (x16)
+  os (0=alive; 1=dead) | 39 | 2 | 0 (x28); 1 (x11)
+  efs-time | 39 | 38 | 3395 (x2); 2370; 818; 4261; 656; 2402; 223; 2805
+  os-time | 39 | 37 | 3395 (x3); 2370; 818; 4261; 2413; 2402; 327; 2805

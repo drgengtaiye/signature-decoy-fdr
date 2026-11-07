@@ -1,0 +1,15 @@
+GSE41613 | samples 97 | platforms {'GPL570': 97}
+TITLE: A 13-gene signature prognostic of HPV-negative OSCC: discovery and external validation
+SUMMARY: OSCC is associated with substantial mortality and morbidity. In this study, we built on our previous molecular work to identify and validate a prognostic 13-gene signature that showed a higher ability than tumor stage in predicting survival for patients with HPV-negative oral squamous cell carcinoma (OSCC).
+DESIGN: We previously reported 131 genes to be associated with survival in OSCC patients. In this study, we applied L1/L2-penalized Cox regression models to the Affymetrix array data from 97 HPV-negative OSCC patients on the 131 gene to identify a model for prediction of OSCC-specific survival. We then tested the model in an independent dataset and compared to tumor stage.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA177687
+FIELDS (n values with it | distinct | examples):
+  tissue type | 97 | 1 | HPV-negative oral squamous cell carcinoma (OSCC) (x97)
+  tumor stage | 97 | 2 | III/IV (x56); I/II (x41)
+  age | 97 | 4 | 60-88 (x47); 50-59 (x28); 40-49 (x16); 19-39 (x6)
+  Sex | 97 | 2 | M (x66); F (x31)
+  vital | 97 | 4 | Alive (x46); Dead-oral ca (x30); Dead-non OC (x14); Dead -unk cause (x7)
+  fu time | 97 | 94 | 62.85 (x2); 6.54 (x2); 70.08 (x2); 55.66; 3.38; 28.62; 85.03; 40.71
+  treatment | 97 | 3 | multii-modality (x53); uni-modality (x43); unknown
+  [source_name_ch1] | 97 | 1 | HPV-negative OSCC patient (x97)
+  [title] | 97 | 97 | HPV-negative OSCC #1; HPV-negative OSCC #3; HPV-negative OSCC #5; HPV-negative OSCC #6; HPV-negative OSCC #8; HPV-negative OSCC #11; HPV-negative OSCC #12; HPV-negative OSCC #13

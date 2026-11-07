@@ -1,0 +1,19 @@
+GSE48276 | samples 116 | platforms {'GPL14951': 116}
+TITLE: Gene expression profiling of urothelial carcinoma
+SUMMARY: Identification of bladder cancer subsets
+DESIGN: 128 FFPE bladder tumors were used to validate the bladder cancer subsets
+RELATIONS: SubSeries of: GSE48277; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA209486
+FIELDS (n values with it | distinct | examples):
+  cstage | 116 | 17 | T2N0M0 (x58); T3N0M0 (x21); T3bN0M0 (x11); T1N0M0 (x8); T4aN0M0 (x3); T2N0M1 (x2); T1bN0M0 (x2); T4N0M0 (x2)
+  histology tur | 73 | 8 | urothelial (x54); squamous diff (x11); micropapillary (x3); sarcomatoid diff; focal glandular; urothelial focal glandular; urothelial- focal micropapillary; urothelial with focal micropapillary
+  pstage | 73 | 20 | pT3bN2M0 (x14); pT3aN0M0 (x7); pT3bN1M0 (x6); pT3bN0M0 (x6); pT0N0M0 (x6); pT3aN2M0 (x5); pT2bN0M0 (x5); pT4aN2M0 (x4)
+  cystectomy histology | 73 | 15 | urothelial (x47); squamous diff (x6); no tumor identified (x6); sarcomatoid diff (x2); urothelial focal glandular (x2); urothelial ?sarc diff; lymphoepithelioma, focal glandular; micropapillary
+  nac | 73 | 3 | no (x37); na (x20); yes-MVAC/A (x16)
+  age (at diagnosis) | 73 | 62 | 62.6 (x3); 69.1 (x3); 41.0 (x2); 62.4 (x2); 67.6 (x2); 68.9 (x2); 68.8 (x2); 58.7 (x2)
+  race | 73 | 5 | Caucasian (x64); Hispanic (x4); Black (x3); Asian; White
+  gender | 73 | 2 | M (x59); F (x14)
+  os censor | 73 | 2 | censored (x39); uncensored (x34)
+  dss censor | 73 | 2 | censored (x48); uncensored (x25)
+  survival (mo) | 73 | 71 | 31.9 (x2); 43.5 (x2); 23.5; 24.2; 180.0; 105.9; 15.5; 125.1
+  [source_name_ch1] | 116 | 1 | Bladder tumor (x116)
+  [title] | 116 | 116 | MDA_FFPE1; MDA_FFPE2; MDA_FFPE3; MDA_FFPE4; MDA_FFPE5; MDA_FFPE6; MDA_FFPE7; MDA_FFPE8

@@ -1,0 +1,43 @@
+GSE40967 | samples 1048 | platforms {'GPL570': 585, 'GPL16070': 463}
+TITLE: Gene expression Classification of Colon Cancer defines six molecular subtypes with distinct clinical, molecular and survival characteristics
+SUMMARY: This SuperSeries is composed of the SubSeries listed below.
+DESIGN: Refer to individual Series
+RELATIONS: SuperSeries of: GSE39582; SuperSeries of: GSE40966; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA175448
+FIELDS (n values with it | distinct | examples):
+  organism | 585 | 1 | Homo sapiens (x585)
+  dataset | 1048 | 3 | discovery (x798); validation (x231); Non Tumoral (x19)
+  Sex | 1048 | 5 | Male (x322); Female (x263); M (x224); F (x187); NA (x52)
+  age.at.diagnosis (year) | 585 | 115 | 69 (x22); 70 (x21); 68 (x20); 71 (x20); 73 (x20); 78 (x19); 67 (x19); 72 (x18)
+  tnm.stage | 1048 | 7 | 2 (x479); 3 (x352); 4 (x93); 1 (x63); NA (x52); 0 (x7); N/A (x2)
+  tnm.t | 585 | 7 | T3 (x379); T4 (x119); T2 (x49); N/A (x22); T1 (x12); Tis (x3); T0
+  tnm.n | 585 | 6 | N0 (x314); N1 (x137); N2 (x100); N/A (x22); N3 (x6); N+ (x6)
+  tnm.m | 585 | 4 | M0 (x499); M1 (x61); N/A (x22); MX (x3)
+  tumor.location | 1048 | 4 | distal (x597); proximal (x397); NA (x52); N/A (x2)
+  chemotherapy.adjuvant | 1048 | 4 | N (x556); Y (x413); NA (x60); N/A (x19)
+  chemotherapy.adjuvant.type | 585 | 6 | N/A (x411); 5FU (x82); FUFOL (x54); FOLFOX (x23); FOLFIRI (x12); other (x3)
+  rfs.event | 1048 | 4 | 0 (x695); 1 (x282); NA (x60); N/A (x11)
+  rfs.delay | 1048 | 141 | 0 (x60); NA (x58); 14 (x21); 5 (x19); 9 (x19); 19 (x19); 86 (x16); 53 (x16)
+  os.event | 585 | 3 | 0 (x385); 1 (x194); N/A (x6)
+  os.delay (months) | 585 | 147 | 14 (x12); 86 (x11); 46 (x11); 32 (x10); 53 (x10); 75 (x9); 42 (x9); 43 (x9)
+  mmr.status | 1048 | 4 | pMMR (x768); dMMR (x135); NA (x96); N/A (x49)
+  cimp.status | 585 | 3 | - (x420); + (x93); N/A (x72)
+  cin.status | 585 | 3 | + (x369); - (x112); N/A (x104)
+  tp53.mutation | 585 | 3 | N/A (x234); M (x190); WT (x161)
+  tp53.mutation.dna | 585 | 49 | N/A (x517); c.524G>A (x6); c.844C>T (x5); FS (x4); c.587C>T (x4); c.817C>T (x3); c.856G>A (x2); c.-1G>A (x2)
+  tp53.mutation.exon.number | 585 | 49 | N/A (x517); c.524G>A (x6); c.844C>T (x5); FS (x4); c.587C>T (x4); c.817C>T (x3); c.856G>A (x2); c.-1G>A (x2)
+  tp53.mutation.protein | 585 | 48 | N/A (x519); p.R175H (x6); p.R282W (x5); FS (x4); p.R196X (x4); p.R273C (x3); p.E286K (x2); p.R273H (x2)
+  kras.mutation | 585 | 3 | WT (x328); M (x217); N/A (x40)
+  kras.mutation.dna | 585 | 27 | N/A (x371); c.35G>A (x52); EX2.codon12 (x47); c.38G>A (x27); c.35G>T (x22); EX2.codon13 (x9); g.35G>T (x8); c.35G>C (x7)
+  kras.mutation.exon.number | 585 | 27 | N/A (x371); c.35G>A (x52); EX2.codon12 (x47); c.38G>A (x27); c.35G>T (x22); EX2.codon13 (x9); g.35G>T (x8); c.35G>C (x7)
+  kras.mutation.protein | 585 | 15 | N/A (x472); p.G12D (x43); p.G13D (x23); p.G12V (x22); p.G12S (x6); p.G12C (x5); p.G12A (x3); p.Q61H (x3)
+  braf.mutation | 585 | 3 | WT (x461); N/A (x73); M (x51)
+  braf.mutation.dna | 585 | 2 | N/A (x560); c.1799T>A (x25)
+  braf.mutation.exon.number | 585 | 2 | N/A (x560); c.1799T>A (x25)
+  braf.mutation.protein | 585 | 2 | N/A (x560); p.V600E (x25)
+  cit.molecularsubtype | 585 | 7 | C5 (x152); C1 (x116); C2 (x104); C3 (x75); C6 (x60); C4 (x59); N/A (x19)
+  dependancy sample | 585 | 18 | N/A (x568); CIT546; CIT540; CIT404; CIT552; CIT431; CIT362; CIT361
+  rna.extraction.method | 583 | 7 | Manual-Rneasy Mini (Qiagen) (x156); Manual-Trizol (x147); TriReagent & Manual-Rneasy Mini (Qiagen) (x134); Manual-Rneasy Micro (Qiagen) (x96); RNA NOW (x19); E3 (x17); Manual-Cesium Chloride (x14)
+  [source_name_ch1] | 1048 | 4 | Frozen tissue of primary colorectal Adenocarcinoma (x463); Frozen tissue of primary colorectal Adenocarcinoma (discovery) (x443); Frozen tissue of primary colorectal Adenocarcinoma (validation) (x123); Frozen tissue of non tumoral colorectal mucosa (x19)
+  [title] | 1048 | 637 | CIT061 (x2); CIT062 (x2); CIT063 (x2); CIT064 (x2); CIT065 (x2); CIT066 (x2); CIT067 (x2); CIT068 (x2)
+  age.at.diagnosis | 463 | 60 | NA (x53); 68 (x17); 73 (x16); 79 (x16); 70 (x15); 75 (x14); 78 (x14); 69 (x14)
+  cit-coloncancermolecularsubtype | 463 | 7 | C5 (x114); C1 (x82); C2 (x81); C3 (x53); NA (x52); C6 (x41); C4 (x40)

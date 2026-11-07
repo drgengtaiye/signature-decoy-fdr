@@ -1,0 +1,17 @@
+GSE26193 | samples 107 | platforms {'GPL570': 107}
+TITLE: Control of oxidative stress by miRNA and impact on ovarian tumorigenesis
+SUMMARY: Transcriptome analysis of high-grade human ovarian adenocarcinomas. The hypothesis tested in the present study was that two reciprocal pathways, namely oxidative stress response and fibrosis, enable to build a hierarchical cluster of ovarian patients.
+DESIGN: Ovarian human tumor samples from Institut Curie were analysed on human genome U133 plus 2.0 array (Affymetrix). Microarray analysis was performed using Partek Genomic Suite software and transcriptomic data were normalized using GCRMA algorithm. Probes from oxidative stress response and fibrosis defined by Ingenuity software  were used to build a hierarchical cluster of ovarian patients.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA135023
+FIELDS (n values with it | distinct | examples):
+  histological type | 107 | 8 | Serous (x79); Endometrioid (x8); Mucinous (x8); Clear Cells (x6); Adenocarcinoma (x3); Brenner Tumor; Carcinosarcoma; Carcinosarcome
+  grade | 107 | 3 | 3 (x67); 2 (x33); 1 (x7)
+  Stage | 107 | 11 | IIIc (x54); IV (x17); Ia (x9); Ic (x6); Ib (x5); IIb (x4); IIa (x4); IIIb (x3)
+  tissue | 107 | 1 | ovarian carcinoma tumor (x107)
+  os event | 107 | 2 | 1 (x76); 0 (x31)
+  os time (years) | 107 | 107 | 20.2218; 9.71663; 6.04517; 2.47502; 4.2245; 2.35455; 2.12731; 4.75838
+  pfs event | 107 | 2 | 1 (x80); 0 (x27)
+  pfs time (years) | 107 | 104 | 1.33881 (x2); 3.96715 (x2); 0.780287 (x2); 20.2218; 9.71663; 3.08556; 1.79603; 1.56605
+  signature | 107 | 2 | FIBROSIS (x56); STRESS (x51)
+  [source_name_ch1] | 107 | 107 | Ovarian carcinoma 1; Ovarian carcinoma 2; Ovarian carcinoma 3; Ovarian carcinoma 4; Ovarian carcinoma 5; Ovarian carcinoma 6; Ovarian carcinoma 7; Ovarian carcinoma 8
+  [title] | 107 | 107 | Ovarian carcinoma 1; Ovarian carcinoma 2; Ovarian carcinoma 3; Ovarian carcinoma 4; Ovarian carcinoma 5; Ovarian carcinoma 6; Ovarian carcinoma 7; Ovarian carcinoma 8

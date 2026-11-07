@@ -1,0 +1,14 @@
+GSE19234 | samples 44 | platforms {'GPL570': 44}
+TITLE: Immune profile and mitotic index of metastatic melanoma lesions enhance clinical staging in predicting patient survival.
+SUMMARY: Although remission rates for metastatic melanoma are generally very poor, some patients can survive for prolonged periods following metastasis. We used gene expression profiling, mitotic index (MI), and quantification of tumor infiltrating leukocytes (TILs) and CD3+ cells in metastatic lesions to search for a molecular basis for this observation and to develop improved methods for predicting patient survival. We identified a group of 266 genes associated with postrecurrence survival. Genes positively associated with survival were predominantly immune response related (e.g., ICOS, CD3d, ZAP70, TRAT1, TARP, GZMK, LCK, CD2, CXCL13, CCL19, CCR7, VCAM1) while genes negatively associated with survival were cell proliferation related (e.g., PDE4D, CDK2, GREF1, NUSAP1, SPC24). Identification of genes associated with survival of metastatic melanoma
+DESIGN: Survival Analysis was performed using Statistical Analysis of Microarrays B D denotes same patient with multiple reccurences
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA120759
+FIELDS (n values with it | distinct | examples):
+  stage at reccurence | 44 | 4 | IIIB (x23); IIIC (x12); IV (x5); IIIA (x4)
+  days lived since metastasis | 44 | 41 | 397 (x2); 668 (x2); 440 (x2); 690; 610; 1015; 1155; 92
+  days since initial diagnosis | 44 | 38 | 3943 (x3); 1816 (x2); 955 (x2); 817 (x2); 668 (x2); 1475; 1417; 620
+  gender | 44 | 2 | male (x28); female (x16)
+  age | 44 | 29 | 78 (x3); 40 (x3); 87 (x2); 79 (x2); 51 (x2); 86 (x2); 49 (x2); 54 (x2)
+  staus dead or alive | 44 | 2 | 1 (x24); 0 (x20)
+  [source_name_ch1] | 44 | 1 | Tumor (x44)
+  [title] | 44 | 44 | 1; 01B; 2; 3; 4; 5; 6; 7

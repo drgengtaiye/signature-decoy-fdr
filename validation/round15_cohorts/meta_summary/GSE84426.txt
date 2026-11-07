@@ -1,0 +1,15 @@
+GSE84426 | samples 76 | platforms {'GPL6947': 76}
+TITLE: Molecular subtypes in gastric cancer. [I]
+SUMMARY: We identified the molecular subtypes and conserved modules in gastric cancer by unsupervised clustering algorithm. We defined five molecular subtypes and six molecular signatrues of gastric cancer associated with the biological heterogeneity of gastric cancer and clinical outcome of patients.
+DESIGN: We obtained gene expression profile of gastrectomy samples from 76 gastric cancer patients by HumanHT-12 v3.0 Expression BeadChip array (Illumina). Total RNA was extracted from the fresh-frozen gastrectomy specimens at the Yonsei University Severance Hospital (South Korea) between 2000 and 2010.
+RELATIONS: SubSeries of: GSE84437; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA329142
+FIELDS (n values with it | distinct | examples):
+  tissue | 76 | 1 | gastric cancer (x76)
+  age | 76 | 38 | 68 (x6); 61 (x4); 78 (x4); 65 (x4); 73 (x4); 72 (x3); 60 (x3); 74 (x3)
+  Sex | 76 | 2 | male (x54); female (x22)
+  ptstage | 76 | 3 | T4 (x48); T3 (x25); T2 (x3)
+  pnstage | 76 | 4 | N1 (x33); N2 (x33); N0 (x9); N3
+  death | 76 | 2 | 0 (x41); 1 (x35)
+  duration overall survival | 76 | 43 | 77 (x7); 70 (x5); 74 (x5); 23 (x4); 82 (x4); 80 (x4); 21 (x3); 71 (x3)
+  [source_name_ch1] | 76 | 1 | Human gastric cancer (x76)
+  [title] | 76 | 76 | Y10052T; Y10055T; Y10056T; Y10057T; Y10058T; Y10060T; Y10063T; Y10065T

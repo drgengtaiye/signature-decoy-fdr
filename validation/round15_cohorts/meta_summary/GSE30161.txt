@@ -1,0 +1,29 @@
+GSE30161 | samples 58 | platforms {'GPL570': 58}
+TITLE: Genomic Multivariate Predictors of Response to Adjuvant Chemotherapy in Ovarian Carcinoma: Predicting Platinum Resistance
+SUMMARY: Purpose:  Despite advances in radical surgery and chemotherapy delivery, ovarian cancer is the most lethal gynecologic malignancy.  Most of these patients are treated with platinum-based chemotherapies, but there is no biomarker model to guide their responses to these therapeutic agents.   We have developed and independently tested our novel multivariate molecular predictors for forecasting patients' responses to individual drugs on a cohort of 58 ovarian cancer patients. Experimental Design:  We adapted and applied the previously-published COXEN algorithm to develop molecular predictors for therapeutic responses of patients' tumors based on expression signatures derived from the NCI-60 in vitro drug activities and genomic expression data. Genome-wide candidate biomarkers were first triaged by examining expression patterns of frozen and formalin-fixed paraffin embedded (FFPE) tissue samples.  We then identify initial drug sensitivity biomarkers for carboplatin and paclitaxel, respectively. These biomarkers  were further narrowed by examining concordant expression patterns between cell lines and a historical set of ovarian cancer patients. Multivariate predictors were obtained from 
+DESIGN: Gene expression data from 58 stage III-IV ovarian cancer patients treated with Carboplatin and Taxol agents
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA143927
+FIELDS (n values with it | distinct | examples):
+  cell type | 58 | 1 | ovarian cancer cell (x58)
+  age | 58 | 31 | 66 (x4); 74 (x4); 52 (x3); 55 (x3); 61 (x3); 53 (x3); 56 (x3); 72 (x3)
+  dob | 58 | 58 | 1930-03-16; 1921-11-24; 1944-10-28; 1950-05-11; 1934-08-29; 1950-08-03; 1945-11-16; 1942-12-07
+  race | 58 | 2 | White (x54); Black (x4)
+  histo | 58 | 7 | Serous (x47); Clear (x5); Unknown (x2); Transitional; Undiff; Endometrioid; Mucinous
+  grade | 58 | 4 | Poor (x33); Mod (x19); Unk (x4); Well (x2)
+  Stage | 58 | 4 | IIIC (x38); IIIB (x11); IVA (x5); IIIA (x4)
+  surgtype | 57 | 1 | Primary Surgery (x57)
+  datedx | 58 | 55 | 1998-04-23 (x2); 1996-09-24 (x2); 1995-08-08 (x2); 1998-05-12; 1997-05-14; 1997-03-25; 1997-10-21; 2001-12-06
+  surgdate | 58 | 53 | 1997-04-17 (x2); 1998-04-23 (x2); 1995-10-12 (x2); 1996-09-24 (x2); 1995-08-08 (x2); 1998-05-12; 1997-05-14; 1997-10-21
+  optimal | 56 | 2 | Sub-optimal (x30); Optimal (x26)
+  chemtype | 58 | 1 | Adjuvant (x58)
+  chemoresponse | 58 | 5 | CR (completely response) (x32); PR (partial response) (x22); unknown (x2); PD (progress of disease); Unknown
+  chemo agent | 58 | 5 | Carboplatin/Taxol (x49); Cisplatin/Taxol (x5); Carboplatin (x2); Cisplatin/Cytoxan; Carboplatin/Cytoxan
+  date.of.relapse | 48 | 44 | 1998-04-01 (x2); 1997-02-01 (x2); 2003-05-01 (x2); 2003-02-01 (x2); 1999-06-01; 2004-06-08; 1997-09-16; 2004-04-14
+  date.last.follow.up | 58 | 58 | 2000-03-28; 2004-06-08; 1998-11-10; 1998-11-02; 2004-05-21; 2008-11-10; 2001-03-19; 2000-05-11
+  st.categ | 58 | 5 | 4 (x32); 2 (x15); 1 (x7); 6 (x3); 3
+  pfi days | 58 | 54 | 31 (x2); 309 (x2); 367 (x2); 265 (x2); 385; 2582; 175; 162
+  relapse(1=yes, 0=no) | 58 | 3 | 1 (x48); 0 (x6); UNKnown (x4)
+  overall survival days | 58 | 58 | 686; 2582; 595; 377; 897; 3511; 965; 749
+  censoring(dead=1,alive=0) | 58 | 2 | 1 (x36); 0 (x22)
+  [source_name_ch1] | 58 | 1 | formalin-fixed paraffin embedded (FFPE) tissue, ovarian cancer cells (x58)
+  [title] | 58 | 58 | OV_FFPE_1; OV_FFPE_2; OV_FFPE_3; OV_FFPE_4; OV_FFPE_5; OV_FFPE_6; OV_FFPE_7; OV_FFPE_8

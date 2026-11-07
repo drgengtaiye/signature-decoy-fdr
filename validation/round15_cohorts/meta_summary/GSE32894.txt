@@ -1,0 +1,20 @@
+GSE32894 | samples 308 | platforms {'GPL6947': 308}
+TITLE: A Molecular Taxonomy of Urothelial Carcinoma
+SUMMARY: Even though urothelial cancer (UC) is the fourth common tumor type among males, progress in treatment development has been deficient. Pathological assessment provides the urologists with only a broad classification, complicated by frequent disagreement among pathologist and the co-existence of different grading systems. Consequently, there is a great need for an objective, reproducible and biologically relevant classification system to make treatment more efficient. In the present investigation we present a molecular taxonomy for UC stratification based on integrated genomics. We used gene expression profiles from 308 UC to define seven molecular subtypes using step-by-step partitions and a bootstrap approach. Results were validated in three independent and publically available data sets. The subtypes differ significantly with respect to expression of cell cycle genes, of receptor tyrosine kinases particularity FGFR3, ERBB2 (HER2), and EGFR, of an FGFR3 associated gene expression signature, of cytokaratins, and of cell adhesion genes. The subtypes also differ significantly with respect to FGFR3, PIK3CA, and TP53 mutations. The expression of key proteins was validated by IHC on TMA.
+DESIGN: Total RNA from fresh-frozen resection samples of 308 urothelial carcinomas was hybridized to the Illumina HumanHT-12 V3.0 expression beadchip arrays (Illumina Inc) at the SCIBLU Genomics Centre at Lund University Sweden (http://www.lth.se/sciblu).  Supplementary files: GSE32894_non-normalized_308UCsamples.txt file = Raw intensity values for 308 UC (urothelial tumor) samples subjected only to background correction. GSE32894_reps_normals_preprocess*.txt files = Descriptive details and non-normalized data for technical replicates and normal samples that were used only in the preprocessing of the 
+RELATIONS: Affiliated with: GSE32549; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA146635
+FIELDS (n values with it | distinct | examples):
+  gender | 308 | 2 | M (x228); F (x80)
+  age | 308 | 54 | 75 (x16); 76 (x13); 71 (x12); 67 (x12); 79 (x12); 65 (x12); 83 (x12); 57 (x11)
+  hyb_slide | 308 | 37 | S25 (x12); S27 (x12); S21 (x11); S9 (x11); S18 (x11); S31 (x11); S15 (x11); S3 (x10)
+  labeling_plate | 308 | 5 | P4 (x83); P5 (x78); P1 (x63); P2 (x56); P6 (x28)
+  molecular_subtype | 308 | 7 | MS1b (x78); MS2a.2 (x55); MS1a (x53); MS2b.1 (x43); MS2a.1 (x30); MS2b2.2 (x29); MS2b2.1 (x20)
+  tumor_stage | 308 | 9 | Ta (x116); T1 (x97); T2 (x82); T3b (x6); T2b (x2); Tx (x2); T2a; T3
+  tumor_grade | 308 | 5 | G3 (x154); G2 (x103); G1 (x48); Gx (x2); G4
+  progression_to_higher_stage_or_radiotherapy_(yes/no) | 298 | 12 | no (x258); yes (T2) (x13); yes (T1) (x5); yes (T3) (x5); yes (CIS) (x4); yes (T3b) (x4); yes (radiotherapy) (x3); yes (Cystectomy Stage T4a) (x2)
+  dod_excluded_(yes/no) | 304 | 2 | no (x224); yes (x80)
+  time_to_dod_(months) | 224 | 212 | 17.68767123 (x3); 55.03561644 (x2); 6.575342466 (x2); 29.49041096 (x2); 69.50136986 (x2); 54.34520548 (x2); 67.92328767 (x2); 58.02739726 (x2)
+  dod_event_(yes/no) | 224 | 2 | no (x199); yes (x25)
+  node_status | 71 | 8 | pN0 (x47); pN2 (x10); N+ (x7); pN1 (x3); pN3; pN1mic; pN0(i+); N0
+  [source_name_ch1] | 308 | 308 | Bladder Tumor UC_0001_1; Bladder Tumor UC_0002_1; Bladder Tumor UC_0003_1; Bladder Tumor UC_0006_2; Bladder Tumor UC_0007_1; Bladder Tumor UC_0008_1; Bladder Tumor UC_0009_1; Bladder Tumor UC_0010_1
+  [title] | 308 | 308 | UC_0001_1.a1.lbe1; UC_0002_1.RNA.e1.a1.lbe1; UC_0003_1.RNA.e1.a1.lbe1; UC_0006_2.a1.lbe1; UC_0007_1.RNA.e1.a1.lbe1; UC_0008_1.RNA.e1.a1.lbe1; UC_0009_1.RNA.e1.a1.lbe1; UC_0010_1.a1.lbe1

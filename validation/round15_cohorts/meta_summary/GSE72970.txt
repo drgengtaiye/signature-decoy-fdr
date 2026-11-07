@@ -1,0 +1,23 @@
+GSE72970 | samples 124 | platforms {'GPL570': 124}
+TITLE: Molecular subtypes of metastatic colorectal cancer are predictive of patient response to chemo and targeted therapies
+SUMMARY: This SuperSeries is composed of the SubSeries listed below.
+DESIGN: Refer to individual Series
+RELATIONS: SuperSeries of: GSE72968; SuperSeries of: GSE72969; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA295462
+FIELDS (n values with it | distinct | examples):
+  center | 124 | 12 | Bordeaux (x36); Toulouse (x22); Montpellier (x20); Limoges (x20); Paris (x10); Nancy (x3); Bordeaux CHU (x3); Nimes (x3)
+  Sex | 124 | 2 | Male (x74); Female (x50)
+  age | 124 | 45 | 57 (x7); 66 (x7); 59 (x6); 64 (x6); 55 (x5); 62 (x5); 74 (x5); 60 (x4)
+  who performance status | 124 | 5 | 1 (x59); 0 (x53); . (x6); 2 (x5); 3
+  tumor location | 124 | 6 | Left colon (x50); Right colon (x31); Rectum-sigmoid junction (x19); Rectum (x19); Caecum (x3); Transverse colon (x2)
+  synchronous metastase | 124 | 2 | Yes (x102); No (x22)
+  pn | 124 | 4 | pN2 (x53); pNX (x29); pN1 (x28); pN0 (x14)
+  pt | 124 | 5 | pT3 (x50); pT4 (x37); pTX (x29); pT2 (x7); pT1
+  regimen | 124 | 8 | FOLFIRI (x60); FOLFOX (x32); FOLFIRI+BEVACIZUMAB (x22); FOLFOX+BEVACIZUMAB (x4); FOLFIRINOX (x3); FOLFIRI+ERBITUX; XELIRI+BEVACIZUMAB; FOLFIRINOX+BEVACIZUMAB
+  response category | 124 | 4 | PR (x55); SD (x42); PD (x19); CR (x8)
+  response status | 124 | 2 | R (x63); NR (x61)
+  pfs censored | 124 | 2 | 1 (x114); 0 (x10)
+  pfs | 124 | 117 | 1.872689962 (x2); 7.55646801 (x2); 8.180698395 (x2); 4.829568863 (x2); 9.232032776 (x2); 13.14168358 (x2); 13.40451717 (x2); 5.585215569
+  os censored | 124 | 2 | 1 (x92); 0 (x32)
+  os | 124 | 121 | 9.659137726 (x2); 11.03901482 (x2); 23.6550312 (x2); 5.585215569; 13.66735077; 2.49691987; 70.01232147; 19.94250488
+  [source_name_ch1] | 124 | 1 | Tissue samples taken from colorectal cancer patients (x124)
+  [title] | 124 | 124 | Primary_Tumor 01_010; Primary_Tumor 02_005; Primary_Tumor 02_006; Primary_Tumor 02_007; Primary_Tumor 02_008; Primary_Tumor 02_009; Primary_Tumor 02_010; Primary_Tumor 02_011

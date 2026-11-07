@@ -1,0 +1,30 @@
+GSE72094 | samples 442 | platforms {'GPL15048': 442}
+TITLE: KRAS mutation-associated gene expression, p53 and STK11 mutations, proliferation and immune surveillance in lung adenocarcinoma
+SUMMARY: While mutations in the KRAS oncogene are amongst the most prevalent in human cancer, there are few successful treatments to target these tumors. It is also likely that heterogeneity in KRAS-mutant tumor biology significantly contributes to the response to therapy. We hypothesized that presence of commonly co-occurring mutations in STK11 and TP53 tumor suppressors may represent a significant source of heterogeneity in KRAS-mutant tumors.  To address this, we utilized a large cohort of resected tumors from 442 lung adenocarcinoma patients with data including annotation of prevalent driver mutations (KRAS, EGFR) and tumor suppressor mutations (STK11 and TP53), microarray-based gene expression and clinical covariates including overall survival (OS). Specifically, we determined impact of STK11 and TP53 mutations on a new KRAS mutation-associated gene expression signature as well as previously defined signatures of tumor cell proliferation and immune surveillance responses. Interestingly, STK11, but not TP53 mutations, were associated with highly elevated expression of KRAS mutation-associated genes. Mutations in TP53 and STK11 also impacted tumor biology regardless of KRAS status, with 
+DESIGN: Resected tumors from 442 lung adenocarcinoma patients were profiled on gene expression arrays, prevalent driver mutations (KRAS, EGFR) and tumor suppressor mutations (STK11 and TP53) were assessed.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA292925
+FIELDS (n values with it | distinct | examples):
+  barcode_microarray | 442 | 442 | @52070900778263100909406332059157; @52070900778263100909406332059199; @52070900778264100909406332059229; @52070900778513031510407113246252; @52070900778513031510407113246258; @52070900778513031510407113246261; @52070900778513031510407113246271; @52070900778513031510407113246277
+  filename_microarray | 442 | 442 | @52070900778263100909406332059157_1_1.CEL; @52070900778263100909406332059199_1_1.CEL; @52070900778264100909406332059229_1_1.CEL; @52070900778513031510407113246252_1_1.CEL; @52070900778513031510407113246258_1_1.CEL; @52070900778513031510407113246261_1_1.CEL; @52070900778513031510407113246271_1_1.CEL; @52070900778513031510407113246277_1_1.CEL
+  rna_barin | 442 | 43 | 9 (x29); 8.8 (x28); 8.6 (x22); 9.3 (x22); 8.9 (x21); 8.7 (x20); 8.5 (x19); 7.3 (x19)
+  patient_id | 442 | 442 | K074; K400; K030; K276; K459; K193; K305; K078
+  gender | 442 | 2 | F (x240); M (x202)
+  age_at_diagnosis | 442 | 48 | 70 (x25); 72 (x22); NA (x21); 66 (x20); 77 (x20); 67 (x18); 76 (x18); 69 (x17)
+  race | 442 | 8 | WHITE (x399); NA (x22); BLACK (x13); UNKNOWN (x3); OTHER (x2); ASIAN INDIAN OR PAKISTANI; VIETNAMESE; THAI
+  spanish_hispanic | 442 | 3 | Non Spanish/Hispanic (x402); NA (x30); Spanish/Hispanic (x10)
+  smoking_status | 442 | 3 | Ever (x335); Missing (x74); Never (x33)
+  vital_status | 442 | 3 | Alive (x298); Dead (x122); NA (x22)
+  survival_time_in_days | 442 | 331 | NA (x44); 917 (x3); 489 (x3); 830 (x3); 807 (x3); 539 (x3); 1057 (x2); 1025 (x2)
+  Stage | 442 | 10 | 1A (x158); 1B (x101); 2B (x51); 3A (x43); NA (x28); 3B (x19); 2A (x18); 4 (x17)
+  kras_status | 442 | 2 | WT (x288); Mut (x154)
+  egfr_status | 442 | 2 | WT (x395); Mut (x47)
+  stk11_status | 442 | 2 | WT (x374); Mut (x68)
+  tp53_status | 442 | 2 | WT (x331); Mut (x111)
+  egfr_aa_mut | 47 | 13 | L858LR (x23); delE746-A750 (x12); delL747-A750inP (x2); G719GC;E709A; G719GC; delL747-T751; delP741-R748inQGIKRSNIS; delL747-S752inQ
+  tp53_aa_mut | 111 | 86 | SpliceSite (x6); E180* (x3); C277F (x3); Y220C (x3); E298* (x3); R273L (x3); G105C (x2); R249S (x2)
+  [source_name_ch1] | 442 | 1 | lung adenocarcinoma (x442)
+  [title] | 442 | 442 | lung_K074; lung_K400; lung_K030; lung_K276; lung_K459; lung_K193; lung_K305; lung_K078
+  kras_aa_mut | 154 | 20 | G12GC (x58); G12GV (x31); G12GD (x26); G12GA (x8); G13GD (x7); G13GC (x5); G12GR (x3); G12GV;Q61QE (x2)
+  stk11_aa_mut | 68 | 49 | SpliceSite (x5); P281fs*6 (x5); D53fs*11 (x4); L282fs*3 (x3); D194Y (x3); E293* (x2); D53fs*110 (x2); G188fs*99 (x2)
+  stk11_aa_inherited | 10 | 6 | F354L (x5); K178M;E223K; N226S; H168L; R147P; M289K
+  tp53_aa_inherited | 7 | 6 | P72R (x2); D28V; G216L; R283C; P27H; H178P

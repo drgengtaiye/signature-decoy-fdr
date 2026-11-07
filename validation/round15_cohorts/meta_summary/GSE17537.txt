@@ -1,0 +1,17 @@
+GSE17537 | samples 55 | platforms {'GPL570': 55}
+TITLE: Metastasis Gene Expression Profile Predicts Recurrence and Death in Colon Cancer Patients (VMC Samples)
+SUMMARY: Background and Aims: Staging inadequately predicts metastatic risk in colon cancer patients.  We used a gene expression profile derived from invasive murine colon cancer cells that were highly metastatic in an immunocompetent mouse model to identify colon cancer patients at risk for recurrence in a phase I, exploratory biomarker study.  Methods:  55 colorectal cancer patients from Vanderbilt Medical Center (VMC) were used as the training dataset and 177 patients from the Moffitt Cancer Center were used as the independent dataset. The metastasis-associated gene expression profile developed from the mouse model was refined using comparative functional genomics in the VMC gene expression profiles to identify a 34-gene classifier associated with high risk of metastasis and death from colon cancer.  A recurrence score derived from the biologically based classifier was tested in the Moffitt dataset.  Results:  A high score was significantly associated with increased risk of metastasis and death from colon cancer across all pathological stages and specifically in stage II and stage III patients.  The recurrence score was shown to independently predict risk of cancer recurrence and death i
+DESIGN: Gene expression array differences between highly invasive mouse colon cancer cells and non-invasive colon cancer cells were used to develop a metastasis gene expression profile.  It was refined using gene expression data from 55 patient (VMC) samples and trained using 177 patient (Moffitt) samples.
+RELATIONS: SubSeries of: GSE17538; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA123345
+FIELDS (n values with it | distinct | examples):
+  age | 55 | 35 | 70 (x3); 72 (x3); 56 (x3); 57 (x3); 51 (x3); 61 (x2); 74 (x2); 55 (x2)
+  gender | 55 | 2 | female (x29); male (x26)
+  ethnicity | 55 | 3 | caucasian (x50); black (x4); hispanic
+  ajcc_stage | 55 | 4 | 3 (x19); 4 (x17); 2 (x15); 1 (x4)
+  overall_event (death from any cause) | 55 | 2 | no death (x35); death (x20)
+  dfs_event (disease free survival; cancer recurrence) | 55 | 2 | no recurrence (x36); recurrence (x19)
+  overall survival follow-up time | 55 | 54 | 60.0328767123288 (x2); 54.0493150684932; 63.9123287671233; 46.2904109589041; 48.2630136986301; 60.558904109589; 57.0739726027397; 55.8575342465753
+  dfs_time | 55 | 42 | 0 (x13); 60.0328767123288 (x2); 54.0493150684932; 63.9123287671233; 46.2904109589041; 41.5890411; 60.230137; 57.0739726027397
+  [source_name_ch1] | 55 | 1 | Vanderbilt University Medical Center (x55)
+  [title] | 55 | 55 | VMC Patient 1; VMC Patient 2; VMC Patient 3; VMC Patient 4; VMC Patient 5; VMC Patient 6; VMC Patient 7; VMC Patient 8
+  grade | 36 | 4 | 2 - Moderately differentiated(MD) (x25); 2 - Moderately differentiated(MD).1 - Well differentiated (WD) - Moderate to poorly differentiated (MPD) (x7); 3 - Poorly differentiated (PD) (x3); 1 - Well differentiated (WD)

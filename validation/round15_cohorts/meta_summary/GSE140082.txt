@@ -1,0 +1,24 @@
+GSE140082 | samples 380 | platforms {'GPL14951': 380}
+TITLE: Bevacizumab may differentially improve ovarian cancer outcome in patients with proliferative and mesenchymal molecular subtypes
+SUMMARY: DASL gene expression arrays were performed on FFPE tissue from patients enrolled on the ICON7 trial. Patients were stratified into four TCGA molecular subtypes.
+DESIGN: DASL gene expression arrays were performed on FFPE tissue from patients enrolled on the ICON7 trial. Patients were stratified into four TCGA molecular subtypes. Associations between molecular subtype and the efficacy of randomly assigned therapy with bevacizumab were assessed.  Standard treatment: CARBOPLATIN PLUS PACLITAXEL CHEMOTHERAPY Bevacizumab treatment: CARBOPLATIN PLUS PACLITAXEL CHEMOTHERAPY PLUS BEVACIZUMAB  The primary endpoints in the ICON7 trial used to measure treatment efficacy were OS and PFS.  OS: Overall survival was calculated from the date of randomization to the date of de
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA588228
+FIELDS (n values with it | distinct | examples):
+  tissue | 380 | 1 | ovarian cancer (x380)
+  tissue preparation | 380 | 1 | FFPE (x380)
+  treatment | 380 | 2 | bevacizumab (x199); standard (x181)
+  t1_cluster_name | 380 | 4 | immunoreactive (x124); proliferative (x97); differentiated (x86); mesenchymal (x73)
+  debulking_status | 380 | 3 | OPTIMAL (x290); SUB-OPTIMAL (x88); Inoperable (x2)
+  figo_stage | 380 | 4 | III (x266); IV (x63); II (x31); I (x20)
+  histology.serous | 380 | 2 | serous (x277); other (x103)
+  newgrade | 380 | 3 | high.grade (x281); low.grade (x74); NA (x25)
+  age | 380 | 51 | 65 (x18); 66 (x18); 57 (x17); 68 (x16); 64 (x15); 70 (x15); 53 (x14); 62 (x13)
+  final_pfstm | 380 | 325 | 274 (x3); 658 (x3); 719 (x3); 518 (x3); 263 (x3); 386 (x3); 478 (x3); 722 (x2)
+  final_pfsid | 380 | 2 | 1 (x235); 0 (x145)
+  final_ostm | 380 | 306 | 645 (x5); 730 (x4); 722 (x4); 765 (x4); 821 (x3); 675 (x3); 809 (x3); 829 (x3)
+  final_osid | 380 | 2 | 0 (x284); 1 (x96)
+  manuscript_analysis359 | 380 | 2 | 1 (x359); 0 (x21)
+  sentrix_id | 380 | 40 | 5800710001 (x12); 5800710009 (x12); 5800701030 (x12); 5800701019 (x12); 5800710047 (x11); 5800710052 (x11); 5800710002 (x11); 5800710007 (x11)
+  plate | 380 | 6 | 2 (x88); 1 (x85); 3 (x83); 4 (x82); 5 (x26); 6 (x16)
+  [source_name_ch1] | 380 | 1 | FFPE Ovarian Cancer (x380)
+  [title] | 380 | 380 | X5800701055_A; X5800701055_B; X5800701055_C; X5800701055_D; X5800701055_J; X5800701055_G; X5800701055_K; X5800701006_I

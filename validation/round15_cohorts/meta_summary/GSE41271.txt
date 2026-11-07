@@ -1,0 +1,19 @@
+GSE41271 | samples 275 | platforms {'GPL6884': 275}
+TITLE: Expression profiling of 275 lung cancer specimens
+SUMMARY: From ~1,700 non-small cell lung cancer specimens collected at the MD Anderson Cancer Center over the years 1997 to 2005, we selected 914 tumors with detailed clinical and pathological information. We extracted RNA and DNA from frozen tissues using histology quality control from 700 cases. RNA was examined for quality using Agilent Bioanalyzer and RNA integrity number (RIN) was obtained for all specimens. A final selection of 275 tumor specimens was based on the following criteria: 1) Select mainly adenocarcinomas (n = 183) and squamous carcinomas (n = 80); 2) Tissue material contains at least 70% tumor by section examination; 3) within the tumor section, there should be at least 30% tumor cells (as opposed to stromal cells); 4) RIN should be at least 4.0 (range 0 - 10). Various profiling experiments were then performed including mRNA expression (this study), miRNA profiling, aCGH (Agilent), Reverse-phase protein array (RPPA), mutation analysis of 20 genes (Sequenom) and MS-MALDI-TOFF analysis.
+DESIGN: 275 lung cancer specimens collected at the MD Anderson Cancer Center were profiled on Illumina WG6-V3 expression arrays. Detailed clinico-pathological information were also collected.
+RELATIONS: BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA176417
+FIELDS (n values with it | distinct | examples):
+  histology | 275 | 10 | Adenocarcinoma (x183); Squamous (x80); LCC-NE (x3); Adenosquamous (x2); Sarcomatoid (x2); Sarcomatoid-Adenocarcinoma; NSCLC; Pleomorphic carcinoma
+  gender | 275 | 2 | M (x148); F (x127)
+  race | 275 | 4 | Caucasian (x244); African American (x16); Hispanic (x8); Asian (x7)
+  tobacco history | 272 | 2 | Y (x244); N (x28)
+  final patient stage | 275 | 8 | IB (x84); IIIA (x51); IA (x48); IIB (x39); IIIB (x35); IIA (x11); IV (x6); IA Vs IIIB
+  date of birth | 275 | 269 | 1925-12-07 (x2); 1941-01-11 (x2); 1946-12-24 (x2); 1945-05-29 (x2); 1927-08-24 (x2); 1938-08-28 (x2); 1926-02-21; 1928-10-17
+  date of surgery | 274 | 256 | 2004-06-07 (x3); 1999-10-06 (x2); 2000-02-14 (x2); 2000-04-04 (x2); 2000-05-04 (x2); 2003-10-30 (x2); 2004-01-06 (x2); 2004-06-23 (x2)
+  vital statistics | 275 | 2 | A (x151); D (x124)
+  last follow-up survival | 274 | 240 | 2010-05-12 (x4); 2010-04-14 (x3); 2010-04-13 (x3); 2010-04-22 (x3); 2009-02-27 (x2); 2010-02-22 (x2); 2002-10-22 (x2); 2010-01-15 (x2)
+  recurrence | 275 | 2 | N (x153); Y (x122)
+  last follow-up recurrence | 274 | 247 | 2010-04-14 (x3); 2010-02-22 (x2); 2001-02-15 (x2); 2010-02-24 (x2); 2010-02-03 (x2); 2009-03-19 (x2); 2005-08-15 (x2); 2007-02-26 (x2)
+  [source_name_ch1] | 275 | 1 | Lung cancer specimen (x275)
+  [title] | 275 | 275 | 15-T; 18-T; 96-T; 157-T; 250-T; 259-T; 289-T; 296-T

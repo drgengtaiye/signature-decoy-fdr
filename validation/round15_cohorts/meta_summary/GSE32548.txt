@@ -1,0 +1,11 @@
+GSE32548 | samples 131 | platforms {'GPL6947': 131}
+TITLE: Integrated genomic and gene expression profiling identifies two major gene/genomic circuits operating in urothelial carcinoma (gene expression)
+SUMMARY: Genomic and gene expression profiling identifies two major gene/genomic circuits operating in urothelial carcinoma
+DESIGN: 131 primary bladder cancer tumor samples were analyzed on Illumina gene expression Bead Arrays.
+RELATIONS: SubSeries of: GSE32549; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA154427
+FIELDS (n values with it | distinct | examples):
+  tumor stage | 131 | 4 | T1 (x52); Ta (x40); T2 (x38); Tx
+  tumor grade | 131 | 3 | G3 (x75); G2 (x41); G1 (x15)
+  tissue | 131 | 1 | bladder cancer tumor (x131)
+  [source_name_ch1] | 131 | 131 | Bladder tumor UC_0001_1; Bladder tumor UC_0002_1; Bladder tumor UC_0007_1; Bladder tumor UC_0008_1; Bladder tumor UC_0009_1; Bladder tumor UC_0017_1; Bladder tumor UC_0021_1; Bladder tumor UC_0023_1
+  [title] | 131 | 131 | Bladder tumor UC_0001_1.RNA.e1.a1.lbe1; Bladder tumor UC_0002_1.RNA.e1.a1.lbe1; Bladder tumor UC_0007_1.RNA.e1.a1.lbe1; Bladder tumor UC_0008_1.RNA.e1.a1.lbe1; Bladder tumor UC_0009_1.RNA.e1.a1.lbe1; Bladder tumor UC_0017_1.RNA.e1.a1.lbe1; Bladder tumor UC_0021_1.RNA.e1.a1.lbe1; Bladder tumor UC_0023_1.RNA.e1.a1.lbe1

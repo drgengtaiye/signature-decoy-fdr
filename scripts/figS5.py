@@ -1,74 +1,72 @@
-"""Additional file 1: Fig. S4 (GB v7) - prognosis in 20 TCGA cancer types, in detail (ten decoy sets; panel a, set 1,
-which is the decoy set of applications/v11_decoy_r_by_cohort.R).
+"""Additional file 1: Fig. S3 (GB v7) - the package rerun and the variability of one draw of decoys (validation V3 of
+validation/PLAN_round6_applications.md; analysis 4 of PLAN_round7_estimand_and_bias.md): ten decoy sets, seed 20261022.
 
-a  decoys' internal correlation against their target's in each cancer type (median over a target's co-expressed
-   decoys; one point per signature x cancer type)
-b  under 200 within-type permutations of (time, event): the share of units called, by kind and statistic (nominal 2.5%)
-c  each signature's median delta C, directed statistic (overall survival), against its co-expressed decoys
-d  signatures called by family, for each endpoint and statistic
+a  each signature's median delta over the 12 cohorts, published pipeline (calib_v3, N0) against the package rerun,
+   folded and directed
+b  the estimate from each of the ten decoy sets (points), pooled over the ten (diamond), and from the first decoy set of
+   the response analysis (ring), per application
+c  decoys' internal correlation against their target's, rerun decoys (median over cohorts)
 """
-import os, numpy as np, pandas as pd, warnings
+import numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
 import sys; sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
 import v4kit as K
 import figstyle as fs
-from fig67_lib import per_signature, C_FOLD, C_DIR, C_SIG, C_DEC
 K.apply()
-D = K.D + "/icb/"; P = D + "v12_pkg/"; P11 = D + "v11_pkg/"
+D = K.D + "/icb/"
 TT = 6.9
-FAM = pd.read_csv(D + "v5_signature_clusters.csv").set_index("signature").family.to_dict()
-CL = pd.read_csv(P + "tcga_OS_calls.csv.gz")
-GN = pd.read_csv(P + "tcga_OS_globalnull_summary.csv").set_index("stat")
-RP = pd.read_csv(P11 + "tcga_decoy_r_by_type.csv")          # written by applications/v11_decoy_r_by_cohort.R
-C = K.Canvas(150)
+C_FOLD, C_DIR, C_SIG, C_DEC = fs.GREY, fs.BLUE, fs.TEAL, fs.SLATE
+U = pd.read_csv(D + "calib_v3_units.csv"); U = U[(U["null"] == "N0") & (U.kind == "target")]
+R = pd.read_csv(D + "v12_pkg/response_calls.csv.gz"); R = R[R.kind == "target"]
+F0 = pd.read_csv(D + "calib_v3_fdr.csv"); F0 = F0[F0["null"] == "N0"]
+P = D + "v12_pkg/"
+I1 = pd.read_csv(P + "response_decoy_info.csv.gz"); I1 = I1[I1.set == 1]
+C = K.Canvas(62)
 
-ax = C.ax(15, 15, 45, 40)
-ax.scatter(RP.r_target, RP.r_decoy_med, s=3, color=C_SIG, alpha=.5, lw=0, zorder=3)
-ax.plot([0, 1], [0, 1], color=fs.INK, lw=.5, ls=(0, (3, 2)))
-ax.set_xlim(-.05, 1); ax.set_ylim(-.05, 1)
-ax.set_xlabel("signature internal $r$"); ax.set_ylabel("its co-expressed decoys' internal $r$\n(median)")
-fs.note(ax, .04, .95, "one point per signature\n× cancer type", size=K.T_SMALL, color=fs.SLATE)
+ax = C.ax(15, 13, 40, 40)
+out = {}
+for st, cc, mk in (("fold", C_FOLD, "o"), ("dir", C_DIR, "^")):
+    a = U[U.stat == st].set_index("unit").med_delta; b = R[R.stat == st].set_index("unit").med_delta.reindex(a.index)
+    ax.scatter(a, b, s=8, marker=mk, color=cc, lw=0, zorder=3, label=f"{'folded' if st == 'fold' else 'directed'}, r = {np.corrcoef(a, b)[0, 1]:.3f}")
+    ca = U[U.stat == st].set_index("unit").call.astype(str).eq("True"); cb = R[R.stat == st].set_index("unit").call.reindex(ca.index).astype(bool)
+    out[st] = (int(ca.sum()), int(cb.sum()), int((ca & cb).sum()), float(np.corrcoef(a, b)[0, 1]))
+lo, hi = -.17, .14
+ax.plot([lo, hi], [lo, hi], color=fs.INK, lw=.5, ls=(0, (3, 2)))
+ax.axhline(0, color=fs.LIGHT, lw=.6); ax.axvline(0, color=fs.LIGHT, lw=.6)
+ax.set_xlim(lo, hi); ax.set_ylim(lo, hi)
+ax.set_xlabel("median Δ, published pipeline"); ax.set_ylabel("median Δ, package rerun")
+ax.legend(fontsize=K.T_SMALL, loc="upper left", frameon=False, handletextpad=.3)
 K.frame(ax)
-C.title(15, 9, "Decoys fall short of coherent signatures", size=TT, fontweight="bold"); C.letter(7.5, 8.5, "a")
+C.title(15, 7, "Each signature, published and rerun", size=TT, fontweight="bold"); C.letter(7.5, 6.5, "a")
 
-ax = C.ax(80, 15, 85, 40)
-groups = [("signatures", "rate_targets"), ("co-expressed\ndecoys", "rate_coex"), ("random-gene\ndecoys", "rate_rand")]
-for gi, (lab, col) in enumerate(groups):
-    for si, (st, cc) in enumerate([("fold", C_FOLD), ("dir", C_DIR)]):
-        v = GN.loc[st, col]; x = gi + (si - .5) * .36
-        ax.bar(x, v, .34, color=cc, lw=0, zorder=3)
-        ax.text(x, v + .08, f"{v:.1f}", ha="center", va="bottom", fontsize=K.T_SMALL, color=cc, fontweight="bold")
-ax.axhline(2.5, color=fs.INK, lw=.55, ls=(0, (3, 2))); ax.text(2.6, 2.62, "2.5%", fontsize=K.T_SMALL, va="bottom", ha="right")
-ax.set_xticks(range(3)); ax.set_xticklabels([g[0] for g in groups], fontsize=K.T_SMALL); ax.tick_params(axis="x", length=0)
-ax.set_ylim(0, max(GN.rate_targets.max(), GN.rate_coex.max()) * 1.3); ax.set_xlim(-.6, 2.7)
-ax.set_ylabel("called per unit (%)")
-K.key(ax, [(C_FOLD, "folded"), (C_DIR, "directed")], x=.78, y=.96, s=9, size=K.T_SMALL, marker="s")
-K.frame(ax)
-C.title(80, 9, "Permuted survival: the folded call runs above nominal for every unit", size=TT, fontweight="bold")
-C.letter(72.5, 8.5, "b")
-
-ax = C.ax(40, 72, 50, 74)
-per_signature(ax, CL, "dir", fam=FAM)
-ax.set_xlabel("median ΔC over 20 cancer types (directed, OS)")
-C.title(15, 66, "Each signature against its decoys, directed", size=TT, fontweight="bold"); C.letter(7.5, 65.5, "c")
-
-ax = C.ax(115, 74, 50, 40)
+ax = C.ax(75, 13, 50, 40)
+apps = [("response\nfolded", "response", "fold"), ("response\ndirected", "response", "dir"), ("TCGA OS\nfolded", "tcga_OS", "fold"),
+        ("breast PC1\nfolded", "breast_pc1", "fold"), ("breast\nmean z", "breast_mean", "fold")]
 rows = []
-for ep in ("OS", "DSS", "PFI"):
-    f = P + f"tcga_{ep}_calls.csv.gz"
-    if not os.path.exists(f): continue
-    c = pd.read_csv(f); c = c[(c.kind == "target") & c.call]
-    for st in ("fold", "dir"):
-        cc = c[c.stat == st]
-        rows.append((f"{ep}\n{'folded' if st == 'fold' else 'directed'}",
-                     [int((cc.target.map(FAM) == f).sum()) for f in ("Inflamed/IFN", "Other", "Confounder")]))
-for k, (lab, v) in enumerate(rows):
-    b = 0
-    for f, n in zip(("Inflamed/IFN", "Other", "Confounder"), v):
-        ax.bar(k, n, .7, bottom=b, color=fs.FAM[f], lw=0, zorder=3); b += n
-ax.set_xticks(range(len(rows))); ax.set_xticklabels([r[0] for r in rows], fontsize=4.8); ax.tick_params(axis="x", length=0)
-ax.set_ylabel("signatures called")
-K.key(ax, [(fs.FAM[f], fs.FAMLAB[f]) for f in ("Inflamed/IFN", "Other", "Confounder")], x=.02, y=.97, s=9, size=K.T_SMALL, marker="s")
+for k, (lab, app, st) in enumerate(apps):
+    bs = pd.read_csv(P + f"{app}_fdr_by_set.csv"); bs = bs[bs.stat == st]
+    pool = pd.read_csv(P + f"{app}_fdr.csv"); pool = pool[(pool.stat == st) & (pool.decoys == "coex") & (pool.boot == "targets")].iloc[0]
+    cc = C_DIR if st == "dir" else C_FOLD
+    ax.scatter(k + np.linspace(-.18, .18, len(bs)), bs.fdr, s=6, color=cc, lw=0, zorder=3)
+    ax.scatter(k, pool.fdr, s=22, marker="D", color=cc, edgecolor=fs.INK, lw=.5, zorder=4)
+    if app == "response":
+        f0 = F0[(F0.stat == st) & (F0.pool == "A") & (F0.decoys == "coex")].iloc[0]
+        ax.scatter(k, f0.fdr, s=26, facecolor="none", edgecolor=fs.INK, lw=.8, zorder=5)
+    rows.append((lab.replace("\n", " "), round(pool.fdr, 1), round(bs.fdr.min(), 1), round(bs.fdr.max(), 1)))
+ax.set_xticks(range(len(apps))); ax.set_xticklabels([a[0] for a in apps], fontsize=K.T_SMALL)
+ax.tick_params(axis="x", length=0); ax.set_ylabel("estimated FDR (%)"); ax.set_xlim(-.6, len(apps) - .4); ax.set_ylim(0, 80)
+fs.note(ax, .02, .97, "small points, each decoy set; diamonds, pooled over the ten;\nring, the first decoy set of the response analysis", size=K.T_SMALL, color=fs.SLATE)
 K.frame(ax)
-C.title(115, 66, "What is called, by family", size=TT, fontweight="bold"); C.letter(107.5, 65.5, "d")
-C.save("FigS4_tcga_GB7")
+C.title(75, 7, "One draw of decoys against ten", size=TT, fontweight="bold"); C.letter(67.5, 6.5, "b")
+
+ax = C.ax(140, 13, 32, 40)
+for cls, cc in (("rand", C_DEC), ("coex", C_SIG)):
+    g = I1[I1["class"] == cls]
+    ax.scatter(g.r_target_med, g.r_achieved_med, s=3, color=cc, alpha=.5, lw=0, zorder=3)
+ax.plot([0, 1], [0, 1], color=fs.INK, lw=.5, ls=(0, (3, 2)))
+ax.set_xlim(0, 1); ax.set_ylim(-.05, 1); ax.set_xlabel("target internal $r$"); ax.set_ylabel("decoy internal $r$")
+K.key(ax, [(C_SIG, "co-expressed"), (C_DEC, "random-gene")], x=.04, y=.97, s=9, size=K.T_SMALL)
+K.frame(ax)
+C.title(140, 7, "Rerun decoys (set 1)", size=TT, fontweight="bold"); C.letter(132.5, 6.5, "c")
+C.save("FigS3_package_GB7")
+print("FigS3 |", out, "|", rows)

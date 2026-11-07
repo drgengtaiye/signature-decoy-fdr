@@ -1,0 +1,17 @@
+GSE58812 | samples 107 | platforms {'GPL570': 107}
+TITLE: Gene-expression molecular subtyping of triple-negative breast cancer tumours: importance of immune response
+SUMMARY: Triple-negative (TN) breast cancers need to be refined in order to identify therapeutic subgroups of patients. We conducted an unsupervised analysis of microarray gene-expression profiles of 107 TN breast cancer patients and undertook robust functional annotation of the molecular entities found by means of numerous approaches including immunohistochemistry and gene-expression signatures. An 87 TN external cohort was used for validation. Fuzzy clustering separated TN tumours into three clusters: C1 (22.4%), C2 (44.9%) and C3 (32.7%). C1 patients were older (mean = 64.6 years) than C2 (mean = 56.8 years; P = 0.03) and C3 patients (mean = 51.9 years; P = 0.0004). Histological grade and Nottingham prognostic index were higher in C2 and C3 than in C1 (P < 0.0001 for both comparisons). Significant event-free survival (EFS) (P = 0.03) was found according to cluster membership: patients belonging to C3 had a better outcome than patients in C1 (P = 0.01) and C2 (P = 0.02). EFS analysis results were confirmed when our cohort was pooled with external cohort (n = 194; P = 0.01). Functional annotation showed that 22% of TN patients were not basal-like (C1). C1 was enriched in luminal subtypes a
+DESIGN: Subtyping molecular characterization within a cohort of 107 TN-IHC by means of gene expression profiling
+RELATIONS: SubSeries of: GSE103091; BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA253922
+FIELDS (n values with it | distinct | examples):
+  diagnosis | 107 | 1 | triple negative breast cancer (x107)
+  age at diag | 107 | 107 | 72.79124; 66.26421; 67.75633; 49.54963; 84.63245; 36.98015; 59.01985; 68.18891
+  meta | 107 | 2 | 0 (x76); 1 (x31)
+  mfs (days) | 107 | 105 | 2009 (x2); 783 (x2); 1184; 984; 877; 905; 340; 2081
+  death | 107 | 2 | 0 (x78); 1 (x29)
+  os (days) | 107 | 105 | 1430 (x2); 1632 (x2); 1520; 1281; 1066; 1050; 422; 2081
+  er-ihc | 107 | 1 | 0 (x107)
+  pr-ihc | 107 | 1 | 0 (x107)
+  her2-ihc | 107 | 1 | 0 (x107)
+  [source_name_ch1] | 107 | 1 | Breast tumor biospsie (x107)
+  [title] | 107 | 107 | GP_001; GP_002; GP_003; GP_004; GP_005; GP_006; GP_007; GP_008
