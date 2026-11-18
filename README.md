@@ -41,7 +41,7 @@ paper from the stored per-cohort statistics.
 | `breast/` | download and preparation of the breast cancer cohorts and the Venet et al. signature library |
 | `scripts/` | the response and prognostic benchmarks, the dependence between signatures, figures |
 | `decoys/` | the target-decoy estimate on the response benchmark and its calibration (global null, planted signal, intervals) |
-| `validation/` | the analysis plans with their SHA-256 hashes, and the provenance of the immune and breast signatures |
+| `validation/` | the analysis plans with their SHA-256 hashes, when each was deposited (`PLAN_DEPOSITS.md`), and the provenance of the immune and breast signatures |
 | `docs/` | the searchable page of validation-cohort false-validation rates |
 
 `README.txt` gives the order in which the scripts run. The analysis scripts carry the absolute paths of the system

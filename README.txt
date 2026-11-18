@@ -17,7 +17,8 @@ breast/        download and preparation of the breast cancer cohorts and of the 
 external/      screening, download and preparation of the independent survival cohorts and of GSE176307
 scripts/       benchmarks, dependence between signatures, figures
 decoys/        the target-decoy estimate on the response benchmark and its calibration
-validation/    analysis plans with their SHA-256 hashes; provenance of the immune and breast signatures
+validation/    analysis plans with their SHA-256 hashes; when each was deposited (PLAN_DEPOSITS.md); provenance of the
+               immune and breast signatures
 
 Run order (each step reads the outputs of the steps before it)
 1  Benchmarks. scripts/null_matched_v2.R: response AUC in each checkpoint cohort with its size- and engine-matched

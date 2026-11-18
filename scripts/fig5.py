@@ -140,7 +140,7 @@ for i, e in enumerate(EP):
     for xx, s in zip((29.2, 33.8, 38.6, 43.4), (f"{r.called:.0f}", f"{r.exp_false:.1f}", f"{r.fdr:.0f}%", f"{r.fdr_pi0:.0f}%")):
         pg.txt(xx, yy, s, ha="right")
     out.append((e, r.called, r.exp_true, r.exp_false, r.fdr, r.fdr_pi0))
-for xx, s in zip((29.2, 33.8, 38.6, 43.4), ("called", "exp.", "FDR", "π0")):
+for xx, s in zip((29.2, 33.8, 38.6, 43.4), ("called", "exp.", "FDR", "corr.")):
     pg.txt(xx, ya - 1.4, s, ha="right", weight="bold")
 ax.set_yticks(range(3), EP, fontsize=5.5)
 ax.set_ylim(2.5, -0.5)
