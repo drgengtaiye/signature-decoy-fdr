@@ -118,7 +118,8 @@ pg.txt(xr_, 38.7, line, ha="right", **WB)
 pg.c.plot(56.2, 14.3, "o", ms=2.6, mfc=INK, mec="white", mew=0.3, zorder=7); pg.txt(57.4, 14.3, "content call", **WB)
 pg.c.plot(56.2, 16.7, "o", ms=2.4, mfc="white", mec=INK, mew=0.6, zorder=7); pg.txt(57.4, 16.7, "none")
 pg.c.plot(56.2, 19.1, "+", ms=4.5, mew=0.8, color=INK, zorder=7); pg.txt(57.4, 19.1, "family mean", **WB)
-pg.src("c", pd.DataFrame(out, columns=["signature", "family", "mean_rho_response", "mean_rho_OS", "content_call_either"]))
+pg.src("c", pd.DataFrame(out, columns=["signature", "family", "mean_rho_response", "mean_rho_OS", "content_call_either"])
+       .assign(inflamed_minus_confounder=p0.contrast_inflamed_minus_confounder, lo=p0.lo, hi=p0.hi, P_permutation=p0.p_perm))
 
 # ================================================================== d  family means, per setting
 pg.panel(84.5, 3, "d", "Family means")

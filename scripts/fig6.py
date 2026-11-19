@@ -456,7 +456,7 @@ def km_panel(lt, x_, title, col, color, show_y):
             pg.txt(x_ - 2.2, yy, nm, ha="right")
     if show_y:
         pg.txt(x_ - 2.2, 229.9, "at risk", ha="right", weight="bold")
-    pg.src(lt, KM.assign(above_median=hi_)[["time", "event", "above_median"]].sort_values("time").reset_index(drop=True))
+    pg.src(lt, KM.assign(above_median=hi_)[["time", "event", "above_median"]].sort_values("time").reset_index(drop=True).assign(log_rank_P=p_))
     return p_, [[int((KM.time[mk] >= tk).sum()) for tk in ticks] for mk in (hi_, ~hi_)]
 
 
