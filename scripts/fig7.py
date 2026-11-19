@@ -52,12 +52,11 @@ def lab(s):
     return s
 
 
-def sci(p):
-    """as the old sheet: two significant digits, or a power of ten below 0.001, returned as (base, exponent)"""
+def pfmt(p):
+    """(sign, value): two significant digits down to 0.001; below, no superscript (p_small: 0.0004, or < 0.0001)"""
     if p >= 0.001:
-        return (f"{p:.2g}" if p < 0.01 else f"{p:.2f}"), None
-    m, e = f"{p:.0e}".split("e")
-    return f"{m}×10", minus(int(e))
+        return "=", (f"{p:.2g}" if p < 0.01 else f"{p:.2f}")
+    return p_small(p)
 
 
 def width(s, size=5.0):
@@ -111,12 +110,11 @@ ax.set_xlabel("mean ρ, response (12 cohorts)"); ax.set_ylabel("mean ρ, OS (20 
 ax.text(0.21, 0.99, "more for survival", ha="left", va="top", fontsize=5, color=MUTED, zorder=2, **WB)
 ax.text(0.99, 0.345, "more for response", ha="right", va="center", fontsize=5, color=MUTED, zorder=2, **WB)
 p0 = PC[PC.b == "tcga_OS"].iloc[0]
-base, ex = sci(p0.p_perm)
+op_, pv_ = pfmt(p0.p_perm)
 xr_ = 81.2
-line = f"{p0.contrast_inflamed_minus_confounder:.2f} ({p0.lo:.2f}–{p0.hi:.2f}), P = {base}"
+line = f"{p0.contrast_inflamed_minus_confounder:.2f} ({p0.lo:.2f}–{p0.hi:.2f}), P {op_} {pv_}"
 pg.txt(xr_, 36.7, "inflamed − confounder", ha="right", **WB)
-pg.txt(xr_ - width(ex), 38.7, line, ha="right", **WB)
-pg.txt(xr_ - width(ex) + 0.1, 38.1, ex)
+pg.txt(xr_, 38.7, line, ha="right", **WB)
 pg.c.plot(56.2, 14.3, "o", ms=2.6, mfc=INK, mec="white", mew=0.3, zorder=7); pg.txt(57.4, 14.3, "content call", **WB)
 pg.c.plot(56.2, 16.7, "o", ms=2.4, mfc="white", mec=INK, mew=0.6, zorder=7); pg.txt(57.4, 16.7, "none")
 pg.c.plot(56.2, 19.1, "+", ms=4.5, mew=0.8, color=INK, zorder=7); pg.txt(57.4, 19.1, "family mean", **WB)
@@ -348,8 +346,8 @@ ax = pg.ax(40.5, YA - 2.5, 22.5, HA + 2.5)
 types_scatter(ax, BT.tcga, BT.ext, BT.type, INFL, {"CESC": (0.035, 0.03, "left"), "SARC": (0.035, -0.035, "left"), "HNSC": (-0.035, 0.03, "right"), "LUAD": (-0.035, 0, "right"),
                                                    "SKCM": (-0.035, 0.0, "right"), "BRCA": (0.035, 0.035, "left")})
 ax.set_xlabel("inflamed mean ρ, TCGA"); ax.set_ylabel("inflamed mean ρ, independent")
-pb, _ = sci(PRI.p_one_sided)
-ax.text(1.04, 0.015, f"Spearman {PRI.spearman:.2f},".replace("-", "−") + f"\nP = {pb}", ha="right", va="bottom", fontsize=5, linespacing=1.05, zorder=2, **WB)
+op_, pb = pfmt(PRI.p_one_sided)
+ax.text(1.04, 0.015, f"Spearman {PRI.spearman:.2f},".replace("-", "−") + f"\nP {op_} {pb}", ha="right", va="bottom", fontsize=5, linespacing=1.05, zorder=2, **WB)
 pg.src("p", BT.assign(spearman=PRI.spearman, p_one_sided=PRI.p_one_sided))
 
 pg.panel(65.5, YR, "q", "Confounder family")

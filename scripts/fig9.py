@@ -121,18 +121,15 @@ def rho(a, b):
     return stats.spearmanr(a, b).statistic
 
 
-def pow10(pg, xr, y, p, prefix="", ha="right", color=INK):
-    """a P value as in the other sheets, its exponent a raised run in the same size. xr is the right end (or left, ha='left')."""
+def pow10(pg, xr, y, p, ha="right", color=INK):
+    """a P value as in the other sheets, without a superscript: two figures down to 0.001, below that p_small
+    (0.0004, or < 0.0001). xr is the right end (or left, ha='left')."""
     if p >= 0.001:
-        s = prefix + (f"{p:.2g}" if p < 0.1 else f"{p:.2f}")
-        pg.txt(xr, y, s, ha=ha, color=color)
-        return
-    m, e = f"{p:.0e}".split("e")
-    base, ex = prefix + f"{int(m)}×10", minus(int(e))
-    wb, we = tw(base) + 0.35, tw(ex)
-    x0 = xr - wb - we if ha == "right" else xr
-    pg.txt(x0, y, base, color=color)
-    pg.txt(x0 + wb, y - 0.55, ex, color=color)
+        s = f"{p:.2g}" if p < 0.1 else f"{p:.2f}"
+    else:
+        op, v = p_small(p)
+        s = f"< {v}" if op == "<" else v
+    pg.txt(xr, y, s, ha=ha, color=color)
 
 
 SQRT = ("function", {"functions": (np.sqrt, np.square)})
@@ -229,7 +226,7 @@ for tp, r, y_, first in rows_:
         if tp != ORDER[0]:
             pg.line(1, y_ - CH / 2 - GAP / 2, 144.6, y_ - CH / 2 - GAP / 2, color=HAIR, lw=0.25)
     out_ = not r.independent_set
-    pg.txt(X_ACC, y_, r.acc + ("†" if out_ else ""), color=MUTED if out_ else INK)
+    pg.txt(X_ACC, y_, r.acc, color=MUTED if out_ else INK)
     pg.txt(X_RANK, y_, str(r["rank"]), ha="right")
     pg.txt(X_END, y_, r.endpoint, ha="center")
     pg.txt(X_PAT, y_, f"{r.patients:,.0f}", ha="right")
@@ -239,7 +236,7 @@ for tp, r, y_, first in rows_:
     if out_:
         pg.txt(X_SIB, y_, r.same_patients_as, color=MUTED)
     point(axa, 100 * r.fvr, y_, NULLC if out_ else INK, ms=3.0)
-key(pg, 1, 9.0, [(INK, "independent set (35)", "o"), (NULLC, "† outside the set (8)", "o"), (INK, "2.5%, β = 0", "dot")])
+key(pg, 1, 9.0, [(INK, "independent set (35)", "o"), (NULLC, "outside the set (8)", "o"), (INK, "2.5%, β = 0", "dot")])
 pg.src("a", pd.DataFrame([{**{k: r[k] for k in ("type", "cohort", "rank", "endpoint", "patients", "events", "null_models", "fvr", "independent_set", "same_patients_as", "note")}}
                           for _, r, _, _ in rows_]))
 
@@ -474,8 +471,7 @@ ax.set_xscale(SQRT[0], **SQRT[1]); ax.set_yscale(SQRT[0], **SQRT[1])
 ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.set_xticks([0, 10, 25, 50, 100], ["0", "10", "25", "50", "100"]); ax.set_yticks([0, 10, 25, 50, 100], ["0", "10", "25", "50", "100"]); ax.minorticks_off()
 ax.set_xlabel("law's FVR, in sample (%)"); ax.set_ylabel("observed FVR (%)")
 pg.txt(XS + 0.6, YS + 0.3, f"Spearman {H6.spearman[10]:.2f}")
-pg.txt(XS + 0.6, YS + 2.4, "P < 10")
-pg.txt(XS + 0.6 + tw("P < 10") + 0.35, YS + 1.85, "−4")
+pg.txt(XS + 0.6, YS + 2.4, "P < 0.0001")
 pg.txt(XS + 0.6, YS + 4.5, f"n = {int(H6.cohorts[10])}")
 top = C.nlargest(1, "obs")
 place(pg, (XS, YS, WS, HS), ((0, 100), (0, 100)), list(zip(100 * top.pred, 100 * top.obs)), [tlab(c) for c in top.cohort], scale=("sqrt", "sqrt"), avoid=[(XS, YS - 1, XS + 13, YS + 6)],
@@ -510,8 +506,7 @@ ax.set_xlim(0, LIMO); ax.set_ylim(0, LIMO); ax.set_xticks(TKO, [str(t) for t in 
 ax.set_xlabel("predicted FVR, half B (%)"); ax.set_ylabel("observed FVR, half B (%)")
 tx = XN + 0.8
 pg.txt(tx, YNA + 0.3, f"Spearman {HS8.spearman[10]:.2f}")
-pg.txt(tx, YNA + 2.4, "P < 10")
-pg.txt(tx + tw("P < 10") + 0.35, YNA + 1.85, "−4")
+pg.txt(tx, YNA + 2.4, "P < 0.0001")
 pg.txt(tx, YNA + 4.5, f"n = {int(HS8.cohorts[10])} cohorts")
 pg.txt(tx, YNA + 6.6, f"events only, {HS8.spearman_events[10]:.2f}")
 pg.txt(tx, YNA + 8.7, f"mean predicted {100 * HS8.pred_mean[10]:.1f}%")
@@ -523,8 +518,9 @@ pg.src("n", C[["cohort", "type", "D_B", "splits", "n", "k", "pred", "obs", "pred
 XO = 96.6
 pg.panel(XO, YB, "o", "Law in sample and out of sample")
 XK_, XF_, XN_ = XO, XO + 4.2, XO + 18.9
-TL = [("sp", XO + 19.9, 7.9), ("law", XO + 27.8, 6.2), ("ev", XO + 34.0, 6.2), ("pool", XO + 69.2, 6.1), ("with", XO + 75.3, 6.1)]
-XDF, XP = XO + 61.4, XO + 68.5
+# P and AUC columns 1.3 mm further right than in v19, to fit "< 0.0001" (no superscript) after the difference column
+TL = [("sp", XO + 19.9, 7.9), ("law", XO + 27.8, 6.2), ("ev", XO + 34.0, 6.2), ("pool", XO + 70.5, 6.1), ("with", XO + 76.6, 6.1)]
+XDF, XP = XO + 61.4, XO + 69.8
 YH, CO_ = YB + 7.4, 2.72
 pg.txt(XK_, YH - 0.4, "K", va="bottom", weight="bold")
 pg.txt(XN_, YH - 0.4, "n", ha="right", va="bottom", weight="bold")
@@ -556,8 +552,7 @@ for K in (10, 5, 20):
         tile(pg, TL[2][1], y_, TL[2][2], CO_, PURPLE(float(q["ev"]) / 0.25), f"{q['ev']:.3f}")
         pg.txt(XDF, yc, f"{minus(f'{q['d']:.3f}')} ({minus(f'{q['lo']:.3f}')} to {minus(f'{q['hi']:.3f}')})", ha="right")
         if q["p"] == 0:
-            pg.txt(XP - tw("−4") - 0.35, yc, "< 10", ha="right")
-            pg.txt(XP - tw("−4"), yc - 0.55, "−4")
+            pg.txt(XP, yc, "< 0.0001", ha="right")
         else:
             pow10(pg, XP, yc, q["p"])
         tile(pg, TL[3][1], y_, TL[3][2], CO_, BLUE(float((q["pool"] - 0.5) / 0.5)), f"{q['pool']:.2f}")

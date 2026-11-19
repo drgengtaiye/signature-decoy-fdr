@@ -144,6 +144,12 @@ def minus(v):
     return str(v).replace("-", "−")
 
 
+def p_small(p):
+    """a P value below 0.001 written without a superscript: one figure down to 0.0001 (("=", "0.0004")), below that
+    ("<", "0.0001"). The exact values are in the source data."""
+    return ("<", "0.0001") if p < 0.0001 else ("=", f"{p:.1g}")
+
+
 def tile(pg, x, y, w, h, fc, s=None, size=5.0, weight=None):
     """one matrix cell, parted from its neighbours by paper; the value printed in the contrasting ink"""
     pg.box(x, y, w - 0.15, h - 0.15, fc, z=2)

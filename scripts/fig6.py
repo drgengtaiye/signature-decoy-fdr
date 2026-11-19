@@ -445,10 +445,9 @@ def km_panel(lt, x_, title, col, color, show_y):
         ax_.set_ylabel("relapse-free")
     key(pg, x_ + 1.5, y_ + h_ - 6.4, [(color, "above median", "line")])
     key(pg, x_ + 1.5, y_ + h_ - 4.1, [(light, "below", "line")])
-    m_, e_ = f"{p_:.0e}".split("e")
-    base = f"log-rank P = {m_}×10"
-    pg.txt(x_ + 1.5, y_ + h_ - 1.6, base)
-    pg.txt(x_ + 1.5 + width(base) + 0.25, y_ + h_ - 2.3, minus(str(int(e_))))
+    # no superscript: two figures down to 0.001, below that p_small (0.0004, or < 0.0001)
+    op, s_ = p_small(p_) if p_ < 0.001 else ("=", f"{p_:.2g}" if p_ < 0.01 else f"{p_:.2f}")
+    pg.txt(x_ + 1.5, y_ + h_ - 1.6, f"log-rank P {op} {s_}")
     for jj, (mk, nm) in enumerate(((hi_, "above"), (~hi_, "below"))):
         yy = 232.6 + 2.6 * jj
         for tk in ticks:

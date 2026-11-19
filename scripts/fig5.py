@@ -497,14 +497,12 @@ def km_pair(x, w, col, c, letter, title, show_y):
     pg.txt(xl + 2.4, yl, "above median")
     pg.line(xl, yl + 2.2, xl + 1.8, yl + 2.2, color=lo_c, lw=0.8)
     pg.txt(xl + 2.4, yl + 2.2, "below")
-    # the P on the old sheet: a power of ten below 0.001, otherwise two figures; the exponent set as its own 5 pt text
+    # two figures down to 0.001; below, no superscript (p_small: 0.0004, or < 0.0001)
     if p >= 0.001:
         pg.txt(xl, yl + 4.5, f"log-rank P = {p:.2f}")
     else:
-        m_, ex = f"{p:.0e}".split("e")
-        s0 = f"log-rank P = {m_}×10"
-        pg.txt(xl, yl + 4.5, s0)
-        pg.txt(xl + textw(s0) + 0.25, yl + 3.9, f"−{int(ex.lstrip('-'))}")
+        op, s_ = p_small(p)
+        pg.txt(xl, yl + 4.5, f"log-rank P {op} {s_}")
     rows_y = (KMY + KMH + 9.3, KMY + KMH + 11.6)
     for yy, m, cc, nm in ((rows_y[0], hi, c, "above"), (rows_y[1], ~hi, INK, "below")):
         for tt in TICKS:
