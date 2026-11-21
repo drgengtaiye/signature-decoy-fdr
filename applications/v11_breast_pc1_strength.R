@@ -4,7 +4,7 @@
 # share of variance its first component carries, which a set mixing up- and down-regulated genes can have high with
 # a mean correlation near zero. Per signature and cohort: that share for the signature and the median over its
 # co-expressed and random-gene decoys.
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 OUT <- file.path(D, "v11_pkg")
 co <- breast_cohorts(); sets <- breast_sets()
 dec <- readRDS(file.path(OUT, "breast_decoys.rds"))

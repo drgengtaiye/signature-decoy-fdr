@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 
 t, pmcid, rx = sys.argv[1], sys.argv[2], sys.argv[3]
 w = int(sys.argv[4]) if len(sys.argv) > 4 and sys.argv[4].isdigit() else 600
-base = "/groups/adv2105_gp/yichen/Yi/com/gastric/" + ("round13_downloads" if "--r13" in sys.argv else "round15_downloads")
+base = "/path/to/analysis_root/" + ("round13_downloads" if "--r13" in sys.argv else "round15_downloads")
 p = f"{base}/{t}/{pmcid.replace('PMC', '')}.xml"
 if not os.path.exists(p):
     p = f"{base}/{t}/{pmcid}.xml"

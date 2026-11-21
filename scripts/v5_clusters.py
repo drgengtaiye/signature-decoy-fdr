@@ -2,7 +2,7 @@
 
     python v5_clusters.py    -> icb/v5_signature_clusters.csv, icb/v5_cluster_stats.csv
 
-Figure 1's count of significant signatures is already referred to a permutation null that
+The count of significant signatures for response (Figure 2) is already referred to a permutation null that
 preserves the correlation between signatures. Every other signature-level statistic in the
 paper — the inflamed-versus-confounder family contrast, the attribution correlations, the
 triage held-out correlation — still treats the 52 signatures as independent observations.
@@ -24,7 +24,7 @@ from scipy.cluster.hierarchy import linkage, fcluster
 from scipy.spatial.distance import squareform
 from scipy.stats import mannwhitneyu, spearmanr
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 EXCLUDE = {"ICB_VanDenEnde"}
 CUT = 0.50            # stated cut: merge while average |r| >= 0.50
 NDRAW = 20000         # one-per-cluster draws

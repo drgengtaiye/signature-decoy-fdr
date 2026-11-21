@@ -7,7 +7,7 @@ Input: the per-cohort reads of calib_score_v3.R and calib_read_natbank.R (calib_
 the same rows calib_v3_fdr.py tests. Calls: Wilcoxon signed-rank over cohorts, P < 0.05 with a positive median.
 Intervals for each FDR:
   (a) targets resampled with their decoys (the published interval)
-  (b) the 13 correlation clusters of Fig. 2d resampled, each with its targets and their decoys
+  (b) the 13 correlation clusters of Supplementary Fig. 1 resampled, each with its targets and their decoys
   (c) decoys alone resampled within each target, targets fixed (Monte Carlo error of the decoys)
   (d) the 12 cohorts resampled, every call of every target and decoy recomputed
   (e) clusters and cohorts resampled together
@@ -19,7 +19,7 @@ from scipy.spatial.distance import squareform
 from v10_calib_lib import calls
 print = functools.partial(print, flush=True)
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 rng = np.random.default_rng(20261021)
 X = pd.concat([pd.read_csv(f) for f in sorted(glob.glob(f"{D}/calib_v3/ICB_*_v3.csv"))
                + sorted(glob.glob(f"{D}/calib_v3/ICB_*_nat.csv"))])
@@ -29,7 +29,7 @@ I = pd.read_csv(f"{D}/v10_store/decoy_info.csv").set_index("decoy")
 close = ((I.r_achieved_med - I.r_target_med).abs() <= 0.05)
 DIRN = X.drop_duplicates("unit").set_index("unit").dirn
 
-# ---------------------------------------------------------------- clusters at three cuts (0.5 is Fig. 2d)
+# ---------------------------------------------------------------- clusters at three cuts (0.5 is that of Supplementary Fig. 1)
 EFF = pd.read_csv(f"{D}/v4_standardised_effects.csv"); sigs = sorted(EFF.signature); S_IDX = {s: i for i, s in enumerate(sigs)}
 zs = np.zeros((52, 52)); ws = np.zeros((52, 52))
 for co in COH:
@@ -42,7 +42,7 @@ dist = 1 - np.abs(R); np.fill_diagonal(dist, 0); dist = (dist + dist.T) / 2
 LK = linkage(squareform(dist, checks=False), method="average")
 CUTS = {c: pd.Series(fcluster(LK, t=1 - c, criterion="distance"), index=sigs).reindex(TG).to_numpy() for c in (0.4, 0.5, 0.6)}
 ref = pd.read_csv(f"{D}/v5_signature_clusters.csv").set_index("signature").cluster_fixed.reindex(TG).to_numpy()
-assert (pd.crosstab(CUTS[0.5], ref).gt(0).sum(1) == 1).all() and len(set(ref)) == len(set(CUTS[0.5])), "Fig. 2d clusters"
+assert (pd.crosstab(CUTS[0.5], ref).gt(0).sum(1) == 1).all() and len(set(ref)) == len(set(CUTS[0.5])), "clusters of Supplementary Fig. 1"
 print("clusters at cuts 0.4/0.5/0.6:", {c: len(set(v)) for c, v in CUTS.items()})
 
 

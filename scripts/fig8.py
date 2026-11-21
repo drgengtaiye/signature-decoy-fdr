@@ -1,14 +1,13 @@
-"""Figure 8 (v18) in the look of pixl_nc.py: published prognostic risk models over the whole search (round 15 part A),
-clinical multigene assays as positive controls (round 15 part D), and the published pipeline on theme pools (round 13
-part B, v17 Fig. 9 n-r). Plans: validation/PLAN_round13_published_risk_models.md (amendments 1-2) and
+"""Figure 8 (style: pixl_nc.py): published prognostic risk models over the whole search, clinical multigene assays as positive
+controls, and the published pipeline that builds models on theme pools, against matched decoys. Plans: validation/PLAN_round13_published_risk_models.md (amendments 1-2) and
 validation/PLAN_round15_literature_cohorts_controls.md (amendments 1-4). Tables: icb/v20_round15 (decoys/v20_audit.py,
-v20_citations.py, v20_assays_audit.py; applications/v20_published_models.R, v20_assays.R) and icb/v19_audit (round 13).
+v20_citations.py, v20_assays_audit.py; applications/v20_published_models.R, v20_assays.R) and icb/v19_audit (the first-pass sample and the pipeline).
 Shares, medians and quantiles read from those tables are descriptive; no test, interval or cut-off is made here."""
 import glob
 import json
 import os
 import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd
 from matplotlib.patches import Polygon
@@ -19,7 +18,7 @@ V = D + "/signature-decoy-fdr/validation/"
 THEME = {"emt": "EMT", "m6a": "m6A"}
 TYPES = ["BLCA", "BRCA", "CESC", "COAD", "HNSC", "LUAD", "LUSC", "OV", "SARC", "SKCM", "STAD"]
 
-# ---- round 15 part A
+# ---- the whole search (part A of the second literature plan)
 U = pd.read_csv(A15 + "audit_models_units.csv")
 W = U[U.n_coex.notna()]                                   # models with decoys
 IND = W[~W.uses_external.astype(bool)]
@@ -53,7 +52,7 @@ _chk = [(am(AM, "primary", "fdr").estimate, 0.395), (am(AM, "primary", "fdr").lo
 assert all(abs(a - b) < 0.0006 for a, b in _chk), _chk
 assert len(IND) == 427 and IND.validated.sum() == 180
 
-# ---- round 15 part D (clinical assays); drawn only once v20_assays_audit.py has written its tables
+# ---- clinical assays (part D of the second literature plan); drawn only once v20_assays_audit.py has written its tables
 AS = A15
 HAVE_ASSAY = all(os.path.exists(AS + f) for f in ("assay_units_all.csv", "assay_h7.csv", "assay_h7_sensitivity.csv", "assay_by_assay.csv"))
 if HAVE_ASSAY:
@@ -68,7 +67,7 @@ BR_ER = ["BRCA_GSE21653_ERpos", "BRCA_GSE96058_ERpos", "BRCA_METABRIC_ERpos"]
 CO_PRIM = ["TCGA", "COAD_GSE39582", "COAD_GSE17538", "COAD_GSE38832", "COAD_GSE103479", "COAD_GSE72970"]
 CO_OVL = ["COAD_GSE17536", "COAD_GSE14333"]
 
-# ---- round 13 part B (pipeline), as fig9_pixl.py reads it
+# ---- the pipeline (part B of the first literature plan)
 PU = pd.read_csv(A13 + "audit_pipeline_units.csv")
 PA = pd.read_csv(A13 + "audit_pipeline.csv")
 PD = pd.concat([pd.read_csv(f) for f in sorted(glob.glob(A13 + "pipeline_decoys_*.csv.gz"))])
@@ -132,7 +131,7 @@ for yy, s in zip(y, steps):
     for xc, v in ((39.3, s[1]), (44.2, s[2]), (50.3, s[3])):
         if v is not None:
             pg.txt(xc, yp, f"{v:,}", ha="right")
-pg.src("a", pd.DataFrame(steps, columns=["step", "whole_search", "first_pass_round13", "second_pass_round15"]))
+pg.src("a", pd.DataFrame(steps, columns=["step", "whole_search", "first_pass", "second_pass"]))
 
 # ================================================================ b  validated, TCGA and independent
 pg.panel(53, 3, "b", "Validated")
@@ -482,4 +481,4 @@ ax.step(bins[:-1], 100 * h / len(PU), where="post", color=SIG, lw=0.8, zorder=4)
 ax.set_xlabel("genes in model"); ax.set_ylabel("pools (%)"); ax.set_xlim(-0.5, 37); ax.set_xticks([0, 12, 24, 36]); ax.set_yticks([0, 20])
 pg.src("q", pd.concat([PD[PD["class"] == "coex"][["type", "pool", "n_model"]].assign(kind="decoy"), PU[["type", "pool", "n_model"]].assign(kind="target")]))
 
-pg.save("Fig8v18")
+pg.save("Figure8")

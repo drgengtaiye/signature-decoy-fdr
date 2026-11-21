@@ -5,7 +5,7 @@
 #   survival: the external survival cohorts of external/cohorts (one endpoint each), decoys from the genes measured
 #             in all of them and in no curated signature
 #   response: GSE176307 (metastatic urothelial carcinoma, checkpoint blockade; validation/cohorts), alone
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 args <- commandArgs(TRUE); app <- args[1]; NC <- if (length(args) > 1) as.integer(args[2]) else 8L
 OUT <- file.path(G, "icb", "v16_external"); dir.create(OUT, showWarnings = FALSE)
 K <- 10L; t0 <- Sys.time()

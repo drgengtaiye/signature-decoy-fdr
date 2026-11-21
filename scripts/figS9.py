@@ -1,20 +1,13 @@
-"""Additional file 1 Fig. S8 (GB v14): panels f and g of the GB v13 Figure 8, moved here when Figure 8 took the
-external replication (validation/PLAN_round11_external_replication.md). Unchanged in content. Original docstring:
-Figure 8 (GB v13) - gene content and co-expression structure, by endpoint, family and cancer type
+"""Supplementary Figure 9: gene content against structure, single-cohort estimates and libraries.   python figS9.py
 (validation/PLAN_round10_content_and_structure.md; icb/v15_content from decoys/v15_content_structure.py).
 
 rho(s, c) = the share of a signature's 320 co-expressed decoys whose gain over the null in cohort c lies below its own
-(0.5 when its genes add nothing to a module of its structure).
-a  rho over every signature x cohort test, by family, for response and for overall survival
-b  each signature's mean rho for response against overall survival; content calls
-c  family means of rho with intervals over correlation clusters, per setting
-d  the atlas: rho for every signature in every response cohort and TCGA type; calls and single-cohort estimates above
-e  the five tumor types of the response cohorts: inflamed and confounder rho, response against survival
-f  single-cohort estimates against the inflamed family's rho
-g  libraries: structure (decoys' per-test clearance) against content (mean rho of called targets)
+(0.5 when its genes add nothing to a module of its structure); the other displays of rho are in Figure 7 (fig7.py).
+a  single-cohort estimates against the inflamed family's rho
+b  libraries: structure (decoys' per-test clearance) against content (mean rho of called targets)
 """
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
 import cns10 as K
@@ -79,5 +72,5 @@ K.ref(ax, 5, axis="v")
 ax.set_xlim(3, 17); ax.set_ylim(0.6, 0.92); ax.set_xticks([5, 10, 15])
 ax.set_xlabel("decoys above the null's 95th pct (%)"); ax.set_ylabel("mean ρ of the called")
 
-C.save("FigS8_content_GB14")
-print("FigS8_content_GB14")
+C.save("SupplementaryFigure9")
+print("SupplementaryFigure9")

@@ -1,5 +1,5 @@
 import sys, statistics as st
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/validation/round15_cohorts/tmp_b2")
+sys.path.insert(0, "/path/to/analysis_root/signature-decoy-fdr/validation/round15_cohorts/tmp_b2")
 from soft_meta import load
 from collections import Counter
 m = load("GSE72970")

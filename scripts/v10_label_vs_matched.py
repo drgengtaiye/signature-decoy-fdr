@@ -1,9 +1,9 @@
-"""label_vs_matched.csv with the signed weighted-mean null (Additional file 1: Note S1, "The matched null against a
+"""label_vs_matched.csv with the signed weighted-mean null (Supplementary Note 1, "The matched null against a
 permutation of the labels"). Every 12-cohort benchmark row with the per-cohort 95th percentile of the folded AUC under
 label permutation (label_p95, unchanged) and whether the signature clears each bar. Run on the v4 table it must
 reproduce the v4 file.     python v10_label_vs_matched.py   -> icb/label_vs_matched.csv (v4 copy in _pre_v10/)"""
 import os, shutil, numpy as np, pandas as pd
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 if not os.path.exists(f"{D}/_pre_v10/label_vs_matched.csv"):
     shutil.copy2(f"{D}/label_vs_matched.csv", f"{D}/_pre_v10/label_vs_matched.csv")
 OLD = pd.read_csv(f"{D}/_pre_v10/label_vs_matched.csv")

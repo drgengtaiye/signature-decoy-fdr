@@ -10,7 +10,7 @@ import numpy as np, pandas as pd
 from scipy.optimize import least_squares
 from scipy.stats import norm
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 S = pd.read_csv(f"{D}/cf_cohort_stats.csv").set_index("cohort")
 N = pd.read_csv(f"{D}/native_response_matched_v2.csv")
 if "null_signed" in N:                    # v10: model the unsigned ladder rungs, as drawn

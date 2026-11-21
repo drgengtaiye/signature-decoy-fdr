@@ -1,7 +1,7 @@
 ## Export official-symbol and alias -> Entrez Gene ID tables from the installed org.Hs.eg.db
 ## (no downloaded data are read).  Usage: Rscript export_orgHs_symbols.R OUT_DIR
 args <- commandArgs(trailingOnly = TRUE)
-out <- if (length(args)) args[1] else "/groups/adv2105_gp/yichen/Yi/com/gastric/breast/annotation"
+out <- if (length(args)) args[1] else "/path/to/analysis_root/breast/annotation"
 dir.create(out, showWarnings = FALSE, recursive = TRUE)
 suppressPackageStartupMessages(library(org.Hs.eg.db))
 sym <- toTable(org.Hs.egSYMBOL)          # gene_id, symbol

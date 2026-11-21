@@ -2,7 +2,7 @@
 
 Authoritative protocol: `validation/PLAN_round15_literature_cohorts_controls.md` (A1-A2), which keeps the eligibility of
 `validation/PLAN_round13_published_risk_models.md` (A3) with its two amendments (`AMENDMENT_1_...`, `AMENDMENT_2_...`,
-rules 1-3). All paths below are under `/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/validation/`.
+rules 1-3). All paths below are under `/path/to/analysis_root/signature-decoy-fdr/validation/`.
 Do not run any search: the records are fixed.
 
 ## Your records

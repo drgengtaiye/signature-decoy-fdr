@@ -3,7 +3,7 @@
 # overall survival in 20 TCGA cancer types (primary), then disease-specific survival and the
 # progression-free interval with the same decoys (secondary). Seeds derive from 20261022: decoys 20261022,
 # null banks 20261023, global null 20261024.
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 OUT <- file.path(D, "v11_pkg"); NC <- 20L
 L <- immune_library(key = "symbol")
 CL <- read.csv(file.path(D, "v5_signature_clusters.csv"), stringsAsFactors = FALSE)

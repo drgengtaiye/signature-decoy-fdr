@@ -2,7 +2,7 @@
 # Secondary readings of the applications from their saved calls (no new draws): the estimate with only the decoys
 # whose internal correlation lies within 0.05 of their target's (closest-matched, as for the response analysis), and
 # the calls by family.  Rscript v11_post.R tcga|breast
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 OUT <- file.path(D, "v11_pkg"); app <- commandArgs(trailingOnly = TRUE)[1]
 info <- read.csv(file.path(OUT, sprintf("%s_decoy_info.csv", app)), stringsAsFactors = FALSE)
 close_ids <- info$decoy[abs(info$r_achieved_med - info$r_target_med) <= 0.05 & info$class == "coex"]

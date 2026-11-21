@@ -1,5 +1,5 @@
 """The validation-cohort lookup page (docs/validation_cohorts.html) from the table shipped with decoyfdr
-(decoyfdr/inst/extdata/validation_cohorts_r15.csv) and docs/validation_cohorts_template.html. Writes the page body (for
+(decoyfdr/inst/extdata/validation_cohorts.csv) and docs/validation_cohorts_template.html. Writes the page body (for
 hosting as an artifact) and a standalone copy with its own document head.
 
     python3 -I v24_cohort_page.py <repo root>
@@ -9,7 +9,7 @@ from pathlib import Path
 import pandas as pd
 
 R = Path(sys.argv[1])
-d = pd.read_csv(R / "decoyfdr/inst/extdata/validation_cohorts_r15.csv")
+d = pd.read_csv(R / "decoyfdr/inst/extdata/validation_cohorts.csv")
 d["independent_set"] = d.independent_set.astype(bool)
 rec = json.loads(d.to_json(orient="records"))
 body = (R / "docs/validation_cohorts_template.html").read_text().replace("__DATA__", json.dumps(rec, separators=(",", ":")))

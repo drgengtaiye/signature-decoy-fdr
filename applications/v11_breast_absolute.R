@@ -3,9 +3,9 @@
 # matched on the mean absolute pairwise correlation of their genes, the coherence a first-principal-component score
 # depends on, instead of the mean signed correlation. Null banks are drawn with the seed of the primary analysis and
 # are therefore the same; only the decoys differ. Decoy seed 20261025.
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 detach("package:decoyfdr", unload = TRUE)          # this analysis needs grow_decoys(coherence =), installed in Rlib4
-suppressMessages(library(decoyfdr, lib.loc = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb/v11_pkg/Rlib4"))
+suppressMessages(library(decoyfdr, lib.loc = "/path/to/analysis_root/icb/v11_pkg/Rlib4"))
 stopifnot("coherence" %in% names(formals(grow_decoys)))
 OUT <- file.path(D, "v11_pkg"); NC <- 13L
 co <- breast_cohorts(); sets <- breast_sets()

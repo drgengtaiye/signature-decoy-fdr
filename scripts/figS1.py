@@ -1,15 +1,14 @@
-"""Figure 2 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
-The 52 signatures as one correlated library. Old sheet: fig2_v10.py -> Figure2_GB10.
+"""Supplementary Figure 1: the 52 signatures are one correlated library, not 52 independent tests (style: pixl_nc.py).
 Tables: v3_dissociation.csv, v4_standardised_effects.csv (standardised_effects.py), v4_permutation_inference.csv (perm_inference.py),
 calib_v3/ICB_*_v3.csv (declared direction), v12_pkg/response_calls.csv.gz (calls), scores/*_sig.csv.gz (signature scores),
 SignatureSets-main/data-raw/IO/*.csv (gene lists). Correlation and clusters computed as in v5_clusters.py.
-New panels are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md)."""
+v13_fig/ (figprep_tables.py). Panels outside the figure plan are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md)."""
 import glob
 import os
 import sys
 import warnings
 from collections import Counter
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd, plt
 from matplotlib.collections import LineCollection
@@ -58,7 +57,7 @@ def vbar(pg, x, y, w, h, cmap, lo, hi, ticks, label):
     pg.txt(x + w / 2, y - 1.5, label, ha="center")
 
 
-# ---------------------------------------------------------------- tables, as in fig2_v10.py
+# ---------------------------------------------------------------- tables
 EFF = pd.read_csv(f"{I}/v4_standardised_effects.csv")
 T = pd.read_csv(f"{I}/v3_dissociation.csv")[["signature", "family", "n_genes", "method"]].merge(
     EFF[["signature", "z_resp", "z_prog"]], on="signature")
@@ -77,7 +76,7 @@ for f in FAMORD:
     order += T[T.family == f].sort_values("z_resp", ascending=False).signature.tolist()
 TO = T.set_index("signature").loc[order]
 
-# ---------------------------------------------------------------- score correlation and clusters (v5_clusters.py, fig2_v10.py)
+# ---------------------------------------------------------------- score correlation and clusters (v5_clusters.py, figprep_tables.py)
 cohorts = sorted(os.path.basename(p)[:-11] for p in glob.glob(f"{I}/scores/*_sig.csv.gz"))
 cohorts = [c for c in cohorts if c != "ICB_VanDenEnde"]
 assert len(cohorts) == 12
@@ -124,7 +123,7 @@ big_cl = sorted([c for c in csize.index if csize[c] >= 3], key=lambda c: -csize[
 rv = Rm[iu]
 same = (cl[:, None] == cl[None, :])[iu]
 
-# ---------------------------------------------------------------- gene lists and Jaccard (fig2_v10.py)
+# ---------------------------------------------------------------- gene lists and Jaccard
 genes = {}
 for s in T.signature:
     genes[s] = set(pd.read_csv(f"{I}/SignatureSets-main/data-raw/IO/{s}.csv", encoding="latin-1").get("gene_name", pd.Series(dtype=str)).dropna())
@@ -161,7 +160,7 @@ pc1 = np.median([v[0] / v.sum() for v in EIG.values()])
 corder = sorted(cohorts, key=lambda c: (TUM[c], COHORT[c]))
 SIM = np.array([[pd.Series(RV[a]).corr(pd.Series(RV[b])) for b in corder] for a in corder])
 
-# ---- agreement with the deposited tables and with the old sheet
+# ---- agreement with the tables of figprep_tables.py
 _s = pd.read_csv(f"{I}/v13_fig/cohort_similarity.csv", index_col=0).loc[corder, corder].to_numpy()
 assert np.allclose(_s, SIM, atol=1e-6)
 _e = pd.read_csv(f"{I}/v13_fig/eigen_by_cohort.csv")
@@ -570,7 +569,7 @@ ax.spines["left"].set_visible(False)
 ax.set_xlabel(f"signatures containing them ({len(holders)})", labelpad=2)
 pg.src("q", pd.DataFrame([{"gene": g, "n_signatures": n_, "signatures": ";".join(s for s in holders if g in genes[s])} for g, n_ in top]))
 
-pg.save("Fig2")
+pg.save("SupplementaryFigure1")
 print(f"called {int(CALL.sum())} | nodes {H.number_of_nodes()} edges {H.number_of_edges()} isolates {len(iso)} hubs {hubs} | meff median {med_meff} "
       f"| clusters {CLS.nunique()} sizes {sorted(csize.tolist(), reverse=True)} | r same {np.median(rv[same]):.3f} diff {np.median(rv[~same]):.3f} | pc1 {pc1:.3f} "
       f"| r>0.5 no gene {hi_r0}/{hi_r} | holders {len(holders)} | genes {len(cnt_g)} | blocks {blocks}")

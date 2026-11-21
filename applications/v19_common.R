@@ -1,6 +1,6 @@
 # Round 13 (validation/PLAN_round13_published_risk_models.md): shared pieces of the published-model audit (part A,
 # v19_published_models.R) and of the pipeline run on theme pools (part B, v19_pipeline.R).
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 suppressMessages({library(survival); library(glmnet)})
 OUT <- file.path(G, "icb", "v19_audit"); dir.create(OUT, showWarnings = FALSE)
 TYPES <- c("STAD", "SKCM", "LUAD", "LUSC", "COAD", "CESC", "SARC", "HNSC", "BLCA", "OV", "BRCA")   # plan order = index

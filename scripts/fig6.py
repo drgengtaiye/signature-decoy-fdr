@@ -1,12 +1,11 @@
-"""Figure 7 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
-The breast-cancer prognostic signatures of Venet et al. in 13 cohorts (folded C-index, first principal component unless marked,
+"""Figure 6: a library outside immunology, the breast-cancer prognostic signatures of Venet et al. (style: pixl_nc.py), in 13 cohorts (folded C-index, first principal component unless marked,
 ten decoy sets). Tables: icb/v12_pkg/breast_* (applications/v12_rerun.R, v12_breast_origin.R), icb/v11_pkg/breast_pc1_strength.csv
 (v11_breast_pc1_strength.R, post hoc), icb/v13_fig/km_breast.csv (scripts/figprep_km.R), breast/cohorts/manifest.csv,
-validation/venet_provenance*.csv. New panels (j, m, n, o, s) and the random-gene rows of c are reads of those tables, descriptive
-(validation/NOTE_figures_v17_descriptive_only.md). Nothing here is resampled or tested anew; the log-rank P values are the two the old
-sheet printed, recomputed by the same formula as cns.logrank_p and checked against the old sheet."""
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+validation/venet_provenance*.csv. Panels j, m, n, o, s and the random-gene rows of c are descriptive reads of those tables
+(validation/NOTE_figures_v17_descriptive_only.md). Nothing here is resampled or tested anew; the two log-rank P values are
+computed by the formula of cns.logrank_p."""
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd, plt  # noqa: F401
 from matplotlib.colors import to_hex
@@ -66,7 +65,7 @@ def km_curve(time, event):
 
 
 def logrank_p(time, event, group):
-    """two-group log-rank P, as cns.logrank_p; it reproduces the two values on the old sheet"""
+    """two-group log-rank P, as cns.logrank_p"""
     from scipy.stats import chi2
     t, e, g = np.asarray(time, float), np.asarray(event, int), np.asarray(group, bool)
     oe, v = 0.0, 0.0
@@ -252,7 +251,7 @@ pg.txt(148.5, Y2 + 0.4, f"ratio {GN.ratio:.2f}\n({GN.ratio_lo:.2f}–{GN.ratio_h
 key(pg, 134.5, Y2 + 7.6, [(INK, f"mean {GP.R.mean():.2f}", "line")])
 key(pg, 134.5, Y2 + 10.2, [(EST, f"estimate {GP.E.mean():.2f}", "line")])
 beyond = sorted(GP.R[GP.R >= XG].astype(int))
-pg.txt(148.5, Y2 + H2 - 3.0, f"› {', '.join(map(str, beyond))}", ha="right")
+pg.txt(148.5, Y2 + H2 - 3.0, f"≥ {XG}: {', '.join(map(str, beyond))}", ha="right")
 pg.src("g", GP[["perm", "R", "E"]].assign(realized_mean=GN.realized, estimated_mean=GN.estimated, ratio=GN.ratio, ratio_lo=GN.ratio_lo, ratio_hi=GN.ratio_hi))
 
 # ---------------------------------------------------------------- h  ten decoy sets
@@ -519,7 +518,7 @@ SD = pd.DataFrame(out, columns=["cohort", "signatures_above", "signatures", "sig
 assert SD[["signatures_pct", "coex_pct", "rand_pct"]].max().max() < XA
 pg.src("s", SD)
 
-pg.save("Fig7")
+pg.save("Figure6")
 print("c:", [(r[0], int(r[1].called), round(float(r[1].fdr), 2), round(float(r[1].fdr_lo), 2), round(float(r[1].fdr_hi), 2), round(float(r[1].fdr_pi0), 2)) for r in rows])
 print(SD.round(1).to_string())
 print("sum p_s", round(ps.sum(), 3), "| q>0.5", int((qq > 0.5).sum()), "| dC>0.1:", int((T.dC > HL).sum()), "max", round(T.dC.max(), 3), "| KM P", [f"{k_[0]:.1e}" for k_ in kmv])

@@ -6,7 +6,7 @@ Same observed AUC on both sides; only the null bank differs: the target's 1,000-
 """
 import glob, numpy as np, pandas as pd, multiprocessing as mp
 from scipy.stats import wilcoxon
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb/"
+D = "/path/to/analysis_root/icb/"
 O = pd.concat([pd.read_csv(f) for f in sorted(glob.glob(D + "calib_v3/ICB_*_own.csv"))])
 S = pd.concat([pd.read_csv(f) for f in sorted(glob.glob(D + "calib_v3/ICB_*_v3.csv"))])
 ON = sorted(glob.glob(D + "calib_v3/ICB_*_ownnat.csv")); SN = sorted(glob.glob(D + "calib_v3/ICB_*_nat.csv"))

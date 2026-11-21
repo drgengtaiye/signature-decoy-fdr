@@ -1,12 +1,11 @@
-"""Figure 3 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
-Immune signatures and response to checkpoint blockade: the same tables as fig3_v10.py, with the marginals of the old matrix split
-out and new descriptive panels read from existing tables (validation/NOTE_figures_v17_descriptive_only.md).
+"""Figure 2: immune signatures carry information about response to checkpoint blockade (style: pixl_nc.py).
+Panels outside the figure plan are descriptive reads of the tables below (validation/NOTE_figures_v17_descriptive_only.md).
 
 Tables: icb/native_response_matched_v2.csv (v10_apply_signed.py), icb/v3_dissociation.csv (p_resp, family, n_genes),
-icb/v4_permutation_inference.csv and icb/v4_permutation_null_draws.csv.gz (perm_inference.py, signed nulls of round 5),
+icb/v4_permutation_inference.csv and icb/v4_permutation_null_draws.csv.gz (perm_inference.py, signed nulls of validation/PLAN_calibration_round5.md),
 icb/cf_cohort_stats.csv (cf1_cohort_stats.R; patients and responders)."""
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd, plt
 from matplotlib.colors import Normalize
@@ -44,7 +43,7 @@ assert len(dv) == 2000 and int(ph.observed) == nsig
 CS = pd.read_csv(I + "cf_cohort_stats.csv").set_index("cohort")
 
 SHORT = {"CD39-CD8Tcell_Chow": "CD39 CD8 (Chow)", "TUMOR-VASCULATURE-UP_Lu": "Tumor vasculature (Lu)", "Tcell-inflamed_Ayers": "T-cell-inflamed (Ayers)",
-         "WNT-beta-catenin_Takeuchi": "WNT/β-catenin (Takeuchi)"}  # cns.SHORT, as the old sheet labels them
+         "WNT-beta-catenin_Takeuchi": "WNT/β-catenin (Takeuchi)"}  # cns.SHORT
 GENES = {}   # signature names are labels, roman on every sheet
 
 
@@ -58,7 +57,7 @@ def lab(s, italic=True):
 
 
 def coh(c):
-    return c.replace("ICB_", "").replace("_", " ")
+    return {"ICB_Limagne1": "Limagne", "ICB_Miao1": "Miao"}.get(c, c.replace("ICB_", "").replace("_", " "))
 
 
 def swarm(vals, step):
@@ -325,7 +324,7 @@ for i, a_ in enumerate(cols):
             tile(pg, x0 + cx * j, y0 + cy * i, cx, cy, EMPTY)
             continue
         v = RHO.loc[a_, b_]
-        tile(pg, x0 + cx * j, y0 + cy * i, cx, cy, TEALOR((v + 1) / 2), f"{v + 0.0:.1f}".replace("-0.0", "0.0").replace("-", "−"))
+        tile(pg, x0 + cx * j, y0 + cy * i, cx, cy, TEALOR((v + 1) / 2), f"{v + 0.0:.1f}".replace("-0.0", "0.0").replace("0.", ".").replace("-", "−"))   # no leading zero: "−0.6" filled the cell
 pg.src("k", RHO.rename_axis("cohort").reset_index())
 
 # ================================================================= l  gains per cohort: the data behind the marginal (new)
@@ -486,4 +485,4 @@ pg.src("s", pd.DataFrame({"signature": med.index, "family": famd[med.index].valu
 check_palette("tumor type", TYPE)
 check_palette("family", FAM)
 pg.sources = dict(sorted(pg.sources.items())); pg.letters = sorted(pg.letters)
-pg.save("Fig3")
+pg.save("Figure2")

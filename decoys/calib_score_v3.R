@@ -9,7 +9,7 @@
 suppressMessages({library(GSVA); library(matrixStats); library(MultiAssayExperiment)
                   library(SummarizedExperiment)})
 COH <- commandArgs(trailingOnly=TRUE)[1]
-D   <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D   <- "/path/to/analysis_root/icb"
 set.seed(91L + sum(utf8ToInt(COH)))
 
 meta <- read.csv(file.path(D,"sig_methods_clean.csv"), stringsAsFactors=FALSE)

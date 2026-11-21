@@ -3,7 +3,7 @@
 # Each download goes into its own directory under $BASE; files already present are not re-fetched.
 # Nothing downloaded is ever executed.  Usage: fetch_breast_data.sh [BASE]
 set -u
-BASE=${1:-/groups/adv2105_gp/yichen/Yi/com/gastric/breast}
+BASE=${1:-/path/to/analysis_root/breast}
 GEO=$BASE/download_geo
 MB=$BASE/download_metabric
 CURL="/usr/bin/curl -sS -L --fail --retry 4 --retry-delay 20 --max-time 3600"   # system curl: the conda curl's TLS handshake to ftp.ncbi times out

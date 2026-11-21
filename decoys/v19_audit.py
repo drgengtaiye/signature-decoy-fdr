@@ -5,7 +5,7 @@ applications/v19_published_models.R and v19_pipeline.R.
 """
 import glob, numpy as np, pandas as pd
 
-G = "/groups/adv2105_gp/yichen/Yi/com/gastric"
+G = "/path/to/analysis_root"
 A = f"{G}/icb/v19_audit"
 TYPES = ["STAD", "SKCM", "LUAD", "LUSC", "COAD", "CESC", "SARC", "HNSC", "BLCA", "OV", "BRCA"]
 B = 10000

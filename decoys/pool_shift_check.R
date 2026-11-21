@@ -8,7 +8,7 @@
 # an unweighted mean of z-scores (cheap; the shift is a property of the pool, not the engine).
 #   Rscript pool_shift_check.R -> pool_shift_check.csv
 suppressMessages({library(matrixStats); library(MultiAssayExperiment); library(SummarizedExperiment); library(parallel)})
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D <- "/path/to/analysis_root/icb"
 COH <- c("ICB_Mariathasan","ICB_Braun","ICB_Gide","ICB_Liu","ICB_Kim","ICB_Jung",
          "ICB_Hugo","ICB_Riaz","ICB_Van_Allen","ICB_Miao1","ICB_Puch","ICB_Limagne1")
 NB <- 300L; POOLCAP <- 8000L

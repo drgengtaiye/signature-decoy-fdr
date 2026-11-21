@@ -6,7 +6,7 @@
 # A model or decoy is scorable in a cohort when at least 80% of its genes are measured there (round 13 A5), and is
 # scored on those genes. -> icb/v20_round15/cohort_scores_<TYPE>.csv.gz
 #   DFDR_LIB=<frozen install> Rscript v20_cohort_scores.R <TYPE> [cores]
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/v20_common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/v20_common.R")
 args <- commandArgs(TRUE); tp <- args[1]
 NC <- if (length(args) > 1) as.integer(args[2]) else 8L
 CO <- read.csv(file.path(G, "signature-decoy-fdr", "validation", "round15_cohorts", "built_cohorts_r15.csv"),

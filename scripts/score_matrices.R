@@ -15,7 +15,7 @@
 #   Rscript score_matrices.R        -> icb/scores/<cohort>_{sig,null}.csv.gz, _map.csv
 suppressMessages({library(GSVA); library(matrixStats); library(MultiAssayExperiment)
                   library(SummarizedExperiment); library(parallel)})
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D <- "/path/to/analysis_root/icb"
 NRAND  <- 200
 LADDER <- c(4, 7, 12, 20, 32, 50, 80, 130, 260, 440)
 NCORE  <- as.integer(Sys.getenv("NCORE", "7"))

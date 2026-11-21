@@ -1,5 +1,5 @@
-"""Additional file 1: Fig. S4 (GB v7) - prognosis in 20 TCGA cancer types, in detail (ten decoy sets; panel a, set 1,
-which is the decoy set of applications/v11_decoy_r_by_cohort.R).
+"""Supplementary Figure 6: prognosis in 20 TCGA cancer types, in detail (ten decoy sets; panel a, set 1,
+which is the decoy set of applications/v11_decoy_r_by_cohort.R).   python run_restyled.py figS6.py
 
 a  decoys' internal correlation against their target's in each cancer type (median over a target's co-expressed
    decoys; one point per signature x cancer type)
@@ -9,7 +9,7 @@ d  signatures called by family, for each endpoint and statistic
 """
 import os, numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
-import sys; sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import v4kit as K
 import figstyle as fs
 from fig67_lib import per_signature, C_FOLD, C_DIR, C_SIG, C_DEC
@@ -71,4 +71,4 @@ ax.set_ylabel("signatures called")
 K.key(ax, [(fs.FAM[f], fs.FAMLAB[f]) for f in ("Inflamed/IFN", "Other", "Confounder")], x=.02, y=.97, s=9, size=K.T_SMALL, marker="s")
 K.frame(ax)
 C.title(115, 66, "What is called, by family", size=TT, fontweight="bold"); C.letter(107.5, 65.5, "d")
-C.save("FigS4_tcga_GB7")
+C.save("SupplementaryFigure6")

@@ -2,8 +2,8 @@
 # rows keyed by Entrez Gene) with rows mapped to current symbols (org.Hs.eg.db; the row with the largest mean kept per
 # symbol) and overall survival from the cBioPortal patient file (written by the round-15 build: BRCA_METABRIC_clin.tsv).
 suppressMessages({library(org.Hs.eg.db); library(data.table)})
-B <- "/groups/adv2105_gp/yichen/Yi/com/gastric/breast/cohorts"
-O <- "/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15"
+B <- "/path/to/analysis_root/breast/cohorts"
+O <- "/path/to/analysis_root/external/cohorts_r15"
 x <- fread(cmd = paste("zcat", file.path(B, "METABRIC_expr.tsv.gz")))
 s <- mapIds(org.Hs.eg.db, as.character(x$entrez), "SYMBOL", "ENTREZID")
 x <- x[!is.na(s)]; sym <- s[!is.na(s)]

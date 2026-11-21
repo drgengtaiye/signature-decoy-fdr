@@ -14,7 +14,7 @@ a <- commandArgs(trailingOnly=TRUE); COH <- a[1]
 NB    <- if (length(a) > 1) as.integer(a[2]) else 300L
 PER_T <- if (length(a) > 2) as.integer(a[3]) else 4L
 PMODE <- if (length(a) > 3) a[4] else "enriched"   # "natural": signature genes at their natural share, N1/N2 only
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D <- "/path/to/analysis_root/icb"
 POOLCAP <- 8000L; TOL <- 0.02; CHUNK <- 4000L
 NW <- as.integer(Sys.getenv("GSVA_WORKERS", "1"))   # GSVA is single-threaded unless given workers
 set.seed(313L + sum(utf8ToInt(COH)))

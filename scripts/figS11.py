@@ -1,12 +1,11 @@
-"""Supplementary Figure 11 (v18): the round-13 first pass of the published-model audit, v17 Fig. 9 panels a-m unchanged in
-content, laid out to fill the page (pixl_nc.py look). Code taken from fig9_pixl.py; only positions changed.
-Published prognostic risk models against matched decoys (validation/PLAN_round13_published_risk_models.md with
+"""Supplementary Figure 11 (style: pixl_nc.py): published prognostic risk models against matched decoys, in a random first-pass
+sample of the search (validation/PLAN_round13_published_risk_models.md with
 amendments 1-2; icb/v19_audit from applications/v19_*.R and decoys/v19_audit.py).
-New panels of v17 are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md)."""
+Panels outside the figure plan are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md)."""
 import glob
 import json
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd
 
@@ -202,4 +201,4 @@ ax.set_yticks(range(len(b)), [f.replace("immune-related", "immune") for f in b.f
 ax.set_ylim(-0.7, len(b) - 0.2); ax.set_xlim(-0.3, 10); ax.set_xticks([0, 2, 4, 6, 8]); ax.set_xlabel("models")
 pg.src("m", BYF)
 
-pg.save("SFig11")
+pg.save("SupplementaryFigure11")

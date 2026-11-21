@@ -1,4 +1,4 @@
-"""Shared style for the main figures (GB v8 figure set).
+"""Shared style of the earlier figure set (cns10.py builds on it; cohort labels and the log-rank P used by the figures).
 
 180 mm canvas, axes placed in millimetres from the top-left; sans-serif type at 5-8 pt; hairline axes; marks separated
 by a white gap or ring instead of outlines; no hatching. Colour does one job per figure:
@@ -13,13 +13,13 @@ The categorical hues are slots 1-3 of the reference palette (blue, orange, aqua)
 deltaE 9.2, normal-vision 24.0); aqua sits below 3:1 on white, so it always carries a legend or a direct label.
 """
 import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric")
+sys.path.insert(0, "/path/to/analysis_root")
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import to_rgb
 import figstyle as fs
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric"
+D = "/path/to/analysis_root"
 OUTDIR = f"{D}/figs_pub"
 MM = 1 / 25.4
 W = 180.0

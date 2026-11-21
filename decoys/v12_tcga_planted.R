@@ -8,12 +8,12 @@
 # per target and type) is read by Harrell's C under each simulated outcome; folded deltas against the kept bank's
 # folded median; signed-rank calls over the 20 types. Seeds: causal set and outcome 720000 + 1000 x setting +
 # replicate, truth draws 730000 + 1000 x setting + replicate, bootstrap 732000 + ... (arbitrary labels).
-suppressMessages({library(decoyfdr, lib.loc = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb/v12_pkg/Rlib5")
+suppressMessages({library(decoyfdr, lib.loc = "/path/to/analysis_root/icb/v12_pkg/Rlib5")
   library(matrixStats); library(survival); library(parallel); library(Rcpp)})
 args <- commandArgs(trailingOnly = TRUE)
 SET <- as.integer(args[1]); NREP <- if (length(args) > 1) as.integer(args[2]) else 100L
 M <- if (length(args) > 2) as.integer(args[3]) else 100L; NC <- if (length(args) > 3) as.integer(args[4]) else 1L
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"; OUTD <- file.path(D, "v12_truth"); dir.create(OUTD, FALSE)
+D <- "/path/to/analysis_root/icb"; OUTD <- file.path(D, "v12_truth"); dir.create(OUTD, FALSE)
 SETTINGS <- data.frame(kind = rep(c("T1 library", "T2 outside", "T3 mixed"), each = 2), beta = rep(c(0.3, 0.6), 3))
 kind <- SETTINGS$kind[SET + 1]; beta <- SETTINGS$beta[SET + 1]
 LAMBDA <- 0.5
@@ -95,8 +95,8 @@ pool <- readRDS(file.path(D, "v11_pkg", "tcga_decoys.rds"))$pool
 Hs <- lapply(split(H$gene_symbol, H$gs_name), function(g) intersect(unique(g), pool))
 Hs <- Hs[vapply(Hs, length, 1L) >= 15]
 cat(sprintf("msigdbr %s: %d Hallmark sets with at least 15 decoy-pool genes\n", packageVersion("msigdbr"), length(Hs)))
-Sys.setenv(DFDR_LIB = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb/v12_pkg/Rlib5")
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R", local = TRUE)
+Sys.setenv(DFDR_LIB = "/path/to/analysis_root/icb/v12_pkg/Rlib5")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R", local = TRUE)
 LIB <- immune_library(key = "symbol")$lib
 stopifnot(identical(names(LIB$sets), targets))
 

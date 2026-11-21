@@ -3,8 +3,8 @@
 # <cohort>_clin.tsv: sample, time in months, event = death). One primary-tumour specimen per patient (the first by
 # identifier when there are several). Downloaded files are read as text only.
 suppressMessages({library(org.Hs.eg.db); library(data.table)})
-R <- "/groups/adv2105_gp/yichen/Yi/com/gastric/external/raw_r15"
-O <- "/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15"
+R <- "/path/to/analysis_root/external/raw_r15"
+O <- "/path/to/analysis_root/external/cohorts_r15"
 write_cohort <- function(id, X, clin) {
   X <- log2(pmax(X, 0) + 1)
   m <- rowMeans(X); X <- X[order(-m), , drop = FALSE]; X <- X[!duplicated(rownames(X)), , drop = FALSE]

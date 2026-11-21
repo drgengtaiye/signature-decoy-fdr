@@ -1,4 +1,4 @@
-"""Additional file 1: Fig. S2 (GB v7) - calibration details.
+"""Supplementary Figure 4: calibration of the target-decoy estimate in detail.   python run_restyled.py figS4.py
 
 a  per signature: how often it is called under permutation against the mean call rate of its decoys
 b  planted signal: the realized false discovery proportion under three gene-content definitions of a true signature,
@@ -12,7 +12,7 @@ f  coverage of the setting's realized FDR under the call-probability truth, plai
 """
 import numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
-import sys; sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import v4kit as K
 import figstyle as fs
 K.apply()
@@ -148,5 +148,5 @@ K.frame(ax, left=False)
 C.title(105, 111, "Coverage, truth by call probability", size=TT, fontweight="bold")
 C.letter(97.5, 110.5, "f")
 
-C.save("FigS2_calib_GB7")
+C.save("SupplementaryFigure4")
 print("FigS_calib |", NS.round(3).to_string())

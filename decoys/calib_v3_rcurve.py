@@ -3,7 +3,7 @@
     python calib_v3_rcurve.py  -> calib_v3_rcurve.csv
 """
 import numpy as np, pandas as pd
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb/"
+D = "/path/to/analysis_root/icb/"
 U = pd.read_csv(D + "calib_v3_units.csv")
 I = pd.read_csv(D + "calib_decoys_v3_info.csv").set_index("decoy")
 U = U[(U.kind == "decoy") & (U.pool == "A") & (U.structure == "coex")].copy()

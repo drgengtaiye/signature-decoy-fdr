@@ -10,7 +10,7 @@ own decoys, so the dependence among one target's decoys is kept.
 """
 import glob, numpy as np, pandas as pd
 from scipy.stats import wilcoxon
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb/"
+D = "/path/to/analysis_root/icb/"
 RNG = np.random.default_rng(20261019)
 X = pd.concat([pd.read_csv(f) for f in sorted(glob.glob(D + "calib_v3/ICB_*_v3.csv"))])
 NAT = sorted(glob.glob(D + "calib_v3/ICB_*_nat.csv"))          # natural-pool N1/N2 (null_natpool_v4.R)

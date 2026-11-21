@@ -1,5 +1,6 @@
-"""Additional file 1: Fig. S3 (GB v7) - the package rerun and the variability of one draw of decoys (validation V3 of
+"""Supplementary Figure 5: the package rerun and the variability of one draw of decoys (validation V3 of
 validation/PLAN_round6_applications.md; analysis 4 of PLAN_round7_estimand_and_bias.md): ten decoy sets, seed 20261022.
+python run_restyled.py figS5.py
 
 a  each signature's median delta over the 12 cohorts, published pipeline (calib_v3, N0) against the package rerun,
    folded and directed
@@ -9,7 +10,7 @@ c  decoys' internal correlation against their target's, rerun decoys (median ove
 """
 import numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
-import sys; sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import v4kit as K
 import figstyle as fs
 K.apply()
@@ -68,5 +69,5 @@ ax.set_xlim(0, 1); ax.set_ylim(-.05, 1); ax.set_xlabel("target internal $r$"); a
 K.key(ax, [(C_SIG, "co-expressed"), (C_DEC, "random-gene")], x=.04, y=.97, s=9, size=K.T_SMALL)
 K.frame(ax)
 C.title(140, 7, "Rerun decoys (set 1)", size=TT, fontweight="bold"); C.letter(132.5, 6.5, "c")
-C.save("FigS3_package_GB7")
+C.save("SupplementaryFigure5")
 print("FigS3 |", out, "|", rows)

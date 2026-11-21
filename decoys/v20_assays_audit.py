@@ -5,10 +5,10 @@ and ER-positive patients of the annotated cohorts. Secondary: each assay's rho p
 -> icb/v20_round15/assay_units.csv (primary), assay_units_all.csv (every set), assay_h7.csv (primary), assay_h7_sensitivity.csv,
    assay_by_assay.csv (primary), assay_by_assay_sensitivity.csv"""
 import numpy as np, pandas as pd
-O = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb/v20_round15"
+O = "/path/to/analysis_root/icb/v20_round15"
 S = pd.read_csv(f"{O}/assay_scores.csv.gz")
 S = S[S.scorable.astype(bool)]
-CO = pd.read_csv("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/validation/round15_cohorts/built_cohorts_r15.csv")
+CO = pd.read_csv("/path/to/analysis_root/signature-decoy-fdr/validation/round15_cohorts/built_cohorts_r15.csv")
 IND = set(CO[CO.built.astype(bool) & CO.independent_set.astype(bool)].cohort) | {"TCGA"}     # amendment 4: primary on the independent set and TCGA
 S["set"] = ["erpos" if c.endswith("_ERpos") else ("primary" if c in IND else "overlap") for c in S.cohort]
 M = pd.read_csv(f"{O}/audit_models_units.csv"); M = M[M.n_coex.notna() & ~M.uses_external.astype(bool)]

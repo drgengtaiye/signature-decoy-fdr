@@ -1,6 +1,6 @@
 #!/bin/sh
 # Target-decoy calibration v3: score the decoys of calib_decoys_v3.rds in the 12 primary cohorts.
-cd /groups/adv2105_gp/yichen/Yi/com/gastric/icb || exit 1
+cd /path/to/analysis_root/icb || exit 1
 mkdir -p calib_v3/logs
 : > calib_v3/logs/exit.txt
 export OMP_NUM_THREADS=6 OPENBLAS_NUM_THREADS=6 MKL_NUM_THREADS=6

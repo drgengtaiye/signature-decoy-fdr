@@ -30,7 +30,7 @@ suppressMessages({library(GSVA); library(matrixStats); library(MultiAssayExperim
 args    <- commandArgs(trailingOnly=TRUE)
 COH     <- args[1]
 NDRAW   <- if (length(args) > 1) as.integer(args[2]) else 300L
-D       <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D       <- "/path/to/analysis_root/icb"
 OUT     <- file.path(D, "null_v4nat")
 POOLCAP <- 8000L     # candidate pool for the correlation matrix
 TOL     <- 0.02      # band around the target correlation when growing a set

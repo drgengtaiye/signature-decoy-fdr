@@ -8,7 +8,7 @@ usage: python3 -I recall_scan_r15.py
 import csv, re
 import xml.etree.ElementTree as ET
 
-G = "/groups/adv2105_gp/yichen/Yi/com/gastric"
+G = "/path/to/analysis_root"
 GENE = r"[A-Z][A-Z0-9]{1,}(?:-[A-Z0-9]+)?"
 COEF = r"[-−–—‐]?\s?\d*\.\d+(?:\s?[eE]\s?[-−–‐]?\d+|\s?[×x]\s?10\s?[-−–‐]?\d+)?"
 PROD = re.compile(COEF + r"\s*[×x\*·]\s*\(?\s*(?:Expr?\w*\s*)?\(?\s*(" + GENE + ")|(" + GENE + r")\s*(?:exp\w*)?\s*[×x\*·]\s*\(?\s*" + COEF)

@@ -4,7 +4,7 @@
 # of its genes are measured there, and is scored on those genes.
 # -> icb/v20_round15/assay_scores.csv.gz, assay_decoy_info.csv.gz
 #   DFDR_LIB=<frozen install> Rscript v20_assays.R [cores]
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/v20_common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/v20_common.R")
 # (the TCGA pair is held in PR: common.R keeps the TCGA data path in P, which a second load_pair() call reads)
 args <- commandArgs(TRUE); NC <- if (length(args)) as.integer(args[1]) else 8L
 AD <- file.path(G, "signature-decoy-fdr", "validation", "round15_assays")

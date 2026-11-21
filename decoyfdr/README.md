@@ -79,9 +79,10 @@ validated models with rho >= 0.95 replicated in another independent cohort in 30
 Decoys are matched in the training and validation cohorts by default (`match =`); give `exclude =` the gene set the
 model was selected from (for instance a ferroptosis list) to keep it out of the decoys, as the paper did.
 
-`cohort_fvr()` returns the table of the paper's 43 validation cohorts (11 cancer types): for each, the share of
-null models validated there, where a null model is the usual pipeline (univariate Cox screen, then LASSO Cox) run
-in TCGA on a pool of genes outside every published theme and model. The rates run from 0% to 85%.
+`cohort_fvr()` returns the table of the paper's 41 validation cohorts (43 rows, two of which repeat the patients of
+others; 11 cancer types): for each, the share of null models validated there, where a null model is the usual
+pipeline (univariate Cox screen, then LASSO Cox) run in TCGA on a pool of genes outside every published theme and
+model. The rates run from 0% to 85%.
 
 ## What the estimate estimates
 
@@ -99,6 +100,6 @@ draw of decoys.
 the response benchmark (its first decoy set) from the per-cohort statistics in
 `inst/extdata/response_units_N0.csv.gz`. The scripts in `../applications/` run the package on the response cohorts,
 on 20 TCGA cancer types, on breast cancer cohorts and on the MSigDB Hallmark library, with the seeds given there.
-`check_models()` reproduces round 15 part A of the paper (728 published models, 11 cancer types) from the same inputs
+`check_models()` reproduces the paper's audit of its whole literature search (728 published models, 11 cancer types) from the same inputs
 and seeds: `../applications/v24_check_models_repro.R` runs it, `../decoys/v24_check_models_repro.py` compares the
 output with the paper's tables, and `../validation/TOOL_check_models_acceptance.md` states the criteria.

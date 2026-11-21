@@ -5,7 +5,7 @@
 The inflamed-versus-confounder contrast on the standardised shift is currently a
 Mann-Whitney test over 20 and 8 signatures treated as independent observations. They are
 not independent, so the test is repeated against a null built the same way as the one
-behind Figure 1: response labels are shuffled within cohort while the score matrices stay
+behind the response benchmark (Figure 2): response labels are shuffled within cohort while the score matrices stay
 fixed, so every correlation between signatures is preserved exactly, and the whole
 pipeline is recomputed on each permutation --- per-cohort AUC for each signature and each
 matched random set, the null median and standard deviation of the signature's own rung,
@@ -22,7 +22,7 @@ print = functools.partial(print, flush=True)
 import numpy as np, pandas as pd
 from scipy.stats import mannwhitneyu
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 B = int(os.environ.get("NPERM", "2000"))
 CHUNK = 250
 EXCLUDE = {"ICB_VanDenEnde"}

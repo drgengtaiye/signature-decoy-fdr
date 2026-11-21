@@ -8,7 +8,7 @@ Inputs are the stored outputs of rounds 7 (package runs and planted signal); not
 """
 import glob, os, numpy as np, pandas as pd
 
-ICB = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+ICB = "/path/to/analysis_root/icb"
 PKG, TRU, OUT = f"{ICB}/v12_pkg", f"{ICB}/v12_truth", f"{ICB}/v14_standard"
 os.makedirs(OUT, exist_ok=True)
 T = 0.025  # null rate of the call: two-sided P < 0.05 with a positive median

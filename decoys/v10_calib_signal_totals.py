@@ -1,8 +1,8 @@
-"""Planted-signal replicates summarized as ratios of totals (Fig. 4f; Additional file 1: Fig. S4c, d): per scenario,
+"""Planted-signal replicates summarized as ratios of totals: per scenario,
 statistic and truth definition, the realized false discovery proportion sum(V)/sum(R) and each estimator's sum(E)/sum(R).
     python v10_calib_signal_totals.py   -> icb/v10_calib_signal_totals.csv"""
 import pandas as pd
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 S = pd.read_csv(f"{D}/v10_calib_signal.csv")
 rows = []
 for k, g in S.groupby(["scenario", "beta", "cohorts", "stat", "truth"]):

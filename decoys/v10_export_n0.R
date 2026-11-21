@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 # Write the N0 banks of null_matched_v3_coexpr.R (signed AUC, 1,000 draws per test) as one table for Python.
 #   Rscript v10_export_n0.R  -> icb/v10_n0_bank.csv.gz  (cohort, signature, a0001..a1000)
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D <- "/path/to/analysis_root/icb"
 out <- list()
 for (f in list.files(file.path(D, "null_v2"), pattern="_v2\\.rds$", full.names=TRUE)) {
   r <- readRDS(f)

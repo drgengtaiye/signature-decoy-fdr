@@ -16,7 +16,7 @@
 #   Rscript calib_decoys_v3.R   -> calib_decoys_v3.rds, calib_decoys_v3_info.csv
 suppressMessages({library(matrixStats); library(MultiAssayExperiment); library(SummarizedExperiment)
                   library(parallel)})
-D   <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D   <- "/path/to/analysis_root/icb"
 COH <- c("ICB_Mariathasan","ICB_Braun","ICB_Gide","ICB_Liu","ICB_Kim","ICB_Jung",
          "ICB_Hugo","ICB_Riaz","ICB_Van_Allen","ICB_Miao1","ICB_Puch","ICB_Limagne1")
 NA_COEX <- 32L; NA_RAND <- 8L; NB_COEX <- 16L

@@ -1,4 +1,4 @@
-"""Shared panels for Figures 6 and 7 (GB v6): an application of decoyfdr read from icb/v11_pkg."""
+"""Shared panels of Supplementary Figures 6-8: an application of decoyfdr read from icb/v11_pkg."""
 import numpy as np, pandas as pd
 import v4kit as K
 import figstyle as fs
@@ -62,7 +62,7 @@ def globalnull(ax, summ, stats):
 
 
 def bars2(ax, combos, ymax):
-    """GB v7: expected true (solid) and false (hatched) calls by the plain estimate; above each bar the plain estimate
+    """Expected true (solid) and false (hatched) calls by the plain estimate; above each bar the plain estimate
     and, beneath it, the pi0-corrected one. combos: (label, row, color), row from decoy_fdr()."""
     for x, (lab, r, cc) in enumerate(combos):
         et, ef = r.called - r.exp_false, r.exp_false

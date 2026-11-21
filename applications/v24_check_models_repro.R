@@ -2,7 +2,7 @@
 # models and decoys of part B5, rerun through the packaged function from the same inputs and seeds.
 #   DFDR_LIB=<install of decoyfdr 0.3.0> Rscript v24_check_models_repro.R <TYPE> [cores]
 # -> icb/v24_tool/repro_{units,scores,decoys}_<TYPE>.csv.gz (compared with round 15 by decoys/v24_check_models_repro.py)
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/v20_common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/v20_common.R")
 stopifnot(packageVersion("decoyfdr", lib.loc = RUNLIB) >= "0.3.0")
 args <- commandArgs(TRUE); tp <- args[1]
 NC <- if (length(args) > 1) as.integer(args[2]) else 8L

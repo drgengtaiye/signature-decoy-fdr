@@ -11,7 +11,7 @@
 # values one unit apart in the last place), and splits run in blocks of 25 per cohort, in parallel.
 # AMENDMENT_3_round12 (post hoc sensitivity): apps tcga_boot and external_boot, 200 nonparametric bootstrap resamples
 # of each cohort's patients (seeds 20261107 and 20261108), rho on each resample.
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 args <- commandArgs(TRUE); app <- args[1]; NC <- if (length(args) > 1) as.integer(args[2]) else 8L
 OUT <- file.path(G, "icb", "v18_split"); dir.create(OUT, showWarnings = FALSE)
 NS <- 500L; NB <- 200L; BLOCK <- 25L; TIE <- 1e-12; t0 <- Sys.time()

@@ -3,7 +3,7 @@ replacement, the call rates of targets and decoys (N0, folded and directed), aga
 Descriptive check of v10_fdr_intervals.py (d).   python v10_cohort_boot_diag.py -> icb/v10_cohort_boot_diag.csv"""
 import glob, numpy as np, pandas as pd
 from v10_calib_lib import calls
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 rng = np.random.default_rng(5)
 X = pd.concat([pd.read_csv(f) for f in sorted(glob.glob(f"{D}/calib_v3/ICB_*_v3.csv"))])
 X = X[X["null"] == "N0"]; COH = sorted(X.cohort.unique())

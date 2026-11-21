@@ -1,8 +1,8 @@
 # Data for the survival examples of Figures 6 and 7: a called signature and its median co-expressed decoy (by folded C in
 # that cohort) in one cohort, with the patients' survival, from the set-1 fits of the package runs (applications/v11_*.R).
 #   Rscript figprep_km.R   -> icb/v13_fig/km_<tag>.csv
-suppressMessages(library(decoyfdr, lib.loc = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb/v12_pkg/Rlib6"))
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+suppressMessages(library(decoyfdr, lib.loc = "/path/to/analysis_root/icb/v12_pkg/Rlib6"))
+D <- "/path/to/analysis_root/icb"
 ex <- list(list(tag = "tcga", fit = "tcga_OS_fit.rds", units = "tcga_OS_units.csv.gz", cohort = "KIRP", target = "CIN70_Carter"),
            list(tag = "breast", fit = "breast_pc1_fit.rds", units = "breast_pc1_units.csv.gz", cohort = "METABRIC",
                 target = "SOTIRIOU-GGI"))

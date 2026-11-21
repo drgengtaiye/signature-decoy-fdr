@@ -3,7 +3,7 @@
 #   DFDR_LIB=<frozen install> Rscript v20_published_models.R <TYPE> [cores]
 # A decoy carries its model's coefficients in random order (Mersenne-Twister, seed 20261202 + type index, drawn decoy
 # by decoy in the order of grow_decoys) and the direction of its own association with survival in TCGA (plan A7).
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/v20_common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/v20_common.R")
 args <- commandArgs(TRUE); tp <- args[1]
 NC <- if (length(args) > 1) as.integer(args[2]) else 8L
 ti <- match(tp, TYPES) - 1L; stopifnot(!is.na(ti))

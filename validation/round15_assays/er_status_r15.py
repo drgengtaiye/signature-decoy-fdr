@@ -1,7 +1,7 @@
 """Round 15 D2, secondary: ER status per sample from the GEO sample annotations (read as text). Writes er_status_r15.csv: cohort, sample, er."""
 import re, sys
 import pandas as pd
-G = "/groups/adv2105_gp/yichen/Yi/com/gastric"
+G = "/path/to/analysis_root"
 KEYS = {"BRCA_GSE20711": "er status", "BRCA_GSE21653": "er ihc", "BRCA_GSE42568": "er_status", "BRCA_GSE96058": "er status"}
 DIRS = {"BRCA_GSE96058": f"{G}/external/cohorts", }
 rows = []

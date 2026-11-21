@@ -1,4 +1,5 @@
-"""Additional file 1: Fig. S5 (GB v7) - the breast cancer library in detail (ten decoy sets; panels a and b, set 1).
+"""Supplementary Figure 7: the breast cancer library in detail (ten decoy sets; panels a and b, set 1).
+python run_restyled.py figS7.py
 
 a  share of variance on the first principal component, each signature against the median of its co-expressed and
    random-gene decoys (one point per signature x cohort; applications/v11_breast_pc1_strength.R, post hoc)
@@ -9,7 +10,7 @@ d  each signature's median delta C scored by the mean z, against its co-expresse
 """
 import numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
-import sys; sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import v4kit as K
 import figstyle as fs
 from fig67_lib import bars2, per_signature, C_FOLD, C_DIR, C_SIG, C_DEC
@@ -57,4 +58,4 @@ ax = C.ax(40, 72, 50, 74)
 per_signature(ax, CM, "fold", fam=None)
 ax.set_xlabel("median ΔC over cohorts (folded, mean z)")
 C.title(15, 66, "Scored by the mean z, against its decoys", size=TT, fontweight="bold"); C.letter(7.5, 65.5, "d")
-C.save("FigS5_breast_GB7")
+C.save("SupplementaryFigure7")

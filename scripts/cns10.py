@@ -1,5 +1,5 @@
-"""Shared style for the v10 main figures: the v8/v9 module (cns.py) with a deeper palette and the forms the redesign
-adds (nested interval bands, filled densities, two-dimensional density contours, alluvial ribbons, Kaplan-Meier
+"""Style of Supplementary Figures 2-10 (figS3.py, figS9.py, figS10.py and, through run_restyled.py, the others): cns.py with a
+deeper palette and further forms (nested interval bands, filled densities, two-dimensional density contours, alluvial ribbons, Kaplan-Meier
 curves with numbers at risk, circular tracks).
 
 Palette, validated all-pairs with the dataviz checker (worst CVD deltaE 10.7 deutan, 8.7 tritan; normal-vision 18.9;
@@ -7,8 +7,8 @@ every hue >= 3:1 on white): BLUE #1f62b0, VERM #d24b2a, TEAL #169073. The roles 
 family (inflamed/IFN BLUE, confounder VERM, other GRAY), unit (signature INK, co-expressed decoy TEAL, random-gene
 decoy LGRAY), statistic (folded SLATE, directed BLUE).
 """
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.path import Path

@@ -4,7 +4,7 @@
 #   folded    max(a, 1-a)        -- what the published analysis uses
 #   directed  a or 1-a           -- by the curation's 'association' column
 # The null is transformed the same way, so each statistic has its own null.
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D <- "/path/to/analysis_root/icb"
 fs <- list.files(file.path(D,"null_v2"), pattern="_v2\\.rds$", full.names=TRUE)
 rows <- list()
 for (f in fs) {

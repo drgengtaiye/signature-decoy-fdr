@@ -11,7 +11,7 @@ rung of every row, which is what the closed-form null (cf2_fit.py) models.
 """
 import numpy as np, pandas as pd
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 COLS = ["rand_med", "rand_p95", "rand_mean", "rand_sd"]
 for tab, sig, keys, stat in [("native_response_matched_v2.csv", "response", ["cohort", "signature"], "AUC"),
                              ("native_prognosis_matched.csv", "prognosis", ["cancer", "endpoint", "signature"], "C"),

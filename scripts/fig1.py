@@ -1,13 +1,12 @@
-"""Figure 1 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
-A matched null for 52 signatures, and the target-decoy procedure built on it.
+"""Figure 1: a matched null for 52 published signatures, and the target-decoy procedure built on it (style: pixl_nc.py).
 Panels a-d are the procedure drawn with real values: Chemokine (Messina) and its first decoy set (a-c), the whole library (d).
-Old tables as in fig1_v10.py; calib_v3/ICB_*_v3.csv, calib_v3_units.csv, calib_v3_fdr.csv and v12_pkg/response_fdr.csv hold the unit-level
+Tables: v13_fig/ (figprep_example.py, figprep_roc.py, figprep_r.R); calib_v3/ICB_*_v3.csv, calib_v3_units.csv, calib_v3_fdr.csv and v12_pkg/response_fdr.csv hold the unit-level
 values of the first decoy set and the ten-set estimate (calib_score_v3.R, calib_v3_fdr.py, applications/v11_*.R).
-New panels are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md)."""
+Panels outside the figure plan are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md)."""
 import glob
 import json
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd, plt
 from scipy.stats import spearmanr
@@ -246,17 +245,17 @@ pg.src("g", Q.assign(drawn=Q.n >= 10, fixed_48_gene_median_p95=old95))
 # ---------------------------------------------------------------- h  matched against fixed
 pg.panel(143, 53, "h", "Matched and fixed null")
 ax = pg.ax(151, 58, 28, 24)
-m = R.assign(delta_old=R.AUC - R.cohort.map(FIX.rand_med))
-s = m.groupby("signature")[["delta", "delta_old"]].median(); s["family"] = s.index.map(famd)
+m = R.assign(delta_fixed=R.AUC - R.cohort.map(FIX.rand_med))
+s = m.groupby("signature")[["delta", "delta_fixed"]].median(); s["family"] = s.index.map(famd)
 lo_, hi_ = -.025, .13
 ax.plot([lo_, hi_], [lo_, hi_], color=INK, lw=0.5, ls=(0, (1.0, 1.5)), zorder=1)
 for f in ("Other", "Confounder", "Inflamed/IFN"):
     g = s[s.family == f]
-    point(ax, g.delta_old, g.delta, FAM[f], ms=2.5)
+    point(ax, g.delta_fixed, g.delta, FAM[f], ms=2.5)
 ax.set_xlim(lo_, hi_); ax.set_ylim(lo_, hi_); ax.set_xticks([0, .05, .1], ["0", "0.05", "0.10"]); ax.set_yticks([0, .05, .1], ["0", "0.05", "0.10"])
 ax.set_xlabel("median ΔAUC, fixed null"); ax.set_ylabel("median ΔAUC, matched")
-rr = spearmanr(s.delta_old, s.delta)[0]
-ax.text(lo_ + 0.006, hi_, f"ρ = {rr:.2f}, n = {len(s)}", fontsize=5, va="top")
+rr = spearmanr(s.delta_fixed, s.delta)[0]
+ax.text(lo_ + 0.006, hi_, f"Spearman r = {rr:.2f}, n = {len(s)}", fontsize=5, va="top")
 pg.src("h", s.reset_index())
 
 # ================================================================ i, j
@@ -273,6 +272,7 @@ for i, co in enumerate(oi):
     for dy, v, c, mk, ms_, nm in ((-0.28, tt[tt.cohort == co].r_target, SIG, "o", 2.2, "signature"),
                                   (0.0, RB[(RB.cohort == co) & (RB["class"] == "coex")].r_decoy, COEX, "s", 1.9, "coex"),
                                   (0.28, RB[(RB.cohort == co) & (RB["class"] == "rand")].r_decoy, RAND, "D", 1.7, "rand")):
+        v = v.dropna()      # CRMA (Shukla) is unscored in Miao
         q = np.percentile(v, [5, 25, 50, 75, 95])
         ci(ax, q[0], q[4], i + dy, tint(c, 0.55), lw=0.4)
         ci(ax, q[1], q[3], i + dy, c, lw=0.9)
@@ -488,7 +488,7 @@ for i, r_ in bs.iterrows():
     tile(pg, x0 + 2 * cw, y0 + ch * i, cw, ch, BLUE(float(r_.matched) / 0.7), f"{100 * r_.matched:.0f}")
 pg.src("s", bs.assign(fixed=100 * bs.fixed, matched=100 * bs.matched))
 
-pg.save("Fig1")
+pg.save("Figure1")
 print("Fig1 | fixed", round(allr.fixed, 1), "matched", round(allr.matched, 1), "fixed higher in", int((pc.fixed > pc.matched).sum()),
       "| ROC AUC", round(auc_t, 3), "| rho", round(rr, 2), "| median size", MEDSZ, "| Gide target", round(tv, 3), "median", round(med_b, 3),
       "| first set", SP, RR, round(100 * SP / RR, 2), "| ten sets", TEN.exp_false, TEN.called, round(TEN.fdr, 2), "pi0", round(TEN.pi0, 3), round(TEN.fdr_pi0, 2))

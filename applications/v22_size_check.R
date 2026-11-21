@@ -1,7 +1,7 @@
 # Round 17 (validation/PLAN_round17_decoy_size.md): target and decoy sizes per cohort test, and the estimate with mismatched tests dropped.
 #   DFDR_LIB=<frozen install> Rscript v22_size_check.R
 suppressMessages(library(decoyfdr, lib.loc = Sys.getenv("DFDR_LIB")))
-G <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+G <- "/path/to/analysis_root/icb"
 P <- file.path(G, "v12_pkg"); O <- file.path(G, "v22_size"); dir.create(O, showWarnings = FALSE)
 LIBS <- list(response = c("response_units.csv.gz", "response_fdr.csv"), tcga_OS = c("tcga_OS_units.csv.gz", "tcga_OS_fdr.csv"),
              tcga_DSS = c("tcga_DSS_units.csv.gz", "tcga_DSS_fdr.csv"), tcga_PFI = c("tcga_PFI_units.csv.gz", "tcga_PFI_fdr.csv"),

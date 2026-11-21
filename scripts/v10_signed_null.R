@@ -15,8 +15,8 @@
 suppressMessages({library(GSVA); library(matrixStats); library(MultiAssayExperiment)
                   library(SummarizedExperiment); library(survival); library(parallel)})
 MODE <- commandArgs(trailingOnly=TRUE)[1]
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
-P <- "/groups/adv2105_gp/yichen/Yi/com/gastric/pancan"
+D <- "/path/to/analysis_root/icb"
+P <- "/path/to/analysis_root/pancan"
 NRAND <- 200
 LADDER <- c(4, 7, 12, 20, 32, 50, 80, 130, 260, 440)
 SIGNED <- c("EMT_Thompson", "IMPRES_Auslander", "IRG_Yang", "MPS_Guijarro")

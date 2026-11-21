@@ -6,7 +6,7 @@ for OS, DSS and PFI) was not kept; this re-implementation gives 0.006, 0.0009 an
     python v10_prog_cluster_boot.py [table]   -> printed
 """
 import sys, numpy as np, pandas as pd
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 P = pd.read_csv(sys.argv[1] if len(sys.argv) > 1 else f"{D}/native_prognosis_matched.csv")
 CL = pd.read_csv(f"{D}/v5_signature_clusters.csv").set_index("signature").cluster_fixed
 for ep in ("OS", "DSS", "PFI"):

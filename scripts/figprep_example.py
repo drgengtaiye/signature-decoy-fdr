@@ -5,7 +5,7 @@
 """
 import sys
 import numpy as np, pandas as pd
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/decoys")
+sys.path.insert(0, "/path/to/analysis_root/signature-decoy-fdr/decoys")
 from v10_calib_lib import Library, D
 
 L = Library()

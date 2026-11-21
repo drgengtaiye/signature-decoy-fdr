@@ -1,12 +1,11 @@
-"""Figure 6 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
-The same procedure for prognosis in 20 TCGA cancer types: folded C-index, ten decoy sets.
-Parallel to Figure 7 (one library in TCGA, one in breast cohorts).
+"""Figure 5: the same procedure for prognosis in 20 TCGA cancer types: folded C-index, ten decoy sets (style: pixl_nc.py).
+Parallel to Figure 6 (one library in TCGA, one in breast cohorts).
 
-Old panels: figscripts/fig6_v10.py. Data: icb/v12_pkg/tcga_* (applications/v12_rerun.R), v11_pkg/tcga_decoy_r_by_type.csv
+Data: icb/v12_pkg/tcga_* (applications/v12_rerun.R), v11_pkg/tcga_decoy_r_by_type.csv
 (set 1 decoys), calib_v3_units.csv (response), v13_fig/km_tcga.csv (scripts/figprep_km.R), v5_signature_clusters.csv.
-New panels are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md)."""
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+Panels outside the figure plan are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md)."""
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd, plt, fm, TextPath, D
 
@@ -78,7 +77,7 @@ def half_up(v, nd=2):
 
 
 def regions(ax, x, y, color, xlim, ylim, levels=(0.5, 0.75, 0.9, 0.97), n=120, bw=0.15, z=2):
-    """regions holding the stated shares of the density, as in fig6_v10.py: pale fills of one hue and a hairline at each level"""
+    """regions holding the stated shares of the density: pale fills of one hue and a hairline at each level"""
     from scipy.stats import gaussian_kde
     x, y = np.asarray(x, float), np.asarray(y, float)
     k = gaussian_kde(np.vstack([x, y]), bw_method=bw)
@@ -102,7 +101,7 @@ def km_curve(time, event):
 
 
 def logrank_p(time, event, group):
-    """two-group log-rank P, the function behind the old sheet's printed P (cns.logrank_p)"""
+    """two-group log-rank P, as cns.logrank_p"""
     from scipy.stats import chi2
     t, e, g = np.asarray(time, float), np.asarray(event, int), np.asarray(group, bool)
     oe, v = 0.0, 0.0
@@ -598,5 +597,5 @@ pg.src("s", pd.DataFrame(out, columns=["family", "signatures", "endpoint", "call
 pg.cbar(164.2, 231.0, 12.6, 1.4, BLUE, 0, 100, [0, 50, 100], None, labels=["0", "50", "100"])
 pg.txt(151.0, 231.7, "family called (%)")
 
-pg.save("Fig6")
+pg.save("Figure5")
 print("called", {e: (int(row(F[e]).called), round(row(F[e]).fdr, 1), round(row(F[e]).fdr_pi0, 1)) for e in EP}, "both/one/neither", both, one, none, "km P", KM_OUT)

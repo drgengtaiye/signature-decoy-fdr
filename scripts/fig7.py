@@ -1,12 +1,11 @@
-"""Figure 8 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
-What a signature's genes add beyond its structure, by endpoint and cancer type: gene content and structure
+"""Figure 7: what a signature's genes add beyond its structure, by endpoint and cancer type (style: pixl_nc.py): gene content and structure
 (validation/PLAN_round10_content_and_structure.md; icb/v15_content from decoys/v15_content_structure.py) and the independent
-cohorts of round 11 (validation/PLAN_round11_external_replication.md; icb/v17_external from decoys/v17_external_replication.py).
-New panels are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md).
+cohorts (validation/PLAN_round11_external_replication.md; icb/v17_external from decoys/v17_external_replication.py).
+Panels outside the figure plan are descriptive reads of those tables (validation/NOTE_figures_v17_descriptive_only.md).
 
 rho(s, c) = the share of a signature's 320 co-expressed decoys whose gain over the null in cohort c lies below its own."""
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd, plt, fm, TextPath
 
@@ -409,4 +408,4 @@ ax.set_yticks(tk, [g[0] for g in GR], fontsize=5); ax.tick_params(axis="y", leng
 ax.set_xlabel("family mean ρ")
 pg.src("s", pd.DataFrame(out, columns=["setting", "family", "cohort", "family_mean_rho"]))
 
-pg.save("Fig8")
+pg.save("Figure7")

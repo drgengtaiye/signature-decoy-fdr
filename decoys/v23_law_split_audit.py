@@ -4,7 +4,7 @@ import numpy as np, pandas as pd
 from scipy import stats
 import statsmodels.api as sm
 from sklearn.metrics import roc_auc_score
-G = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"; O = f"{G}/v23_law_split"; B = 10000
+G = "/path/to/analysis_root/icb"; O = f"{G}/v23_law_split"; B = 10000
 L = pd.concat([pd.read_csv(f) for f in sorted(glob.glob(f"{O}/law_split*.csv.gz"))]).drop_duplicates(["cohort", "split", "K", "id"])
 print(L.shape, L.cohort.nunique(), "cohorts")
 rows = []

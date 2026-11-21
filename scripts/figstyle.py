@@ -1,8 +1,8 @@
 """Publication style for the manuscript figures.
 
 Nature Communications specifications: 180 mm double column, 88 mm single column,
-sans-serif face, 5-7 pt type, 0.25-1 pt rules. Everything here exists so that the five
-main figures read as one set rather than five separate scripts.
+sans-serif face, 5-7 pt type, 0.25-1 pt rules. Everything here exists so that the figures
+of one set read as one set rather than separate scripts.
 """
 import matplotlib
 matplotlib.use("Agg")
@@ -79,7 +79,7 @@ def save(fig, stem, outdir="."):
 # ---------------------------------------------------------------------------------
 from matplotlib.colors import LinearSegmentedColormap as _LSC
 
-FIGDIR = "/groups/adv2105_gp/yichen/Yi/com/gastric/figs_pub"
+FIGDIR = "/path/to/analysis_root/figs_pub"
 AMBER  = "#E3A33B"     # 'missed' / intermediate calls only
 PAPER  = "#F4F6F8"     # neutral midpoint, panel wash
 

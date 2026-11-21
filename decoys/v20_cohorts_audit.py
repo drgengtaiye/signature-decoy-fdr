@@ -17,7 +17,7 @@ import glob, re
 import numpy as np, pandas as pd
 from scipy import stats
 
-G = "/groups/adv2105_gp/yichen/Yi/com/gastric"
+G = "/path/to/analysis_root"
 A = f"{G}/icb/v20_round15"
 B = 10000
 CO = pd.read_csv(f"{G}/signature-decoy-fdr/validation/round15_cohorts/built_cohorts_r15.csv")

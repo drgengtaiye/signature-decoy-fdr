@@ -1,7 +1,7 @@
 # Round 18 (validation/PLAN_round18_law_out_of_sample.md): gamma fitted on half of a cohort's patients; the rate of validation predicted and observed in the other half.
 # -> icb/v23_law_split/law_split[_<cohort>].csv.gz, one row per cohort, split, K, null model
 #   DFDR_LIB=<frozen install> Rscript v23_law_split.R [cores] [cohort]
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/v20_common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/v20_common.R")
 args <- commandArgs(TRUE); NC <- if (length(args)) as.integer(args[1]) else 8L
 ONLY <- if (length(args) > 1) args[2] else NA
 O <- file.path(G, "icb", "v23_law_split"); dir.create(O, showWarnings = FALSE)

@@ -3,7 +3,7 @@
 # Two cheap statistics per cohort: the spread of single-gene folded AUC, and the mean absolute
 # correlation between random gene pairs. One pass over each expression matrix.
 suppressMessages({library(MultiAssayExperiment); library(SummarizedExperiment); library(matrixStats); library(parallel)})
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D <- "/path/to/analysis_root/icb"
 NCORE <- as.integer(Sys.getenv("NCORE", "6"))
 NUL <- read.csv(file.path(D, "native_response_matched_v2.csv"))
 COH <- sort(unique(NUL$cohort))

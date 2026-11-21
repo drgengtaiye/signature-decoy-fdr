@@ -1,6 +1,6 @@
 #!/bin/sh
 # Natural-pool N1/N2 banks for the 52 signatures (300 draws), then the decoys read against them.
-cd /groups/adv2105_gp/yichen/Yi/com/gastric/icb || exit 1
+cd /path/to/analysis_root/icb || exit 1
 mkdir -p null_v4nat/logs
 : > null_v4nat/logs/exit.txt
 export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4

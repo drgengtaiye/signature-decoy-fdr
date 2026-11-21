@@ -77,7 +77,7 @@ check_models <- function(models, train, validate, match = NULL, n_printed = NULL
 
   old <- rng_save(); on.exit(rng_restore(old), add = TRUE)
 
-  # genes measured in every matching cohort (round 15 amendment 2)
+  # genes measured in every matching cohort
   univ <- Reduce(intersect, lapply(match, function(c) rownames(c$Z)))
   sets <- lapply(models, names); W <- lapply(models, unname)
   status <- stats::setNames(rep("kept", length(models)), names(models))
@@ -249,7 +249,7 @@ validation_fdr <- function(x, cohort = NULL, models = NULL, decoys = c("coex", "
 
 #' False-validation rates of the paper's validation cohorts
 #'
-#' For each validation cohort built in the accompanying paper (round 15), the share of null models that validated
+#' For each validation cohort built in the accompanying paper, the share of null models that validated
 #' there under rule (L). A null model is the usual pipeline (univariate Cox screen at P < 0.05, then LASSO Cox) run in
 #' TCGA of the cohort's cancer type on a decoy pool: genes matched in number, and for co-expressed pools in
 #' co-expression, to one of 15 published theme gene sets (ferroptosis, hypoxia and others), drawn from genes in no theme
@@ -267,7 +267,7 @@ validation_fdr <- function(x, cohort = NULL, models = NULL, decoys = c("coex", "
 #' head(cohort_fvr(type = "BRCA"))
 #' @export
 cohort_fvr <- function(cohort = NULL, type = NULL) {
-  f <- system.file("extdata", "validation_cohorts_r15.csv", package = "decoyfdr", mustWork = TRUE)
+  f <- system.file("extdata", "validation_cohorts.csv", package = "decoyfdr", mustWork = TRUE)
   d <- utils::read.csv(f, stringsAsFactors = FALSE)
   if (!is.null(type)) d <- d[d$type %in% type, ]
   if (!is.null(cohort)) {
@@ -339,7 +339,7 @@ as_models <- function(models) {
   models
 }
 
-# sum of coefficient x within-cohort z-score over the genes measured (round 13 A6)
+# sum of coefficient x within-cohort z-score over the genes measured
 lin_score <- function(co, genes, w) {
   k <- genes %in% rownames(co$Z)
   as.numeric(crossprod(co$Z[genes[k], , drop = FALSE], w[k]))

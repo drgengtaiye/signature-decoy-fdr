@@ -12,8 +12,8 @@
 # samples used by native_score.R; overall survival, disease-specific survival and the
 # progression-free interval are then each evaluated on the samples that have that endpoint.
 suppressMessages({library(GSVA); library(matrixStats); library(survival); library(parallel)})
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
-P <- "/groups/adv2105_gp/yichen/Yi/com/gastric/pancan"
+D <- "/path/to/analysis_root/icb"
+P <- "/path/to/analysis_root/pancan"
 NRAND  <- 200
 LADDER <- c(4, 7, 12, 20, 32, 50, 80, 130, 260, 440)
 NCORE  <- as.integer(Sys.getenv("NCORE", "12"))

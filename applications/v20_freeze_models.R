@@ -4,7 +4,7 @@
 # cohorts of the type, the 80% rule), with the amendment's explicit symbol readings -> validation/published_models_r15.csv
 # (frozen with its SHA-256 by amendment before any new model is scored). Only gene identifiers of the cohorts are read.
 suppressMessages(library(org.Hs.eg.db))
-G <- "/groups/adv2105_gp/yichen/Yi/com/gastric"
+G <- "/path/to/analysis_root"
 V <- file.path(G, "signature-decoy-fdr", "validation")
 TYPES <- c("STAD", "SKCM", "LUAD", "LUSC", "COAD", "CESC", "SARC", "HNSC", "BLCA", "OV", "BRCA")
 EXTID <- c(STAD = "STAD_GSE84437", SKCM = "SKCM_GSE65904", LUAD = "LUAD_GSE72094", LUSC = "LUSC_GSE157011",

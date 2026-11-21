@@ -4,7 +4,7 @@
 # absolute-coherence decoys 20261025). Set 1 must reproduce round 6 (icb/v11_pkg) exactly; the check is printed.
 # Seeds are arbitrary labels.
 #   DFDR_LIB=<frozen 0.2.0 install> Rscript v12_rerun.R response|tcga|breast|breast_abs [cores]
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 stopifnot(packageVersion("decoyfdr", lib.loc = RUNLIB) >= "0.2.0")
 args <- commandArgs(trailingOnly = TRUE); app <- args[1]; NC <- if (length(args) > 1) as.integer(args[2]) else 20L
 OUT <- file.path(D, "v12_pkg"); OLD <- file.path(D, "v11_pkg")

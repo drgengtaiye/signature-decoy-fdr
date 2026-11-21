@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/validation/round15_cohorts/tmp_b2")
+sys.path.insert(0, "/path/to/analysis_root/signature-decoy-fdr/validation/round15_cohorts/tmp_b2")
 from soft_meta import load
 a = load("GSE11969"); b = load("GSE13213")
 ka = {(d.get("Age"), d.get("Sex"), d.get("Survival (days)")) for d in a.values() if d.get("Histology") == "AD"}

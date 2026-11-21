@@ -10,7 +10,7 @@ realized proportion. Response replicates also carry the expected-delta truth of 
 """
 import glob, numpy as np, pandas as pd
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb/v12_truth"
+D = "/path/to/analysis_root/icb/v12_truth"
 
 
 def summarize(S, keys, extra=()):

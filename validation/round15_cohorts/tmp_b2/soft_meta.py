@@ -3,7 +3,7 @@ signature-decoy-fdr/external/parse_soft.py does (characteristics split at the fi
 suffixed '#2', '#3'; '(source)' and '(platform)' pseudo-fields), plus '(title)'. Read as text only."""
 import sys, os
 
-RAW = "/groups/adv2105_gp/yichen/Yi/com/gastric/external/raw_r15"
+RAW = "/path/to/analysis_root/external/raw_r15"
 
 
 def load(gse):

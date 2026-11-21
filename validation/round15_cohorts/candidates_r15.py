@@ -7,7 +7,7 @@ usage: python3 -I candidates_r15.py
 import csv, re
 from collections import Counter
 
-S = "/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/validation/round15_search"
+S = "/path/to/analysis_root/signature-decoy-fdr/validation/round15_search"
 TYPES = ["STAD", "SKCM", "LUAD", "LUSC", "COAD", "CESC", "SARC", "HNSC", "BLCA", "OV", "BRCA"]
 R11 = dict(STAD="GSE84437", SKCM="GSE65904", LUAD="GSE72094", LUSC="GSE157011", COAD="GSE39582", CESC="GSE44001",
            SARC="GSE21050", HNSC="GSE65858", BLCA="GSE13507", OV="GSE32062", BRCA="GSE96058")

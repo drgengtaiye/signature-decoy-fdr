@@ -5,7 +5,7 @@
 # predicted probability that it validates under (L), p_mc = Phi(0.80 sqrt(D_c) beta_mc - 1.96). K = 10 (primary), 5, 20.
 # -> icb/v20_round15/law_predictions.csv.gz (one row per cohort, null model and K)
 #   DFDR_LIB=<frozen install> Rscript v20_law.R [cores]
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/v20_common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/v20_common.R")
 args <- commandArgs(TRUE); NC <- if (length(args)) as.integer(args[1]) else 8L
 ONLY <- if (length(args) > 1) args[2] else NA      # one cohort, run alone (a forked worker that dies returns nothing)
 CO <- read.csv(file.path(G, "signature-decoy-fdr", "validation", "round15_cohorts", "built_cohorts_r15.csv"),

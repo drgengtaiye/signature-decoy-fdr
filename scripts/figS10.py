@@ -1,4 +1,4 @@
-"""Additional file 1 Fig. S9 (GB v15): how reproducible a cancer type's value is
+"""Supplementary Figure 10: how reproducible a cancer type's value is   (python figS10.py)
 (validation/PLAN_round12_reproducibility_by_type.md with amendments 1-3; icb/v18_split from
 applications/v18_split_half.R and decoys/v18_reproducibility.py).
 
@@ -10,8 +10,8 @@ c  TCGA against the independent cohort of each type, with the same noise on both
 d  why the halves can move together: the correlation of two halves' values over splits against the whole-cohort value
 e  one signature in one cohort: how often a signature above 95% of its decoys in one half is so in the other
 """
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
 import cns10 as K
@@ -145,5 +145,5 @@ ax.set_xlim(-0.6, 1.6); ax.set_ylim(0, 70); ax.set_yticks([0, 20, 40, 60])
 ax.set_ylabel("above 95% of decoys in the\nother half too (%)")
 K.legend(ax, [(K.VERM, "share of all cells", "line")], x=0.08, y=0.95, size=K.T_SMALL)
 
-C.save("FigS9_reproducibility_GB15")
-print("FigS9_reproducibility_GB15")
+C.save("SupplementaryFigure10")
+print("SupplementaryFigure10")

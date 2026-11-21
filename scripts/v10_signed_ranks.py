@@ -11,7 +11,7 @@ signature's rung is pointed at them. Nothing else in the file changes, and both 
 import glob, os, shutil, numpy as np, pandas as pd
 from scipy.stats import rankdata
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 os.makedirs(f"{D}/_pre_v10/scores", exist_ok=True)
 for f in sorted(glob.glob(f"{D}/scores/*_signed.csv.gz")):
     co = os.path.basename(f)[:-len("_signed.csv.gz")]

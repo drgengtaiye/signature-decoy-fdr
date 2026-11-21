@@ -3,7 +3,7 @@
 # against the natural-pool N1/N2 banks of null_natpool_v4.R, in the format of calib_score_v3.R.
 #   Rscript calib_read_natbank.R <ICB_cohort> -> calib_v3/<cohort>_nat.csv
 COH <- commandArgs(trailingOnly=TRUE)[1]
-D   <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D   <- "/path/to/analysis_root/icb"
 BK  <- readRDS(file.path(D, "null_v4nat", paste0(COH, "_nat.rds")))
 V   <- read.csv(file.path(D, "calib_v3", paste0(COH, "_v3.csv")), stringsAsFactors=FALSE)
 V   <- V[V$null == "N0",]

@@ -1,8 +1,8 @@
 """SCAN-B (GSE96058) as prepared for the breast library in round 7 (Entrez genes, overall survival), with Entrez
 identifiers mapped to symbols by the same org.Hs.eg.db table (breast/annotation/orgHs_symbol2entrez.tsv)."""
 import pandas as pd
-B = "/groups/adv2105_gp/yichen/Yi/com/gastric/breast"
-O = "/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts"
+B = "/path/to/analysis_root/breast"
+O = "/path/to/analysis_root/external/cohorts"
 m = pd.read_csv(f"{B}/annotation/orgHs_symbol2entrez.tsv", sep="\t", dtype=str)
 m.columns = [c.lower() for c in m.columns]
 e2s = m.drop_duplicates("gene_id").set_index("gene_id")["symbol"]

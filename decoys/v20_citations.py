@@ -3,7 +3,7 @@ against rho < 0.95, among models with decoys. -> icb/v20_round15/citations.csv, 
 import json, time, urllib.parse, urllib.request
 import numpy as np, pandas as pd
 from scipy import stats
-G = "/groups/adv2105_gp/yichen/Yi/com/gastric"; O = f"{G}/icb/v20_round15"
+G = "/path/to/analysis_root"; O = f"{G}/icb/v20_round15"
 U = pd.read_csv(f"{O}/audit_models_units.csv"); U = U[U.n_coex.notna()].copy()
 ids = sorted({str(p).replace("PMC", "") for p in U.pmcid.dropna()})
 print(len(U), "models with decoys,", len(ids), "papers")

@@ -10,7 +10,7 @@ TCGA values (icb/v15_content/atlas_by_type.csv) and the round-11 external values
 import numpy as np, pandas as pd
 from scipy.stats import chi2, spearmanr, rankdata
 
-ICB = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+ICB = "/path/to/analysis_root/icb"
 OUT = f"{ICB}/v18_split"
 FAM = pd.read_csv(f"{ICB}/v5_signature_clusters.csv").set_index("signature").family
 INF, CON, OTH = "Inflamed/IFN", "Confounder", "Other"

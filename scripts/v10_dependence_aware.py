@@ -1,4 +1,4 @@
-"""Assemble v5_dependence_aware.csv (read by Figure 1) from v5_cluster_stats.csv (v5_clusters.py) and
+"""Assemble v5_dependence_aware.csv (the dependence-aware signature-level statistics) from v5_cluster_stats.csv (v5_clusters.py) and
 v5_perm_family.csv (v5_perm_family.py).
 
     python v10_dependence_aware.py [input_dir]   -> icb/v5_dependence_aware.csv
@@ -8,7 +8,7 @@ the inputs of manuscript v4 (icb/_pre_v10), must reproduce the file that version
 """
 import sys, numpy as np, pandas as pd
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 IN = sys.argv[1] if len(sys.argv) > 1 else D
 C = pd.read_csv(f"{IN}/v5_cluster_stats.csv")
 F = pd.read_csv(f"{IN}/v5_perm_family.csv")

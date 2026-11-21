@@ -5,7 +5,7 @@
 # order grow_decoys returns them) use seed 20261205 + i. A fitted model is a null model: what the pipeline makes from
 # genes of no theme. Only TCGA is read here; the null models are scored in the validation cohorts by v20_null_scores.R.
 #   DFDR_LIB=<frozen install> Rscript v20_null_models.R <TYPE> [cores]
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/v20_common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/v20_common.R")
 args <- commandArgs(TRUE); tp <- args[1]
 NC <- if (length(args) > 1) as.integer(args[2]) else 8L
 ti <- match(tp, TYPES) - 1L; stopifnot(!is.na(ti))

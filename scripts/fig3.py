@@ -1,13 +1,12 @@
-"""Figure 4 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
-A target-decoy false discovery rate for 52 immune signatures and response to checkpoint blockade.
-Tables as in fig4_v10.py: calib_v3_fdr.csv, calib_v3_units.csv, calib_v3/ICB_*_v3.csv, calib_v3_fdr_diff_close.csv, calib_v3_rcurve.csv
+"""Figure 3: a target-decoy false discovery rate for 52 published immune signatures and response to checkpoint blockade
+(style: pixl_nc.py). Tables: calib_v3_fdr.csv, calib_v3_units.csv, calib_v3/ICB_*_v3.csv, calib_v3_fdr_diff_close.csv, calib_v3_rcurve.csv
 (first decoy set); v12_pkg/response_fdr.csv, response_fdr_by_set.csv, response_calls.csv.gz, response_decoy_info.csv.gz (ten sets);
-v13_fig/threshold_curve.csv, convergence_sets.csv (written by fig4_v10.py). New panels are descriptive reads of those tables
-(validation/NOTE_figures_v17_descriptive_only.md). The per-test intervals of panel h repeat the seeded bootstrap of fig4_v10.py,
-same seed, same order, same draws; nothing is resampled afresh."""
+v13_fig/threshold_curve.csv, convergence_sets.csv (figprep_tables.py). Panels outside the figure plan are descriptive reads of
+those tables (validation/NOTE_figures_v17_descriptive_only.md). The per-test intervals of panel h are a bootstrap with a fixed
+seed (20261019), drawn in a fixed order, so that every drawing of the figure gives the same intervals."""
 import glob
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd, plt
 from matplotlib import font_manager as fm
@@ -28,7 +27,7 @@ TH = pd.read_csv(I_ + "v13_fig/threshold_curve.csv")
 CONV = pd.read_csv(I_ + "v13_fig/convergence_sets.csv")
 FAMS = pd.read_csv(I_ + "v5_signature_clusters.csv").set_index("signature").family
 
-# The two statistics. Black and blue as in the old sheet's dark and blue; checked with their tints.
+# The two statistics: black and blue, checked with their tints.
 FOLD, DIRN = INK, "#3B8ED0"
 STAT = {"fold": FOLD, "dir": DIRN}
 LIGHT = {"fold": 0.40, "dir": 0.30}
@@ -238,7 +237,7 @@ for k_y, it in zip(np.arange(133.4, 160, 2.45),
     key(pg, kx, k_y, [it], sw=1.8)
 pg.src("d", pd.DataFrame(out))
 
-# ---- q per signature, as fig4_v10.py computes it
+# ---- q per signature
 QS = {}
 PS = {}
 NDEC = {}
@@ -417,7 +416,7 @@ out = []
 
 
 def regions(ax, x, y, color, levels=(0.5, 0.75, 0.9, 0.97), n=120, bw=0.18):
-    """highest-density regions drawn as hairlines, as fig4_v10.py computes them"""
+    """highest-density regions drawn as hairlines"""
     from scipy.stats import gaussian_kde
     k = gaussian_kde(np.vstack([x, y]), bw_method=bw)
     gx, gy = np.meshgrid(np.linspace(0, 1, n), np.linspace(0, 1, n))
@@ -476,7 +475,7 @@ for i, (co, r) in enumerate(byc.iterrows()):
 ax.text(13.6, len(byc) - 0.25, "n", ha="right", va="bottom", fontsize=5, weight="bold", clip_on=False)
 ax.axvline(5, color=NOM, lw=0.7, ls=(0, (1.0, 1.5)), zorder=1)
 ax.text(5, len(byc) - 0.25, "5%", ha="center", va="bottom", fontsize=5, clip_on=False)
-ax.set_yticks(range(len(byc)), [c_.replace("ICB_", "").replace("_", " ") for c_ in byc.index], fontsize=5)
+ax.set_yticks(range(len(byc)), [{"ICB_Limagne1": "Limagne", "ICB_Miao1": "Miao"}.get(c_, c_.replace("ICB_", "").replace("_", " ")) for c_ in byc.index], fontsize=5)
 ax.set_ylim(-0.6, len(byc) - 0.4); ax.set_xlim(0, 11.5); ax.set_xticks([0, 5, 10]); ax.set_xlabel("decoy tests above (%)")
 pg.src("n", byc.reset_index().rename(columns={"coex": "coexpressed_pct", "rand": "random_gene_pct", "n": "patients"}))
 
@@ -561,4 +560,4 @@ ax.set_xlabel("decoy sets pooled"); ax.set_ylabel("estimated FDR (%)")
 key(pg, 161, 214.6, [(FOLD, "folded", "o"), (DIRN, "directed", "o")], sw=1.5, gap=1.5)
 pg.src("s", CONV)
 
-pg.save("Fig4")
+pg.save("Figure3")

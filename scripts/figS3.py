@@ -1,13 +1,13 @@
-"""Additional file 1, Fig. S2 (GB v11): the panels of the v10 Figure 5 moved out of the main figure, unchanged in content
-(validation/PLAN_round9_standard_fdr_comparison.md, B), in the order the text cites them.
+"""Supplementary Figure 3: calibration of the estimate: call rates, true signatures, interval coverage and pi0
+(validation/PLAN_round9_standard_fdr_comparison.md, B), in the order the text cites them.   python figS3.py
 
-a  per unit: the call rate of signatures and of each decoy class under the global null against the nominal 2.5% (v10 5c)
-b  the pi0 estimate in each of the 1,000 label permutations (v10 5l)
-c  how many signatures each truth counts as true (v10 5f)
-d  how often the intervals contain the setting's realized FDR (v10 5i)
+a  per unit: the call rate of signatures and of each decoy class under the global null against the nominal 2.5%
+b  the pi0 estimate in each of the 1,000 label permutations
+c  how many signatures each truth counts as true
+d  how often the intervals contain the setting's realized FDR
 """
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import glob, numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
 import cns10 as K
@@ -77,5 +77,5 @@ K.legend(ax, [(K.SLATE, f"folded, mean {P0[P0.stat == 'fold'].pi0.mean():.2f}", 
               (K.BLUE, f"directed, mean {P0[P0.stat == 'dir'].pi0.mean():.2f}", "line")], x=0.03, y=0.97, dy=0.1, s=7,
          size=K.T_SMALL)
 
-C.save("FigS2_calib_extra_GB11")
-print("FigS2_calib_extra_GB11 | n true", nt.round(1).to_dict(), "| pi0 mean", P0.groupby("stat").pi0.mean().round(3).to_dict())
+C.save("SupplementaryFigure3")
+print("SupplementaryFigure3 | n true", nt.round(1).to_dict(), "| pi0 mean", P0.groupby("stat").pi0.mean().round(3).to_dict())

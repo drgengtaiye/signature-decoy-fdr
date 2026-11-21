@@ -1,4 +1,4 @@
-"""The look of the AML multi-omic figures (Yi/pixlgen/integration/cns_figures), for the main figures of the decoy paper.
+"""Style of the main figures and of Supplementary Figures 1 and 11.
 
   page     180 mm wide, at most 240 mm tall, everything placed in mm from the top-left; panels small and many
   type     real Helvetica; letter 8 bold, title 6.5 bold, axis 6, tick 5.5, everything else 5; nothing under 5 pt
@@ -24,12 +24,12 @@ from matplotlib.colors import LinearSegmentedColormap, to_rgb
 from matplotlib.patches import Rectangle
 from matplotlib.textpath import TextPath
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric"
+D = "/path/to/analysis_root"
 OUT = os.environ.get("PIXL_OUT", f"{D}/figs_pub/pixl")
 os.makedirs(OUT, exist_ok=True)
 
 # ---- Font: the real faces only. ~/.fonts holds a different cut under the same family name, so it is dropped in memory.
-FACES = "/groups/adv2105_gp/yichen/font/helvetica_faces/Helvetica-%s.ttf"
+FACES = os.environ.get("HELVETICA_FACES", "/path/to/fonts/helvetica_faces") + "/Helvetica-%s.ttf"   # Helvetica-Regular.ttf, -Bold, -Oblique, -BoldOblique
 fm.fontManager.ttflist = [f for f in fm.fontManager.ttflist if f.name != "Helvetica"]
 for face in ("Regular", "Bold", "Oblique", "BoldOblique"):
     fm.fontManager.addfont(FACES % face)
@@ -57,7 +57,7 @@ MARK = {"sig": "o", "coex": "s", "rand": "D", "null": "o"}
 INFL, CONF, OTH = "#00A087", "#9B6FD6", "#BDBDBD"                       # family
 FAM = {"Inflamed/IFN": INFL, "Confounder": CONF, "Other": OTH}
 EST, NOM, PI0 = "#00A087", "#BDBDBD", "#8A6100"                         # decoy estimate, nominal, pi0-corrected (where drawn together)
-SCEN = {"P1": "#00A087", "P2": "#E3B341", "P3": "#7A0F3C"}              # planted scenarios in Fig. 5
+SCEN = {"P1": "#00A087", "P2": "#E3B341", "P3": "#7A0F3C"}              # planted scenarios in Figure 4
 TYPE = {"melanoma": "#4A3B8F", "kidney": "#C2549C", "lung": "#3B8ED0", "bladder": "#E3B341", "gastric": "#8A6100"}
 # Ramps
 BLUE = LinearSegmentedColormap.from_list("agree", ["#EEF4FA", "#9CC3E0", "#1F6FAE", "#08306B"])

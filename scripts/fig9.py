@@ -1,15 +1,15 @@
-"""Figure 10, in the look of the AML multi-omic figures (pixl_nc.py). Round 15 parts B and C: the false-validation rate of
+"""Figure 9 (style: pixl_nc.py): the false-validation rate of
 validation cohorts and what accounts for it (validation/PLAN_round15_literature_cohorts_controls.md, amendment 3; icb/v20_round15
-from applications/v20_cohort_scores.R, v20_law.R and decoys/v20_cohorts_audit.py), with the law tested out of sample in round 18
+from applications/v20_cohort_scores.R, v20_law.R and decoys/v20_cohorts_audit.py), with the law tested out of sample
 (validation/PLAN_round18_law_out_of_sample.md; icb/v23_law_split from applications/v23_law_split.R and decoys/v23_law_split_audit.py).
 
-Under the reading rule of round 18, H6c at K = 10 is not met, so the sheet keeps "predicted" for the out-of-sample panels alone.
+Under the reading rule of the out-of-sample plan, H6c at K = 10 is not met, so the sheet keeps "predicted" for the out-of-sample panels alone.
 Every P value printed comes from cohorts_h4.csv, cohorts_h5.csv, cohorts_h6.csv or law_split_h6.csv. The other coefficients are
 descriptive (printed with n, no P). Nothing is resampled here. The script stops if a table disagrees with the quoted values."""
 import glob
 import re
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd, plt, fm, TextPath
 from scipy import stats
@@ -518,7 +518,7 @@ pg.src("n", C[["cohort", "type", "D_B", "splits", "n", "k", "pred", "obs", "pred
 XO = 96.6
 pg.panel(XO, YB, "o", "Law in sample and out of sample")
 XK_, XF_, XN_ = XO, XO + 4.2, XO + 18.9
-# P and AUC columns 1.3 mm further right than in v19, to fit "< 0.0001" (no superscript) after the difference column
+# P and AUC columns placed to fit "< 0.0001" (no superscript) after the difference column
 TL = [("sp", XO + 19.9, 7.9), ("law", XO + 27.8, 6.2), ("ev", XO + 34.0, 6.2), ("pool", XO + 70.5, 6.1), ("with", XO + 76.6, 6.1)]
 XDF, XP = XO + 61.4, XO + 69.8
 YH, CO_ = YB + 7.4, 2.72
@@ -618,4 +618,4 @@ key(pg, XR2 + 7.4, AXY + 0.4, [(NULLC, "in sample", "o")])
 key(pg, XR2 + 7.4, AXY + 2.6, [(INK, "half B", "o")])
 pg.src("r", pd.concat(brows).assign(bin_lo=lambda d: d.bin / 10, bin_hi=lambda d: (d.bin + 1) / 10))
 
-pg.save("Fig10")
+pg.save("Figure9")

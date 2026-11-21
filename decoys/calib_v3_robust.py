@@ -1,4 +1,4 @@
-"""Reviewer checks on the target-decoy FDR (calibration v3).
+"""Robustness checks on the target-decoy FDR (calibration v3).
 
     python calib_v3_robust.py  -> calib_v3_fdr_diff.csv, calib_v3_fdr_matched.csv
 
@@ -10,7 +10,7 @@
    of their target's and (b) without targets whose internal r exceeds 0.5.
 """
 import glob, numpy as np, pandas as pd
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb/"
+D = "/path/to/analysis_root/icb/"
 U = pd.read_csv(D + "calib_v3_units.csv")
 I = pd.read_csv(D + "calib_decoys_v3_info.csv").set_index("decoy")
 X = pd.concat([pd.read_csv(f, usecols=["unit", "kind", "dirn"]) for f in sorted(glob.glob(D + "calib_v3/ICB_*_v3.csv"))])

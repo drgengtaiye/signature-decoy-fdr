@@ -1,6 +1,6 @@
 #!/bin/bash
 # the 12 response cohorts, one process each
-cd /groups/adv2105_gp/yichen/Yi/com/gastric/icb
+cd /path/to/analysis_root/icb
 export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4
 printf '%s\n' ICB_Braun ICB_Gide ICB_Hugo ICB_Jung ICB_Kim ICB_Limagne1 ICB_Liu \
   ICB_Mariathasan ICB_Miao1 ICB_Puch ICB_Riaz ICB_Van_Allen \

@@ -1,5 +1,5 @@
-"""The validation-cohort table shipped with decoyfdr 0.3.0 (cohort_fvr()), from icb/v20_round15/cohorts_fvr.csv
-(round 15 B4). Adds the accession and the count of null models validated; every other value is copied unchanged.
+"""The validation-cohort table shipped with decoyfdr (cohort_fvr(); inst/extdata/validation_cohorts.csv), from
+icb/v20_round15/cohorts_fvr.csv (part B4 of validation/PLAN_round15_literature_cohorts_controls.md). Adds the accession and the count of null models validated; every other value is copied unchanged.
 
     python3 -I v24_cohort_table.py <cohorts_fvr.csv> <out csv>
 """

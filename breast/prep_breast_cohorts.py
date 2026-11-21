@@ -16,7 +16,7 @@ Run (the .Rda files of the Venet bundle are parsed with the pure-Python `rdata`
 package, never with R):
 
     RDENV=<a Python virtual environment with rdata, numpy and pandas>/bin/python
-    $RDENV -I prep_breast_cohorts.py [--base /groups/adv2105_gp/yichen/Yi/com/gastric/breast]
+    $RDENV -I prep_breast_cohorts.py [--base /path/to/analysis_root/breast]
 
 Inputs (defaults under --base): download_venet/, download_geo/<GSE>/, download_metabric/,
 annotation/orgHs_{symbol,alias}2entrez.tsv (written by export_orgHs_symbols.R from the
@@ -581,9 +581,9 @@ def cross_diagnostic(cohorts, out):
 # --------------------------------------------------------------------------- main
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--base", default="/groups/adv2105_gp/yichen/Yi/com/gastric/breast")
-    ap.add_argument("--tcga-expr", default="/groups/adv2105_gp/yichen/Yi/com/gastric/pancan/expr/BRCA.gz")
-    ap.add_argument("--tcga-surv", default="/groups/adv2105_gp/yichen/Yi/com/gastric/pancan/Survival_SupplementalTable_S1_20171025_xena_sp")
+    ap.add_argument("--base", default="/path/to/analysis_root/breast")
+    ap.add_argument("--tcga-expr", default="/path/to/analysis_root/pancan/expr/BRCA.gz")
+    ap.add_argument("--tcga-surv", default="/path/to/analysis_root/pancan/Survival_SupplementalTable_S1_20171025_xena_sp")
     ap.add_argument("--skip-write", action="store_true", help="build everything but do not write cohort files")
     a = ap.parse_args()
     a.venet = f"{a.base}/download_venet/ploscb-venet-dumont-detours/data"

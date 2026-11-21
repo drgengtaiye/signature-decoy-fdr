@@ -2,7 +2,7 @@
 # Does a consensus of published inflamed signatures beat the individual signatures,
 # and does supervised learning beat the consensus? Everything evaluated out-of-cohort.
 suppressMessages({library(glmnet)}); set.seed(42)
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D <- "/path/to/analysis_root/icb"
 CO <- readRDS(file.path(D,"positive_scores.rds"))
 INFLAMED <- c("Chemokine_Messina","STAT1_Care","ImmuneScore_Roh","TIS_Damotte","APM_Thompson",
               "Inflammatory_Thompson","IRG_Ayers","APM_Wang","IFN_Ayers","Teff-IFNG_Fehrenbacher",

@@ -5,7 +5,7 @@ patient. Chemo-immunotherapy cohorts use the registered endpoint (major patholog
 for GSE207422, CR/PR against SD for GSE235919). Nothing here looks at any signature.
 """
 import gzip, io, re, glob, os, numpy as np, pandas as pd
-V = "/groups/adv2105_gp/yichen/Yi/com/gastric/validation"; RAW = f"{V}/raw"; OUT = f"{V}/cohorts"
+V = "/path/to/analysis_root/validation"; RAW = f"{V}/raw"; OUT = f"{V}/cohorts"
 os.makedirs(OUT, exist_ok=True)
 
 

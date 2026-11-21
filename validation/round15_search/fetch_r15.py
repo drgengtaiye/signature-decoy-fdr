@@ -5,7 +5,7 @@ usage: python3 -I fetch_r15.py
 """
 import csv, os, time, urllib.request
 
-G = "/groups/adv2105_gp/yichen/Yi/com/gastric"
+G = "/path/to/analysis_root"
 S = f"{G}/signature-decoy-fdr/validation/round13_search"
 OUT = f"{G}/round15_downloads"
 TYPES = ["STAD", "SKCM", "LUAD", "LUSC", "COAD", "CESC", "SARC", "HNSC", "BLCA", "OV", "BRCA"]

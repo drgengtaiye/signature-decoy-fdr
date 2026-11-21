@@ -1,8 +1,8 @@
 # Shared loaders for the decoyfdr runs (validation/PLAN_round6_applications.md; round 7 sets DFDR_LIB to its frozen
 # install of decoyfdr 0.2.0).
-RUNLIB <- Sys.getenv("DFDR_LIB", "/groups/adv2105_gp/yichen/Yi/com/gastric/icb/v11_pkg/Rlib3")   # a frozen install (Rlib3: calibrate_null directed deltas fixed; pc1 by the Gram matrix): development installs leave running jobs alone
+RUNLIB <- Sys.getenv("DFDR_LIB", "/path/to/analysis_root/icb/v11_pkg/Rlib3")   # a frozen install (Rlib3: calibrate_null directed deltas fixed; pc1 by the Gram matrix): development installs leave running jobs alone
 suppressMessages({library(decoyfdr, lib.loc = RUNLIB); library(matrixStats)})
-G   <- "/groups/adv2105_gp/yichen/Yi/com/gastric"
+G   <- "/path/to/analysis_root"
 D   <- file.path(G, "icb")
 P   <- file.path(G, "pancan")
 

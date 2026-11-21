@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Format checks on the prepared breast cohorts (no expression-outcome computation of any kind).
 
-    python3 -I verify_breast_cohorts.py [/groups/adv2105_gp/yichen/Yi/com/gastric/breast/cohorts]
+    python3 -I verify_breast_cohorts.py [/path/to/analysis_root/breast/cohorts]
 """
 import sys
 
 import numpy as np
 import pandas as pd
 
-d = sys.argv[1] if len(sys.argv) > 1 else "/groups/adv2105_gp/yichen/Yi/com/gastric/breast/cohorts"
+d = sys.argv[1] if len(sys.argv) > 1 else "/path/to/analysis_root/breast/cohorts"
 man = pd.read_csv(f"{d}/manifest.csv")
 bad = 0
 for _, r in man[man.included].iterrows():

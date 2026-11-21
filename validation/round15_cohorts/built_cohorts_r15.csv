@@ -1,45 +1,45 @@
 type,cohort,dir,built,genes,patients,events,endpoint,independent_set,note
-STAD,STAD_GSE84437,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts,TRUE,37752,431,207,OS,TRUE, round-11 cohort
-STAD,STAD_GSE84433,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,37752,355,172,OS,FALSE,
-SKCM,SKCM_GSE65904,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts,TRUE,34694,210,102,DSS,TRUE, round-11 cohort
-LUAD,LUAD_GSE31210,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,226,35,OS,TRUE,
-LUAD,LUAD_GSE72094,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts,TRUE,22115,398,113,OS,TRUE, round-11 cohort
-LUAD,LUAD_GSE30219,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,83,43,OS,TRUE,
-LUAD,LUAD_GSE50081,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,127,51,OS,TRUE,
-LUAD,LUAD_GSE37745,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,106,77,OS,TRUE,
-LUAD,LUAD_GSE13213,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,16122,117,49,OS,TRUE,
-LUAD,LUAD_GSE41271,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,38275,182,70,OS,TRUE,
-LUAD,LUAD_GSE42127,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,38275,131,41,OS,FALSE,
-LUAD,LUAD_GSE26939,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,17109,115,66,OS,TRUE,
-LUAD,LUAD_GSE11969,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,16625,90,40,OS,FALSE,
-LUSC,LUSC_GSE74777,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,30905,107,42,OS,TRUE,
-LUSC,LUSC_GSE41271,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,38275,80,43,OS,TRUE,
-LUSC,LUSC_GSE157011,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts,TRUE,22880,483,264,OS,TRUE, round-11 cohort
-COAD,COAD_GSE39582,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts,TRUE,22880,556,187,OS,TRUE, round-11 cohort
-COAD,COAD_GSE17536,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,177,73,OS,FALSE,
-COAD,COAD_GSE17538,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,232,93,OS,TRUE,
-COAD,COAD_GSE38832,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,122,28,DSS,TRUE,
-COAD,COAD_GSE103479,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,25386,127,49,OS,TRUE,
-COAD,COAD_GSE14333,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,196,43,DFS,FALSE,
-COAD,COAD_GSE72970,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,86,64,OS,TRUE,
+STAD,STAD_GSE84437,/path/to/analysis_root/external/cohorts,TRUE,37752,431,207,OS,TRUE, round-11 cohort
+STAD,STAD_GSE84433,/path/to/analysis_root/external/cohorts_r15,TRUE,37752,355,172,OS,FALSE,
+SKCM,SKCM_GSE65904,/path/to/analysis_root/external/cohorts,TRUE,34694,210,102,DSS,TRUE, round-11 cohort
+LUAD,LUAD_GSE31210,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,226,35,OS,TRUE,
+LUAD,LUAD_GSE72094,/path/to/analysis_root/external/cohorts,TRUE,22115,398,113,OS,TRUE, round-11 cohort
+LUAD,LUAD_GSE30219,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,83,43,OS,TRUE,
+LUAD,LUAD_GSE50081,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,127,51,OS,TRUE,
+LUAD,LUAD_GSE37745,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,106,77,OS,TRUE,
+LUAD,LUAD_GSE13213,/path/to/analysis_root/external/cohorts_r15,TRUE,16122,117,49,OS,TRUE,
+LUAD,LUAD_GSE41271,/path/to/analysis_root/external/cohorts_r15,TRUE,38275,182,70,OS,TRUE,
+LUAD,LUAD_GSE42127,/path/to/analysis_root/external/cohorts_r15,TRUE,38275,131,41,OS,FALSE,
+LUAD,LUAD_GSE26939,/path/to/analysis_root/external/cohorts_r15,TRUE,17109,115,66,OS,TRUE,
+LUAD,LUAD_GSE11969,/path/to/analysis_root/external/cohorts_r15,TRUE,16625,90,40,OS,FALSE,
+LUSC,LUSC_GSE74777,/path/to/analysis_root/external/cohorts_r15,TRUE,30905,107,42,OS,TRUE,
+LUSC,LUSC_GSE41271,/path/to/analysis_root/external/cohorts_r15,TRUE,38275,80,43,OS,TRUE,
+LUSC,LUSC_GSE157011,/path/to/analysis_root/external/cohorts,TRUE,22880,483,264,OS,TRUE, round-11 cohort
+COAD,COAD_GSE39582,/path/to/analysis_root/external/cohorts,TRUE,22880,556,187,OS,TRUE, round-11 cohort
+COAD,COAD_GSE17536,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,177,73,OS,FALSE,
+COAD,COAD_GSE17538,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,232,93,OS,TRUE,
+COAD,COAD_GSE38832,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,122,28,DSS,TRUE,
+COAD,COAD_GSE103479,/path/to/analysis_root/external/cohorts_r15,TRUE,25386,127,49,OS,TRUE,
+COAD,COAD_GSE14333,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,196,43,DFS,FALSE,
+COAD,COAD_GSE72970,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,86,64,OS,TRUE,
 COAD,COAD_GSE40967,,FALSE,,,,OS,FALSE,same patients and data as COAD_GSE39582: its rate is that of COAD_GSE39582
-CESC,CESC_GSE44001,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts,TRUE,20668,300,38,DFS,TRUE, round-11 cohort
-SARC,SARC_GSE21050,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts,TRUE,22880,289,101,MFS,FALSE, round-11 cohort
-SARC,SARC_GSE71118,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,291,103,MFS,TRUE,
-HNSC,HNSC_GSE65858,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts,TRUE,24218,253,85,OS,TRUE, round-11 cohort
-HNSC,HNSC_GSE41613,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,97,51,OS,TRUE,
-BLCA,BLCA_GSE13507,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts,TRUE,42509,165,69,OS,TRUE, round-11 cohort
-BLCA,BLCA_GSE31684,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,93,65,OS,TRUE,
-BLCA,BLCA_GSE32894,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,18646,224,25,DSS,TRUE,
-OV,OV_GSE140082,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,FALSE,14159,277,73,OS,FALSE,"fails B2 after building: 14159 genes, 277 patients, 73 events"
-OV,OV_GSE32062,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts,TRUE,19595,260,121,OS,TRUE, round-11 cohort
-BRCA,BRCA_GSE20685,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,327,83,OS,TRUE,
-BRCA,BRCA_GSE42568,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,104,35,OS,TRUE,
-BRCA,BRCA_GSE58812,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,107,29,OS,TRUE,
-BRCA,BRCA_GSE21653,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,248,79,DFS,TRUE,
-BRCA,BRCA_GSE20711,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,22880,88,25,OS,TRUE,
-BRCA,BRCA_GSE96058,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts,TRUE,23853,3273,336,OS,TRUE, round-11 cohort
+CESC,CESC_GSE44001,/path/to/analysis_root/external/cohorts,TRUE,20668,300,38,DFS,TRUE, round-11 cohort
+SARC,SARC_GSE21050,/path/to/analysis_root/external/cohorts,TRUE,22880,289,101,MFS,FALSE, round-11 cohort
+SARC,SARC_GSE71118,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,291,103,MFS,TRUE,
+HNSC,HNSC_GSE65858,/path/to/analysis_root/external/cohorts,TRUE,24218,253,85,OS,TRUE, round-11 cohort
+HNSC,HNSC_GSE41613,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,97,51,OS,TRUE,
+BLCA,BLCA_GSE13507,/path/to/analysis_root/external/cohorts,TRUE,42509,165,69,OS,TRUE, round-11 cohort
+BLCA,BLCA_GSE31684,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,93,65,OS,TRUE,
+BLCA,BLCA_GSE32894,/path/to/analysis_root/external/cohorts_r15,TRUE,18646,224,25,DSS,TRUE,
+OV,OV_GSE140082,/path/to/analysis_root/external/cohorts_r15,FALSE,14159,277,73,OS,FALSE,"fails B2 after building: 14159 genes, 277 patients, 73 events"
+OV,OV_GSE32062,/path/to/analysis_root/external/cohorts,TRUE,19595,260,121,OS,TRUE, round-11 cohort
+BRCA,BRCA_GSE20685,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,327,83,OS,TRUE,
+BRCA,BRCA_GSE42568,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,104,35,OS,TRUE,
+BRCA,BRCA_GSE58812,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,107,29,OS,TRUE,
+BRCA,BRCA_GSE21653,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,248,79,DFS,TRUE,
+BRCA,BRCA_GSE20711,/path/to/analysis_root/external/cohorts_r15,TRUE,22880,88,25,OS,TRUE,
+BRCA,BRCA_GSE96058,/path/to/analysis_root/external/cohorts,TRUE,23853,3273,336,OS,TRUE, round-11 cohort
 BRCA,BRCA_GSE103091,,FALSE,,,,OS,FALSE,same patients and data as BRCA_GSE58812: its rate is that of BRCA_GSE58812
-BRCA,BRCA_METABRIC,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,19933,1975,1139,OS,TRUE,
-OV,OV_OV-AU,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,33126,81,66,OS,TRUE,
-CESC,CESC_HTMCP-CC,/groups/adv2105_gp/yichen/Yi/com/gastric/external/cohorts_r15,TRUE,59427,116,72,OS,TRUE,
+BRCA,BRCA_METABRIC,/path/to/analysis_root/external/cohorts_r15,TRUE,19933,1975,1139,OS,TRUE,
+OV,OV_OV-AU,/path/to/analysis_root/external/cohorts_r15,TRUE,33126,81,66,OS,TRUE,
+CESC,CESC_HTMCP-CC,/path/to/analysis_root/external/cohorts_r15,TRUE,59427,116,72,OS,TRUE,

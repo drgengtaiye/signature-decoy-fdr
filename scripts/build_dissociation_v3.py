@@ -21,7 +21,7 @@ ICB_VanDenEnde is excluded: CD8A, IFNG, CXCL9, GZMB and PTPRC are absent from it
 import numpy as np, pandas as pd
 from scipy.stats import wilcoxon
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 R = pd.read_csv(f"{D}/native_response_matched_v2.csv")
 R = R[R.cohort != "ICB_VanDenEnde"].copy()
 P = pd.read_csv(f"{D}/native_prognosis_matched.csv")

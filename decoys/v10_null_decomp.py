@@ -1,19 +1,19 @@
-"""Analysis 2 of validation/PLAN_calibration_round5.md: why the response benchmark (Fig. 3) calls 20 signatures
-and the N0 bank of the target-decoy calibration (Fig. 4) calls 21.
+"""Analysis 2 of validation/PLAN_calibration_round5.md: why the response benchmark (Fig. 2) calls 20 signatures
+and the N0 bank of the target-decoy calibration (Fig. 3) calls 21.
 
     python v10_null_decomp.py   -> icb/v10_null_decomp.csv, icb/v10_null_decomp_calls.csv
 
 Four constructions of the folded-AUC null, the same observed AUCs throughout, 12 cohorts:
   (i)   ladder rung, unsigned weighted-mean null, 200 draws        native_response_matched_v2.csv (as published)
   (ii)  ladder rung, signed null for the four +1/-1 signatures     v10_signed_response.csv patched in
-  (iii) exact size, signed, 1,000 draws                            null_v2/<cohort>_v2.rds, N0 (Fig. 4), via v10_export_n0.R
+  (iii) exact size, signed, 1,000 draws                            null_v2/<cohort>_v2.rds, N0 (Fig. 3), via v10_export_n0.R
   (iv)  exact size, signed, 200 draws                              500 random subsamples of (iii)
-A call is two-sided Wilcoxon P < 0.05 over cohorts (Fig. 3) and P < 0.05 with a positive median (Fig. 4).
+A call is two-sided Wilcoxon P < 0.05 over cohorts (Fig. 2) and P < 0.05 with a positive median (Fig. 3).
 """
 import glob, numpy as np, pandas as pd
 from scipy.stats import wilcoxon
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 EX = "ICB_VanDenEnde"
 rng = np.random.default_rng(20261021)
 
@@ -25,7 +25,7 @@ med_ii = med_i.copy(); med_ii.loc[S.index] = S.rand_med
 
 N0 = pd.read_csv(f"{D}/v10_n0_bank.csv.gz")                            # v10_export_n0.R
 N0 = N0[N0.cohort != EX].set_index(["cohort", "signature"])
-bank = {k: np.maximum(v, 1 - v) for k, v in zip(N0.index, N0.to_numpy(float))}   # folded, as Fig. 4 reads it
+bank = {k: np.maximum(v, 1 - v) for k, v in zip(N0.index, N0.to_numpy(float))}   # folded, as Fig. 3 reads it
 idx = obs.index
 assert all(k in bank for k in idx), "bank missing a test"
 B = np.stack([bank[k] for k in idx])                                   # tests x 1000

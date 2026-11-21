@@ -8,8 +8,8 @@
 # tiers 1 and inherited (the reader's own suggestion, added after the plan). Reads the ten-set fits of v12_rerun.R
 # breast; no new draws.
 #   DFDR_LIB=<frozen 0.2.0 install> Rscript v12_breast_origin.R
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
-VAL <- "/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/validation"
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
+VAL <- "/path/to/analysis_root/signature-decoy-fdr/validation"
 OUT <- file.path(D, "v12_pkg")
 PV <- read.csv(file.path(VAL, "venet_provenance.csv"), check.names = FALSE, stringsAsFactors = FALSE)
 BL <- read.csv(file.path(VAL, "venet_provenance_borderline.csv"), stringsAsFactors = FALSE)

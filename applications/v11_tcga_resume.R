@@ -3,7 +3,7 @@
 # the calls, at the FDR table (its two bootstrap rows did not bind); this script builds that table, runs the global
 # null with decoyfdr as installed in Rlib2, and fits disease-specific survival and the progression-free interval with
 # the same decoys. Seeds as in v11_tcga_prognosis.R.
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 OUT <- file.path(D, "v11_pkg"); NC <- 20L
 L <- immune_library(key = "symbol")
 CL <- read.csv(file.path(D, "v5_signature_clusters.csv"), stringsAsFactors = FALSE)

@@ -1,16 +1,16 @@
-"""Shared layout kit for the v4 figure set (journal-standard redesign).
+"""Shared layout kit of the earlier figure set (figS2.py, figS4.py to figS8.py).
 
 One message per figure, four to six panels, statistics in the legends rather than on
 the panels, type never below 5 pt at print size. Axes are placed in millimetres from the
 top-left of a 180 mm canvas so rows align exactly across panels.
 """
 import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric")
+sys.path.insert(0, "/path/to/analysis_root")
 import numpy as np
 import matplotlib.pyplot as plt
 import figstyle as fs
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric"
+D = "/path/to/analysis_root"
 MM = fs.MM
 W = 180.0
 

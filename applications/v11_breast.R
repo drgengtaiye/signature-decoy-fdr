@@ -2,7 +2,7 @@
 # Application B of validation/PLAN_round6_applications.md: the breast-cancer prognostic signatures of Venet et al.
 # (2011) in the breast cohorts, scored by their first principal component (primary) and by the mean z (sensitivity);
 # folded C-index. Seeds derive from 20261022: decoys 20261022, null banks 20261023, global null 20261024.
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 OUT <- file.path(D, "v11_pkg"); NC <- 13L
 co <- breast_cohorts(); for (c in co) print(c)
 sets <- breast_sets()

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Download each series' samples with their data tables, and each platform table, through the GEO query page (the GEO
 # FTP server is not reachable from this cluster), gzipped, each series in its own directory.
-R=/groups/adv2105_gp/yichen/Yi/com/gastric/external/raw
+R=/path/to/analysis_root/external/raw
 get() {  # $1 accession, $2 dest
   [ -s "$2" ] && return 0
   for try in 1 2 3; do

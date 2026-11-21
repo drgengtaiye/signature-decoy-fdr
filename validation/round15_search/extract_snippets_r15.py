@@ -10,7 +10,7 @@ usage: python3 -I extract_snippets_r15.py <outdir>
 import csv, json, os, re, sys
 import xml.etree.ElementTree as ET
 
-G = "/groups/adv2105_gp/yichen/Yi/com/gastric"
+G = "/path/to/analysis_root"
 S13 = f"{G}/signature-decoy-fdr/validation/round13_search"
 TYPES = ["STAD", "SKCM", "LUAD", "LUSC", "COAD", "CESC", "SARC", "HNSC", "BLCA", "OV", "BRCA"]
 OUT = sys.argv[1]

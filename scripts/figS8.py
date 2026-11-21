@@ -1,5 +1,5 @@
-"""Additional file 1: Fig. S6 (GB v7) - the decoy pool at library scale (analysis 8 of
-validation/PLAN_round7_estimand_and_bias.md), on the 20 TCGA cancer types.
+"""Supplementary Figure 8: the decoy pool at library scale (analysis 8 of
+validation/PLAN_round7_estimand_and_bias.md), on the 20 TCGA cancer types.   python run_restyled.py figS8.py
 
 a  genes left for decoys (measured in all 20 types and in no set) as the library grows: the 52 immune signatures, MSigDB
    Hallmark, Hallmark + C2 canonical pathways, Hallmark + C2 CP + C5 GO biological process
@@ -10,7 +10,7 @@ c  the Hallmark library on overall survival (mean z, folded C-index, ten decoy s
 """
 import numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
-import sys; sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import v4kit as K
 import figstyle as fs
 from fig67_lib import bars2, C_FOLD, C_SIG, C_DEC
@@ -57,4 +57,4 @@ ax.set_ylabel("Hallmark sets called (of 50)")
 g = GN[GN.stat == "fold"].iloc[0]
 fs.note(ax, .03, .97, f"global null: ratio\n{g.ratio:.2f} ({g.ratio_lo:.2f}–{g.ratio_hi:.2f})", size=K.T_SMALL, color=fs.SLATE)
 C.title(130, 7, "Hallmark, overall survival", size=TT, fontweight="bold"); C.letter(122.5, 6.5, "c")
-C.save("FigS6_scale_GB7")
+C.save("SupplementaryFigure8")

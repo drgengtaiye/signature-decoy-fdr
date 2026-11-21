@@ -6,7 +6,7 @@ applications/v24_check_models_repro.R against round 15 (icb/v20_round15).
 import sys
 import numpy as np, pandas as pd
 
-G = "/groups/adv2105_gp/yichen/Yi/com/gastric"
+G = "/path/to/analysis_root"
 A, T24 = f"{G}/icb/v20_round15", f"{G}/icb/v24_tool"
 TYPES = ["STAD", "SKCM", "LUAD", "LUSC", "COAD", "CESC", "SARC", "HNSC", "BLCA", "OV", "BRCA"]
 EXTID = dict(STAD="STAD_GSE84437", SKCM="SKCM_GSE65904", LUAD="LUAD_GSE72094", LUSC="LUSC_GSE157011",

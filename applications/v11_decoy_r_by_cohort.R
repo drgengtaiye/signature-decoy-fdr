@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 # Per signature and cohort: the signature's internal correlation and the median over its co-expressed decoys of
 # theirs, from the decoys saved by grow_decoys().  Rscript v11_decoy_r_by_cohort.R tcga|breast|response
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 OUT <- file.path(D, "v11_pkg"); app <- commandArgs(trailingOnly = TRUE)[1]
 dec <- readRDS(file.path(OUT, sprintf("%s_decoys.rds", app)))
 co <- dec$cohorts

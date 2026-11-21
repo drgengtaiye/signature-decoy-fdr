@@ -1,19 +1,16 @@
-"""Figure 4 and Additional file 1: Fig. S1 (GB v6) - the target-decoy false discovery rate.
+"""Supplementary Figure 2: decoy diagnostics, response analysis (first decoy set).   python run_restyled.py figS2.py
 
-Figure 4: panels a-d of the GB v5 figure; its panels e and f, the calibration, are in Figure 5 (fig5_gb6.py).
-a  expected true and false discoveries for each null x statistic, FDR above each bar
-b  decoys reproduce their target's co-expression cohort by cohort
-c  calibrated per test is not calibrated per library (folded statistic, N0)
-d  the two statistics by the signatures' own co-expression (closest-matched decoys)
+Decoy call rates (a), spread (b), the enriched pool (c), the target's bank against the decoy's own (d), each signature
+against its own decoys (e). Intervals: bootstrap over the 52 targets, each carried with its decoys.
 
-Fig. S1: decoy call rates (a), spread (b), the enriched pool (c), the target's bank against the decoy's own (d),
-each signature against its own decoys (e). Intervals: bootstrap over the 52 targets, each carried with its decoys.
+The first canvas holds panels of an earlier figure that are not in the paper. It is drawn and closed without being saved,
+because the bootstrap of the second canvas continues the same random generator: removing it would change the intervals.
 """
 import glob, os, numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
 import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm, LinearSegmentedColormap
-import sys; sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import v4kit as K
 import figstyle as fs
 K.apply()
@@ -148,10 +145,10 @@ C.title(104, 67, "Direction lowers the estimate only for weak co-expression", si
 C.letter(96.5, 66.5, "d")
 
 
-C.save("Figure4_GB6")
+plt.close(C.fig)                 # not saved: see the docstring
 
 
-# ----------------------------------------------------------------- Additional file 1: Fig. S3
+# ----------------------------------------------------------------- Supplementary Figure 2
 C = K.Canvas(172)
 # ================================================================= c  heatmap of decoy call rates
 ax = C.ax(42, 17, 72, 21)
@@ -284,6 +281,6 @@ K.frame(ax)
 C.title(15, 104, "Each signature against its own decoys", size=TT, fontweight="bold")
 C.letter(7.5, 103.5, "e")
 
-C.save("FigS1_decoys_GB6")
+C.save("SupplementaryFigure2")
 print("Fig_targetdecoy |", ", ".join(f"{n}-{s} {fa.loc[(n,s)].called:.0f} FDR {fa.loc[(n,s)].fdr:.1f}" for n, s in COMBO))
 print("  d:", {k: tuple(round(x, 1) for x in v) for k, v in DVAL.items()})

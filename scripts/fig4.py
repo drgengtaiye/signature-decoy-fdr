@@ -1,11 +1,10 @@
-"""Figure 5 redrawn at the density and in the look of the AML multi-omic figures (pixl_nc.py).
-What the estimate estimates, and how it compares with realized and standard error rates.
+"""Figure 4: what the estimate estimates, and how it compares with realized and standard error rates (style: pixl_nc.py).
 Tables: icb/v12_truth (validation/PLAN_round7_estimand_and_bias.md), icb/v14_standard (validation/PLAN_round9_standard_fdr_comparison.md),
-icb/v10_calib_* (validation/PLAN_calibration_round5.md). New panels are descriptive reads of those tables
+icb/v10_calib_* (validation/PLAN_calibration_round5.md). Panels outside the figure plan are descriptive reads of those tables
 (validation/NOTE_figures_v17_descriptive_only.md)."""
 import glob
-import sys
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pixl_nc import *  # noqa: F401,F403
 from pixl_nc import np, pd, plt
 from matplotlib.patches import Rectangle
@@ -29,7 +28,7 @@ TINFO = pd.read_csv(I + "v12_pkg/tcga_decoy_info.csv.gz")
 
 check_palette("scenario", SCEN)
 
-# TCGA settings keep the hue the old sheet gave them: library as P1, outside as P3, both as P2.
+# TCGA settings: library as P1, outside as P3, both as P2.
 GROUPS = ["P1", "P2", "P3", "T1", "T2", "T3"]
 HUE = {"P1": SCEN["P1"], "P2": SCEN["P2"], "P3": SCEN["P3"], "T1": SCEN["P1"], "T2": SCEN["P3"], "T3": SCEN["P2"]}
 GLAB = {"P1": "3 inflamed signatures", "P2": "3 other signatures", "P3": "outside every signature",
@@ -113,7 +112,7 @@ for j, (st, m) in enumerate((("fold", "o"), ("dir", "^"))):
     x = P0[P0.stat == st]
     ax.plot(x.R + rng.uniform(-0.25, 0.25, len(x)), x.E, m, ms=1.5, mfc=EST, mec="none", alpha=0.6, ls="none", rasterized=True, zorder=3)
     ax.set_xscale("symlog", linthresh=2, linscale=0.8)
-    ax.plot([0, 8], [0, 8], color=INK, lw=0.5, ls=DOT, zorder=2)
+    ax.plot(np.linspace(0, 8, 400), np.linspace(0, 8, 400), color=INK, lw=0.5, ls=DOT, zorder=2)      # y = x
     ax.set_xlim(-0.5, 32); ax.set_xticks([0, 2, 10], ["0", "2", "10"]); ax.xaxis.set_minor_locator(plt.NullLocator())
     ax.set_ylim(0, 8); ax.set_yticks([0, 2, 4, 6, 8])
     if j == 0:
@@ -417,7 +416,7 @@ for i, l in enumerate(LABS):
     for j, (c, _) in enumerate(HEAD):
         y = s[s[c].notna()]
         v = 100 * np.mean(y[c] >= y.realized - 1e-9)
-        tile(pg, x0n + cwn * j, yy, cwn, chn, BLUE(np.clip((v - 50) / 50, 0, 1)), f"{v:.0f}")
+        tile(pg, x0n + cwn * j, yy, cwn, chn, BLUE(np.clip((v - 50) / 50, 0, 1)), f"{v:.1f}" if 99.5 <= v < 100 else f"{v:.0f}")
         on.append(dict(group=l, estimate=c, replicates=len(y), at_or_above_pct=v))
     pg.txt(x0n + cwn * 4 + 5.9, yy + chn / 2 - 0.05, f"{len(s)}", ha="right")
 pg.src("n", pd.DataFrame(on))
@@ -505,7 +504,8 @@ for xp, (l, v, c, m) in zip(XP, GR):
     q1, q2, q3 = np.percentile(v, [25, 50, 75])
     ax.add_patch(Rectangle((xp - 0.33, q1), 0.66, q3 - q1, fc="none", ec=INK, lw=0.5, zorder=5))
     ax.plot([xp - 0.33, xp + 0.33], [q2, q2], color=INK, lw=1.0, solid_capstyle="butt", zorder=6)
-    ax.text(xp, TOPR * 1.25, f"{100 * (v >= 0).mean():.0f}%", ha="center", va="bottom", fontsize=5)
+    sh = 100 * (v >= 0).mean()
+    ax.text(xp, TOPR * 1.25, f"{sh:.1f}%" if 99.5 <= sh < 100 else f"{sh:.0f}%", ha="center", va="bottom", fontsize=5)
     or_[l] = dict(group_replicates=len(v), group_share_at_or_above_pct=100 * (v >= 0).mean(), group_q25=q1, group_median=q2, group_q75=q3)
 zero(ax, 0, axis="y")
 ax.set_xlim(-0.6, 9.5); ax.set_xticks(XP, [g[0] for g in GR], fontsize=5.5); ax.tick_params(axis="x", length=0)
@@ -515,4 +515,4 @@ rr = pd.concat([ALLR.assign(group=ALLR.g + " " + ALLR.stat.map(STAT), data="resp
                 ALLT.assign(group=ALLT.g, data="tcga", stat="fold", cohorts=20).rename(columns={"kind": "scenario"})[["data", "group", "scenario", "beta", "cohorts", "rep", "stat", "gap"]]])
 pg.src("r", rr.join(pd.DataFrame(or_).T, on="group"))
 
-pg.save("Fig5")
+pg.save("Figure4")

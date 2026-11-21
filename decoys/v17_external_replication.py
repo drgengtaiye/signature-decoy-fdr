@@ -9,7 +9,7 @@ icb/v15_content/atlas_by_type.csv (round 10).
 import os, numpy as np, pandas as pd
 from scipy.stats import wilcoxon, spearmanr
 
-ICB = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+ICB = "/path/to/analysis_root/icb"
 V16, OUT = f"{ICB}/v16_external", f"{ICB}/v17_external"
 os.makedirs(OUT, exist_ok=True)
 FAM = pd.read_csv(f"{ICB}/v5_signature_clusters.csv").set_index("signature")

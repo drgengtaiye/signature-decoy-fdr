@@ -6,7 +6,7 @@
 import glob, numpy as np, pandas as pd
 import v19_audit as V19
 
-G = "/groups/adv2105_gp/yichen/Yi/com/gastric"
+G = "/path/to/analysis_root"
 A = f"{G}/icb/v20_round15"
 SEED = 20261203
 

@@ -3,7 +3,7 @@
 #   DFDR_LIB=<frozen install> Rscript v19_pipeline.R <TYPE> [cores] [targets|all]
 # Fold ids: seed 20261117 + unit index, the unit index of theme pool p (0-based) in type t (plan order, 0-based) being
 # 100 t + p; decoy j (1-20 co-expressed, 21-25 random) of that pool uses 20261117 + 100000 + 10000 t + 100 p + j.
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/v19_common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/v19_common.R")
 args <- commandArgs(TRUE); tp <- args[1]
 NC <- if (length(args) > 1) as.integer(args[2]) else 8L
 stage <- if (length(args) > 2) args[3] else "all"

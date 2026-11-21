@@ -29,7 +29,7 @@ print = functools.partial(print, flush=True)
 import numpy as np, pandas as pd
 from scipy.stats import rankdata, wilcoxon, norm
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 B = int(os.environ.get("NPERM", "2000"))
 CHUNK = 250
 EXCLUDE = {"ICB_VanDenEnde"}          # excluded from the headline analysis, as in v3

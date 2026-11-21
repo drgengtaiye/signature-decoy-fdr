@@ -1,6 +1,6 @@
 #!/bin/sh
 # Target-decoy calibration v3: own-bank check on 4 decoys per target in the 12 primary cohorts.
-cd /groups/adv2105_gp/yichen/Yi/com/gastric/icb || exit 1
+cd /path/to/analysis_root/icb || exit 1
 mkdir -p calib_v3/logs
 : > calib_v3/logs/exit_own.txt
 export OMP_NUM_THREADS=6 OPENBLAS_NUM_THREADS=6 MKL_NUM_THREADS=6

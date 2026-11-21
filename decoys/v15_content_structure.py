@@ -9,7 +9,7 @@ Inputs are the stored per-cohort outputs of the round-7 package runs; nothing is
 import os, numpy as np, pandas as pd
 from scipy.stats import wilcoxon
 
-ICB = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+ICB = "/path/to/analysis_root/icb"
 PKG, OUT = f"{ICB}/v12_pkg", f"{ICB}/v15_content"
 os.makedirs(OUT, exist_ok=True)
 

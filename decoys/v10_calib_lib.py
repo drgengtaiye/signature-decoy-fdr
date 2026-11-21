@@ -10,7 +10,7 @@ over replicates. At the observed labels it must reproduce calib_v3_units.csv.
 import glob, json, functools, numpy as np, pandas as pd
 from scipy.stats import rankdata
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 ST = f"{D}/v10_store"
 COHORTS = ["ICB_Braun", "ICB_Gide", "ICB_Hugo", "ICB_Jung", "ICB_Kim", "ICB_Limagne1", "ICB_Liu",
            "ICB_Mariathasan", "ICB_Miao1", "ICB_Puch", "ICB_Riaz", "ICB_Van_Allen"]

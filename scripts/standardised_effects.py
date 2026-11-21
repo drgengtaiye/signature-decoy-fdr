@@ -21,7 +21,7 @@ print = functools.partial(print, flush=True)
 import numpy as np, pandas as pd
 from scipy.stats import wilcoxon, mannwhitneyu
 
-D = "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"
+D = "/path/to/analysis_root/icb"
 FAMORD = ["Inflamed/IFN", "Other", "Confounder"]
 
 R = pd.read_csv(f"{D}/native_response_matched_v2.csv")

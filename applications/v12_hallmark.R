@@ -5,7 +5,7 @@
 #       how close they come to the set's internal correlation; (c) the 50 Hallmark sets, mean z, on overall survival with
 #       ten decoy sets (seeds 741000 decoys, 741001 null banks, 741002 global null). Seeds are arbitrary labels.
 #   DFDR_LIB=<frozen 0.2.0 install> Rscript v12_hallmark.R [cores]
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 suppressMessages(library(msigdbr))
 stopifnot(packageVersion("decoyfdr", lib.loc = RUNLIB) >= "0.2.0")
 NC <- { a <- commandArgs(trailingOnly = TRUE); if (length(a)) as.integer(a[1]) else 20L }

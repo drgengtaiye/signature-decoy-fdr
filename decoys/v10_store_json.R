@@ -2,7 +2,7 @@
 # Convert the score-store metadata (v10_store.R) to JSON for v10_calib_sim.py, and add the decoy table.
 #   Rscript v10_store_json.R  -> v10_store/<cohort>_meta.json, v10_store/decoy_info.csv, v10_store/targets.json
 suppressMessages(library(jsonlite))
-D <- "/groups/adv2105_gp/yichen/Yi/com/gastric/icb"; ST <- file.path(D, "v10_store")
+D <- "/path/to/analysis_root/icb"; ST <- file.path(D, "v10_store")
 for (f in list.files(ST, pattern="_meta\\.rds$", full.names=TRUE)) {
   m <- readRDS(f)
   m$tgt_genes <- lapply(m$tgt_genes, as.character); m$dcy_genes <- lapply(m$dcy_genes, as.character)

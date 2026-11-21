@@ -1,9 +1,9 @@
-"""Run a supplementary-figure script of the GB v6/v7 set in the palette of the GB v10 main figures (cns10.py), saving under
-the GB10 suffix:  python run_restyled_v10.py <script.py>
+"""Run a supplementary-figure script drawn with figstyle.py (figS2.py, figS4.py to figS8.py) in the palette of cns10.py:
+    python run_restyled.py <script.py>
 The script's own layout and data are unchanged; figstyle's colour constants and hatching are replaced before it runs."""
-import sys, runpy
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric/figscripts")
-sys.path.insert(0, "/groups/adv2105_gp/yichen/Yi/com/gastric")
+import os, sys, runpy
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, "/path/to/analysis_root")
 import figstyle as fs
 import cns10 as K
 import matplotlib.axes
@@ -11,8 +11,6 @@ fs.BLUE, fs.VERM, fs.TEAL, fs.GREY, fs.INK, fs.LIGHT, fs.SLATE, fs.AMBER = (K.BL
                                                                             K.SLATE, K.ORANGE)
 fs.FAM.update({"Inflamed/IFN": K.BLUE, "Immune": K.BLUE, "Other": K.GRAY, "Confounder": K.ORANGE})
 fs.DIV = K.DIV
-_save = fs.savefig
-fs.savefig = lambda fig, stem: _save(fig, stem.replace("_GB7", "_GB10").replace("_GB6", "_GB10") if stem.startswith("FigS") else stem + "_restyled_unused")
 _bar = matplotlib.axes.Axes.bar
 
 

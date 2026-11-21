@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 # V3 of validation/PLAN_round6_applications.md: the response benchmark rerun end to end with decoyfdr,
 # decoys and null banks drawn afresh (seed 20261022), beside the published calls and FDRs.
-source("/groups/adv2105_gp/yichen/Yi/com/gastric/signature-decoy-fdr/applications/common.R")
+source("/path/to/analysis_root/signature-decoy-fdr/applications/common.R")
 OUT <- file.path(D, "v11_pkg")
 co <- response_cohorts()
 for (c in co) print(c)

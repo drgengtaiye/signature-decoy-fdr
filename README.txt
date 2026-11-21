@@ -5,10 +5,15 @@ The R package decoyfdr (decoyfdr/) implements the procedure; install it with
 remotes::install_github("drgengtaiye/signature-decoy-fdr", subdir = "decoyfdr"). Its tests reproduce the
 response-benchmark calls and estimates from the per-cohort statistics shipped in decoyfdr/inst/extdata.
 
-The analysis scripts were run on one HPC system and carry its absolute paths. INPUTS.csv lists every input file
-with its source; lay them out under a local root and run  python scripts/set_root.py /path/to/root  to rewrite
-the paths in every script. ENVIRONMENT.txt gives the R and Python versions used. Seeds in the scripts are arbitrary
-labels; several have the form of calendar dates.
+The analysis scripts name their files under the placeholder root /path/to/analysis_root. INPUTS.csv lists every
+input file with its source; lay them out under a local root and run  python scripts/set_root.py /path/to/root  to
+write that root into every script. The figure scripts also need the four Helvetica faces in the directory named by
+the environment variable HELVETICA_FACES. ENVIRONMENT.txt gives the R and Python versions used. Seeds in the scripts
+are arbitrary labels; several have the form of calendar dates.
+
+The analysis plans in validation/ are named in the order they were written (PLAN_round5 to PLAN_round18, each with
+its amendments); Supplementary Note 2 of the paper lists them with what each covers. The prefixes of scripts and
+output directories (v3_ to v24_) number the steps in the order they were run.
 
 decoyfdr/      the R package (R code, C++ for the C-index, tests, vignette)
 applications/  the package run on the response cohorts, on 20 TCGA cancer types, on breast cancer cohorts and on
@@ -18,7 +23,7 @@ external/      screening, download and preparation of the independent survival c
 scripts/       benchmarks, dependence between signatures, figures
 decoys/        the target-decoy estimate on the response benchmark and its calibration
 validation/    analysis plans with their SHA-256 hashes; when each was deposited (PLAN_DEPOSITS.md); provenance of the
-               immune and breast signatures
+               immune and breast signatures; the literature search and the validation cohorts
 
 Run order (each step reads the outputs of the steps before it)
 1  Benchmarks. scripts/null_matched_v2.R: response AUC in each checkpoint cohort with its size- and engine-matched
@@ -43,7 +48,7 @@ Run order (each step reads the outputs of the steps before it)
    (calib_read_natbank.R). run_calib_v3_own.sh / run_calib_v3_ownnat.sh and calib_v3_ownbank_compare.py check the
    shared-bank shortcut; pool_shift_check.R tests the draw pool; export_decoy_genes_v3.R writes the decoy gene lists.
 3  Calibration (validation/PLAN_calibration_round5.md). decoys/v10_export_n0.R and v10_null_decomp.py compare the
-   nulls of Figs 3 and 4; run_v10_store.sh runs v10_store.R per cohort (ranks of every target, decoy and N0 set,
+   nulls of Figs 2 and 3; run_v10_store.sh runs v10_store.R per cohort (ranks of every target, decoy and N0 set,
    reproducing the published banks), then v10_store_json.R; v10_calib_sim.py repro | null | signal reruns the whole
    procedure on the observed labels, on 1,000 label permutations and on planted signal (v10_calib_lib.py holds the
    engine), v10_calib_signal_totals.py summarizes the latter; v10_fdr_intervals.py gives the dependence-aware
@@ -80,7 +85,7 @@ Run order (each step reads the outputs of the steps before it)
    response (run_v16.sbatch) runs the package on the 11 survival cohorts and on GSE176307 (icb/v16_external/);
    decoys/v17_external_replication.py computes the plan's tests from them (icb/v17_external/).
    Split halves (validation/PLAN_round12_reproducibility_by_type.md, deposited before it was computed, and three
-   amendments: a tie rule, one round-10 cell accepted, and a post hoc bootstrap; AMENDMENT_2's first deposited version
+   amendments: a tie rule, one cell of the content analysis accepted, and a post hoc bootstrap; AMENDMENT_2's first deposited version
    is kept as _superseded). applications/v18_split_half.R tcga | external | tcga_boot | external_boot (run_v18.sbatch)
    splits every TCGA type and independent survival cohort 500 times into halves stratified by event status and
    bootstraps its patients 200 times, from the per-patient scores of the step-5 TCGA fit and of the independent cohorts
@@ -114,21 +119,23 @@ Run order (each step reads the outputs of the steps before it)
    v22_size_check.R (icb/v22_size/).
 11 The law out of sample (validation/PLAN_round18_law_out_of_sample.md): applications/v23_law_split.R and
    decoys/v23_law_split_audit.py (icb/v23_law_split/).
-12 Figures (validation/PLAN_round8_figure_displays.md and its four amendments; the panels added in the redraw are
-   descriptive under validation/NOTE_figures_v17_descriptive_only.md, except those that show rounds 15 and 18).
-   scripts/pixl_nc.py holds the style and pixl_nc_check.py the checks. Figure n is scripts/fig<n>.py: Figures 2-7
-   are the content and replication analyses (rounds 5-12), Figure 8 the published models, clinical assays and
-   pipeline (rounds 13 and 15), Figure 9 the validation cohorts and the law (rounds 15 and 18). Supplementary Figure
-   n is scripts/figS<n>.py: Supplementary Figure 1 the library's correlation structure, 2-10 the earlier
-   supplementary figures (python figS3.py; python run_restyled.py figS2.py and figS4.py to figS8.py, whose scripts
-   save under their earlier names; python figS9.py, round 10; python figS10.py, round 12), 11 the first-pass sample of
-   published models (round 13). figprep_example.py, figprep_r.R, figprep_roc.py and figprep_km.R write the data of
-   the example panels (icb/v13_fig/); cns.py, cns10.py, run_restyled.py, fig67_lib.py, figstyle.py and v4kit.py are
-   the style of the earlier supplementary figures.
+12 Figures (validation/PLAN_round8_figure_displays.md and its four amendments; the panels outside that plan are
+   descriptive under validation/NOTE_figures_v17_descriptive_only.md, except those that show the analyses of
+   PLAN_round15 and PLAN_round18). scripts/pixl_nc.py holds the style. Figure n is scripts/fig<n>.py, written as
+   Figure<n>.pdf with its source data in source/Figure<n>_source.xlsx (one sheet per panel): Figures 2-7 are the
+   response, calibration, prognosis, breast and content analyses, Figure 8 the published models, clinical assays and
+   pipeline, Figure 9 the validation cohorts and the law. Supplementary Figure n is scripts/figS<n>.py, written as
+   SupplementaryFigure<n>: 1, the library's correlation structure, and 11, the first-pass sample of published models,
+   in the style of the main figures; 2-10 in the style of an earlier figure set (python figS3.py, figS9.py,
+   figS10.py; python run_restyled.py figS2.py and figS4.py to figS8.py). The palette of that set has changed since
+   Supplementary Figures 2-10 were drawn, so their scripts redraw the same data and layout but not pixel for pixel.
+   figprep_example.py, figprep_r.R, figprep_roc.py and figprep_km.R write the data of the example panels and
+   figprep_tables.py the tables of Figure 3 and Supplementary Figure 1 (icb/v13_fig/); cns.py, cns10.py,
+   run_restyled.py, fig67_lib.py, figstyle.py and v4kit.py are the style of the earlier set.
 13 The model check of the package (decoyfdr 0.3.0: check_models(), validation_fdr(), cohort_fvr()). Acceptance
    criteria written and hashed before the run (validation/TOOL_check_models_acceptance.md); applications/
-   v24_check_models_repro.R <TYPE> reruns round 15 part A and the published models of part B5 through the function
-   (icb/v24_tool/), decoys/v24_check_models_repro.py compares the output with round 15, and the result is
+   v24_check_models_repro.R <TYPE> reruns part A of PLAN_round15 and the published models of its part B5 through the
+   function (icb/v24_tool/), decoys/v24_check_models_repro.py compares the output with the stored results, and the result is
    validation/TOOL_check_models_result.md. decoys/v24_cohort_table.py writes the cohort table the package ships
-   (decoyfdr/inst/extdata/validation_cohorts_r15.csv) and decoys/v24_cohort_page.py the searchable page
+   (decoyfdr/inst/extdata/validation_cohorts.csv) and decoys/v24_cohort_page.py the searchable page
    docs/validation_cohorts.html from it.
