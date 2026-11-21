@@ -1,4 +1,4 @@
-# Data for the survival examples of Figures 6 and 7: a called signature and its median co-expressed decoy (by folded C in
+# Data for the survival examples of Figures 5o, p and 6p, q: a called signature and its median co-expressed decoy (by folded C in
 # that cohort) in one cohort, with the patients' survival, from the set-1 fits of the package runs (applications/v11_*.R).
 #   Rscript figprep_km.R   -> icb/v13_fig/km_<tag>.csv
 suppressMessages(library(decoyfdr, lib.loc = "/path/to/analysis_root/icb/v12_pkg/Rlib6"))

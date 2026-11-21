@@ -250,7 +250,7 @@ Confidence is high for 35 rows, medium for 9 and low for 1 (KOK).
 
 Per-signature notes:
 
-- **ABBA** (high): Under the user's rule only the original paper's own use counts, so constituent-signature training cohorts are listed as borderline rather than coded. Whether the Teschendorff 2006/2007 constituent lists used NKI outcome was not checked in their full texts. Venet list has 111 symbols vs the paper's 117 genes (alias mapping).
+- **ABBA** (high): Under the coding rule only the original paper's own use counts, so constituent-signature training cohorts are listed as borderline rather than coded. Whether the Teschendorff 2006/2007 constituent lists used NKI outcome was not checked in their full texts. Venet list has 111 symbols vs the paper's 117 genes (alias mapping).
 - **BEN-PORATH-EXP1** (high): The survival test used the combined ES signature (ES exp1 over AND PRC2 targets under), not ES exp1 alone; coded V for each component set. Pawitan n=159 identifies the Stockholm (GSE1456) series.
 - **BEN-PORATH-PRC2** (high): The survival test used the combined ES signature (ES exp1 over AND PRC2 targets under), not PRC2 targets alone; coded V for each component set.
 - **BUESS** (high): Venet's BUESS list has 30 symbols versus 42 genes in the paper (symbol mapping); does not affect coding.

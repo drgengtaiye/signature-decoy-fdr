@@ -100,6 +100,7 @@ draw of decoys.
 the response benchmark (its first decoy set) from the per-cohort statistics in
 `inst/extdata/response_units_N0.csv.gz`. The scripts in `../applications/` run the package on the response cohorts,
 on 20 TCGA cancer types, on breast cancer cohorts and on the MSigDB Hallmark library, with the seeds given there.
-`check_models()` reproduces the paper's audit of its whole literature search (728 published models, 11 cancer types) from the same inputs
+`check_models()` reproduces the paper's audit of its whole literature search (the 707 scored of 728 eligible published
+models, 11 cancer types; two documented differences in `../validation/TOOL_check_models_result.md`) from the same inputs
 and seeds: `../applications/v24_check_models_repro.R` runs it, `../decoys/v24_check_models_repro.py` compares the
 output with the paper's tables, and `../validation/TOOL_check_models_acceptance.md` states the criteria.

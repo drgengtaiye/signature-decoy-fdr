@@ -1,4 +1,4 @@
-"""Data for Figure 1h: ROC curves of Chemokine (Messina) in the Gide cohort, of its 32 co-expressed decoys and of its
+"""Data for Figure 1p: ROC curves of Chemokine (Messina) in the Gide cohort, of its 32 co-expressed decoys and of its
 1,000-draw null bank (pointwise 5th, 50th and 95th percentiles), from the score store (first decoy set, observed labels).
     python figprep_roc.py   -> icb/v13_fig/roc_example.csv
 """

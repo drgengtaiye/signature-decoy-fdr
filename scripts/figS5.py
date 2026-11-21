@@ -70,4 +70,4 @@ K.key(ax, [(C_SIG, "co-expressed"), (C_DEC, "random-gene")], x=.04, y=.97, s=9, 
 K.frame(ax)
 C.title(140, 7, "Rerun decoys (set 1)", size=TT, fontweight="bold"); C.letter(132.5, 6.5, "c")
 C.save("SupplementaryFigure5")
-print("FigS3 |", out, "|", rows)
+print("SupplementaryFigure5 |", out, "|", rows)

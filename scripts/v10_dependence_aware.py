@@ -4,7 +4,7 @@ v5_perm_family.csv (v5_perm_family.py).
     python v10_dependence_aware.py [input_dir]   -> icb/v5_dependence_aware.csv
 
 The table was first assembled by hand from those two files; this script writes the same table and, run on
-the inputs of manuscript v4 (icb/_pre_v10), must reproduce the file that version used.
+the inputs of the original benchmark (icb/_pre_v10), must reproduce the file made from them.
 """
 import sys, numpy as np, pandas as pd
 

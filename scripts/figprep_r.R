@@ -1,4 +1,4 @@
-# Data for Figures 1d and 4b: internal mean pairwise correlation of every signature and of its set-1 decoys in each
+# Data for Figure 1i (the response table; the TCGA table is written too but no figure reads it): internal mean pairwise correlation of every signature and of its set-1 decoys in each
 # response and TCGA cohort, from the decoy objects of the package runs (applications/v11_*.R).
 #   Rscript figprep_r.R   -> icb/v13_fig/r_by_cohort_<app>.csv
 for (app in c("response", "tcga")) {

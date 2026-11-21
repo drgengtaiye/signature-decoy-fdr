@@ -1,4 +1,4 @@
-"""Data for Figure 1e-g: two signatures read against their null banks and their decoys in every response cohort
+"""Data for Figure 1b and l-o: two signatures read against their null banks and their decoys in every response cohort
 (first decoy set, N0, observed labels), from the score store of decoys/v10_store.R.
 
     python figprep_example.py   -> icb/v13_fig/example_units.csv

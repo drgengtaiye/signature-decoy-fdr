@@ -7,7 +7,7 @@
 #' expression-level composition, the co-expressed ones also matched on internal co-expression, drawn from genes in no
 #' model. A decoy carries the model's coefficients in a random order and the direction of its own association with
 #' survival in the training cohort. Model and decoys then go through the same test in every validation cohort:
-#' rule (L), the score split at its median, log-rank P < `alpha` with the high group faring worse.
+#' the validation rule: the score split at its median, log-rank P < `alpha` with the high group faring worse.
 #'
 #' Genes. A model keeps the genes measured in every cohort of `match`; if some are missing there it keeps the rest when
 #' they are at least `min_measured` of its printed genes (`n_printed`) and at least two, and is dropped otherwise. In a
@@ -33,7 +33,7 @@
 #'   selected from).
 #' @param n_coex,n_rand decoys per model.
 #' @param min_measured smallest share of a model's genes that must be measured.
-#' @param alpha log-rank threshold of rule (L).
+#' @param alpha log-rank threshold of the validation rule.
 #' @param seed seed of the decoys and of the coefficient shuffles; with the same models in the same order, the same
 #'   cohorts and the same seed, the result is identical.
 #' @param cores forked workers.
@@ -250,7 +250,7 @@ validation_fdr <- function(x, cohort = NULL, models = NULL, decoys = c("coex", "
 #' False-validation rates of the paper's validation cohorts
 #'
 #' For each validation cohort built in the accompanying paper, the share of null models that validated
-#' there under rule (L). A null model is the usual pipeline (univariate Cox screen at P < 0.05, then LASSO Cox) run in
+#' there under the validation rule of `check_models()`. A null model is the usual pipeline (univariate Cox screen at P < 0.05, then LASSO Cox) run in
 #' TCGA of the cohort's cancer type on a decoy pool: genes matched in number, and for co-expressed pools in
 #' co-expression, to one of 15 published theme gene sets (ferroptosis, hypoxia and others), drawn from genes in no theme
 #' set and no published model of the type. The table also gives, for published models of the type, the validation rate among those whose paper did not
@@ -345,7 +345,7 @@ lin_score <- function(co, genes, w) {
   as.numeric(crossprod(co$Z[genes[k], , drop = FALSE], w[k]))
 }
 
-# rule (L): split at the median (ties to the lower group), log-rank P, and whether the high group fares worse
+# the validation rule: split at the median (ties to the lower group), log-rank P, and whether the high group fares worse
 km_valid <- function(s, time, event) {
   g <- as.integer(s > stats::median(s))
   if (length(unique(g)) < 2) return(c(p = NA_real_, worse = NA_real_))

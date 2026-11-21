@@ -1,7 +1,9 @@
 Software used for the analyses (one HPC system, Linux, R and Python as below)
 
 R 4.5.2 (2025-10-31)
-  decoyfdr 0.2.0        this repository (decoyfdr/); frozen installs were used for every run
+  decoyfdr 0.2.0        frozen installs of this repository's package for every analysis run; 0.3.0 for the check of
+                        check_models() (validation/TOOL_check_models_result.md); 0.3.1 in this repository (documentation)
+  (the clean-install test of the package used R 4.5.1 in the rocker/r-ver container)
   GSVA 2.4.4            gsvaParam / ssgseaParam scoring of every signature and null set
   Rcpp 1.1.2, matrixStats 1.5.0, RSpectra 0.16.2
   MultiAssayExperiment 1.36.1, SummarizedExperiment 1.40.0   ORCESTRA clinical_icb objects

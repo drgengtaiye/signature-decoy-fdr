@@ -1,11 +1,12 @@
 # decoyfdr 0.3.1
 
-* Documentation only: the shipped cohort table is `inst/extdata/validation_cohorts.csv`; no computation changes.
+* Documentation only: the shipped cohort table is `inst/extdata/validation_cohorts.csv`; the help pages call the validation
+  rule by its content rather than the plan's label; no computation changes.
 
 # decoyfdr 0.3.0
 
 * `check_models()` audits prognostic risk models given as Cox coefficients named by gene: matched co-expressed and
-  random-gene decoys, rule (L) in every validation cohort (median split, log-rank P < 0.05, high group worse), and per
+  random-gene decoys, one validation rule in every validation cohort (median split, log-rank P < 0.05, high group worse), and per
   model the share of decoys validated and rho. It packages the audit of published risk models of the accompanying paper
   and reproduces the audit of its whole search from the same inputs and seed (validation/TOOL_check_models_acceptance.md).
 * `validation_fdr()` gives the decoy-estimated FDR of validation over a set of checked models, with a bootstrap interval.

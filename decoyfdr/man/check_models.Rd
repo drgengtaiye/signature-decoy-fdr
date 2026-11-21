@@ -41,7 +41,7 @@ selected from).}
 
 \item{min_measured}{smallest share of a model's genes that must be measured.}
 
-\item{alpha}{log-rank threshold of rule (L).}
+\item{alpha}{log-rank threshold of the validation rule.}
 
 \item{seed}{seed of the decoys and of the coefficient shuffles; with the same models in the same order, the same
 cohorts and the same seed, the result is identical.}
@@ -71,7 +71,7 @@ genes receives `n_coex` co-expressed and `n_rand` random-gene decoys ([grow_deco
 expression-level composition, the co-expressed ones also matched on internal co-expression, drawn from genes in no
 model. A decoy carries the model's coefficients in a random order and the direction of its own association with
 survival in the training cohort. Model and decoys then go through the same test in every validation cohort:
-rule (L), the score split at its median, log-rank P < `alpha` with the high group faring worse.
+the validation rule: the score split at its median, log-rank P < `alpha` with the high group faring worse.
 }
 \details{
 Genes. A model keeps the genes measured in every cohort of `match`; if some are missing there it keeps the rest when

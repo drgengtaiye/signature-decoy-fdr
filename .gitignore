@@ -2,6 +2,6 @@ __pycache__/
 *.pyc
 # manuscript builders are kept outside the public repository
 manuscript/
-# round 15: excerpts of the papers' full text and the readers' scratch files stay local
+# excerpts of the papers' full text and the readers' scratch files of the literature search stay local
 validation/round15_search/snippets/
 validation/round15_search/tmp_*

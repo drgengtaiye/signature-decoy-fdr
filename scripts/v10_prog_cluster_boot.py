@@ -1,7 +1,7 @@
 """The prognostic gain over the matched null, tested by resampling whole correlation clusters (Methods, "Statistical
 tests"; 20,000 resamples, two-sided). The script that produced the published values (P = 0.006, 5 x 10^-4 and 0.046
 for OS, DSS and PFI) was not kept; this re-implementation gives 0.006, 0.0009 and 0.050 on the same table
-(icb/_pre_v10/native_prognosis_matched.csv) and is the one used from manuscript v5 on.
+(icb/_pre_v10/native_prognosis_matched.csv) and is the one reported.
 
     python v10_prog_cluster_boot.py [table]   -> printed
 """

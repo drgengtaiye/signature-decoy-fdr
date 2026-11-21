@@ -18,7 +18,7 @@ A data frame, one row per cohort; with neither argument, the whole table.
 }
 \description{
 For each validation cohort built in the accompanying paper, the share of null models that validated
-there under rule (L). A null model is the usual pipeline (univariate Cox screen at P < 0.05, then LASSO Cox) run in
+there under the validation rule of `check_models()`. A null model is the usual pipeline (univariate Cox screen at P < 0.05, then LASSO Cox) run in
 TCGA of the cohort's cancer type on a decoy pool: genes matched in number, and for co-expressed pools in
 co-expression, to one of 15 published theme gene sets (ferroptosis, hypoxia and others), drawn from genes in no theme
 set and no published model of the type. The table also gives, for published models of the type, the validation rate among those whose paper did not
